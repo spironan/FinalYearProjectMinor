@@ -16,7 +16,7 @@ public class controllerTester : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-        if(Input.GetButton("A_button_player1"))
+        if(Input.GetButton("A_button_xBox360"))
         {
             test_A.SetActive(false);
         }
