@@ -3,20 +3,20 @@ using System.Collections;
 
 public class CameraMoveScript : MonoBehaviour
 {
-    Vector3 movement;
-    void Start()
-    {
-        movement.x = 1;
-        movement.y = 0;
-        movement.z = 0;
-    }
+    Vector3 movementLR = new Vector3(1, 0, 0);
+    Vector3 movementUD = new Vector3(0, 1, 0);
 
     void Update()
     {
         if (Input.GetKey(KeyCode.A))
-            this.transform.position -= movement;
-
+            this.transform.position -= movementLR;
         if (Input.GetKey(KeyCode.D))
-            this.transform.position += movement;
+            this.transform.position += movementLR;
+
+        if (Input.GetKey(KeyCode.W))
+            this.transform.position += movementUD;
+        if (Input.GetKey(KeyCode.S))
+            this.transform.position -= movementUD;
+        
     }
 }
