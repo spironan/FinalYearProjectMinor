@@ -2,50 +2,57 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public enum Characters
-{
-    PLAYTEST_CHAR = 0,
-    PLAYTEST_CHAR_2,
-    MAX_CHARACTER
-};
-
 public class CharacterBase : MonoBehaviour 
 {
-    //Character Basic Data
+    //Character Basic Data Variable(s)
     bool inAir;
     bool canJump;
-    bool staggered;
+    bool stunned;
     bool isDead;
+    bool isBlocking;
+    bool canUlti;
     Characters name;
+    AttackType type;
     uint health;
     uint ultiBar;
-    uint staggerMeter;
+    uint stunMeter;
     uint jumpForce;
     uint moveSpeed;
-    Vector3 direction;
+    Vector2 direction;
     Image characterArt;
     Rigidbody2D rigidbody;
 
+    //Getter(s)
+    public bool GetDead() { return isDead; }
+    //Setter(s)
+    public void SetDead(bool newIsDead) { isDead = newIsDead; }
+
+
+    //This data are always the same,thus been place here
     public void Start()
     {
-        inAir = staggered = false;
+        isBlocking = inAir = stunned = false;
         canJump = true;
+        canUlti = false;
+        direction = new Vector2(0, 0);
         Init();
-        rigidbody = gameObject.GetComponent<Rigidbody2D>();
     }
-
+    //This Data Are to Be Loaded from a DataBase Next Time
     public virtual void Init()
     {
         name = Characters.PLAYTEST_CHAR;
+        type = AttackType.MID_RANGE;
         health = 100;
         ultiBar = 0;
-        staggerMeter = 50;
-        moveSpeed = 500;
-        jumpForce = 10000;
-        gameObject.transform.position = new Vector3(0, 0, 0);
-        direction =  new Vector3(0, 0, 0);
+        stunMeter = 50;
+        moveSpeed = 15;
+        jumpForce = 100000;
+        this.transform.position = new Vector3(0, -2.5f, 0);
+        rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        rigidbody.velocity = new Vector2(0, 0);
     }
 
+    //Overall Structure of how the code should flow
     public virtual void Update() 
     {
         ReadControl();
@@ -57,6 +64,7 @@ public class CharacterBase : MonoBehaviour
         Recalculate();
     }
 
+    //Read the Different Inputs and convert into the same input
     public virtual void ReadControl()
     {
         //Standard Keyboard Controls
@@ -67,75 +75,94 @@ public class CharacterBase : MonoBehaviour
             || Input.GetKey(KeyCode.W)
             || Input.GetKey(KeyCode.UpArrow))
         {
-            direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+            direction.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
         //xBox360 Controller Support
-        if (Input.GetAxis("leftStick_X_xBox360") != 0 || Input.GetAxis("leftStick_Y_xBox360") != 0)
+        else if (Input.GetAxis("leftStick_X_xBox360") != 0 || Input.GetAxis("leftStick_Y_xBox360") != 0)
         {
-            direction.Set(Input.GetAxis("leftStick_X_xBox360"), -Input.GetAxis("leftStick_Y_xBox360"), 0);    
+            direction.Set(Input.GetAxis("leftStick_X_xBox360"), -Input.GetAxis("leftStick_Y_xBox360"));    
         }
     }
-
     public virtual bool MoveCondition()
     {
         return !direction.x.Equals(0);
     }
     public virtual void Move() 
     {
-        //if(Input.GetKeyDown(KeyCode.A)
-        //|| Input.GetKeyDown(KeyCode.LeftArrow)
-        //|| Input.GetKeyDown(KeyCode.D)
-        //|| Input.GetKeyDown(KeyCode.RightArrow)
-        //|| Input.GetAxis("leftStick_X_xBox360") != 0)
-        //{
-        rigidbody.AddRelativeForce(new Vector2(moveSpeed * direction.x * Time.deltaTime, 0));
+        gameObject.transform.position += new Vector3(moveSpeed * direction.x * Time.deltaTime, 0, 0);
         Debug.Log("Move!");
-        //}
     }
     public virtual bool JumpCondition()
     {
-        return (!inAir && direction.y > 0);
+        return (!inAir && direction.y > 0.1);
     }
     public virtual void Jump() 
     {
-        //Jumping
-        //if (Input.GetKeyDown(KeyCode.Space)
-        //    || Input.GetAxis("leftStick_Y_xBox360") < 0)
-        //{
         inAir = true;
-        rigidbody.AddRelativeForce(new Vector2(0, jumpForce * Time.deltaTime));
-        Debug.Log("Jump! ");
-        //}
+        rigidbody.AddForce(new Vector2(0, jumpForce * Time.deltaTime));
+        Debug.Log("Jump!");
     }
-
     public virtual void Recalculate()
     {
-        if (health <= 0)
-        {
+        if (isDead)
             Die();
-        }
-        else if (inAir && rigidbody.velocity.y == 0)
-        {
+        if (ultiBar > 0 && !canUlti)
+            canUlti = true;
+        direction = new Vector2(0,0);
+    }
+
+    
+    //Check to See if Player Touch the ground,so that it can jump again
+    public virtual void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.collider.tag == "Ground" && inAir)
             inAir = false;
-        }
-        direction = new Vector3(0, 0, 0);
     }
 
     public virtual void Attack() { }
     public virtual void Block() { }
 
-    public virtual void SkillA() { }
-    public virtual void SkillB() { }
-    public virtual void SkillC() { }
-    public virtual void SkillD() { }
+    public virtual void CastSkillA() { }
+    public virtual void CastSkillB() { }
+    public virtual void CastSkillC() { }
+    public virtual void CastSkillD() { }
+    public virtual void CastUltimate() 
+    {
+        if (canUlti)
+        {
+            //cast ulti here
+            canUlti = false;
+            ultiBar = 0;
+        }
+    }
 
-    //When a Character Dies
+    //Go through this function to make character take damage
+    public virtual void TakeDamage(uint damage)
+    {
+        if (isBlocking)
+        {
+            //Temporary damage nerf
+            damage /= 5;
+        }
+        health -= damage;
+        if (health <= 0)
+            isDead = true;
+    }
+    //When a Character Dies , can only be called internally
     public virtual void Die() 
     {
         //Player Lose Ability to Control
         //Death Animation Plays
         //Win for Opponent Animation Plays
         Debug.Log("Died");
+        Reset();
     }
-    public virtual void Reset() { }
+    //Reset Player to Default Position
+    public virtual void Reset()
+    {
+        Init();
+        isDead = false;
+        Debug.Log("Reset");
+    }
+
 }

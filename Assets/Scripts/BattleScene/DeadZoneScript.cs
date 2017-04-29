@@ -3,8 +3,10 @@ using System.Collections;
 
 public class DeadZoneScript : MonoBehaviour 
 {
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        other.gameObject.GetComponent<CharacterBase>().Die();
+        Debug.Log("Something Entered : " + other.gameObject.tag);
+        if(other.gameObject.tag == "Player")
+            other.gameObject.GetComponent<CharacterBase>().SetDead(true);
     }
 }
