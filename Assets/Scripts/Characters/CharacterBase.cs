@@ -11,8 +11,8 @@ public class CharacterBase : MonoBehaviour
     bool isDead;
     bool isBlocking;
     bool canUlti;
-    Characters name;
-    AttackType type;
+    CHARACTERS name;
+    ATTACKTYPE type;
     uint health;
     uint ultiBar;
     uint stunMeter;
@@ -27,26 +27,24 @@ public class CharacterBase : MonoBehaviour
     //Setter(s)
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
 
-
     //This data are always the same,thus been place here
     public void Start()
     {
-        isBlocking = inAir = stunned = false;
-        canJump = true;
-        canUlti = false;
-        direction = new Vector2(0, 0);
         Init();
     }
     //This Data Are to Be Loaded from a DataBase Next Time
     public virtual void Init()
     {
-        name = Characters.PLAYTEST_CHAR;
-        type = AttackType.MID_RANGE;
+        canUlti = isBlocking = inAir = stunned = false;
+        canJump = true;
+        name = CHARACTERS.PLAYTEST_CHAR;
+        type = ATTACKTYPE.MID_RANGE;
         health = 100;
         ultiBar = 0;
         stunMeter = 50;
         moveSpeed = 15;
         jumpForce = 100000;
+        direction = new Vector2(0, 0);
         this.transform.position = new Vector3(0, -2.5f, 0);
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         rigidbody.velocity = new Vector2(0, 0);
@@ -90,7 +88,7 @@ public class CharacterBase : MonoBehaviour
     public virtual void Move() 
     {
         gameObject.transform.position += new Vector3(moveSpeed * direction.x * Time.deltaTime, 0, 0);
-        Debug.Log("Move!");
+        //Debug.Log("Move!");
     }
     public virtual bool JumpCondition()
     {
@@ -100,7 +98,7 @@ public class CharacterBase : MonoBehaviour
     {
         inAir = true;
         rigidbody.AddForce(new Vector2(0, jumpForce * Time.deltaTime));
-        Debug.Log("Jump!");
+        //Debug.Log("Jump!");
     }
     public virtual void Recalculate()
     {
@@ -119,7 +117,19 @@ public class CharacterBase : MonoBehaviour
             inAir = false;
     }
 
-    public virtual void Attack() { }
+    public virtual void Attack() 
+    {
+        switch (type)
+        {
+        case ATTACKTYPE.GLOBAL:
+            break;
+        case ATTACKTYPE.MID_RANGE:
+            break;
+        case ATTACKTYPE.MELEE:
+            break;
+        }
+    }
+
     public virtual void Block() { }
 
     public virtual void CastSkillA() { }
