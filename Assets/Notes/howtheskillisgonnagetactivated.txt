@@ -1,0 +1,3 @@
+character hold the script for the SkillActivator, when detect key press for a skill 
+pass skill to activator. activator check for the number of keys required to proc the 
+skill and sets the random keys. when key is entered correctly, shoots skill.
