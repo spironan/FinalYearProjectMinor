@@ -1616,7 +1616,7 @@ MonoBehaviour:
     m_FontSize: 150
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 0
     m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1624,7 +1624,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 60
+  m_Text: 99
 --- !u!222 &1010575282
 CanvasRenderer:
   m_ObjectHideFlags: 0
