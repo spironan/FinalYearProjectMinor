@@ -11,6 +11,9 @@ public class SkillProfile : MonoBehaviour {
     [HideInInspector]
     public int[] directionToPress = new int[5];
 
+    //[HideInInspector]
+    public bool activateSkill = false;
+
     public void determineKeyDirections()
     {
         for(int i = 0; i < 5; ++i)

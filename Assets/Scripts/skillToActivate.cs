@@ -45,4 +45,15 @@ public class skillToActivate : MonoBehaviour {
             keys[i].transform.GetChild(1).gameObject.SetActive(true);
         }
     }
+
+    public void showPressedCorrect(int keyToShowCorrect)
+    {
+        keys[keyToShowCorrect].transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public void closeBorder()
+    {
+        keyBox.SetActive(false);
+
+    }
 }
