@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - MainMenu
+  - Ground
   layers:
   - Default
   - TransparentFX
