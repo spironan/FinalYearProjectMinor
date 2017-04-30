@@ -6,7 +6,7 @@ public class ProjectileBaseScript : MonoBehaviour
 {
     bool canTimeout = true;
     bool isActive = true;
-    bool canDamage;
+    bool canDamage = true;
     float lifetime;
     float pSpeed;
     uint damage;

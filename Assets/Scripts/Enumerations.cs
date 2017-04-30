@@ -15,6 +15,12 @@ public enum PLAYER
     MAX_PLAYERS,
 };
 
+public enum GAME_MODES
+{
+    LOCAL_PVP,
+    MAX_GAME_MODES
+}
+
 public enum ATTACKTYPE
 {
     GLOBAL,

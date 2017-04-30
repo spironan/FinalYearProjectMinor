@@ -12,6 +12,7 @@ public class PlayerData : MonoBehaviour
     // Player's In Game Data <- Determine which side player is Spawned and used for in game stuff
     PlayerInGameData data;
 
+    public PlayerInGameData GetData() { return data; }
 	// Use this for initialization
 	void Start () 
     {

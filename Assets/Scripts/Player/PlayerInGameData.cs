@@ -6,22 +6,25 @@ public class PlayerInGameData : MonoBehaviour
     uint playerID;
     short wonMatches;
     TEAM playerTeam;
-    CHARACTERS selectedChar;
+    CharacterBase selectedChar;
+
+
+    public CharacterBase GetChar() { return selectedChar; }
 
     //Call Init When Game Starts
-    void Init()
+    public void Init()
     {
         //Generate Blue or Red Team
         //playerTeam = ;
         wonMatches = 0;
     }
 
-    void WinMatch()
+    public void WinMatch()
     {
         wonMatches++;
     }
 
-    short GetMatchWins()
+    public short GetMatchWins()
     {
         return wonMatches;
     }

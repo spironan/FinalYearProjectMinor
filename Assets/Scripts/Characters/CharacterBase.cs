@@ -24,8 +24,21 @@ public class CharacterBase : MonoBehaviour
 
     //Getter(s)
     public bool GetDead() { return isDead; }
+    public uint GetHealth() { return health; }
     //Setter(s)
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
+
+    //Copy Constructor
+    public CharacterBase(CharacterBase copy)
+    {
+        type = copy.type;
+        name = copy.name;
+        health = copy.health;
+        ultiBar = copy.ultiBar;
+        stunMeter = copy.stunMeter;
+        jumpForce = copy.jumpForce;
+        moveSpeed = copy.moveSpeed;
+    }
 
     //This data are always the same,thus been place here
     public void Start()
