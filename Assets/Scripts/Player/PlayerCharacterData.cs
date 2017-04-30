@@ -8,15 +8,17 @@ public class PlayerCharacterData : MonoBehaviour
     uint win, lose;
     uint charPts;
 
+    uint GetWins() { return win; }
+    uint GetLose() { return lose; }
+    uint GetCharPts() { return charPts; }
+
     void UsePoints(uint points)
     {
         if (charPts >= points)
         {
             charPts -= points;
-            Debug.Log("Points Used");
+            Debug.Log("Points Used!");
         }
     }
-    uint GetWins() { return win; }
-    uint GetLose() { return lose; }
 
 }

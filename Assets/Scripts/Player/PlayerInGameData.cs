@@ -8,8 +8,9 @@ public class PlayerInGameData : MonoBehaviour
     TEAM playerTeam;
     CharacterBase selectedChar;
 
-
     public CharacterBase GetChar() { return selectedChar; }
+    public TEAM GetTeam() { return playerTeam; }
+    public void SetTeam(TEAM newPlayerTeam) { playerTeam = newPlayerTeam; }
 
     //Call Init When Game Starts
     public void Init()

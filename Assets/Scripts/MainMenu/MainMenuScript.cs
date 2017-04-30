@@ -18,17 +18,11 @@ public class MainMenuScript : MonoBehaviour
     public GameObject[] main;
     private MainStates currentState;
     bool stateChanged = false;
-    static bool canInteract;
     void Start()
     {
         currentState = MainStates.MainStatesBegin;
         stateChanged = true;
-        canInteract = true;
-    }
-
-    void OnGUI()
-    {
-        
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().ChangeState(GAMESTATE.MAIN_MENU);
     }
 
     void Update()
@@ -41,6 +35,8 @@ public class MainMenuScript : MonoBehaviour
             stateChanged = false;
         }
         Select();
+
+        Debug.Log("Input Axis Y Value : " + Input.GetAxis("leftStick_Y_xBox360"));
     }
 
     private void Select()
@@ -63,7 +59,8 @@ public class MainMenuScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W)
             || Input.GetKeyDown(KeyCode.A)
             || Input.GetKeyDown(KeyCode.UpArrow)
-            || Input.GetAxis("LeftJoyStickVertical") > 0 && canInteract
+            || Input.GetKeyDown(KeyCode.LeftArrow)
+            || Input.GetAxis("leftStick_Y_xBox360") > 0
             )
             MoveUp();
     }
@@ -74,7 +71,6 @@ public class MainMenuScript : MonoBehaviour
             currentState = MainStates.MainStatesBegin;
 
         stateChanged = true;
-        canInteract = false;
     }
     
     public void MoveDownInput()
@@ -82,7 +78,8 @@ public class MainMenuScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S)
             || Input.GetKeyDown(KeyCode.D)
             || Input.GetKeyDown(KeyCode.DownArrow)
-            || Input.GetAxis("LeftJoyStickVertical") < 0 && canInteract
+            || Input.GetKeyDown(KeyCode.RightArrow)
+            || Input.GetAxis("leftStick_Y_xBox360") < 0
             )
             MoveDown();
     }
@@ -93,12 +90,10 @@ public class MainMenuScript : MonoBehaviour
             currentState = MainStates.MainStatesEnd;
 
         stateChanged = true;
-        canInteract = false;
     }
 
     private void ChangeScene(string sceneName)
     {
-
     }
 
 }

@@ -12,12 +12,14 @@ public class PlayerData : MonoBehaviour
     // Player's In Game Data <- Determine which side player is Spawned and used for in game stuff
     PlayerInGameData data;
 
+    //Getter(s)
     public PlayerInGameData GetData() { return data; }
+
+
 	// Use this for initialization
 	void Start () 
     {
 	    //On Initialization should determine player Unique ID and Name
-        DontDestroyOnLoad(this);
 	}
 	
 	// Update is called once per frame

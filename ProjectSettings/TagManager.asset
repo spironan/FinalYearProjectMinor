@@ -7,6 +7,8 @@ TagManager:
   - MainMenu
   - Ground
   - Player
+  - UserInterface
+  - GameManager
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum GAMESTATE
+{ 
+    MAIN_MENU,
+    CHAR_SELECT,
+    IN_GAME,
+    MAX_STATE
+};
+
 public enum TEAM
 {
     RED_TEAM,

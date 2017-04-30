@@ -89,9 +89,13 @@ public class CharacterBase : MonoBehaviour
             direction.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
         //xBox360 Controller Support
-        else if (Input.GetAxis("leftStick_X_xBox360") != 0 || Input.GetAxis("leftStick_Y_xBox360") != 0)
+        else if (Input.GetAxis("leftStick_X_xBox360") != 0 
+            || Input.GetAxis("leftStick_Y_xBox360") < -0.9)
         {
-            direction.Set(Input.GetAxis("leftStick_X_xBox360"), -Input.GetAxis("leftStick_Y_xBox360"));    
+            if (Input.GetAxis("leftStick_Y_xBox360") > -0.9)
+                direction.Set(Input.GetAxis("leftStick_X_xBox360"), 0);    
+            else
+                direction.Set(Input.GetAxis("leftStick_X_xBox360"), 1);
         }
     }
     public virtual bool MoveCondition()

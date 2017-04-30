@@ -6,37 +6,40 @@ public class BattleSceneManager : MonoBehaviour
 {
     //Number of Players
     PlayerData[] players = new PlayerData[(int)PLAYER.MAX_PLAYERS];
+    //PlayerData[] players;
     Vector3[] spawnPositions = new Vector3[(int)PLAYER.MAX_PLAYERS];
     float curBattleTimer;
     float maxBattleTimer;
     GAME_MODES gameMode;
 
-    BattleSceneManager() 
-    {
-
-    }
-
-    public float GetCurrentBattleTimer() { return curBattleTimer; } 
+    public float GetCurrentBattleTimer() { return curBattleTimer; }
 
     public void SetGameMode(GAME_MODES mode)
     {
         switch (mode)
         {
-        case GAME_MODES.LOCAL_PVP :
-                maxBattleTimer = 90.0f;
-            break;
+            case GAME_MODES.LOCAL_PVP:
+                maxBattleTimer = 99.0f;
+                break;
         }
         ResetTimer();
     }
 
+    BattleSceneManager() 
+    {
+    }
+
     void Start()
     {
+        //Temporary Test Code
+        //players = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetPlayers();
         SetGameMode(GAME_MODES.LOCAL_PVP);
     }
 
     //Called Once when a Player Starts
     public void StartBattle()
     {
+        //Add in Animation Time,Counter Countdown Time next time here
         ResetTimer();
         SetPlayerSpawnPoints();
     }
