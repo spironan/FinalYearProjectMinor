@@ -43,6 +43,9 @@ public class CharacterBase : MonoBehaviour
     //This data are always the same,thus been place here
     public void Start()
     {
+        name = CHARACTERS.PLAYTEST_CHAR;
+        type = ATTACKTYPE.MID_RANGE;
+        rigidbody = gameObject.GetComponent<Rigidbody2D>();
         Init();
     }
     //This Data Are to Be Loaded from a DataBase Next Time
@@ -50,8 +53,6 @@ public class CharacterBase : MonoBehaviour
     {
         canUlti = isBlocking = inAir = stunned = false;
         canJump = true;
-        name = CHARACTERS.PLAYTEST_CHAR;
-        type = ATTACKTYPE.MID_RANGE;
         health = 100;
         ultiBar = 0;
         stunMeter = 50;
@@ -59,7 +60,6 @@ public class CharacterBase : MonoBehaviour
         jumpForce = 100000;
         direction = new Vector2(0, 0);
         this.transform.position = new Vector3(0, -2.5f, 0);
-        rigidbody = gameObject.GetComponent<Rigidbody2D>();
         rigidbody.velocity = new Vector2(0, 0);
     }
 
@@ -78,6 +78,8 @@ public class CharacterBase : MonoBehaviour
     //Read the Different Inputs and convert into the same input
     public virtual void ReadControl()
     {
+        //WASD for player 1 and up down left right for player 2
+
         //Standard Keyboard Controls
         if (Input.GetKey(KeyCode.A)
             || Input.GetKey(KeyCode.LeftArrow)
@@ -147,7 +149,10 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    public virtual void Block() { }
+    public virtual void Block() 
+    {
+        isBlocking = true;
+    }
 
     public virtual void CastSkillA() { }
     public virtual void CastSkillB() { }
@@ -166,12 +171,13 @@ public class CharacterBase : MonoBehaviour
     //Go through this function to make character take damage
     public virtual void TakeDamage(uint damage)
     {
+        uint temp = damage;
         if (isBlocking)
         {
             //Temporary damage nerf
-            damage /= 5;
+            temp /= 5;
         }
-        health -= damage;
+        health -= temp;
         if (health <= 0)
             isDead = true;
     }
