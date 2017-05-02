@@ -21,6 +21,11 @@ public class SkillActivator : MonoBehaviour {
     void Start()
     {
         dpadDown = false;
+        Vector2 sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
+        Debug.Log(sprite_size);
+        Vector2 local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        Debug.Log(local_sprite_size);
+        activator.gameObject.transform.position = new Vector2(0, transform.position.y + local_sprite_size.y + 0.1f);
     }
 
     // Update is called once per frame
@@ -178,9 +183,14 @@ public class SkillActivator : MonoBehaviour {
             if (Input.GetButtonDown("L1_button_xBox360") && player_number == 1
                     || Input.GetButtonDown("L1_button_xBox360_player2") && player_number == 2)
             {
-                if (currentSkillProfile.keysToActivate == keyIterator)
+                if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null)
                 {
-                    currentSkillProfile.activateSkill = true;
+                    //currentSkillProfile.activateSkill = true;// activates the skills
+                    GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+                    temp.GetComponent<SkillProfile>().player_ID = player_number;
+                    temp.GetComponent<SkillProfile>().owner = gameObject;
+
+                    temp.GetComponent<SkillProfile>().direction = gameObject.GetComponent<CharacterBase>().GetDirection();
                     keyIterator = 0;
                     dpadDown = false;
                     currentSkillProfile = null;
