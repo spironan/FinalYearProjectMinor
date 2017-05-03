@@ -185,10 +185,12 @@ public class SkillActivator : MonoBehaviour {
             {
                 if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null)
                 {
-                    //currentSkillProfile.activateSkill = true;// activates the skills
+                    currentSkillProfile.activateSkill = true;// activates the skills
                     GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+                    temp.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<CharacterBase>().GetDirection(), 1);
                     temp.GetComponent<SkillProfile>().player_ID = player_number;
                     temp.GetComponent<SkillProfile>().owner = gameObject;
+                    temp.GetComponent<SkillProfile>().findEnemy();
 
                     temp.GetComponent<SkillProfile>().direction = gameObject.GetComponent<CharacterBase>().GetDirection();
                     keyIterator = 0;
