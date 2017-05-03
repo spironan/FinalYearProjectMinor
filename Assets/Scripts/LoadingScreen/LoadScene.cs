@@ -7,13 +7,6 @@ public class LoadScene : MonoBehaviour
 {
     public void LoadSceneByName(string sceneName)
     {
-        //if(SceneManager.)
-        //if (num < 0 || num >= SceneManager.sceneCountInBuildSettings)
-        //{
-        //    Debug.Log("Can't load scene num " + num + ", SceneManager only has " + SceneManager.sceneCountInBuildSettings + "scenes in BuildSettings!");
-        //    return;
-        //}
-
         LoadingScreenManager.LoadScene(sceneName);
     }
 
@@ -27,7 +20,7 @@ public class LoadScene : MonoBehaviour
         //PlayerDataScript.SavePlayerData(Int64.Parse(PlayerManager.GetInstance().GetCurrentPlayer().GetUserID()));
 
         //LoopThrough All DataBase and Drop them all
-        //DatabaseSystem.GetInstance().Clear();
+        DatabaseSystem.GetInstance().Clear();
 
         //Do Check to Quit correctly on Android
         Debug.Log("Quitting Successful");

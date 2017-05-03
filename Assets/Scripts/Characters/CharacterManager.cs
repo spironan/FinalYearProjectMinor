@@ -14,9 +14,28 @@ public class CharacterManager : Singleton<CharacterManager>
         characterList.Clear();
     }
 
-    public void InitCharacters()
+    public void InitCharacters(string database, string tableName)
     {
-        //Create All Unique Characters Data Here Through Database through cloud server,Should Only Be Ran Once On Initalization
+        //Create All Unique Characters Data Here through local database server,Should Only Be Ran Once On Initalization
+        Database dataBase = DatabaseSystem.GetInstance().GetDataBase(database);
+        dataBase.dbConnection.Open();
+        dataBase.dbCmd = dataBase.dbConnection.CreateCommand();
+        string sqlQuery = "SELECT * FROM " + tableName;
+        dataBase.dbCmd.CommandText = sqlQuery;
+        dataBase.reader = dataBase.dbCmd.ExecuteReader();
+        while (dataBase.reader.Read())
+        {
+            string name = dataBase.reader.GetString(1);
+            if (!HasCharacter(name))
+            {
+                //characterList.Add(dataBase.reader.GetInt32(0),
+                //    new CharacterBase(name, dataBase.reader.GetInt32(2),
+                //                 dataBase.reader.GetInt32(3), dataBase.reader.GetInt32(4), dataBase.reader.GetString(5),
+                //                 dataBase.reader.GetString(6), dataBase.reader.GetString(7)));
+            }
+        }
+        dataBase.SoftReset();
+
     }
 
     public CharacterBase GetCharacterByID(int charID)
@@ -65,5 +84,13 @@ public class CharacterManager : Singleton<CharacterManager>
         return characterList.ContainsKey(charName);
     }
 
+    public bool HasCharacter(string charName)
+    { 
+        CHARACTERS go = (CHARACTERS)System.Enum.Parse(typeof(CHARACTERS), charName);
+        return characterList.ContainsKey(go);
+    }
+    
 
 }
+
+    

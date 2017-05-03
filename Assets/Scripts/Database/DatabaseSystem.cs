@@ -17,8 +17,8 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
     public void InitDataBase(string dataBaseName, string dataBasePath)
     {
 #if UNITY_ANDROID
-        //string actualDBFile = Application.persistentDataPath + "/" + dataBasePath;
-        string actualDBFile = Application.persistentDataPath + "/StudioProject4DataBase.db";
+        string actualDBFile = Application.persistentDataPath + "/" + dataBasePath;
+        //string actualDBFile = Application.persistentDataPath + "/StudioProject4DataBase.db";
         //Debug.Log(actualDBFile);
         string filePath = "URI=file:" + actualDBFile;
         //Application.persistentDataPath
