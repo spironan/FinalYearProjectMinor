@@ -8,6 +8,11 @@ public class SkillProfile : MonoBehaviour {
     public int player_ID;
     public float damagePerSecond;
 
+    //[HideInInspector]
+    public GameObject owner;
+
+    public Vector2 direction;
+
     [HideInInspector]
     public int[] directionToPress = new int[5];
 

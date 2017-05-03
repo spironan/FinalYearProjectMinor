@@ -25,6 +25,7 @@ public class CharacterBase : MonoBehaviour
     //Getter(s)
     public bool GetDead() { return isDead; }
     public uint GetHealth() { return health; }
+    public Vector2 GetDirection() { return direction; }
     //Setter(s)
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
 
