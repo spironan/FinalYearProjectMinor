@@ -20,12 +20,14 @@ public class CharacterBase : MonoBehaviour
     uint moveSpeed;
     Vector2 direction;
     Image characterArt;
+    Image characterIcon;
     Rigidbody2D rigidbody;
 
     //Getter(s)
     public bool GetDead() { return isDead; }
     public uint GetHealth() { return health; }
     public Vector2 GetDirection() { return direction; }
+    public Image GetIcon() { return characterIcon; }
     //Setter(s)
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
 
