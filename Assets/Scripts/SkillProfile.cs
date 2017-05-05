@@ -10,13 +10,15 @@ public class SkillProfile : MonoBehaviour {
     public float lifetime = 5;
     public float pSpeed = 20;
 
-    public BoxCollider2D collider;
+    public CircleCollider2D circleCollider;
 
     //[HideInInspector]
     public GameObject owner;
     public GameObject enemy;
 
     public Vector2 direction = new Vector2(0,0);
+    
+
 
     [HideInInspector]
     public int[] directionToPress = new int[5];
@@ -26,6 +28,12 @@ public class SkillProfile : MonoBehaviour {
 
 
     private CharacterBase[] listOfPlayers;
+
+    protected RaycastHit2D[] collision;
+    protected Vector2 position;
+    protected Vector2 sprite_size;
+    protected Vector2 local_sprite_size;
+
 
     public virtual void determineKeyDirections()//virtual, so if dont want random spawn, we can set it ourselves
     {
@@ -46,7 +54,14 @@ public class SkillProfile : MonoBehaviour {
 
     public virtual void Start()
     {
-        
+        sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
+
+        local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+    }
+
+    public virtual void Update()
+    {
+
     }
 
     public virtual void findEnemy()
@@ -60,8 +75,41 @@ public class SkillProfile : MonoBehaviour {
             }
         }
     }
+
+    //public virtual void OnCollisionStay2D(Collision2D collision)
+    //{
+    //    Debug.Log("weee");
+    //    if (collision.gameObject != owner && collision.gameObject.tag == "Player")
+    //    {
+    //        //do damage
+    //        Debug.Log("hit");
+    //    }
+    //}
+    public virtual bool checkForCollision()
+    {
+        collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x/2, Vector2.zero, 0);
+
+        foreach (RaycastHit2D temp in collision)
+        {
+            if (temp.collider != null)
+            {
+                if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
+                {
+                    Debug.Log("hit");
+                    //gameObject.SetActive(false);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public virtual void offSetSpawn(Vector2 dir, float offset)
     {
         //Debug.Log("hi");
+    }
+
+    public virtual float distToEnemy()
+    {
+        return (enemy.transform.position - transform.position).magnitude;
     }
 }

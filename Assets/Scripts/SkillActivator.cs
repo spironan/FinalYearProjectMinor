@@ -26,6 +26,9 @@ public class SkillActivator : MonoBehaviour {
         Vector2 local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
         Debug.Log(local_sprite_size);
         activator.gameObject.transform.position = new Vector2(0, transform.position.y + local_sprite_size.y + 0.1f);
+        //Debug.Log(Input.GetJoystickNames()[1]);  
+        
+          
     }
 
     // Update is called once per frame

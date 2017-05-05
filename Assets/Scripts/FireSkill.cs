@@ -2,27 +2,48 @@
 using System.Collections;
 
 public class FireSkill : SkillProfile {
+    
+    float checkEveryInterval_lifeTime = 0.0f;
+    
+    bool runOnce = false;
 
-    bool runOnce_spawnLoc = false;
-	
-	// Update is called once per frame
-	void Update () {
-        if(!runOnce_spawnLoc)
-        {
+    
 
-        }
-	    if(activateSkill)
+    // Update is called once per frame
+    public override void Update () {
+        checkEveryInterval_lifeTime += Time.deltaTime;
+        if (checkEveryInterval_lifeTime > lifetime)
         {
-            //#need dir T_T
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+            //send this object to despawn
+            checkEveryInterval_lifeTime = 0;
         }
+        if(distToEnemy() < 1.0f)
+        {
+            if(checkForCollision())
+            {
+                
+                gameObject.SetActive(false);
+                Destroy(gameObject);
+                //send this object to despawn
+            }
+        }
+
+        
+        if (!runOnce)
+        {
+            direction = (enemy.transform.position - owner.transform.position).normalized;
+            runOnce = true;
+            position = gameObject.transform.position;
+        }
+	    
+        position.x += direction.x * pSpeed * Time.deltaTime;
+        gameObject.transform.position = position;
+        
 	}
     public override void offSetSpawn(Vector2 dir, float offset)
     {
-        //Debug.Log("bye");
-        //the direction will be 0 when not moving :|
-        //if (dir.x > 0)
-        //    gameObject.transform.position = new Vector2(gameObject.transform.position.x + offset, gameObject.transform.position.y);
-        //else if(dir.x < 0)
-        //    gameObject.transform.position = new Vector2(gameObject.transform.position.x + offset, gameObject.transform.position.y);
+        
     }
 }
