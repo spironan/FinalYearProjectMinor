@@ -10,6 +10,8 @@ public class SkillActivator : MonoBehaviour {
 
     public skillToActivate activator;
 
+    public PlayerControllerManager playerControllerManager;
+
     public int player_number;
 
     private SkillProfile currentSkillProfile;
@@ -34,8 +36,7 @@ public class SkillActivator : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetButtonDown("X_button_xBox360") && player_number == 1)
-            || (Input.GetButtonDown("X_button_xBox360_player2") && player_number == 2))
+        if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForKeyPress(BUTTON_INPUT.X, player_number) )
         {
             Debug.Log(5);
             currentSkillProfile = skill1.GetComponent<SkillProfile>();
@@ -46,8 +47,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 1
             activator.generate_keys(skill1);
         }
-        else if (Input.GetButtonDown("Y_button_xBox360") && player_number == 1
-            || Input.GetButtonDown("Y_button_xBox360_player2") && player_number == 2)
+        else if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForKeyPress(BUTTON_INPUT.Y, player_number))
         {
             currentSkillProfile = skill2.GetComponent<SkillProfile>();
             keyIterator = 0;
@@ -57,8 +57,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 2
             activator.generate_keys(skill2);
         }
-        else if (Input.GetButtonDown("A_button_xBox360") && player_number == 1
-            || Input.GetButtonDown("A_button_xBox360_player2") && player_number == 2)
+        else if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForKeyPress(BUTTON_INPUT.A, player_number))
         {
 
             currentSkillProfile = skill4.GetComponent<SkillProfile>();
@@ -69,8 +68,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 4
             activator.generate_keys(skill4);
         }
-        else if (Input.GetButtonDown("B_button_xBox360") && player_number == 1
-            || Input.GetButtonDown("B_button_xBox360_player2") && player_number == 2)
+        else if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForKeyPress(BUTTON_INPUT.B, player_number))
         {
             
             currentSkillProfile = skill3.GetComponent<SkillProfile>();
@@ -93,8 +91,8 @@ public class SkillActivator : MonoBehaviour {
             if (keyIterator != currentSkillProfile.keysToActivate)
             {
                 int keyValue = -1;
-                if (Input.GetAxis("DPad_Y_xBox360") > 0 && player_number == 1
-                    || Input.GetAxis("DPad_Y_xBox360_player2") > 0 && player_number == 2)//up?
+                
+                if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT.DPAD_Y,player_number) > 0)//up?
                 {
                     keyValue = 0;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -112,8 +110,7 @@ public class SkillActivator : MonoBehaviour {
                     }
 
                 }
-                else if (Input.GetAxis("DPad_Y_xBox360") < 0 && player_number == 1
-                    || Input.GetAxis("DPad_Y_xBox360_player2") < 0 && player_number == 2)//down?
+                else if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT.DPAD_Y, player_number) < 0)//down?
                 {
                     keyValue = 2;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -130,8 +127,7 @@ public class SkillActivator : MonoBehaviour {
                         keyIterator = 0;
                     }
                 }
-                else if (Input.GetAxis("DPad_X_xBox360") > 0 && player_number == 1
-                    || Input.GetAxis("DPad_X_xBox360_player2") > 0 && player_number == 2)//right
+                else if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT.DPAD_X, player_number) > 0)//right
                 {
                     keyValue = 3;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -148,8 +144,7 @@ public class SkillActivator : MonoBehaviour {
                         keyIterator = 0;
                     }
                 }
-                else if (Input.GetAxis("DPad_X_xBox360") < 0 && player_number == 1
-                    || Input.GetAxis("DPad_X_xBox360_player2") < 0 && player_number == 2)//left
+                else if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT.DPAD_X, player_number) < 0)//left
                 {
                     keyValue = 1;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]

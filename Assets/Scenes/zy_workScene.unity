@@ -113,7 +113,7 @@ Transform:
   m_LocalScale: {x: 5.26, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!212 &934869
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -216,6 +216,49 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &7531517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 7531519}
+  - 114: {fileID: 7531518}
+  m_Layer: 0
+  m_Name: ControllerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &7531518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 7531517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3675bbe202cc14e4e87c6bcd7c4901a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XBox360: {fileID: 203439142}
+  PS4: {fileID: 1571472307}
+--- !u!4 &7531519
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 7531517}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1571472308}
+  - {fileID: 203439143}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!1 &31372257
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,6 +462,45 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &203439141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 203439143}
+  - 114: {fileID: 203439142}
+  m_Layer: 0
+  m_Name: XBOX360
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &203439142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 203439141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a7cc8c3b712674cb2a71e84cf3a262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &203439143
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 203439141}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7531519}
+  m_RootOrder: 1
 --- !u!1 &265414981
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +548,7 @@ MonoBehaviour:
   skill3: {fileID: 0}
   skill4: {fileID: 0}
   activator: {fileID: 917549143}
+  playerControllerManager: {fileID: 7531518}
   player_number: 1
 --- !u!212 &265414984
 SpriteRenderer:
@@ -509,7 +592,7 @@ Transform:
   m_Children:
   - {fileID: 917549142}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
 --- !u!61 &265414986
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -647,7 +730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &388661230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,6 +758,7 @@ MonoBehaviour:
   skill3: {fileID: 0}
   skill4: {fileID: 0}
   activator: {fileID: 1807847850}
+  playerControllerManager: {fileID: 7531518}
   player_number: 2
 --- !u!212 &388661232
 SpriteRenderer:
@@ -718,7 +802,7 @@ Transform:
   m_Children:
   - {fileID: 1807847851}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!61 &388661234
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -940,7 +1024,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &784973446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,7 +1098,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &794894977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,7 +2025,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1 &1167914492
 GameObject:
   m_ObjectHideFlags: 0
@@ -2353,6 +2437,45 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &1571472306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1571472308}
+  - 114: {fileID: 1571472307}
+  m_Layer: 0
+  m_Name: PS4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1571472307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1571472306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908e4af1ca9732d4c8b9c849c75bf853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1571472308
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1571472306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7531519}
+  m_RootOrder: 0
 --- !u!1 &1629661862
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,7 +2546,7 @@ Transform:
   m_Children:
   - {fileID: 908950379}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &1726853170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2619,7 +2742,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &1981662978
 GameObject:
   m_ObjectHideFlags: 0
