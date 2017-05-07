@@ -25,12 +25,22 @@ public class PlayerControllerManager : MonoBehaviour {
         int index = 0;
         foreach (string joystick in Input.GetJoystickNames())
         {
-            if (joystick.Contains("360"))
+            if (joystick.Contains("360") || joystick.Contains("GamepadF310"))
                 orderOfController[index] = XBox360;
             else if (joystick.Contains("Wireless Controller"))
                 orderOfController[index] = PS4;
 
             index += 1;
         }
+    }
+
+    public bool getIsKeyDown(BUTTON_INPUT input, int playerNumber)
+    {
+        return orderOfController[controllerAssigned[playerNumber]].CheckForKeyPress(input, playerNumber);
+    } 
+
+    public float getValueFromAxis(JOYSTICK_AXIS_INPUT input, int playerNumber)
+    {
+        return orderOfController[controllerAssigned[playerNumber]].CheckForJoyStickAxis(input, playerNumber);
     }
 }
