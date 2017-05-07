@@ -3,13 +3,14 @@ using System.Collections;
 
 public class ControllerInput : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    //protected int controllerNumber;
+
+    public virtual bool CheckForKeyPress(BUTTON_INPUT keyNumber, int controllerNumber)
+    {
+        return false;
+    }
+    public virtual float CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, int controllerNumber)
+    {
+        return 0;
+    }
 }

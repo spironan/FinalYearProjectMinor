@@ -43,3 +43,31 @@ public enum CHARACTERS
     PLAYTEST_CHAR_2,
     MAX_CHARACTER
 };
+
+public enum BUTTON_INPUT
+{
+    A = 0,
+    B,
+    X,
+    Y,
+    L1,
+    R1,
+    BACK,
+    START,
+    L3,
+    R3,
+    TOTAL
+};
+
+public enum JOYSTICK_AXIS_INPUT
+{
+    L2 = 0,
+    R2,
+    L3_X,
+    L3_Y,
+    R3_X,
+    R3_Y,
+    DPAD_X,
+    DPAD_Y,
+    TOTAL
+};

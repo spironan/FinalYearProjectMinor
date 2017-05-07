@@ -10,9 +10,12 @@ public class SkillActivator : MonoBehaviour {
 
     public skillToActivate activator;
 
+    public PlayerControllerManager playerControllerManager;
+
     public int player_number;
 
     private SkillProfile currentSkillProfile;
+    private GameObject skill_gameObject;
     private int keyIterator;
 
     private bool dpadDown;
@@ -22,34 +25,38 @@ public class SkillActivator : MonoBehaviour {
     {
         dpadDown = false;
         Vector2 sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
-        Debug.Log(sprite_size);
+        //Debug.Log(sprite_size);
         Vector2 local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
-        Debug.Log(local_sprite_size);
+        //Debug.Log(local_sprite_size);
+        if(player_number == 1)
         activator.gameObject.transform.position = new Vector2(0, transform.position.y + local_sprite_size.y + 0.1f);
+        else
+            activator.gameObject.transform.position = new Vector2(0, transform.position.y - local_sprite_size.y - 0.1f);
         //Debug.Log(Input.GetJoystickNames()[1]);  
-        
-          
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetButtonDown("X_button_xBox360") && player_number == 1)
-            || (Input.GetButtonDown("X_button_xBox360_player2") && player_number == 2))
+        //Debug.Log(player_number);
+        if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.X, player_number) )
         {
             Debug.Log(5);
             currentSkillProfile = skill1.GetComponent<SkillProfile>();
+            createNewSkillObject();
             keyIterator = 0;
             //make sure the skill knows the owner first
             currentSkillProfile.player_ID = player_number;
             //pass skill1 to activator
             //skill 1
-            activator.generate_keys(skill1);
+            activator.generate_keys(currentSkillProfile.gameObject);
         }
-        else if (Input.GetButtonDown("Y_button_xBox360") && player_number == 1
-            || Input.GetButtonDown("Y_button_xBox360_player2") && player_number == 2)
+        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.Y, player_number))
         {
             currentSkillProfile = skill2.GetComponent<SkillProfile>();
+            createNewSkillObject();
             keyIterator = 0;
             //make sure the skill knows the owner first
             currentSkillProfile.player_ID = player_number;
@@ -57,11 +64,11 @@ public class SkillActivator : MonoBehaviour {
             //skill 2
             activator.generate_keys(skill2);
         }
-        else if (Input.GetButtonDown("A_button_xBox360") && player_number == 1
-            || Input.GetButtonDown("A_button_xBox360_player2") && player_number == 2)
+        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.A, player_number))
         {
 
             currentSkillProfile = skill4.GetComponent<SkillProfile>();
+            createNewSkillObject();
             keyIterator = 0;
             //make sure the skill knows the owner first
             currentSkillProfile.player_ID = player_number;
@@ -69,11 +76,11 @@ public class SkillActivator : MonoBehaviour {
             //skill 4
             activator.generate_keys(skill4);
         }
-        else if (Input.GetButtonDown("B_button_xBox360") && player_number == 1
-            || Input.GetButtonDown("B_button_xBox360_player2") && player_number == 2)
+        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.B, player_number))
         {
             
             currentSkillProfile = skill3.GetComponent<SkillProfile>();
+            createNewSkillObject();
             keyIterator = 0;
             //make sure the skill knows the owner first
             currentSkillProfile.player_ID = player_number;
@@ -93,13 +100,15 @@ public class SkillActivator : MonoBehaviour {
             if (keyIterator != currentSkillProfile.keysToActivate)
             {
                 int keyValue = -1;
-                if (Input.GetAxis("DPad_Y_xBox360") > 0 && player_number == 1
-                    || Input.GetAxis("DPad_Y_xBox360_player2") > 0 && player_number == 2)//up?
+                
+                if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_Y,player_number) > 0)//up?
                 {
+                    
                     keyValue = 0;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
                     && !dpadDown)//doing this so it wont keep taking same input IMSORRY IF THIS IS HARDCODE T^T
                     {
+                        //Debug.Log(player_number);
                         activator.showPressedCorrect(keyIterator);
                         keyIterator += 1;
                         dpadDown = true;
@@ -108,12 +117,12 @@ public class SkillActivator : MonoBehaviour {
                     && !dpadDown)
                     {
                         activator.closeBorder();
+                        destroyInactiveSkill();
                         keyIterator = 0;
                     }
 
                 }
-                else if (Input.GetAxis("DPad_Y_xBox360") < 0 && player_number == 1
-                    || Input.GetAxis("DPad_Y_xBox360_player2") < 0 && player_number == 2)//down?
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_Y, player_number) < 0)//down?
                 {
                     keyValue = 2;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -127,11 +136,11 @@ public class SkillActivator : MonoBehaviour {
                     && !dpadDown)
                     {
                         activator.closeBorder();
+                        destroyInactiveSkill();
                         keyIterator = 0;
                     }
                 }
-                else if (Input.GetAxis("DPad_X_xBox360") > 0 && player_number == 1
-                    || Input.GetAxis("DPad_X_xBox360_player2") > 0 && player_number == 2)//right
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_X, player_number) > 0)//right
                 {
                     keyValue = 3;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -145,11 +154,11 @@ public class SkillActivator : MonoBehaviour {
                     && !dpadDown)
                     {
                         activator.closeBorder();
+                        destroyInactiveSkill();
                         keyIterator = 0;
                     }
                 }
-                else if (Input.GetAxis("DPad_X_xBox360") < 0 && player_number == 1
-                    || Input.GetAxis("DPad_X_xBox360_player2") < 0 && player_number == 2)//left
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_X, player_number) < 0)//left
                 {
                     keyValue = 1;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -163,6 +172,7 @@ public class SkillActivator : MonoBehaviour {
                     && !dpadDown)
                     {
                         activator.closeBorder();
+                        destroyInactiveSkill();
                         keyIterator = 0;
                         //dpadDown = false;
                     }
@@ -183,19 +193,20 @@ public class SkillActivator : MonoBehaviour {
             //}
             //Debug.Log(Input.GetAxis("DPad_Y_xBox360"));
 
-            if (Input.GetButtonDown("L1_button_xBox360") && player_number == 1
-                    || Input.GetButtonDown("L1_button_xBox360_player2") && player_number == 2)
+            if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForKeyPress(BUTTON_INPUT.L1, player_number))
             {
                 if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null)
                 {
                     currentSkillProfile.activateSkill = true;// activates the skills
-                    GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
-                    temp.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<CharacterBase>().GetDirection(), 1);
-                    temp.GetComponent<SkillProfile>().player_ID = player_number;
-                    temp.GetComponent<SkillProfile>().owner = gameObject;
-                    temp.GetComponent<SkillProfile>().findEnemy();
+                                                             // GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+                    skill_gameObject.SetActive(true);
+                    skill_gameObject.transform.position = transform.position;
+                    skill_gameObject.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<CharacterBase>().GetDirection(), 1);
+                    skill_gameObject.GetComponent<SkillProfile>().player_ID = player_number;
+                    skill_gameObject.GetComponent<SkillProfile>().owner = gameObject;
+                    skill_gameObject.GetComponent<SkillProfile>().findEnemy();
 
-                    temp.GetComponent<SkillProfile>().direction = gameObject.GetComponent<CharacterBase>().GetDirection();
+                    skill_gameObject.GetComponent<SkillProfile>().direction = gameObject.GetComponent<CharacterBase>().GetDirection();
                     keyIterator = 0;
                     dpadDown = false;
                     currentSkillProfile = null;
@@ -207,4 +218,21 @@ public class SkillActivator : MonoBehaviour {
     }
 
 
+    void createNewSkillObject()
+    {
+        if(skill_gameObject != null)
+        {
+            if (skill_gameObject.activeSelf)
+                skill_gameObject = null;
+            else
+                Destroy(skill_gameObject);
+        }
+        skill_gameObject = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        currentSkillProfile = skill_gameObject.GetComponent<SkillProfile>();
+    }
+
+    void destroyInactiveSkill()
+    {
+        Destroy(skill_gameObject);
+    }
 }
