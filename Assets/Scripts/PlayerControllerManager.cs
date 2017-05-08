@@ -39,7 +39,7 @@ public class PlayerControllerManager : MonoBehaviour {
         return orderOfController[controllerAssigned[playerNumber]].CheckForKeyPress(input, playerNumber);
     } 
 
-    public float getValueFromAxis(JOYSTICK_AXIS_INPUT input, int playerNumber)
+    public FloatAndBool getValueFromAxis(JOYSTICK_AXIS_INPUT input, int playerNumber)
     {
         return orderOfController[controllerAssigned[playerNumber]].CheckForJoyStickAxis(input, playerNumber);
     }
