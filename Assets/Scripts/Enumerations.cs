@@ -29,6 +29,18 @@ public enum GAME_MODES
     MAX_GAME_MODES
 }
 
+public enum PLAYMAPS
+{
+    STANDARD = 0,
+    RANDOM,
+    EXTRA,
+    TEST_MAP_1,
+    TEST_MAP_2,
+    TEST_MAP_3,
+    TEST_MAP_4,
+    MAX_MAP
+}
+
 public enum ATTACKTYPE
 {
     GLOBAL,

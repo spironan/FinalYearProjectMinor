@@ -10,6 +10,7 @@ TagManager:
   - UserInterface
   - GameManager
   - CharacterSlot
+  - Canvas
   layers:
   - Default
   - TransparentFX
