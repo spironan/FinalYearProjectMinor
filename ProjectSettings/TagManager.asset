@@ -10,6 +10,9 @@ TagManager:
   - UserInterface
   - GameManager
   - CharacterSlot
+  - SpellSkill
+  - SpecialSkill
+  - PhysicalSkill
   layers:
   - Default
   - TransparentFX
@@ -46,4 +49,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: test
+    uniqueID: 1131164135
     locked: 0

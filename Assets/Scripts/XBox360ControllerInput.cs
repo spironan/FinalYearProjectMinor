@@ -186,7 +186,7 @@ public class XBox360ControllerInput : ControllerInput
                     floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), false);
                     break;
                 case JOYSTICK_AXIS_INPUT.DPAD_UP:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), Input.GetAxis("DPad_Y_xBox360_player2_player2") > 0);
+                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), Input.GetAxis("DPad_Y_xBox360_player2") > 0);
                     break;
                 case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
                     floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), Input.GetAxis("DPad_Y_xBox360_player2") < 0);
