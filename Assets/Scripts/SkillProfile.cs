@@ -7,8 +7,9 @@ public class SkillProfile : MonoBehaviour {
     public int keysToActivate;
     public int player_ID;
     public float damagePerSecond;
-    public float lifetime = 5;
-    public float pSpeed = 20;
+    public float lifetime;
+    public float pSpeed;
+    public float gravity;
 
     public CircleCollider2D circleCollider;
 
@@ -55,7 +56,7 @@ public class SkillProfile : MonoBehaviour {
     public virtual void Start()
     {
         sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
-
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>());
         local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
     }
 
@@ -87,6 +88,7 @@ public class SkillProfile : MonoBehaviour {
     //}
     public virtual bool checkForCollision()
     {
+        //Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(),owner.GetComponent<Collider2D>());
         collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x/2, Vector2.zero, 0);
 
         foreach (RaycastHit2D temp in collision)
@@ -111,5 +113,10 @@ public class SkillProfile : MonoBehaviour {
     public virtual float distToEnemy()
     {
         return (enemy.transform.position - transform.position).magnitude;
+    }
+
+    public virtual void reset()
+    {
+
     }
 }

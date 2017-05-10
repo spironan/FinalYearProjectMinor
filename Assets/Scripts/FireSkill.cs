@@ -46,4 +46,10 @@ public class FireSkill : SkillProfile {
     {
         
     }
+
+    public override void reset()
+    {
+        runOnce = false;
+        checkEveryInterval_lifeTime = 0;
+    }
 }

@@ -62,7 +62,7 @@ public class SkillActivator : MonoBehaviour {
             currentSkillProfile.player_ID = player_number;
             //pass skill2 to activator
             //skill 2
-            activator.generate_keys(skill2);
+            activator.generate_keys(currentSkillProfile.gameObject);
         }
         else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.A, player_number))
         {
@@ -74,7 +74,7 @@ public class SkillActivator : MonoBehaviour {
             currentSkillProfile.player_ID = player_number;
             //pass skill4 to activator
             //skill 4
-            activator.generate_keys(skill4);
+            activator.generate_keys(currentSkillProfile.gameObject);
         }
         else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.B, player_number))
         {
@@ -86,7 +86,7 @@ public class SkillActivator : MonoBehaviour {
             currentSkillProfile.player_ID = player_number;
             //pass skill3 to activator
             //skill 3
-            activator.generate_keys(skill3);
+            activator.generate_keys(currentSkillProfile.gameObject);
         }
 
 
@@ -101,7 +101,7 @@ public class SkillActivator : MonoBehaviour {
             {
                 int keyValue = -1;
                 
-                if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_Y,player_number) > 0)//up?
+                if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_UP,player_number).getBool())//up?
                 {
                     
                     keyValue = 0;
@@ -122,7 +122,7 @@ public class SkillActivator : MonoBehaviour {
                     }
 
                 }
-                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_Y, player_number) < 0)//down?
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_DOWN, player_number).getBool())//down?
                 {
                     keyValue = 2;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -140,7 +140,7 @@ public class SkillActivator : MonoBehaviour {
                         keyIterator = 0;
                     }
                 }
-                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_X, player_number) > 0)//right
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_RIGHT, player_number).getBool())//right
                 {
                     keyValue = 3;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -158,7 +158,7 @@ public class SkillActivator : MonoBehaviour {
                         keyIterator = 0;
                     }
                 }
-                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_X, player_number) < 0)//left
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_LEFT, player_number).getBool())//left
                 {
                     keyValue = 1;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
