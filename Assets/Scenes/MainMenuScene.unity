@@ -407,7 +407,7 @@ GameObject:
   - 4: {fileID: 786817439}
   - 114: {fileID: 786817438}
   m_Layer: 0
-  m_Name: Holder
+  m_Name: GameManager
   m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

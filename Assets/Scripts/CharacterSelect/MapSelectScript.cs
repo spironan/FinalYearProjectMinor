@@ -100,7 +100,7 @@ public class MapSelectScript : MonoBehaviour
         //}
 	}
 
-    void PickSelectedMap()
+    public void PickSelectedMap()
     {
         mapPicked = true;
     }
@@ -142,36 +142,36 @@ public class MapSelectScript : MonoBehaviour
         }
     }
 
-    void RotateByFixedAmount(float amount)
-    {
-        float circleProgress = 0.0f;
-        int index = 0;
-        for (int i = 0; i < totalMaps; ++i)
-        {
-            circleProgress = (i * 1.0f) / (totalMaps * 1.0f);//0 - 1
-            float angle = circleProgress * Mathf.PI * 2;
-            float x = Mathf.Sin(angle) * radius;
-            float z = Mathf.Cos(angle) * radius;
-            Vector3 pos = new Vector3(x, 0, -z) + centrePos;
+    //void RotateByFixedAmount(float amount)
+    //{
+    //    float circleProgress = 0.0f;
+    //    int index = 0;
+    //    for (int i = 0; i < totalMaps; ++i)
+    //    {
+    //        circleProgress = (i * 1.0f) / (totalMaps * 1.0f);//0 - 1
+    //        float angle = circleProgress * Mathf.PI * 2;
+    //        float x = Mathf.Sin(angle) * radius;
+    //        float z = Mathf.Cos(angle) * radius;
+    //        Vector3 pos = new Vector3(x, 0, -z) + centrePos;
 
-            index = currIndex + i;
-            if (index >= totalMaps)
-                index -= totalMaps;
+    //        index = currIndex + i;
+    //        if (index >= totalMaps)
+    //            index -= totalMaps;
 
-            maps[index].transform.localPosition = pos;
+    //        maps[index].transform.localPosition = pos;
 
-            //if (amount > 0)
-            //    maps[index].GetComponent<MapSlot>().MoveLeft();
-            //else
-            //    maps[index].GetComponent<MapSlot>().MoveRight();
+    //        //if (amount > 0)
+    //        //    maps[index].GetComponent<MapSlot>().MoveLeft();
+    //        //else
+    //        //    maps[index].GetComponent<MapSlot>().MoveRight();
 
-            //if (maps[index].transform.localPosition.z >= cutOffZ)
-            //    maps[index].SetActive(false);
-            //else
-            //    maps[index].SetActive(true);
-        }
-        maps[currIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
-    }
+    //        //if (maps[index].transform.localPosition.z >= cutOffZ)
+    //        //    maps[index].SetActive(false);
+    //        //else
+    //        //    maps[index].SetActive(true);
+    //    }
+    //    maps[currIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
+    //}
 
     void IncreaseIndex()
     {

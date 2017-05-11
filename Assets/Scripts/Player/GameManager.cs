@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     //Getter(s)
     public PlayerData[] GetPlayers() { return Players; }
     public PlayerData GetPlayer(PLAYER playerNo) { return Players[(int)playerNo]; }
+    public PlayerData GetPlayer(int playerNo) { return Players[playerNo]; }
     public GAMESTATE GetGameState() { return currState; }
     
     void Awake()
