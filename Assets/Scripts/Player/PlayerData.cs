@@ -23,11 +23,6 @@ public class PlayerData : MonoBehaviour
         return controller;
     }
 
-    public bool GetAction(BUTTON_INPUT action)
-    {
-        return controller.getIsKeyDown(action, (int)playerID);
-    }
-
     //if i make a player holds what kind of button is being pressed, am i able to utilize through the fact that this is a player
     //holds all the virtual actions in bool of bitset
     //Gameobject find gamemanager 
@@ -40,6 +35,8 @@ public class PlayerData : MonoBehaviour
     public void SetPlayerID(PLAYER id)
     {
         playerID = id;
+        controller = GetComponent<PlayerControllerManager>();
+        controller.init(playerID);
     }
 
     public PLAYER GetPlayerID()
@@ -90,13 +87,14 @@ public class PlayerData : MonoBehaviour
     public PlayerInGameData GetInGameData() { return inGameData; }
 
 	// Use this for initialization
-	void Start () 
+	void Start ()
     {
-	    //On Initialization should determine player Unique ID and Name
+        //On Initialization should determine player Unique ID and Name
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	    //Used to Update The Progression of the Players
 	}
+
 }

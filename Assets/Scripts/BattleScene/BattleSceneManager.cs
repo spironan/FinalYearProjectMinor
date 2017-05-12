@@ -5,7 +5,8 @@ using System.Collections;
 public class BattleSceneManager : MonoBehaviour
 {
     //Number of Players
-    PlayerData[] players = new PlayerData[(int)PLAYER.MAX_PLAYERS];
+    //PlayerData[] players = new PlayerData[(int)PLAYER.MAX_PLAYERS];
+
     //PlayerData[] players;
     Vector3[] spawnPositions = new Vector3[(int)PLAYER.MAX_PLAYERS];
     float curBattleTimer;
@@ -50,7 +51,7 @@ public class BattleSceneManager : MonoBehaviour
         for (int i = 0; i < (int)PLAYER.MAX_PLAYERS; ++i)
         {
             spawnPoint = spawnPositions[i];
-            players[i].GetInGameData().GetChar().transform.position.Set(spawnPoint.x, spawnPoint.y, spawnPoint.z);
+            //players[i].GetInGameData().GetChar().transform.position.Set(spawnPoint.x, spawnPoint.y, spawnPoint.z);
         }
     }
 
@@ -77,20 +78,19 @@ public class BattleSceneManager : MonoBehaviour
         uint curPlayerHp = 0;
         for (int i = (int)PLAYER.PLAYER_ONE; i < (int)PLAYER.MAX_PLAYERS; ++i)
         {
-            curPlayerHp = players[i].GetInGameData().GetChar().GetHealth();
+            //curPlayerHp = players[i].GetInGameData().GetChar().GetHealth();
             if (curPlayerHp > winnerHP)
             {
                 winnerHP = curPlayerHp;
                 winnerID = i;
             }
         }
-        if (winnerID >= (int)PLAYER.MAX_PLAYERS)
-            players[winnerID].GetInGameData().WinMatch();
+        //if (winnerID >= (int)PLAYER.MAX_PLAYERS)
+            //players[winnerID].GetInGameData().WinMatch();
     }
 
     public void ResetTimer()
     {
         curBattleTimer = maxBattleTimer;
     }
-
 }

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     PLAYER playerCount = PLAYER.PLAYER_BEGIN;
     List<PlayerData> PlayerList = new List<PlayerData>();
     GameObject MasterPlayer = null;
+    public GameObject PlayerBasePrefab;
 
     //Getter(s)
     //public PlayerData[] GetPlayers() { return PlayerList; }
@@ -117,12 +118,12 @@ public class GameManager : MonoBehaviour
             return null;
         }
         playerCount++;
-        GameObject Master = Instantiate(gameObject);
+        GameObject player = Instantiate(PlayerBasePrefab);
         gameObject.transform.parent = transform;
-        PlayerData masterData = Master.AddComponent<PlayerData>();
-        masterData.SetPlayerID(playerCount);
-        PlayerList.Add(masterData);
-        return Master;
+        PlayerData playerData = player.GetComponent<PlayerData>();
+        playerData.SetPlayerID(playerCount);
+        PlayerList.Add(playerData);
+        return player;
     }
 
 }
