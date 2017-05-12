@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class PS4ControllerInput : ControllerInput {
-
-    public override bool CheckForKeyPress(BUTTON_INPUT keyNumber, int controllerNumber)
+    //public int playernum = 
+    public override bool CheckForKeyPress(BUTTON_INPUT keyNumber, PLAYER player)
     {
-        if (controllerNumber == 1)
+        if (player == PLAYER.PLAYER_ONE)
         {
             switch (keyNumber)
             {
@@ -34,7 +34,7 @@ public class PS4ControllerInput : ControllerInput {
             }
             
         }
-        else if (controllerNumber == 2)
+        else if (player == PLAYER.PLAYER_TWO)
         {
             switch (keyNumber)
             {
@@ -64,9 +64,9 @@ public class PS4ControllerInput : ControllerInput {
         }
         return false;
     }
-    public override FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, int controllerNumber)
+    public override FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player)
     {
-        if (controllerNumber == 1)
+        if (player == PLAYER.PLAYER_ONE)
         {
 
             switch (joyStickNumber)
@@ -139,7 +139,7 @@ public class PS4ControllerInput : ControllerInput {
             return floatAndBool;
 
         }
-        else if (controllerNumber == 2)
+        else if (player == PLAYER.PLAYER_TWO)
         {
             switch (joyStickNumber)
             {

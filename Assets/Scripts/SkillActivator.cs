@@ -41,7 +41,7 @@ public class SkillActivator : MonoBehaviour {
     void Update()
     {
         //Debug.Log(player_number);
-        if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.X, player_number) )
+        if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.X) )
         {
             Debug.Log(5);
             currentSkillProfile = skill1.GetComponent<SkillProfile>();
@@ -53,7 +53,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 1
             activator.generate_keys(currentSkillProfile.gameObject);
         }
-        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.Y, player_number))
+        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.Y))
         {
             currentSkillProfile = skill2.GetComponent<SkillProfile>();
             createNewSkillObject();
@@ -64,7 +64,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 2
             activator.generate_keys(currentSkillProfile.gameObject);
         }
-        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.A, player_number))
+        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.A))
         {
 
             currentSkillProfile = skill4.GetComponent<SkillProfile>();
@@ -76,7 +76,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 4
             activator.generate_keys(currentSkillProfile.gameObject);
         }
-        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.B, player_number))
+        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.B))
         {
             
             currentSkillProfile = skill3.GetComponent<SkillProfile>();
@@ -101,7 +101,7 @@ public class SkillActivator : MonoBehaviour {
             {
                 int keyValue = -1;
                 
-                if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_UP,player_number).getBool())//up?
+                if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_UP).getBool())//up?
                 {
                     
                     keyValue = 0;
@@ -122,7 +122,7 @@ public class SkillActivator : MonoBehaviour {
                     }
 
                 }
-                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_DOWN, player_number).getBool())//down?
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_DOWN).getBool())//down?
                 {
                     keyValue = 2;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -140,7 +140,7 @@ public class SkillActivator : MonoBehaviour {
                         keyIterator = 0;
                     }
                 }
-                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_RIGHT, player_number).getBool())//right
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_RIGHT).getBool())//right
                 {
                     keyValue = 3;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -158,7 +158,7 @@ public class SkillActivator : MonoBehaviour {
                         keyIterator = 0;
                     }
                 }
-                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_LEFT, player_number).getBool())//left
+                else if (playerControllerManager.getValueFromAxis(JOYSTICK_AXIS_INPUT.DPAD_LEFT).getBool())//left
                 {
                     keyValue = 1;
                     if (keyValue == currentSkillProfile.directionToPress[keyIterator]
@@ -193,7 +193,7 @@ public class SkillActivator : MonoBehaviour {
             //}
             //Debug.Log(Input.GetAxis("DPad_Y_xBox360"));
 
-            if (playerControllerManager.orderOfController[playerControllerManager.controllerAssigned[player_number]].CheckForKeyPress(BUTTON_INPUT.L1, player_number))
+            if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.L1))
             {
                 if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null)
                 {
