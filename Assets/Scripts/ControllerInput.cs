@@ -7,11 +7,11 @@ public class ControllerInput : MonoBehaviour {
     protected FloatAndBool floatAndBool = new FloatAndBool();
 
 
-    public virtual bool CheckForKeyPress(BUTTON_INPUT keyNumber, int controllerNumber)
+    public virtual bool CheckForKeyPress(BUTTON_INPUT keyNumber, PLAYER player)
     {
         return false;
     }
-    public virtual FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, int controllerNumber)
+    public virtual FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player)
     {
         return null;
     }
