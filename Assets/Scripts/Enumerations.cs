@@ -18,7 +18,8 @@ public enum TEAM
 
 public enum PLAYER
 {
-    PLAYER_ONE,
+    PLAYER_BEGIN,
+    PLAYER_ONE = PLAYER_BEGIN,
     PLAYER_TWO,
     MAX_PLAYERS,
 };

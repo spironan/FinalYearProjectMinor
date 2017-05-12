@@ -102,6 +102,11 @@ public class CharacterSelectScript : MonoBehaviour
 
     public void Update()
     {
+        //if(InputManager::GetInstance().GetKeyLeft(inputType,playerNo))
+        //{
+        //    p1Frame moves certain direction
+        //}
+
     }
 
     void NavigateSelect()
@@ -158,9 +163,6 @@ public class CharacterSelectScript : MonoBehaviour
     {
         return finished;
     }
-
-
-
 
 
 

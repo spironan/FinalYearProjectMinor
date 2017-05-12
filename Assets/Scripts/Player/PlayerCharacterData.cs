@@ -8,6 +8,12 @@ public class PlayerCharacterData : MonoBehaviour
     uint win, lose;
     uint charPts;
 
+    void awake()
+    {
+        name = CHARACTERS.MAX_CHARACTER;
+        playerID = win = lose = charPts = 0;
+    }
+
     uint GetWins() { return win; }
     uint GetLose() { return lose; }
     uint GetCharPts() { return charPts; }

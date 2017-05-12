@@ -59,7 +59,7 @@ public class ParallaxScrollingScript : MonoBehaviour
 	
     private void ScrollLeft()
     {
-        int lastRight = rightIndex;
+        //int lastRight = rightIndex; never used
         layers[rightIndex].position = Vector3.right * (layers[leftIndex].position.x - backgroundSize);
         leftIndex = rightIndex;
         rightIndex--;
@@ -69,7 +69,7 @@ public class ParallaxScrollingScript : MonoBehaviour
 
     private void ScrollRight()
     {
-        int lastleft = leftIndex;
+        //int lastleft = leftIndex; never used
         layers[leftIndex].position = Vector3.right * (layers[rightIndex].position.x + backgroundSize);
         rightIndex = leftIndex;
         leftIndex++;

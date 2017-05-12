@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerInGameData : MonoBehaviour 
 {
-    uint playerID;
     short wonMatches;
     TEAM playerTeam;
     CharacterBase selectedChar;
