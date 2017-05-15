@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     GAMESTATE currState;
     //Players
     PLAYER playerCount = PLAYER.PLAYER_BEGIN;
+    TEAM playerTeam = TEAM.TEAM_BEGIN;
+    public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
     List<PlayerData> PlayerList = new List<PlayerData>();
     GameObject MasterPlayer = null;
     public GameObject PlayerBasePrefab;
@@ -36,6 +38,11 @@ public class GameManager : MonoBehaviour
     }
 
     public GAMESTATE GetGameState() { return currState; }
+
+    public int GetPlayerSize()
+    {
+        return PlayerList.Count;
+    }
 
     //Each Scene Should have their own "Head of Department" that will call this code once to change scene
     public void ChangeState(GAMESTATE state)
@@ -123,6 +130,9 @@ public class GameManager : MonoBehaviour
         PlayerData playerData = player.GetComponent<PlayerData>();
         playerData.SetPlayerID(playerCount);
         PlayerList.Add(playerData);
+        playerData.GetInGameData().SetTeam(playerTeam);
+        playerData.selectframe = frameObj[(int)playerTeam];
+        playerTeam++;
         return player;
     }
 

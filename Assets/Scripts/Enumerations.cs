@@ -11,7 +11,8 @@ public enum GAMESTATE
 
 public enum TEAM
 {
-    RED_TEAM,
+    TEAM_BEGIN,
+    RED_TEAM = TEAM_BEGIN,
     BLUE_TEAM,
     MAX_TEAM
 };

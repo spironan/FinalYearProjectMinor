@@ -3,10 +3,12 @@ using System.Collections;
 
 public class PlayerData : MonoBehaviour 
 {
+    //the frame outline of the player
+    public GameObject selectframe;
     //Unique Player ID <- Important , used to identify that particular player
     uint UniquePlayerID;    
     //Player In Game ID
-    PLAYER playerID;         
+    PLAYER playerID;
     //PlayerName <- Name of the Player           
     string PlayerName;                                                             
     // Character Data is the progression of the data                                           read from Database As well next time                               
@@ -15,12 +17,22 @@ public class PlayerData : MonoBehaviour
     PlayerInGameData inGameData = new PlayerInGameData();
     //whether the player is master or guest
     bool isMaster = false;
-
+    //Controller For Reading Input
     PlayerControllerManager controller;
 
     public PlayerControllerManager GetController()
     {
         return controller;
+    }
+
+    public bool IsKeyDown(BUTTON_INPUT input)
+    {
+        return controller.getIsKeyDown(input);
+    }
+
+    public bool IsJoyDown(JOYSTICK_AXIS_INPUT input)
+    {
+        return controller.getValueFromAxis(input).getBool();
     }
 
     //if i make a player holds what kind of button is being pressed, am i able to utilize through the fact that this is a player

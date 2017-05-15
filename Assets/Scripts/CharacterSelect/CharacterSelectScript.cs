@@ -10,15 +10,21 @@ public class CharacterSelectScript : MonoBehaviour
     List<GameObject> charSlots = new List<GameObject>();
 
     //Player Prolly Has An Image that i can use instead of a gameobject
-    public GameObject p1Frame, p2Frame;
+    List<GameObject> playerFrames;
+    //p1Frame, p2Frame;
 
     GameManager gameManager;
     bool finished = false;
+    Vector2 moveBy;
 
 	void Start () 
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+        {
+            playerFrames.Add(gameManager.GetPlayer(i).GetComponent<PlayerData>().selectframe);
+        }
         finished = false;
-        //gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         Vector2 parentSize = GetComponent<RectTransform>().rect.size;
         Vector2 prefabSize = framePrefab.GetComponent<RectTransform>().rect.size;
 
@@ -83,18 +89,24 @@ public class CharacterSelectScript : MonoBehaviour
                 spawnIndex = (int)(maxIndex * 0.5f);
             }
 
+            for (int i = 0; i < playerFrames.Count; ++i)
+            {
+                GameObject frame = Instantiate(playerFrames[i]);
+                frame.transform.SetParent(gameObject.transform, false);
+                frame.transform.localScale = new Vector3(1, 1, 1);
+                frame.transform.localPosition = charSlots[spawnIndex].transform.localPosition;
+                moveBy = new Vector2(frame.GetComponent<Rect>().width, frame.GetComponent<Rect>().height);
+            }
 
-            //Init Player 1 
-            GameObject p1 = Instantiate(p1Frame);
-            p1.transform.SetParent(gameObject.transform, false);
-            p1.transform.localScale = new Vector3(1, 1, 1);
-            
-            //InitPlayer 2 
-            GameObject p2 = Instantiate(p2Frame);
-            p2.transform.SetParent(gameObject.transform, false);
-            p2.transform.localScale = new Vector3(1, 1, 1);
-
-            p1Frame.transform.localPosition = p2Frame.transform.localPosition = charSlots[spawnIndex].transform.localPosition;// new Vector3(startPointX + (spawnIndex.x * prefabSize.x), spawnIndex.y * -prefabSize.y, 0);
+            ////Init Player 1 
+            //GameObject p1 = Instantiate(p1Frame);
+            //p1.transform.SetParent(gameObject.transform, false);
+            //p1.transform.localScale = new Vector3(1, 1, 1);
+            ////InitPlayer 2 
+            //GameObject p2 = Instantiate(p2Frame);
+            //p2.transform.SetParent(gameObject.transform, false);
+            //p2.transform.localScale = new Vector3(1, 1, 1);
+            //p1Frame.transform.localPosition = p2Frame.transform.localPosition = charSlots[spawnIndex].transform.localPosition;
             
         }
         
@@ -102,29 +114,43 @@ public class CharacterSelectScript : MonoBehaviour
 
     public void Update()
     {
-        //if(InputManager::GetInstance().GetKeyLeft(inputType,playerNo))
-        //{
-        //    p1Frame moves certain direction
-        //}
-
+        NavigateSelect();
     }
 
     void NavigateSelect()
     {
-        //Move Left Right
-        //if()
-        //{
-        //}
-        //else if () 
-        //{
-        //}
-        //// Move Up Down
-        //if()
-        //{
-        //}
-        //else if ()
-        //{
-        //}
+        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+        {
+            PlayerData player = gameManager.GetPlayer(i);
+            //Move Left Right
+            if (player.IsJoyDown(JOYSTICK_AXIS_INPUT.DPAD_LEFT)
+                || player.IsJoyDown(JOYSTICK_AXIS_INPUT.L3_LEFT)
+                )
+            {
+
+            }
+            else if (player.IsJoyDown(JOYSTICK_AXIS_INPUT.DPAD_RIGHT)
+                || player.IsJoyDown(JOYSTICK_AXIS_INPUT.L3_RIGHT)) 
+            {
+
+            }
+
+            // Move Up Down
+            if (player.IsJoyDown(JOYSTICK_AXIS_INPUT.DPAD_UP)
+                || player.IsJoyDown(JOYSTICK_AXIS_INPUT.L3_UP))
+            {
+
+            }
+            else if (player.IsJoyDown(JOYSTICK_AXIS_INPUT.DPAD_DOWN)
+                || player.IsJoyDown(JOYSTICK_AXIS_INPUT.L3_DOWN))
+            {
+            }
+            
+            if(player.IsKeyDown(BUTTON_INPUT.A))
+            {
+                LockInCharacter(gameManager.GetPlayer(i),);
+            }
+        }
     }
 
     public void LockInCharacter(PLAYER player,CHARACTERS charaName)
@@ -151,7 +177,7 @@ public class CharacterSelectScript : MonoBehaviour
     
     bool CheckBothPicked()
     {
-        for(int i = 0; i < (int)PLAYER.MAX_PLAYERS; ++i)
+        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
             if (gameManager.GetPlayer(i).GetPickStatus() == false)
                 return false;
@@ -163,7 +189,5 @@ public class CharacterSelectScript : MonoBehaviour
     {
         return finished;
     }
-
-
 
 }
