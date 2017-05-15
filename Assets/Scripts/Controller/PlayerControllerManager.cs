@@ -11,6 +11,11 @@ public class PlayerControllerManager : MonoBehaviour {
     public ControllerInput currController;
     public PLAYER playerID;
 
+    public void Awake()
+    {
+        currController = XBox360;
+    }
+
     public void init(PLAYER number)
     {
         playerID = number;
@@ -19,10 +24,15 @@ public class PlayerControllerManager : MonoBehaviour {
 
     public void detectController()
     {
-        if (Input.GetJoystickNames()[(int)playerID].Contains("360") || Input.GetJoystickNames()[(int)playerID].Contains("GamepadF310"))
-            currController = XBox360;
-         else if (Input.GetJoystickNames()[(int)playerID].Contains("Wireless Controller"))
-            currController = PS4;
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            if (Input.GetJoystickNames()[(int)playerID].Contains("360") || Input.GetJoystickNames()[(int)playerID].Contains("GamepadF310"))
+                currController = XBox360;
+            else if (Input.GetJoystickNames()[(int)playerID].Contains("Wireless Controller"))
+                currController = PS4;
+            else
+                currController = XBox360;
+        }
     }
 
 

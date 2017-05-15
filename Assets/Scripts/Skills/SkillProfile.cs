@@ -5,7 +5,7 @@ public class SkillProfile : MonoBehaviour {
 
     [Range(1,5)]
     public int keysToActivate;
-    public int player_ID;
+    public PLAYER player_ID;
     public float damagePerSecond;
     public float lifetime;
     public float pSpeed;

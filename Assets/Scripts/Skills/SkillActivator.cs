@@ -12,7 +12,8 @@ public class SkillActivator : MonoBehaviour {
 
     public PlayerControllerManager playerControllerManager;
 
-    public int player_number;
+    //public int player_number;
+    public PLAYER player_number;
 
     private SkillProfile currentSkillProfile;
     private GameObject skill_gameObject;
@@ -21,18 +22,28 @@ public class SkillActivator : MonoBehaviour {
     private bool dpadDown;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         dpadDown = false;
+        Debug.Log("hi1");
+        playerControllerManager = GetComponent<PlayerControllerManager>();
+        playerControllerManager.init(player_number);
+        Debug.Log("hi");
+        activator = transform.GetChild(0).GetComponent<skillToActivate>();
         Vector2 sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
-        //Debug.Log(sprite_size);
+
         Vector2 local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
-        //Debug.Log(local_sprite_size);
-        if(player_number == 1)
-        activator.gameObject.transform.position = new Vector2(0, transform.position.y + local_sprite_size.y + 0.1f);
-        else
+
+        if(player_number == PLAYER.PLAYER_ONE)
+            activator.gameObject.transform.position = new Vector2(0, transform.position.y + local_sprite_size.y + 0.1f);
+        else if(player_number == PLAYER.PLAYER_TWO)
             activator.gameObject.transform.position = new Vector2(0, transform.position.y - local_sprite_size.y - 0.1f);
-        //Debug.Log(Input.GetJoystickNames()[1]);  
+
+  
+        
+
+
+
 
 
     }
@@ -47,8 +58,7 @@ public class SkillActivator : MonoBehaviour {
             currentSkillProfile = skill1.GetComponent<SkillProfile>();
             createNewSkillObject();
             keyIterator = 0;
-            //make sure the skill knows the owner first
-            currentSkillProfile.player_ID = player_number;
+            
             //pass skill1 to activator
             //skill 1
             activator.generate_keys(currentSkillProfile.gameObject);
@@ -58,8 +68,7 @@ public class SkillActivator : MonoBehaviour {
             currentSkillProfile = skill2.GetComponent<SkillProfile>();
             createNewSkillObject();
             keyIterator = 0;
-            //make sure the skill knows the owner first
-            currentSkillProfile.player_ID = player_number;
+            
             //pass skill2 to activator
             //skill 2
             activator.generate_keys(currentSkillProfile.gameObject);
@@ -70,8 +79,7 @@ public class SkillActivator : MonoBehaviour {
             currentSkillProfile = skill4.GetComponent<SkillProfile>();
             createNewSkillObject();
             keyIterator = 0;
-            //make sure the skill knows the owner first
-            currentSkillProfile.player_ID = player_number;
+            
             //pass skill4 to activator
             //skill 4
             activator.generate_keys(currentSkillProfile.gameObject);
@@ -82,8 +90,7 @@ public class SkillActivator : MonoBehaviour {
             currentSkillProfile = skill3.GetComponent<SkillProfile>();
             createNewSkillObject();
             keyIterator = 0;
-            //make sure the skill knows the owner first
-            currentSkillProfile.player_ID = player_number;
+            
             //pass skill3 to activator
             //skill 3
             activator.generate_keys(currentSkillProfile.gameObject);
