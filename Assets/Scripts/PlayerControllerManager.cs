@@ -21,7 +21,7 @@ public class PlayerControllerManager : MonoBehaviour {
     {
         if (Input.GetJoystickNames()[(int)playerID].Contains("360") || Input.GetJoystickNames()[(int)playerID].Contains("GamepadF310"))
             currController = XBox360;
-         else if (Input.GetJoystickNames()[(int)playerID].Contains("Wireless Controller"))
+        else if (Input.GetJoystickNames()[(int)playerID].Contains("Wireless Controller"))
             currController = PS4;
     }
 
@@ -52,7 +52,6 @@ public class PlayerControllerManager : MonoBehaviour {
 
 // Update is called once per frame
 //void Update () {
-
 //       int index = 0;
 //       foreach (string joystick in Input.GetJoystickNames())
 //       {
@@ -60,7 +59,6 @@ public class PlayerControllerManager : MonoBehaviour {
 //               orderOfController[index] = XBox360;
 //           else if (joystick.Contains("Wireless Controller"))
 //               orderOfController[index] = PS4;
-
 //           index += 1;
 //       }
 //   }
