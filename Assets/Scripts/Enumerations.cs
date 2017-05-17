@@ -97,3 +97,31 @@ public enum JOYSTICK_AXIS_INPUT
     DPAD_X,
     TOTAL
 };
+
+public enum ACTIONS
+{
+    START,
+    SELECT,
+    ACTIVATE,
+
+    MOVE_UP,
+    MOVE_DOWN,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+
+    GAME_UP,
+    GAME_DOWN,
+    GAME_LEFT,
+    GAME_RIGHT,
+
+    GAME_MOVE_UP,
+    GAME_MOVE_DOWN,
+    GAME_MOVE_LEFT,
+    GAME_MOVE_RIGHT,
+
+    SKILL_ONE,
+    SKILL_TWO,
+    SKILL_THREE,
+    SKILL_FOUR,
+    TOTAl,
+}
