@@ -16,21 +16,36 @@ public class ListOfControllerActions : MonoBehaviour {
 	}
 
     //*********************************************************************************************
-    //calling
+    //getters
     //*********************************************************************************************
-    public bool callButtonAction(ACTIONS action)
+    public bool getButtonAction(ACTIONS action)
     {
         return playerControllerManager.getIsKeyDown(buttonBinds[action]);
     }
 
-    public bool callAxisAction(ACTIONS action)
+    public bool getIsKeyDown(BUTTON_INPUT button)
+    {
+        return playerControllerManager.getIsKeyDown(button);
+    }
+
+    public bool getAxisActionBool(ACTIONS action)
     {
         return playerControllerManager.getValueFromAxis(joystickBinds[action]).getBool();
     }
 
-    public float callAxisActionFloat(ACTIONS action)
+    public float getAxisActionFloat(ACTIONS action)
     {
         return playerControllerManager.getValueFromAxis(joystickBinds[action]).getFloat();
+    }
+
+    public bool getAxisBool(JOYSTICK_AXIS_INPUT axis)
+    {
+        return playerControllerManager.getValueFromAxis(axis).getBool();
+    }
+
+    public float getAxisFloat(JOYSTICK_AXIS_INPUT axis)
+    {
+        return playerControllerManager.getValueFromAxis(axis).getFloat();
     }
 
     //*********************************************************************************************
