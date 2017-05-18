@@ -148,7 +148,7 @@ public class CharacterSelectScript : MonoBehaviour
             
             if(player.IsKeyDown(BUTTON_INPUT.A))
             {
-                LockInCharacter(gameManager.GetPlayer(i),);
+                //LockInCharacter(gameManager.GetPlayer(i),);
             }
         }
     }
@@ -189,5 +189,4 @@ public class CharacterSelectScript : MonoBehaviour
     {
         return finished;
     }
-
 }

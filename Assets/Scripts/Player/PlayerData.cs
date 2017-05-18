@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerData : MonoBehaviour 
+public class PlayerData : MonoBehaviour
 {
+    //whether the player is master or guest
+    bool isMaster = false;
+    //Controller For Reading Input
+    PlayerControllerManager controller;
     //the frame outline of the player
     public GameObject selectframe;
     //Unique Player ID <- Important , used to identify that particular player
@@ -15,10 +19,18 @@ public class PlayerData : MonoBehaviour
     PlayerCharacterData[] characterData = new PlayerCharacterData[(int)CHARACTERS.MAX_CHARACTER];
     // Player's In Game Data <- Determine which side player is Spawned and used for in game stuff
     PlayerInGameData inGameData = new PlayerInGameData();
-    //whether the player is master or guest
-    bool isMaster = false;
-    //Controller For Reading Input
-    PlayerControllerManager controller;
+    //skillbook
+
+
+
+    //if i make a player holds what kind of button is being pressed, am i able to utilize through the fact that this is a player
+    //holds all the virtual actions in bool of bitset
+    //Gameobject find gamemanager 
+    //gamemanager get player (1).getAction("START")
+    //i hold the controller script
+
+    //Player Char Select Data
+    bool pickedChar = false;
 
     public PlayerControllerManager GetController()
     {
@@ -35,14 +47,7 @@ public class PlayerData : MonoBehaviour
         return controller.getValueFromAxis(input).getBool();
     }
 
-    //if i make a player holds what kind of button is being pressed, am i able to utilize through the fact that this is a player
-    //holds all the virtual actions in bool of bitset
-    //Gameobject find gamemanager 
-    //gamemanager get player (1).getAction("START")
-    //i hold the controller script
 
-    //Player Char Select Data
-    bool pickedChar = false;
 
     public void SetPlayerID(PLAYER id)
     {
@@ -55,6 +60,7 @@ public class PlayerData : MonoBehaviour
     {
         return playerID;
     }
+
 
     public void IsMaster()
     {

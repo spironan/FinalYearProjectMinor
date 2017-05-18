@@ -14,6 +14,11 @@ public class PlayerCharacterData : MonoBehaviour
         playerID = win = lose = charPts = 0;
     }
 
+    void WinandLose() { Win(); Lose(); }
+    void Win() { win++; }
+    void Lose() { lose++; }
+
+    float GetWinPercentage() { return (win/win+lose)*100.0f; }
     uint GetWins() { return win; }
     uint GetLose() { return lose; }
     uint GetCharPts() { return charPts; }
