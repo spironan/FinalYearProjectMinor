@@ -5,7 +5,7 @@ using System.Collections;
 public class MapSlot : MonoBehaviour 
 {
     public GameObject left = null, right = null;
-    Image icon;
+    public Map map;
 
     Vector3 centerPos;
     float angleDif = 0.0f, currAngle = 0.0f, targetAngle = 0.0f;
@@ -23,7 +23,6 @@ public class MapSlot : MonoBehaviour
 
     void Start()
     {
-        icon = GetComponent<Image>();
     }
 
     void Update()
@@ -105,7 +104,7 @@ public class MapSlot : MonoBehaviour
 
     public void SetImage(Image image)
     {
-        icon.sprite = image.sprite;
+        //icon.sprite = image.sprite;
     }
 
     public void SetRadius(float newRadius)

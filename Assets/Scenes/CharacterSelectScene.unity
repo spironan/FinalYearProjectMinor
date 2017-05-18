@@ -321,7 +321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &513180738
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1002,8 +1002,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   framePrefab: {fileID: 193272, guid: a82197c60fa646541aafe6630950cfa4, type: 2}
-  p1Frame: {fileID: 112498, guid: b4e720d94b47cfe4695f24a290ef4869, type: 2}
-  p2Frame: {fileID: 176360, guid: 9ed8bff48ac5cda4fbb35abf69c4cc79, type: 2}
 --- !u!114 &1560292432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1133,7 +1131,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 175524, guid: 525874061d7d1b943b45e8aa51508c0d, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 525874061d7d1b943b45e8aa51508c0d, type: 2}

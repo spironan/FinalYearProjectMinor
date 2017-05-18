@@ -36,7 +36,7 @@ public class MainMenuScript : MonoBehaviour
         }
         Select();
 
-        Debug.Log("Input Axis Y Value : " + Input.GetAxis("leftStick_Y_xBox360"));
+        //Debug.Log("Input Axis Y Value : " + Input.GetAxis("leftStick_Y_xBox360"));
     }
 
     private void Select()

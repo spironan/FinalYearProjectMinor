@@ -16,10 +16,11 @@ public class CharSelectSceneManager : MonoBehaviour
     public GameObject charSelectHolder, mapSelectHolder;
     CharacterSelectScript charSelectData;
     MapSelectScript mapSelectData;
-	
+	GameManager manager;
     // Use this for initialization
 	void Start () 
     {
+        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         charSelectData = charSelectHolder.GetComponent<CharacterSelectScript>();
         mapSelectData = mapSelectHolder.GetComponent<MapSelectScript>();
         mapSelectHolder.SetActive(false);
@@ -69,7 +70,8 @@ public class CharSelectSceneManager : MonoBehaviour
 
     void GoToNextScene()
     {
-        LoadingScreenManager.LoadScene("BattleScene");
+        manager.LoadBattleScene();
+        //LoadingScreenManager.LoadScene("BattleScene");
     }
 
 }

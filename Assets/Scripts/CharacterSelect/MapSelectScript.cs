@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class MapSelectScript : MonoBehaviour 
 {
+    GameObject gameManager;
     List<GameObject> maps = new List<GameObject>();
     public GameObject mapPrefab;
     public Vector3 centrePos;
@@ -23,6 +24,7 @@ public class MapSelectScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager");
         buttonCD = buttonCurrCD = timeToRotate;
         totalMaps = (int)PLAYMAPS.MAX_MAP;
         shiftAngle = (1.0f / (totalMaps * 1.0f));
@@ -102,6 +104,7 @@ public class MapSelectScript : MonoBehaviour
 
     public void PickSelectedMap()
     {
+        gameManager.GetComponent<GameManager>().SetMap(maps[currIndex].GetComponent<MapSlot>().map);
         mapPicked = true;
     }
 
