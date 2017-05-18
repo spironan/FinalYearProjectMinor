@@ -15,6 +15,7 @@ public class PlayerControllerManager : MonoBehaviour {
     public void Awake()
     {
         currController = XBox360;
+        detectController();
     }
 
     public void init(PLAYER number)
@@ -25,8 +26,9 @@ public class PlayerControllerManager : MonoBehaviour {
 
     public void detectController()
     {
-        if (Input.GetJoystickNames().Length > 0)
+        if (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames().Length > (int)playerID)
         {
+            Debug.Log(Input.GetJoystickNames());
             if (Input.GetJoystickNames()[(int)playerID].Contains("360") || Input.GetJoystickNames()[(int)playerID].Contains("GamepadF310"))
                 currController = XBox360;
             else if (Input.GetJoystickNames()[(int)playerID].Contains("Wireless Controller"))

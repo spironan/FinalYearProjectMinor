@@ -19,10 +19,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        GetComponent<PlayerControllerManager>().init(PLAYER.PLAYER_ONE);
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)
+            ||GetComponent<PlayerControllerManager>().getIsKeyDown(BUTTON_INPUT.START)
+            )
         {
             CreatePlayer();
         }
@@ -134,7 +137,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Max Number Of Players Created, Cant Create More!");
             return null;
         }
-        Debug.Log(playerCount);
+        Debug.Log(playerCount + " before Increment ");
         GameObject player = Instantiate(PlayerBasePrefab);
         gameObject.transform.parent = transform;
         PlayerData playerData = player.GetComponent<PlayerData>();
@@ -144,6 +147,7 @@ public class GameManager : MonoBehaviour
         PlayerList.Add(playerData);
         playerTeam++;
         playerCount++;
+        Debug.Log(playerCount + " after Increment ");
         return player;
     }
 

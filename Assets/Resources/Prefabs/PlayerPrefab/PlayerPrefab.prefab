@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 489006}
   - 114: {fileID: 11449928}
   - 114: {fileID: 11408700}
+  - 114: {fileID: 11403976}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -29,6 +30,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11403976
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17cfeedf08c11af478a5a35714eaa6ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11408700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7601a5f8e280c347b2565a6441aa914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectframe: {fileID: 0}
 --- !u!114 &11449928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,8 +64,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3675bbe202cc14e4e87c6bcd7c4901a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XBox360: {fileID: 0}
-  PS4: {fileID: 0}
+  XBox360: {fileID: 11412620, guid: 3ad19ba470504b142991c5fcf2657598, type: 2}
+  PS4: {fileID: 11462868, guid: d58c10b2e783b1840810c5e9ce520b63, type: 2}
   currController: {fileID: 0}
   playerID: 0
 --- !u!1001 &100100000

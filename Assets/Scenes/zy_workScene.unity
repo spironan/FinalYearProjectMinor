@@ -422,7 +422,7 @@ MonoBehaviour:
   skill4: {fileID: 136856, guid: f3a25172a87874f4da823eabdb5f4cbd, type: 2}
   activator: {fileID: 917549143}
   playerControllerManager: {fileID: 265414988}
-  player_number: 1
+  player_number: 0
 --- !u!212 &265414984
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XBox360: {fileID: 11412620, guid: 3ad19ba470504b142991c5fcf2657598, type: 2}
   PS4: {fileID: 11462868, guid: d58c10b2e783b1840810c5e9ce520b63, type: 2}
-  currController: {fileID: 11462868, guid: d58c10b2e783b1840810c5e9ce520b63, type: 2}
+  currController: {fileID: 11412620, guid: 3ad19ba470504b142991c5fcf2657598, type: 2}
   playerID: 0
 --- !u!114 &265414989
 MonoBehaviour:
@@ -572,7 +572,7 @@ MonoBehaviour:
   skill4: {fileID: 183182, guid: 789f2062e4a5e3b479449d3c057fb45e, type: 2}
   activator: {fileID: 1807847850}
   playerControllerManager: {fileID: 388661236}
-  player_number: 2
+  player_number: 1
 --- !u!212 &388661232
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -660,7 +660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XBox360: {fileID: 11412620, guid: 3ad19ba470504b142991c5fcf2657598, type: 2}
   PS4: {fileID: 11462868, guid: d58c10b2e783b1840810c5e9ce520b63, type: 2}
-  currController: {fileID: 11412620, guid: 3ad19ba470504b142991c5fcf2657598, type: 2}
+  currController: {fileID: 11462868, guid: d58c10b2e783b1840810c5e9ce520b63, type: 2}
   playerID: 1
 --- !u!1001 &657063542
 Prefab:
