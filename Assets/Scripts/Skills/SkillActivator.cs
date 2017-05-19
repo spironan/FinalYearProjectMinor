@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(PlayerControllerManager))]
 public class SkillActivator : MonoBehaviour {
 
     public GameObject skill1;
@@ -25,10 +26,10 @@ public class SkillActivator : MonoBehaviour {
     void Awake()
     {
         dpadDown = false;
-        Debug.Log("hi1");
+
         playerControllerManager = GetComponent<PlayerControllerManager>();
         playerControllerManager.init(player_number);
-        Debug.Log("hi");
+
         activator = transform.GetChild(0).GetComponent<skillToActivate>();
         Vector2 sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
 

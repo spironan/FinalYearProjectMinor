@@ -11,10 +11,23 @@ public class PlayerControllerManager : MonoBehaviour
     public ControllerInput currController;
     public PLAYER playerID;
 
+    private string nameOfController;
+
     public void Awake()
     {
         currController = XBox360;
         detectController();
+        nameOfController = Input.GetJoystickNames()[(int)playerID];
+    }
+
+    public void Update()
+    {
+        if(nameOfController != Input.GetJoystickNames()[(int)playerID])
+        {
+            detectController();
+            nameOfController = Input.GetJoystickNames()[(int)playerID];
+        }
+        //Debug.Log(Input.GetJoystickNames()[1]);
     }
 
     public void init(PLAYER number)

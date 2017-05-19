@@ -12,8 +12,10 @@ public class skillToActivate : MonoBehaviour {
     //public GameObject skill;
     // Use this for initialization
     void Start () {
-	
-	}
+        //transform.position = Vector2.zero;
+        transform.position = new Vector2(0, transform.position.y);
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
