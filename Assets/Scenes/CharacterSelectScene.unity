@@ -321,7 +321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &513180738
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1131,7 +1131,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 175524, guid: 525874061d7d1b943b45e8aa51508c0d, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 525874061d7d1b943b45e8aa51508c0d, type: 2}
@@ -1246,6 +1246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charSelectHolder: {fileID: 1560292429}
   mapSelectHolder: {fileID: 513180737}
+  mapSelectSpawner: {fileID: 1019733190}
 --- !u!1 &1919533799
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,8 @@ public class MapSelectScript : MonoBehaviour
     float buttonCD;
     float buttonCurrCD;
     bool canActivate = true;
+    bool cancelled = true;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -50,6 +52,7 @@ public class MapSelectScript : MonoBehaviour
             //map manager get instance get map icon 
             maps.Add(map);
         }
+
         // Move map
         MapSlot tempMap;
         for (int i = 0; i < totalMaps; ++i)
@@ -67,6 +70,7 @@ public class MapSelectScript : MonoBehaviour
             tempMap.left = maps[left];
             tempMap.right = maps[right];
         }
+
         //Increase the size of the currentMap Slightly
         ResizeMaps();
 	}
@@ -87,19 +91,25 @@ public class MapSelectScript : MonoBehaviour
                 maps[i].GetComponent<Image>().CrossFadeAlpha(1, 0.0f, false);
         }
 
-        /////Controls here
-        //if()
-        //{
-        //    ShiftLeft();
-        //}
-        //else if()
-        //{
-        //    ShiftRight();
-        //}
-        //if()
-        //{
-        //    PickSelectedMap();
-        //}
+        ///Controls here
+        ///
+        PlayerData player = gameManager.GetComponent<GameManager>().GetPlayer(0);
+        if (player.controller.getAxisActionBool(ACTIONS.MOVE_LEFT))
+        {
+            ShiftLeft();
+        }
+        else if (player.controller.getAxisActionBool(ACTIONS.MOVE_RIGHT))
+        {
+            ShiftRight();
+        }
+        if (player.controller.getButtonAction(ACTIONS.SELECT_MAP))
+        {
+            PickSelectedMap();
+        }
+        else if (player.controller.getButtonAction(ACTIONS.CANCEL_MAP_SELECT))
+        {
+            Cancel();
+        }
 	}
 
     public void PickSelectedMap()
@@ -112,6 +122,10 @@ public class MapSelectScript : MonoBehaviour
     {
         return mapPicked;
     }
+
+    public void Cancel() { cancelled = true; }
+
+    public bool CancelMapSelect() { return cancelled; }
 
     public void ShiftLeft()
     {

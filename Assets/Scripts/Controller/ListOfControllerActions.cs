@@ -63,6 +63,15 @@ public class ListOfControllerActions : MonoBehaviour {
         buttonBinds.Add(ACTIONS.SELECT, BUTTON_INPUT.A);
         buttonBinds.Add(ACTIONS.ACTIVATE, BUTTON_INPUT.L1);
 
+
+        buttonBinds.Add(ACTIONS.PICK_CHARACTER, BUTTON_INPUT.A);
+        buttonBinds.Add(ACTIONS.SELECT_MAP, BUTTON_INPUT.A);
+        buttonBinds.Add(ACTIONS.CANCEL_MAP_SELECT, BUTTON_INPUT.B);
+
+        joystickBinds.Add(ACTIONS.MOVE_UP, JOYSTICK_AXIS_INPUT.DPAD_UP);
+        joystickBinds.Add(ACTIONS.MOVE_DOWN, JOYSTICK_AXIS_INPUT.DPAD_DOWN);
+        joystickBinds.Add(ACTIONS.MOVE_LEFT, JOYSTICK_AXIS_INPUT.DPAD_LEFT);
+        joystickBinds.Add(ACTIONS.MOVE_RIGHT, JOYSTICK_AXIS_INPUT.DPAD_RIGHT);
     }
 
     public void bindButton(ACTIONS action, BUTTON_INPUT button)

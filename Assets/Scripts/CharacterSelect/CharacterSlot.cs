@@ -4,12 +4,12 @@ using System.Collections;
 
 public class CharacterSlot : MonoBehaviour
 {
-    public GameObject up, down, left, right;
+    public GameObject up = null, down = null, left = null, right = null;
     Image icon;
+    CHARACTERS charName;
 
-    void Start()
+    void Awake()
     {
-        up = down = left = right = null;
         icon = GetComponent<Image>();
     }
 
@@ -17,5 +17,8 @@ public class CharacterSlot : MonoBehaviour
     {
         icon.sprite = image.sprite;
     }
+
+    public void SetChar(CHARACTERS chara) { charName = chara; }
+    public CHARACTERS GetChar() { return charName; }
 
 }

@@ -13,7 +13,7 @@ public class CharSelectSceneManager : MonoBehaviour
 
     SELECTIONPHASE currentPhase = SELECTIONPHASE.PICKING;
 
-    public GameObject charSelectHolder, mapSelectHolder;
+    public GameObject charSelectHolder, mapSelectHolder, mapSelectSpawner;
     CharacterSelectScript charSelectData;
     MapSelectScript mapSelectData;
 	GameManager manager;
@@ -22,7 +22,6 @@ public class CharSelectSceneManager : MonoBehaviour
     {
         manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         charSelectData = charSelectHolder.GetComponent<CharacterSelectScript>();
-        mapSelectData = mapSelectHolder.GetComponent<MapSelectScript>();
         mapSelectHolder.SetActive(false);
 	}
 	
@@ -57,6 +56,7 @@ public class CharSelectSceneManager : MonoBehaviour
         {
             //Turn On Map Straight away
             mapSelectHolder.SetActive(true);
+            mapSelectData = mapSelectSpawner.GetComponent<MapSelectScript>();
             currentPhase = SELECTIONPHASE.MAP_PICK;
         }
     }
@@ -66,12 +66,17 @@ public class CharSelectSceneManager : MonoBehaviour
         ///Check for relevant controls and navigation of picture here
         if (mapSelectData.CheckMapPicked())
             currentPhase = SELECTIONPHASE.BEGIN_MATCH;
+        else if (mapSelectData.CancelMapSelect())
+        {
+            mapSelectHolder.SetActive(false);
+            charSelectData.UnFinish();
+            currentPhase = SELECTIONPHASE.PICKING;
+        }
     }
 
     void GoToNextScene()
     {
         manager.LoadBattleScene();
-        //LoadingScreenManager.LoadScene("BattleScene");
     }
 
 }
