@@ -5,7 +5,8 @@ using System.Collections;
 public class MapSlot : MonoBehaviour 
 {
     public GameObject left = null, right = null;
-    public Map map;
+    //public Map map;
+    PLAYMAPS mapID;
 
     Vector3 centerPos;
     float angleDif = 0.0f, currAngle = 0.0f, targetAngle = 0.0f;
@@ -20,6 +21,10 @@ public class MapSlot : MonoBehaviour
     //float angularVelocity = 0.0f;
     //float timeToRotate = 0.0f;
     //float radius;
+
+    public void SetID(PLAYMAPS mapID) { this.mapID = mapID; }
+
+    public int GetMapID() { return (int)mapID; }
 
     void Update()
     {

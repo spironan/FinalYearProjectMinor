@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -90,7 +89,6 @@ public class CharacterManager : Singleton<CharacterManager>
         return characterList.ContainsKey(go);
     }
     
-
 }
 
     

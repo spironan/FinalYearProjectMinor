@@ -33,7 +33,8 @@ public enum GAME_MODES
 
 public enum PLAYMAPS
 {
-    STANDARD = 0,
+    MAPS_BEGIN,
+    STANDARD = MAPS_BEGIN,
     RANDOM,
     EXTRA,
     TEST_MAP_1,

@@ -86,7 +86,7 @@ public class ListOfControllerActions : MonoBehaviour {
 
         buttonBinds.Add(ACTIONS.PICK_CHARACTER, BUTTON_INPUT.A);
         buttonBinds.Add(ACTIONS.SELECT_MAP, BUTTON_INPUT.A);
-        buttonBinds.Add(ACTIONS.CANCEL_MAP_SELECT, BUTTON_INPUT.B);
+        buttonBinds.Add(ACTIONS.CANCEL_MAP_SELECT, BUTTON_INPUT.Y);
 
         joystickBinds.Add(ACTIONS.MOVE_UP, JOYSTICK_AXIS_INPUT.DPAD_UP);
         joystickBinds.Add(ACTIONS.MOVE_DOWN, JOYSTICK_AXIS_INPUT.DPAD_DOWN);

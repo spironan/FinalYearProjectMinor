@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //Should Be the one handling the Timer, which player spawns where
 public class BattleSceneManager : MonoBehaviour
 {
-    //Number of Players
-    //PlayerData[] players = new PlayerData[(int)PLAYER.MAX_PLAYERS];
-
-    //PlayerData[] players;
-    Vector3[] spawnPositions = new Vector3[(int)PLAYER.MAX_PLAYERS];
+    GameManager gameManager;
+    Map currentMap;
+    List<GameObject> playerCharacters = new List<GameObject>();
     float curBattleTimer;
     float maxBattleTimer;
     GAME_MODES gameMode;
@@ -32,9 +31,17 @@ public class BattleSceneManager : MonoBehaviour
 
     void Start()
     {
-        //Temporary Test Code
-        //players = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().GetPlayers();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        currentMap = gameManager.GetCurrMap();
         SetGameMode(GAME_MODES.LOCAL_PVP);
+    }
+
+    public void LoadOncePerScene()
+    {
+        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+        {
+            playerCharacters.Add(gameManager.GetPlayer(i).GetInGameData().GetChar().gameObject);
+        }
     }
 
     //Called Once when a Player Starts
@@ -45,30 +52,50 @@ public class BattleSceneManager : MonoBehaviour
         SetPlayerSpawnPoints();
     }
 
-    public void SetPlayerSpawnPoints()
+    public void ResetMatch()
     {
-        Vector3 spawnPoint;
-        for (int i = 0; i < (int)PLAYER.MAX_PLAYERS; ++i)
+        ResetPlayerCharacters();
+        SetPlayerSpawnPoints();
+        ResetTimer();
+    }
+
+    void ResetPlayerCharacters()
+    {
+        for (int i = 0; i < playerCharacters.Count; ++i)
         {
-            spawnPoint = spawnPositions[i];
-            //players[i].GetInGameData().GetChar().transform.position.Set(spawnPoint.x, spawnPoint.y, spawnPoint.z);
+            playerCharacters[i].GetComponent<CharacterBase>().Reset();
         }
     }
 
+    void SetPlayerSpawnPoints()
+    {
+        Vector3 spawnPoint;
+        for (int i = 0; i < playerCharacters.Count; ++i)
+        {
+            spawnPoint = currentMap.GetSpawnLocation(i);
+            playerCharacters[i].transform.position = spawnPoint;
+        }
+    }
+    
     public void Update()
     {
         UpdateTimer();  
     }
 
-    public void UpdateTimer()
+    void UpdateTimer()
     {
         if (curBattleTimer > 0)
             curBattleTimer -= Time.deltaTime;
         else
         {
             EndMatch();
-            ResetTimer();
+            ResetMatch();
         }
+    }
+
+    void ResetTimer()
+    {
+        curBattleTimer = maxBattleTimer;
     }
 
     public void EndMatch()
@@ -76,21 +103,17 @@ public class BattleSceneManager : MonoBehaviour
         int winnerID = -1;
         uint winnerHP = 0;
         uint curPlayerHp = 0;
-        for (int i = (int)PLAYER.PLAYER_ONE; i < (int)PLAYER.MAX_PLAYERS; ++i)
+        for (int i = 0; i < playerCharacters.Count; ++i)
         {
-            //curPlayerHp = players[i].GetInGameData().GetChar().GetHealth();
+            curPlayerHp = playerCharacters[i].GetComponent<CharacterBase>().GetHealth();
             if (curPlayerHp > winnerHP)
             {
                 winnerHP = curPlayerHp;
                 winnerID = i;
             }
         }
-        //if (winnerID >= (int)PLAYER.MAX_PLAYERS)
-            //players[winnerID].GetInGameData().WinMatch();
+        if (winnerID != -1)
+            gameManager.GetPlayer(winnerID).GetInGameData().WinMatch();
     }
 
-    public void ResetTimer()
-    {
-        curBattleTimer = maxBattleTimer;
-    }
 }

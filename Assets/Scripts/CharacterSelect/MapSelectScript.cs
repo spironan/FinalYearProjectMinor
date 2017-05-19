@@ -32,6 +32,8 @@ public class MapSelectScript : MonoBehaviour
         shiftAngle = (1.0f / (totalMaps * 1.0f));
         float circleProgress = 0.0f;
         float angle,x, z;
+
+        PLAYMAPS currMap = PLAYMAPS.MAPS_BEGIN;
         for (int i = 0; i < totalMaps; ++i)
         {
             circleProgress = (i * 1.0f) / (totalMaps * 1.0f);
@@ -49,6 +51,8 @@ public class MapSelectScript : MonoBehaviour
             map.GetComponent<MapSlot>().SetCenter(centrePos);
             map.GetComponent<MapSlot>().SetRadius(radius);
             map.GetComponent<MapSlot>().SetCurrAngle(i * shiftAngle);
+            map.GetComponent<MapSlot>().SetID(currMap);
+            currMap += 1;
             //map manager get instance get map icon 
             maps.Add(map);
         }
@@ -114,7 +118,7 @@ public class MapSelectScript : MonoBehaviour
 
     public void PickSelectedMap()
     {
-        gameManager.GetComponent<GameManager>().SetMap(maps[currIndex].GetComponent<MapSlot>().map);
+        gameManager.GetComponent<GameManager>().SetCurrMap(maps[currIndex].GetComponent<MapSlot>().GetMapID());
         mapPicked = true;
     }
 

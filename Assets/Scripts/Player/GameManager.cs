@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     List<PlayerData> PlayerList = new List<PlayerData>();
     GameObject MasterPlayer = null;
     public GameObject PlayerBasePrefab;
-    Map playMapData = null;
+    //Which Map is Being Selected
+    Map currMap = null;
 
     //Dont destroy on load the manager -> exist permantly
     void Awake()
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         GetComponent<PlayerControllerManager>().init(PLAYER.PLAYER_ONE);
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)
@@ -33,11 +35,11 @@ public class GameManager : MonoBehaviour
 
     public void LoadBattleScene()
     {
-        if (playMapData != null)
-            LoadingScreenManager.LoadScene(playMapData.mapName);
+        if (currMap != null)
+            LoadingScreenManager.LoadScene(currMap.GetMapName());
     }
-    public void SetMap(Map newMap) { playMapData = newMap; }
-    public Map GetMap() { return playMapData; }
+    public void SetCurrMap(int mapID) { currMap = MapManager.GetInstance().GetMap(mapID); }
+    public Map GetCurrMap() { return currMap; }
 
     //Getter(s)
     //public PlayerData[] GetPlayers() { return PlayerList; }
