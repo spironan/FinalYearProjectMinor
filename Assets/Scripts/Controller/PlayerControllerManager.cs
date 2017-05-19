@@ -11,22 +11,34 @@ public class PlayerControllerManager : MonoBehaviour
     public ControllerInput currController;
     public PLAYER playerID;
 
-    private string nameOfController;
+    //private string nameOfController;
+    //private int numberOfControllers;
+    private string[] listOfConnectedController;
 
     public void Awake()
     {
         currController = XBox360;
-        detectController();
-        nameOfController = Input.GetJoystickNames()[(int)playerID];
+        if (detectController())
+            listOfConnectedController = Input.GetJoystickNames();
+        //numberOfControllers = Input.GetJoystickNames().Length;
+        //if (Input.GetJoystickNames().Length > (int)playerID)
+        //{
+        //    nameOfController = Input.GetJoystickNames()[(int)playerID];
+        //}
+
+        //Debug.Log(Input.GetJoystickNames().Length);
     }
 
     public void Update()
     {
-        if(nameOfController != Input.GetJoystickNames()[(int)playerID])
+     
+        if (listOfConnectedController != Input.GetJoystickNames())
         {
-            detectController();
-            nameOfController = Input.GetJoystickNames()[(int)playerID];
+            if(detectController())
+                listOfConnectedController = Input.GetJoystickNames();
         }
+
+        //Debug.Log(Input.GetJoystickNames().Length);
         //Debug.Log(Input.GetJoystickNames()[1]);
     }
 
@@ -36,18 +48,28 @@ public class PlayerControllerManager : MonoBehaviour
         detectController();
     }
 
-    public void detectController()
+    public bool detectController()
     {
         if (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames().Length > (int)playerID)
         {
             Debug.Log(Input.GetJoystickNames());
             if (Input.GetJoystickNames()[(int)playerID].Contains("360") || Input.GetJoystickNames()[(int)playerID].Contains("GamepadF310"))
+            {
                 currController = XBox360;
+                return true;
+            }
             else if (Input.GetJoystickNames()[(int)playerID].Contains("Wireless Controller"))
+            {
                 currController = PS4;
+                return true;
+            }
             else
+            {
                 currController = XBox360;
+                return false;
+            }
         }
+        return false;
     }
 
 
