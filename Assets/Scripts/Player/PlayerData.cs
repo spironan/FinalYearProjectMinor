@@ -14,7 +14,8 @@ public class PlayerData : MonoBehaviour
     //Player Char Select Data
     bool pickedChar = false;
     //Controller For Reading Input
-    PlayerControllerManager controller;
+    public ListOfControllerActions controller;
+    //PlayerControllerManager controller;
     //the frame outline of the player
     public GameObject selectframe;                                                          
     // Character Data is the progression of the data                                           read from Database As well next time                               
@@ -29,23 +30,24 @@ public class PlayerData : MonoBehaviour
     //gamemanager get player (1).getAction("START")
     //i hold the controller script
 
-    public PlayerControllerManager GetController()
-    {
-        return controller;
-    }
-    public bool IsKeyDown(BUTTON_INPUT input)
-    {
-        return controller.getIsKeyDown(input);
-    }
-    public bool IsJoyDown(JOYSTICK_AXIS_INPUT input)
-    {
-        return controller.getValueFromAxis(input).getBool();
-    }
+    //public PlayerControllerManager GetController()
+    //{
+    //    return controller;
+    //}
+    //public bool IsKeyDown(BUTTON_INPUT input)
+    //{
+    //    return controller.getIsKeyDown(input);
+    //}
+    //public bool IsJoyDown(JOYSTICK_AXIS_INPUT input)
+    //{
+    //    return controller.getValueFromAxis(input).getBool();
+    //}
+    
 
     public void SetPlayerID(PLAYER id)
     {
         playerID = id;
-        controller = GetComponent<PlayerControllerManager>();
+        PlayerControllerManager controller = GetComponent<PlayerControllerManager>();
         controller.init(playerID);
     }
     public PLAYER GetPlayerID()
@@ -92,6 +94,7 @@ public class PlayerData : MonoBehaviour
 	void Start ()
     {
         //On Initialization should determine player Unique ID and Name
+        controller = GetComponent<ListOfControllerActions>();
 	}
 	// Update is called once per frame
 	void Update () 

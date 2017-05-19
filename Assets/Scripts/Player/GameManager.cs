@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
             ||GetComponent<PlayerControllerManager>().getIsKeyDown(BUTTON_INPUT.START)
             )
         {
-            CreatePlayer();
+            CreateNewPlayer();
         }
     }
 
@@ -122,6 +122,14 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    void CreateNewPlayer()
+    {
+        if (!HasMasterPlayer())
+            CreateMasterPlayer();
+        else
+            CreateGuestPlayer();
+    }
+
     bool HasMasterPlayer()
     {
         return MasterPlayer != null;
@@ -139,7 +147,7 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log(playerCount + " before Increment ");
         GameObject player = Instantiate(PlayerBasePrefab);
-        gameObject.transform.parent = transform;
+        player.transform.parent = this.transform;
         PlayerData playerData = player.GetComponent<PlayerData>();
         playerData.SetPlayerID(playerCount);
         playerData.GetInGameData().SetTeam(playerTeam);

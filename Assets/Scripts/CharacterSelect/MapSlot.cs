@@ -21,10 +21,6 @@ public class MapSlot : MonoBehaviour
     //float timeToRotate = 0.0f;
     //float radius;
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         CheckOverUnderFlow();
@@ -100,11 +96,6 @@ public class MapSlot : MonoBehaviour
         //    //if (timeToRotate < 0.0f)
         //    //    timeToRotate = 0.0f;
         //}
-    }
-
-    public void SetImage(Image image)
-    {
-        //icon.sprite = image.sprite;
     }
 
     public void SetRadius(float newRadius)

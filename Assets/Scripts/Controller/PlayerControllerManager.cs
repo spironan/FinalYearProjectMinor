@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 //[RequireComponent(typeof(ListOfControllerActions))]
-public class PlayerControllerManager : MonoBehaviour {
-
-    
+public class PlayerControllerManager : MonoBehaviour 
+{
     public ControllerInput XBox360;
     public ControllerInput PS4;
 

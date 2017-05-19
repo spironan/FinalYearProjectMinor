@@ -14,7 +14,7 @@ public class urgentChangeScene : MonoBehaviour {
     void Update()
     {
         if (gameManager.GetComponent<GameManager>().GetPlayerSize() > 0
-            && gameManager.GetComponent<GameManager>().GetPlayer(PLAYER.PLAYER_ONE).IsKeyDown(BUTTON_INPUT.X)
+            //&& gameManager.GetComponent<GameManager>().GetPlayer(PLAYER.PLAYER_ONE).IsKeyDown(BUTTON_INPUT.X)
             )
         { 
             //Debug.Log(gameManager.GetComponent<GameManager>().GetPlayer(PLAYER.PLAYER_ONE).IsKeyDown(BUTTON_INPUT.START));

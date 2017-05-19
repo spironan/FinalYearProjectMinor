@@ -100,6 +100,7 @@ public enum JOYSTICK_AXIS_INPUT
 
 public enum ACTIONS
 {
+
     START,
     SELECT,
     ACTIVATE,
@@ -123,5 +124,10 @@ public enum ACTIONS
     SKILL_TWO,
     SKILL_THREE,
     SKILL_FOUR,
+
+    
+//START CHARACTER SELECT ACTIONS
+    PICK_CHARACTER,
+//END CHARA SELECT ACTIONS
     TOTAl,
 }
