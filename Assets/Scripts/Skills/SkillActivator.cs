@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(PlayerControllerManager))]
+//[RequireComponent(typeof(PlayerControllerManager))]
+[RequireComponent(typeof(ListOfControllerActions))]
 public class SkillActivator : MonoBehaviour {
 
     public GameObject skill1;
@@ -12,6 +13,7 @@ public class SkillActivator : MonoBehaviour {
     public skillToActivate activator;
 
     public PlayerControllerManager playerControllerManager;
+    public ListOfControllerActions bindedACtions;
 
     //public int player_number;
     public PLAYER player_number;
@@ -29,6 +31,7 @@ public class SkillActivator : MonoBehaviour {
 
         playerControllerManager = GetComponent<PlayerControllerManager>();
         playerControllerManager.init(player_number);
+        bindedACtions = GetComponent<ListOfControllerActions>();
 
         activator = transform.GetChild(0).GetComponent<skillToActivate>();
         Vector2 sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
@@ -53,7 +56,7 @@ public class SkillActivator : MonoBehaviour {
     void Update()
     {
         //Debug.Log(player_number);
-        if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.X) )
+        if (bindedACtions.getButtonAction(ACTIONS.SKILL_ONE) )
         {
             Debug.Log(5);
             currentSkillProfile = skill1.GetComponent<SkillProfile>();
@@ -64,7 +67,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 1
             activator.generate_keys(currentSkillProfile.gameObject);
         }
-        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.Y))
+        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_TWO))
         {
             currentSkillProfile = skill2.GetComponent<SkillProfile>();
             createNewSkillObject();
@@ -74,7 +77,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 2
             activator.generate_keys(currentSkillProfile.gameObject);
         }
-        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.A))
+        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_FOUR))
         {
 
             currentSkillProfile = skill4.GetComponent<SkillProfile>();
@@ -85,7 +88,7 @@ public class SkillActivator : MonoBehaviour {
             //skill 4
             activator.generate_keys(currentSkillProfile.gameObject);
         }
-        else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.B))
+        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_THREE))
         {
             
             currentSkillProfile = skill3.GetComponent<SkillProfile>();
