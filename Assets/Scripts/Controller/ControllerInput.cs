@@ -20,6 +20,17 @@ public class ControllerInput : MonoBehaviour {
     {
         return false;
     }
+
+    public virtual bool CheckForKeyPressHold(BUTTON_INPUT keyNumber, PLAYER player)
+    {
+        return false;
+    }
+
+    public virtual bool CheckForKeyPressUp(BUTTON_INPUT keyNumber, PLAYER player)
+    {
+        return false;
+    }
+
     public virtual FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player)
     {
         return null;

@@ -64,6 +64,131 @@ public class XBox360ControllerInput : ControllerInput
         }
         return false;
     }
+
+    public override bool CheckForKeyPressHold(BUTTON_INPUT keyNumber, PLAYER player)
+    {
+        if (player == PLAYER.PLAYER_ONE)
+        {
+            switch (keyNumber)
+            {
+                case BUTTON_INPUT.A:
+                    return Input.GetButton("A_button_xBox360");
+                case BUTTON_INPUT.B:
+                    return Input.GetButton("B_button_xBox360");
+                case BUTTON_INPUT.X:
+                    return Input.GetButton("X_button_xBox360");
+                case BUTTON_INPUT.Y:
+                    return Input.GetButton("Y_button_xBox360");
+                case BUTTON_INPUT.L1:
+                    return Input.GetButton("L1_button_xBox360");
+                case BUTTON_INPUT.R1:
+                    return Input.GetButton("R1_button_xBox360");
+                case BUTTON_INPUT.BACK:
+                    return Input.GetButton("back_button_xBox360");
+                case BUTTON_INPUT.START:
+                    return Input.GetButton("start_button_xBox360");
+                case BUTTON_INPUT.L3:
+                    return Input.GetButton("L3_button_xBox360");
+                case BUTTON_INPUT.R3:
+                    return Input.GetButton("R3_button_xBox360");
+
+
+            }
+
+        }
+        else if (player == PLAYER.PLAYER_TWO)
+        {
+            switch (keyNumber)
+            {
+                case BUTTON_INPUT.A:
+                    return Input.GetButton("A_button_xBox360_player2");
+                case BUTTON_INPUT.B:
+                    return Input.GetButton("B_button_xBox360_player2");
+                case BUTTON_INPUT.X:
+                    return Input.GetButton("X_button_xBox360_player2");
+                case BUTTON_INPUT.Y:
+                    return Input.GetButton("Y_button_xBox360_player2");
+                case BUTTON_INPUT.L1:
+                    return Input.GetButton("L1_button_xBox360_player2");
+                case BUTTON_INPUT.R1:
+                    return Input.GetButton("R1_button_xBox360_player2");
+                case BUTTON_INPUT.BACK:
+                    return Input.GetButton("back_button_xBox360_player2");
+                case BUTTON_INPUT.START:
+                    return Input.GetButton("start_button_xBox360_player2");
+                case BUTTON_INPUT.L3:
+                    return Input.GetButton("L3_button_xBox360_player2");
+                case BUTTON_INPUT.R3:
+                    return Input.GetButton("R3_button_xBox360_player2");
+
+
+            }
+        }
+        return false;
+    }
+
+    public override bool CheckForKeyPressUp(BUTTON_INPUT keyNumber, PLAYER player)
+    {
+        if (player == PLAYER.PLAYER_ONE)
+        {
+            switch (keyNumber)
+            {
+                case BUTTON_INPUT.A:
+                    return Input.GetButtonUp("A_button_xBox360");
+                case BUTTON_INPUT.B:
+                    return Input.GetButtonUp("B_button_xBox360");
+                case BUTTON_INPUT.X:
+                    return Input.GetButtonUp("X_button_xBox360");
+                case BUTTON_INPUT.Y:
+                    return Input.GetButtonUp("Y_button_xBox360");
+                case BUTTON_INPUT.L1:
+                    return Input.GetButtonUp("L1_button_xBox360");
+                case BUTTON_INPUT.R1:
+                    return Input.GetButtonUp("R1_button_xBox360");
+                case BUTTON_INPUT.BACK:
+                    return Input.GetButtonUp("back_button_xBox360");
+                case BUTTON_INPUT.START:
+                    return Input.GetButtonUp("start_button_xBox360");
+                case BUTTON_INPUT.L3:
+                    return Input.GetButtonUp("L3_button_xBox360");
+                case BUTTON_INPUT.R3:
+                    return Input.GetButtonUp("R3_button_xBox360");
+
+
+            }
+
+        }
+        else if (player == PLAYER.PLAYER_TWO)
+        {
+            switch (keyNumber)
+            {
+                case BUTTON_INPUT.A:
+                    return Input.GetButtonUp("A_button_xBox360_player2");
+                case BUTTON_INPUT.B:
+                    return Input.GetButtonUp("B_button_xBox360_player2");
+                case BUTTON_INPUT.X:
+                    return Input.GetButtonUp("X_button_xBox360_player2");
+                case BUTTON_INPUT.Y:
+                    return Input.GetButtonUp("Y_button_xBox360_player2");
+                case BUTTON_INPUT.L1:
+                    return Input.GetButtonUp("L1_button_xBox360_player2");
+                case BUTTON_INPUT.R1:
+                    return Input.GetButtonUp("R1_button_xBox360_player2");
+                case BUTTON_INPUT.BACK:
+                    return Input.GetButtonUp("back_button_xBox360_player2");
+                case BUTTON_INPUT.START:
+                    return Input.GetButtonUp("start_button_xBox360_player2");
+                case BUTTON_INPUT.L3:
+                    return Input.GetButtonUp("L3_button_xBox360_player2");
+                case BUTTON_INPUT.R3:
+                    return Input.GetButtonUp("R3_button_xBox360_player2");
+
+
+            }
+        }
+        return false;
+    }
+
     public override FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player )
     {
         if (player == PLAYER.PLAYER_ONE)

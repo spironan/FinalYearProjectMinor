@@ -54,7 +54,18 @@ public class PlayerControllerManager : MonoBehaviour
     public bool getIsKeyDown(BUTTON_INPUT input)
     {
         return currController.CheckForKeyPress(input, playerID);
-    } 
+    }
+
+    public bool getIsKeyDownHold(BUTTON_INPUT input)
+    {
+        return currController.CheckForKeyPressHold(input, playerID);
+    }
+
+    public bool getIsKeyDownUp(BUTTON_INPUT input)
+    {
+        return currController.CheckForKeyPressUp(input, playerID);
+    }
+
 
     public FloatAndBool getValueFromAxis(JOYSTICK_AXIS_INPUT input)
     {

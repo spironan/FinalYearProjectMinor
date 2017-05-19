@@ -23,9 +23,29 @@ public class ListOfControllerActions : MonoBehaviour {
         return playerControllerManager.getIsKeyDown(buttonBinds[action]);
     }
 
+    public bool getButtonHoldAction(ACTIONS action)
+    {
+        return playerControllerManager.getIsKeyDownHold(buttonBinds[action]);
+    }
+
+    public bool getButtonUpAction(ACTIONS action)
+    {
+        return playerControllerManager.getIsKeyDownUp(buttonBinds[action]);
+    }
+
     public bool getIsKeyDown(BUTTON_INPUT button)
     {
         return playerControllerManager.getIsKeyDown(button);
+    }
+
+    public bool getIsKeyHold(BUTTON_INPUT button)
+    {
+        return playerControllerManager.getIsKeyDownHold(button);
+    }
+
+    public bool getIsKeyUp(BUTTON_INPUT button)
+    {
+        return playerControllerManager.getIsKeyDownUp(button);
     }
 
     public bool getAxisActionBool(ACTIONS action)
