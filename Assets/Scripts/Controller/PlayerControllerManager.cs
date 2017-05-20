@@ -52,7 +52,7 @@ public class PlayerControllerManager : MonoBehaviour
     {
         if (Input.GetJoystickNames().Length > 0 && Input.GetJoystickNames().Length > (int)playerID)
         {
-            Debug.Log(Input.GetJoystickNames());
+            //Debug.Log(Input.GetJoystickNames());
             if (Input.GetJoystickNames()[(int)playerID].Contains("360") || Input.GetJoystickNames()[(int)playerID].Contains("GamepadF310"))
             {
                 currController = XBox360;
@@ -92,6 +92,10 @@ public class PlayerControllerManager : MonoBehaviour
     public FloatAndBool getValueFromAxis(JOYSTICK_AXIS_INPUT input)
     {
         return currController.CheckForJoyStickAxis(input, playerID);
+    }
+    public bool getAxisKeyDown(JOYSTICK_AXIS_INPUT input)
+    {
+        return currController.CheckForJoyStickAxisDown(input, playerID);
     }
 }
 

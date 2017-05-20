@@ -227,16 +227,16 @@ public class PS4ControllerInput : ControllerInput {
                     floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4"), Input.GetAxis("rightStick_Y_PS4") < 0);
                     break;
                 case JOYSTICK_AXIS_INPUT.R3_LEFT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4"), Input.GetAxis("rightStick_Y_PS4") < 0);
+                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_PS4"), Input.GetAxis("rightStick_X_PS4") < 0);
                     break;
                 case JOYSTICK_AXIS_INPUT.R3_RIGHT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4"), Input.GetAxis("rightStick_Y_PS4") > 0);
+                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_PS4"), Input.GetAxis("rightStick_X_PS4") > 0);
                     break;
                 case JOYSTICK_AXIS_INPUT.R3_Y:
                     floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4"), false);
                     break;
                 case JOYSTICK_AXIS_INPUT.R3_X:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4"), false);
+                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_PS4"), false);
                     break;
                 case JOYSTICK_AXIS_INPUT.DPAD_UP:
                     floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_PS4"), Input.GetAxis("DPad_Y_PS4") > 0);
@@ -299,16 +299,16 @@ public class PS4ControllerInput : ControllerInput {
                     floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4_player2"), Input.GetAxis("rightStick_Y_PS4_player2") < 0);
                     break;
                 case JOYSTICK_AXIS_INPUT.R3_LEFT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4_player2"), Input.GetAxis("rightStick_Y_PS4_player2") < 0);
+                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_PS4_player2"), Input.GetAxis("rightStick_X_PS4_player2") < 0);
                     break;
                 case JOYSTICK_AXIS_INPUT.R3_RIGHT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4_player2"), Input.GetAxis("rightStick_Y_PS4_player2") > 0);
+                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_PS4_player2"), Input.GetAxis("rightStick_X_PS4_player2") > 0);
                     break;
                 case JOYSTICK_AXIS_INPUT.R3_Y:
                     floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4_player2"), false);
                     break;
                 case JOYSTICK_AXIS_INPUT.R3_X:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4_player2"), false);
+                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_PS4_player2"), false);
                     break;
                 case JOYSTICK_AXIS_INPUT.DPAD_UP:
                     floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_PS4_player2"), Input.GetAxis("DPad_Y_PS4_player2_player2") > 0);
@@ -341,6 +341,205 @@ public class PS4ControllerInput : ControllerInput {
             return floatAndBool;
         }
 
+    }
+
+    public override bool CheckForJoyStickAxisDown(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player)
+    {
+        if (player == PLAYER.PLAYER_ONE)
+        {
+
+            switch (joyStickNumber)
+            {
+                case JOYSTICK_AXIS_INPUT.L2:
+                    //L2_button_PS4
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "L2_button_PS4", 1.0f);
+                    break;
+                case JOYSTICK_AXIS_INPUT.R2:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "R2_button_PS4", 1.0f);
+                    break;
+                case JOYSTICK_AXIS_INPUT.L3_UP:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_PS4");
+                    break;
+                case JOYSTICK_AXIS_INPUT.L3_DOWN:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_PS4", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.L3_LEFT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_PS4", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.L3_RIGHT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_PS4");
+                    break;
+                //case JOYSTICK_AXIS_INPUT.L3_Y:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_PS4"), false);
+                //    break;
+                //case JOYSTICK_AXIS_INPUT.L3_X:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_PS4"), false);
+                //    break;
+                case JOYSTICK_AXIS_INPUT.R3_UP:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_PS4");
+                    break;
+                case JOYSTICK_AXIS_INPUT.R3_DOWN:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_PS4", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.R3_LEFT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_PS4", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.R3_RIGHT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_PS4");
+                    break;
+                //case JOYSTICK_AXIS_INPUT.R3_Y:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4"), false);
+                //    break;
+                //case JOYSTICK_AXIS_INPUT.R3_X:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4"), false);
+                //    break;
+                case JOYSTICK_AXIS_INPUT.DPAD_UP:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_PS4");
+                    break;
+                case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_PS4",0.0f,false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_PS4", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_PS4");
+                    break;
+                //case JOYSTICK_AXIS_INPUT.DPAD_Y:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_PS4"), false);
+                //    break;
+                //case JOYSTICK_AXIS_INPUT.DPAD_X:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_PS4"), false);
+                //    break;
+                default:
+                    floatAndBool.setFloatAndBool(0, false);
+                    break;
+
+            }
+            return floatAndBool.getBool();
+
+        }
+        else if (player == PLAYER.PLAYER_TWO)
+        {
+            switch (joyStickNumber)
+            {
+                case JOYSTICK_AXIS_INPUT.L2:
+                    //L2_button_PS4
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "L2_button_PS4_player2", 1.0f);
+                    break;
+                case JOYSTICK_AXIS_INPUT.R2:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "R2_button_PS4_player2", 1.0f);
+                    break;
+                case JOYSTICK_AXIS_INPUT.L3_UP:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_PS4_player2");
+                    break;
+                case JOYSTICK_AXIS_INPUT.L3_DOWN:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_PS4_player2", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.L3_LEFT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_PS4_player2", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.L3_RIGHT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_PS4_player2");
+                    break;
+                //case JOYSTICK_AXIS_INPUT.L3_Y:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_PS4_player2"), false);
+                //    break;
+                //case JOYSTICK_AXIS_INPUT.L3_X:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_PS4_player2"), false);
+                //    break;
+                case JOYSTICK_AXIS_INPUT.R3_UP:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_PS4_player2");
+                    break;
+                case JOYSTICK_AXIS_INPUT.R3_DOWN:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_PS4_player2", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.R3_LEFT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_PS4_player2", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.R3_RIGHT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_PS4_player2");
+                    break;
+                //case JOYSTICK_AXIS_INPUT.R3_Y:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4_player2"), false);
+                //    break;
+                //case JOYSTICK_AXIS_INPUT.R3_X:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_PS4_player2"), false);
+                //    break;
+                case JOYSTICK_AXIS_INPUT.DPAD_UP:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_PS4_player2");
+                    break;
+                case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_PS4_player2", 0.0f,false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_PS4_player2", 0.0f, false);
+                    break;
+                case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
+                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_PS4_player2");
+                    break;
+                //case JOYSTICK_AXIS_INPUT.DPAD_Y:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_PS4_player2"), false);
+                //    break;
+                //case JOYSTICK_AXIS_INPUT.DPAD_X:
+                //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_PS4_player2"), false);
+                //    break;
+                default:
+                    floatAndBool.setFloatAndBool(0, false);
+                    break;
+
+            }
+            return floatAndBool.getBool();
+        }
+        else
+        {
+            floatAndBool.setFloatAndBool(0, false);
+            return floatAndBool.getBool();
+        }
+
+    }
+
+    public override void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber, string rawKeyName, float offset = 0, bool positiveAxis = true)
+    {
+        if (!isJoystickKeyPressed.ContainsKey(joyStickNumber))
+        {
+            isJoystickKeyPressed.Add(joyStickNumber, false);
+        }
+        if (positiveAxis)
+        {
+            if (Input.GetAxis(rawKeyName) + offset > 0 && !isJoystickKeyPressed[joyStickNumber])
+            {
+                keyDown = true;
+                isJoystickKeyPressed[joyStickNumber] = true;
+            }
+            else if (Input.GetAxis(rawKeyName) + offset > 0 && isJoystickKeyPressed[joyStickNumber])
+            {
+                keyDown = false;
+            }
+            else
+            {
+                keyDown = false;
+                isJoystickKeyPressed[joyStickNumber] = false;
+            }
+        }
+        else
+        {
+            if (Input.GetAxis(rawKeyName) + offset < 0 && !isJoystickKeyPressed[joyStickNumber])
+            {
+                keyDown = true;
+                isJoystickKeyPressed[joyStickNumber] = true;
+            }
+            else if (Input.GetAxis(rawKeyName) + offset < 0 && isJoystickKeyPressed[joyStickNumber])
+            {
+                keyDown = false;
+            }
+            else
+            {
+                keyDown = false;
+                isJoystickKeyPressed[joyStickNumber] = false;
+            }
+        }
+        floatAndBool.setFloatAndBool(0, keyDown);
     }
 }
 //if ((int)keyNumber < 5)
