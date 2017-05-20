@@ -3,6 +3,7 @@ using System.Collections;
 
 //[RequireComponent(typeof(PlayerControllerManager))]
 [RequireComponent(typeof(ListOfControllerActions))]
+[RequireComponent(typeof(CharacterBase))]
 public class SkillActivator : MonoBehaviour {
 
     public GameObject skill1;
@@ -28,7 +29,7 @@ public class SkillActivator : MonoBehaviour {
     void Awake()
     {
         dpadDown = false;
-
+        player_number = GetComponent<CharacterBase>().getPlayerID();
         playerControllerManager = GetComponent<PlayerControllerManager>();
         playerControllerManager.init(player_number);
         bindedACtions = GetComponent<ListOfControllerActions>();

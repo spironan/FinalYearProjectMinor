@@ -330,6 +330,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10450ea5cb55cc046bbc5692b07d2139, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &261613202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 261613203}
+  - 114: {fileID: 261613204}
+  m_Layer: 0
+  m_Name: StunMeter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &261613203
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 261613202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 265414985}
+  m_RootOrder: 1
+--- !u!114 &261613204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 261613202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ea9da26901be8e47aa0c532cc6fbf0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunValue: 0.1
+  border: {fileID: 0}
+  fill: {fileID: 0}
 --- !u!1001 &262626512
 Prefab:
   m_ObjectHideFlags: 0
@@ -405,6 +447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4851949783ced4f45b4fa7798326f8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerID: 0
+  controller: {fileID: 0}
 --- !u!114 &265414983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,6 +509,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 917549142}
+  - {fileID: 261613203}
   m_Father: {fileID: 0}
   m_RootOrder: 7
 --- !u!61 &265414986
@@ -497,7 +542,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!114 &265414988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,6 +602,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4851949783ced4f45b4fa7798326f8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerID: 1
+  controller: {fileID: 0}
 --- !u!114 &388661231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,13 +690,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 10
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.5
   m_GravityScale: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &388661236
 MonoBehaviour:
   m_ObjectHideFlags: 0

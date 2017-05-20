@@ -2,8 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 
+[RequireComponent(typeof(PlayerControllerManager))]
 public class CharacterBase : MonoBehaviour 
 {
+    public PLAYER playerID;
+    public PlayerControllerManager controller;
     //Character Basic Data Variable(s)
     bool inAir;
     bool canJump;
@@ -51,6 +54,8 @@ public class CharacterBase : MonoBehaviour
         type = ATTACKTYPE.MID_RANGE;
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         Init();
+        controller = GetComponent<PlayerControllerManager>();
+        controller.init(playerID);
     }
     //This Data Are to Be Loaded from a DataBase Next Time
     public virtual void Init()
@@ -79,6 +84,19 @@ public class CharacterBase : MonoBehaviour
         Recalculate();
     }
 
+    //get the plauerID
+    public PLAYER getPlayerID()
+    {
+        return playerID;
+    }
+
+    //set the playerID
+
+    public void setPlayerID(PLAYER id)
+    {
+        playerID = id;
+    } 
+
     //Read the Different Inputs and convert into the same input
     public virtual void ReadControl()
     {
@@ -95,13 +113,13 @@ public class CharacterBase : MonoBehaviour
             direction.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
         //xBox360 Controller Support
-        else if (Input.GetAxis("leftStick_X_xBox360") != 0 
-            || Input.GetAxis("leftStick_Y_xBox360") < -0.9)
+        else if (controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_X).getFloat() != 0 
+            || controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_Y).getFloat() < -0.9)
         {
-            if (Input.GetAxis("leftStick_Y_xBox360") > -0.9)
-                direction.Set(Input.GetAxis("leftStick_X_xBox360"), 0);    
+            if (controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_Y).getFloat() > -0.9)
+                direction.Set(controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_X).getFloat(), 0);    
             else
-                direction.Set(Input.GetAxis("leftStick_X_xBox360"), 1);
+                direction.Set(controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_X).getFloat(), 1);
         }
     }
     public virtual bool MoveCondition()

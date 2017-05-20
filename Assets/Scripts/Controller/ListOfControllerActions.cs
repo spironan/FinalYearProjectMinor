@@ -63,6 +63,11 @@ public class ListOfControllerActions : MonoBehaviour {
         return playerControllerManager.getValueFromAxis(axis).getBool();
     }
 
+    public bool getAxisBoolDown(JOYSTICK_AXIS_INPUT axis)
+    {
+        return playerControllerManager.getAxisKeyDown(axis);
+    }
+
     public float getAxisFloat(JOYSTICK_AXIS_INPUT axis)
     {
         return playerControllerManager.getValueFromAxis(axis).getFloat();
