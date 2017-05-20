@@ -23,6 +23,7 @@ public class CharSelectSceneManager : MonoBehaviour
         manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         charSelectData = charSelectHolder.GetComponent<CharacterSelectScript>();
         mapSelectHolder.SetActive(false);
+        manager.ChangeState(GAMESTATE.CHAR_SELECT);
 	}
 	
 	// Update is called once per frame
@@ -68,6 +69,7 @@ public class CharSelectSceneManager : MonoBehaviour
             currentPhase = SELECTIONPHASE.BEGIN_MATCH;
         else if (mapSelectData.CancelMapSelect())
         {
+            mapSelectData.SetCancel(false);
             mapSelectHolder.SetActive(false);
             charSelectData.UnFinish();
             currentPhase = SELECTIONPHASE.PICKING;

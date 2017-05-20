@@ -5,14 +5,18 @@ using System.Collections;
 public class MapSlot : MonoBehaviour 
 {
     public GameObject left = null, right = null;
-    //public Map map;
     PLAYMAPS mapID;
 
-    Vector3 centerPos;
-    float angleDif = 0.0f, currAngle = 0.0f, targetAngle = 0.0f;
-    float radius = 0.0f, durationToTarget = 0.0f, angularVel = 0.0f,countDownTimer = 0.0f;
+    Vector3 destination = Vector3.zero;
+    Vector3 dir = Vector3.zero;
+    float speed = 1.0f;
+    float timeToDest = 0.0f;
     bool atDest = true;
 
+    //public Map map;
+    //Vector3 centerPos;
+    //float angleDif = 0.0f, currAngle = 0.0f, targetAngle = 0.0f;
+    //float radius = 0.0f, durationToTarget = 0.0f, angularVel = 0.0f,countDownTimer = 0.0f;
     //Vector3 centrePos;
     //float defaultAngle = 0.0f;
     //float currAngle = 0.0f;
@@ -22,130 +26,151 @@ public class MapSlot : MonoBehaviour
     //float timeToRotate = 0.0f;
     //float radius;
 
+    //void FixedUpdate()
+    //{
+    //    //if (!atDest)
+    //    //{
+    //    //    angularVel = (angleDif * Time.deltaTime) / durationToTarget;
+
+    //    //    currAngle += angularVel;
+    //    //    CheckOverUnderFlow();
+    //    //    float x = Mathf.Sin(currAngle * Mathf.PI * 2) * radius;
+    //    //    float z = Mathf.Cos(currAngle * Mathf.PI * 2) * radius;
+
+    //    //    gameObject.transform.localPosition = centerPos + new Vector3(x, 0, -z);
+
+    //    //    countDownTimer -= Time.deltaTime;
+    //    //    if (Mathf.Abs(targetAngle - currAngle) < 0.001f || countDownTimer <= 0.0f)
+    //    //    {
+    //    //        countDownTimer = 0.0f;
+    //    //        atDest = true;
+    //    //    }
+    //    //}
+    //    //while (currAngle > 1.0f)
+    //    //    currAngle -= 1.0f;
+    //    //while(currAngle < -1.0f)
+    //    //    currAngle += 1.0f;
+    //    //while (angleToReach > 1.0f)
+    //    //    angleToReach -= 1.0f;
+    //    //while (angleToReach < -1.0f)
+    //    //    angleToReach += 1.0f;
+
+    //    //if (Mathf.Abs(currAngle - angleToReach) > 0.001f)
+    //    //{
+    //    //    angularVelocity = (angleToMove * Time.deltaTime) / timeToRotate;
+    //    //    //Debug.Log("Angular Vel : " + angularVelocity);
+
+    //    //    currAngle += angularVelocity;
+    //    //    //Debug.Log("currAngle : " + currAngle);
+    //    //    float x = Mathf.Sin(currAngle * Mathf.PI * 2) * radius;
+    //    //    float z = Mathf.Cos(currAngle * Mathf.PI * 2) * radius;
+    //    //    gameObject.transform.localPosition = centrePos + new Vector3(x, 0, -z);
+
+    //    //    //if (angularVelocity > 0.0f)
+    //    //    //{
+    //    //    //    angleToMove -= angularVelocity;
+    //    //    //    if (angleToMove < 0.0f)
+    //    //    //        angleToMove = 0.0f;
+    //    //    //}
+    //    //    //else if (angularVelocity < 0.0f)
+    //    //    //{
+    //    //    //    angleToMove += angularVelocity;
+    //    //    //    if (angleToMove > 0.0f)
+    //    //    //        angleToMove = 0.0f;
+    //    //    //}
+    //    //    //timeToRotate -= Time.deltaTime;
+    //    //    //if (timeToRotate < 0.0f)
+    //    //    //    timeToRotate = 0.0f;
+    //    //}
+    //}
+
+    ////void CheckOverUnderFlow()
+    ////{
+    ////    if (currAngle >= 1.0f)
+    ////        currAngle -= 1.0f;
+    ////    else if (currAngle <= -1.0f)
+    ////        currAngle += 1.0f;
+
+    ////    if (targetAngle >= 1.0f)
+    ////        targetAngle -= 1.0f;
+    ////    else if (targetAngle <= -1.0f)
+    ////        targetAngle += 1.0f;
+    ////}
+    ////public void SetRadius(float newRadius)
+    ////{
+    ////    radius = newRadius;
+    ////    Debug.Log("new radius is : " + radius);
+    ////}
+
+    ////public void SetCenter(Vector3 center)
+    ////{
+    ////    centerPos = center;
+    ////}
+
+    ////public void SetCurrAngle(float newAngle) 
+    ////{
+    ////    //defaultAngle = angleToReach = currAngle = newAngle; 
+    ////    targetAngle = currAngle = newAngle;
+    ////    //Debug.Log("currAngle : " + currAngle);
+    ////}
+
+    //public void Move(float angle, float rotateTime)
+    //{
+    //    //targetAngle = targetAngle + angle;
+    //    //countDownTimer = durationToTarget = rotateTime;
+    //    //angleDif = targetAngle - currAngle;
+    //    //atDest = false;
+    //    //Debug.Log("targetAngle : " + targetAngle + " currAngle : " + currAngle + " angleDif : " + angleDif);
+    //    //CheckOverUnderFlow();
+    //    //switch(direction)
+    //    //{
+    //    //    case "Left":
+    //    //        //angleToMove -= angle;
+    //    //        //timeToRotate += rotateTime;
+    //    //        //angleToReach = defaultAngle + angleToMove;
+    //    //    break;
+    //    //    case "Right":
+    //    //        //angleToMove += angle;
+    //    //        //timeToRotate += rotateTime;
+    //    //        //angleToReach = defaultAngle + angleToMove;
+    //    //    break;
+    //    //}
+
+    //    //while (angleToMove > 1.0f)
+    //    //    angleToMove -= 1.0f;
+    //    //while (angleToMove < -1.0f)
+    //    //    angleToMove += 1.0f;
+    //}
+    public void SetSpeed(float speedVal) { speed = speedVal; }
     public void SetID(PLAYMAPS mapID) { this.mapID = mapID; }
-
     public int GetMapID() { return (int)mapID; }
-
-    void Update()
-    {
-        CheckOverUnderFlow();
-    }
-
-    void CheckOverUnderFlow()
-    {
-        if (currAngle >= 1.0f)
-            currAngle -= 1.0f;
-        else if (currAngle <= -1.0f)
-            currAngle += 1.0f;
-
-        if (targetAngle >= 1.0f)
-            targetAngle -= 1.0f;
-        else if (targetAngle <= -1.0f)
-            targetAngle += 1.0f;
-    }
 
     void FixedUpdate()
     {
-        if (!atDest)
+        //CheckOverUnderFlow();
+        if (timeToDest > Time.deltaTime)
         {
-            angularVel = (angleDif * Time.deltaTime) / durationToTarget;
-
-            currAngle += angularVel;
-            CheckOverUnderFlow();
-            float x = Mathf.Sin(currAngle * Mathf.PI * 2) * radius;
-            float z = Mathf.Cos(currAngle * Mathf.PI * 2) * radius;
-
-            gameObject.transform.localPosition = centerPos + new Vector3(x, 0, -z);
-
-            countDownTimer -= Time.deltaTime;
-            if (Mathf.Abs(targetAngle - currAngle) < 0.001f || countDownTimer <= 0.0f)
-            {
-                countDownTimer = 0.0f;
-                atDest = true;
-            }
- 
+            Debug.Log("Time To Dest : " + timeToDest);
+            timeToDest -= Time.deltaTime;
+            transform.position += dir * Time.deltaTime * speed;
         }
-        //while (currAngle > 1.0f)
-        //    currAngle -= 1.0f;
-        //while(currAngle < -1.0f)
-        //    currAngle += 1.0f;
-        //while (angleToReach > 1.0f)
-        //    angleToReach -= 1.0f;
-        //while (angleToReach < -1.0f)
-        //    angleToReach += 1.0f;
-
-        //if (Mathf.Abs(currAngle - angleToReach) > 0.001f)
-        //{
-        //    angularVelocity = (angleToMove * Time.deltaTime) / timeToRotate;
-        //    //Debug.Log("Angular Vel : " + angularVelocity);
-
-        //    currAngle += angularVelocity;
-        //    //Debug.Log("currAngle : " + currAngle);
-        //    float x = Mathf.Sin(currAngle * Mathf.PI * 2) * radius;
-        //    float z = Mathf.Cos(currAngle * Mathf.PI * 2) * radius;
-        //    gameObject.transform.localPosition = centrePos + new Vector3(x, 0, -z);
-
-        //    //if (angularVelocity > 0.0f)
-        //    //{
-        //    //    angleToMove -= angularVelocity;
-        //    //    if (angleToMove < 0.0f)
-        //    //        angleToMove = 0.0f;
-        //    //}
-        //    //else if (angularVelocity < 0.0f)
-        //    //{
-        //    //    angleToMove += angularVelocity;
-        //    //    if (angleToMove > 0.0f)
-        //    //        angleToMove = 0.0f;
-        //    //}
-        //    //timeToRotate -= Time.deltaTime;
-        //    //if (timeToRotate < 0.0f)
-        //    //    timeToRotate = 0.0f;
-        //}
+        else if (timeToDest <= Time.deltaTime && timeToDest > 0)
+        {
+            timeToDest = 0.0f;
+            transform.position = destination;
+            dir = Vector3.zero;
+            atDest = true;
+        }
     }
 
-    public void SetRadius(float newRadius)
+    public void Move(Vector3 newLocation)
     {
-        radius = newRadius;
-        Debug.Log("new radius is : " + radius);
-    }
-
-    public void SetCenter(Vector3 center)
-    {
-        centerPos = center;
-    }
-
-    public void SetCurrAngle(float newAngle) 
-    {
-        //defaultAngle = angleToReach = currAngle = newAngle; 
-        targetAngle = currAngle = newAngle;
-        //Debug.Log("currAngle : " + currAngle);
-    }
-
-    public void Move(float angle, float rotateTime)
-    {
-        targetAngle = targetAngle + angle;
-        countDownTimer = durationToTarget = rotateTime;
-        angleDif = targetAngle - currAngle;
-        atDest = false;
-        Debug.Log("targetAngle : " + targetAngle + " currAngle : " + currAngle + " angleDif : " + angleDif);
-        CheckOverUnderFlow();
-        //switch(direction)
-        //{
-        //    case "Left":
-        //        //angleToMove -= angle;
-        //        //timeToRotate += rotateTime;
-        //        //angleToReach = defaultAngle + angleToMove;
-        //    break;
-        //    case "Right":
-        //        //angleToMove += angle;
-        //        //timeToRotate += rotateTime;
-        //        //angleToReach = defaultAngle + angleToMove;
-        //    break;
-        //}
-
-        //while (angleToMove > 1.0f)
-        //    angleToMove -= 1.0f;
-        //while (angleToMove < -1.0f)
-        //    angleToMove += 1.0f;
+        if (atDest)
+        {
+            destination = newLocation;
+            dir = (destination - transform.position).normalized;
+            this.timeToDest = (destination - transform.position).magnitude / speed;
+            atDest = false;
+        }
     }
 }

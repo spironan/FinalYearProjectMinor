@@ -17,7 +17,6 @@ public class CharSelectLocationScript : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(charData.left);
     }
     
     public CHARACTERS GetCharName()
