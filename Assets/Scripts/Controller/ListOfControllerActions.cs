@@ -52,6 +52,10 @@ public class ListOfControllerActions : MonoBehaviour {
     {
         return playerControllerManager.getValueFromAxis(joystickBinds[action]).getBool();
     }
+    public bool getAxisActionBoolDown(ACTIONS action)
+    {
+        return playerControllerManager.getAxisKeyDown(joystickBinds[action]);
+    }
 
     public float getAxisActionFloat(ACTIONS action)
     {
