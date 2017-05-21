@@ -109,21 +109,21 @@ public class CharacterSelectScript : MonoBehaviour
         {
             PlayerData player = gameManager.GetPlayer(i);
             //Move Left Right
-            if (player.controller.getAxisActionBool(ACTIONS.MOVE_LEFT))
+            if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
             {
                 playerFrames[i].MoveLeft();
             }
-            else if (player.controller.getAxisActionBool(ACTIONS.MOVE_RIGHT)) 
+            else if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT)) 
             {
                playerFrames[i].MoveRight();
             }
 
             // Move Up Down
-            if (player.controller.getAxisActionBool(ACTIONS.MOVE_UP))
+            if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_UP))
             {
                playerFrames[i].MoveUp();
             }
-            else if (player.controller.getAxisActionBool(ACTIONS.MOVE_DOWN))
+            else if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
             {
                playerFrames[i].MoveDown();
             }

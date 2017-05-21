@@ -11,6 +11,8 @@ public class BattleSceneManager : MonoBehaviour
     float curBattleTimer;
     float maxBattleTimer;
     GAME_MODES gameMode;
+    bool gameWon = false;
+    int currentRound = 1;
 
     public float GetCurrentBattleTimer() { return curBattleTimer; }
 
@@ -25,15 +27,14 @@ public class BattleSceneManager : MonoBehaviour
         ResetTimer();
     }
 
-    BattleSceneManager() 
-    {
-    }
+    public int GetCurrentRound() { return currentRound; }
 
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         currentMap = gameManager.GetCurrMap();
         SetGameMode(GAME_MODES.LOCAL_PVP);
+        currentRound = 1;
     }
 
     public void LoadOncePerScene()
@@ -48,12 +49,12 @@ public class BattleSceneManager : MonoBehaviour
     public void StartBattle()
     {
         //Add in Animation Time,Counter Countdown Time next time here
-        ResetTimer();
-        SetPlayerSpawnPoints();
+        ResetMatch();
     }
 
     public void ResetMatch()
     {
+        currentRound++;
         ResetPlayerCharacters();
         SetPlayerSpawnPoints();
         ResetTimer();
@@ -79,7 +80,11 @@ public class BattleSceneManager : MonoBehaviour
     
     public void Update()
     {
-        UpdateTimer();  
+        UpdateTimer();
+        CheckForDeath();
+
+        if (gameWon)
+            EndMatch();
     }
 
     void UpdateTimer()
@@ -87,14 +92,21 @@ public class BattleSceneManager : MonoBehaviour
         if (curBattleTimer > 0)
             curBattleTimer -= Time.deltaTime;
         else
+            gameWon = true;
+    }
+
+    void CheckForDeath()
+    {
+        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
-            EndMatch();
-            ResetMatch();
+            if (playerCharacters[i].GetComponent<CharacterBase>().GetDead())
+                gameWon = true;
         }
     }
 
     void ResetTimer()
     {
+        gameWon = false;
         curBattleTimer = maxBattleTimer;
     }
 
@@ -114,6 +126,9 @@ public class BattleSceneManager : MonoBehaviour
         }
         if (winnerID != -1)
             gameManager.GetPlayer(winnerID).GetInGameData().WinMatch();
+
+
+        ResetMatch();
     }
 
 }

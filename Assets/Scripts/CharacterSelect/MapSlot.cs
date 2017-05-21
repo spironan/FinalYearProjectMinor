@@ -7,12 +7,6 @@ public class MapSlot : MonoBehaviour
     public GameObject left = null, right = null;
     PLAYMAPS mapID;
 
-    Vector3 destination = Vector3.zero;
-    Vector3 dir = Vector3.zero;
-    float speed = 1.0f;
-    float timeToDest = 0.0f;
-    bool atDest = true;
-
     //public Map map;
     //Vector3 centerPos;
     //float angleDif = 0.0f, currAngle = 0.0f, targetAngle = 0.0f;
@@ -141,36 +135,6 @@ public class MapSlot : MonoBehaviour
     //    //while (angleToMove < -1.0f)
     //    //    angleToMove += 1.0f;
     //}
-    public void SetSpeed(float speedVal) { speed = speedVal; }
     public void SetID(PLAYMAPS mapID) { this.mapID = mapID; }
     public int GetMapID() { return (int)mapID; }
-
-    void FixedUpdate()
-    {
-        //CheckOverUnderFlow();
-        if (timeToDest > Time.deltaTime)
-        {
-            Debug.Log("Time To Dest : " + timeToDest);
-            timeToDest -= Time.deltaTime;
-            transform.position += dir * Time.deltaTime * speed;
-        }
-        else if (timeToDest <= Time.deltaTime && timeToDest > 0)
-        {
-            timeToDest = 0.0f;
-            transform.position = destination;
-            dir = Vector3.zero;
-            atDest = true;
-        }
-    }
-
-    public void Move(Vector3 newLocation)
-    {
-        if (atDest)
-        {
-            destination = newLocation;
-            dir = (destination - transform.position).normalized;
-            this.timeToDest = (destination - transform.position).magnitude / speed;
-            atDest = false;
-        }
-    }
 }

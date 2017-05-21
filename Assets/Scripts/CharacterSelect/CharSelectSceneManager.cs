@@ -78,7 +78,8 @@ public class CharSelectSceneManager : MonoBehaviour
 
     void GoToNextScene()
     {
-        manager.LoadBattleScene();
+        LoadingScreenManager.LoadScene("BattleScene");
+        //manager.LoadBattleScene();
     }
 
 }

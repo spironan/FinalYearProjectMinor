@@ -18,11 +18,11 @@ public class MapSelectScript : MonoBehaviour
     //public int radius;
     //public float timeToRotate;
     //public float cutOffZ;
-    int currIndex = 0;
-    int totalMaps = 0;
     //float angularVelocity;
     //float rotationTime;
     //float shiftAngle;
+    int currIndex = 0;
+    int totalMaps = 0;
     float buttonCD;
     float buttonCurrCD;
     bool canActivate = true;
@@ -114,11 +114,11 @@ public class MapSelectScript : MonoBehaviour
 
         ///Controls here
         PlayerData player = gameManager.GetComponent<GameManager>().GetPlayer(0);
-        if (player.controller.getAxisActionBool(ACTIONS.MOVE_LEFT))
+        if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
         {
             ShiftLeft(); // Shift The Things To The Left 
         }
-        else if (player.controller.getAxisActionBool(ACTIONS.MOVE_RIGHT))
+        else if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT))
         {
             ShiftRight(); // Shift The Things To The Right
         }
@@ -165,52 +165,46 @@ public class MapSelectScript : MonoBehaviour
 
     public void ShiftLeft()
     {
-        if (canActivate)
-        {
-            canActivate = false;
-            buttonCurrCD = 0.0f;
-            Debug.Log("Shift Left Called ,Current Index is : " + currIndex);
-            if (currIndex > 0)
-            {
-                destination = transform.position + moveBy;
-                atDest = false;
-                dir = (destination - transform.position).normalized;
-                timeToDest = (destination - transform.position).magnitude / speed;
-                buttonCD = timeToDest;
-                DecreaseIndex();
-            }
-
-            //RotateByFixedAmount(1);
-            //for (int i = 0; i < totalMaps; ++i)
-            //{
-            //    int next = i + 1;
-            //    if (next == totalMaps)
-            //        next = 0;
-            //    maps[i].GetComponent<MapSlot>().Move(maps[next].transform.position);
-            //    //maps[i].GetComponent<MapSlot>().Move(-shiftAngle, timeToRotate);
-            //}
-            //transform.position = new Vector3(transform.position.x - amountToMove, transform.position.y, transform.position.z);
-            
-            ResizeMaps();
-        }
+        Shift("Left");
     }
 
     public void ShiftRight()
+    {
+        Shift("Right");
+    }
+
+    void Shift(string direction)
     {
         if (canActivate)
         {
             canActivate = false;
             buttonCurrCD = 0.0f;
-            Debug.Log("Shift Right Called ,Current Index is : " + currIndex + "total Maps is : " + totalMaps);
-            if (currIndex < totalMaps - 1)
+            switch (direction)
             {
-                destination = transform.position - moveBy;
-                atDest = false;
-                dir = (destination - transform.position).normalized;
-                timeToDest = (destination - transform.position).magnitude / speed;
-                buttonCD = timeToDest;
-                IncreaseIndex();
+                case "Left":
+                    if (currIndex > 0)
+                    {
+                        destination = transform.position + moveBy;
+                        atDest = false;
+                        dir = (destination - transform.position).normalized;
+                        timeToDest = (destination - transform.position).magnitude / speed;
+                        buttonCD = timeToDest;
+                        DecreaseIndex();
+                    }
+                    break;
+                case "Right":
+                    if (currIndex < totalMaps - 1)
+                    {
+                        destination = transform.position - moveBy;
+                        atDest = false;
+                        dir = (destination - transform.position).normalized;
+                        timeToDest = (destination - transform.position).magnitude / speed;
+                        buttonCD = timeToDest;
+                        IncreaseIndex();
+                    }
+                    break;
             }
+
             //RotateByFixedAmount(-1);
             //for (int i = 0; i < totalMaps; ++i)
             //{
@@ -221,7 +215,7 @@ public class MapSelectScript : MonoBehaviour
             //    //maps[i].GetComponent<MapSlot>().Move(shiftAngle, timeToRotate);
             //}
             //transform.position = new Vector3(transform.position.x + amountToMove, transform.position.y, transform.position.z);
-            
+
             ResizeMaps();
         }
     }
