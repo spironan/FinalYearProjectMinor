@@ -30,7 +30,7 @@ public class MapSelectScript : MonoBehaviour
     bool mapPicked = false;
     bool cancelled = false;
 
-    public Vector3 moveBy;
+    Vector3 moveBy;
     Vector3 destination = Vector3.zero;
     Vector3 dir = Vector3.zero;
     public float speed = 2.0f;
@@ -92,6 +92,7 @@ public class MapSelectScript : MonoBehaviour
             tempMap.right = maps[right];
         }
 
+        moveBy = new Vector3((itemWidth + spaceBetweenMaps)/619.195f,0,0);
         //Increase the size of the currentMap Slightly
         ResizeMaps();
 	}
