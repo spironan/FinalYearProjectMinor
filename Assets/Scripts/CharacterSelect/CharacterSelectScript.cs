@@ -176,4 +176,26 @@ public class CharacterSelectScript : MonoBehaviour
     }
 
     public void UnFinish() { finished = false; }
+
+    public string GetCurrChara(int playernum)
+    {
+        if (playernum >= (int)PLAYER.MAX_PLAYERS)
+        { 
+            Debug.Log("You fucked up, you entered a number too big playernum:" + playernum);
+            return null;
+        }
+
+        return playerFrames[playernum].GetCharName().ToString();
+    }
+
+    public Image GetCharaArt(int playernum)
+    {
+        if (playernum >= (int)PLAYER.MAX_PLAYERS)
+        {
+            Debug.Log("You fucked up, you entered a number too big playernum:" + playernum);
+            return null;
+        }
+        return CharacterManager.GetInstance().GetCharacterByName(playerFrames[playernum].GetCharName()).GetCharArt();
+    }
+
 }

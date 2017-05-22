@@ -88,7 +88,6 @@ public class CharacterManager : Singleton<CharacterManager>
         CHARACTERS go = (CHARACTERS)System.Enum.Parse(typeof(CHARACTERS), charName);
         return characterList.ContainsKey(go);
     }
-    
 }
 
     
