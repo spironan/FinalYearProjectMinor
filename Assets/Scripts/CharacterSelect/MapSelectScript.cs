@@ -277,4 +277,9 @@ public class MapSelectScript : MonoBehaviour
         }
     }
 
+    public string GetCurrentMapName() 
+    {
+        return MapManager.GetInstance().GetMap(currIndex).GetMapName();
+    }
+
 }

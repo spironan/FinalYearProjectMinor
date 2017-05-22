@@ -14,6 +14,7 @@ TagManager:
   - SpellSkill
   - SpecialSkill
   - PhysicalSkill
+  - MapSpawnArea
   layers:
   - Default
   - TransparentFX
