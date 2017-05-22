@@ -61,7 +61,36 @@ public enum CHARACTERS
 
 public enum BUTTON_INPUT
 {
-    A = 0,
+    //A = 0,
+    //B,
+    //X,
+    //Y,
+    //L1,
+    //R1,
+    //BACK,
+    //START,
+    //L3,
+    //R3,
+    X = 0,
+    A,
+    B,
+    Y,
+    L1,
+    R1,
+    L2,
+    R2,
+    BACK,
+    START,
+    L3,
+    R3,
+    PS,
+    PADPRESS,
+    TOTAL
+};
+
+public enum XBOX360
+{
+    A,
     B,
     X,
     Y,
@@ -71,7 +100,7 @@ public enum BUTTON_INPUT
     START,
     L3,
     R3,
-    TOTAL
+    TOTAL,
 };
 
 public enum JOYSTICK_AXIS_INPUT

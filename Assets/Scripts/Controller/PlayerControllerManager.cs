@@ -11,15 +11,20 @@ public class PlayerControllerManager : MonoBehaviour
     public ControllerInput currController;
     public PLAYER playerID;
 
+    public bool disableControls;
+
     //private string nameOfController;
     //private int numberOfControllers;
     private string[] listOfConnectedController;
 
     public void Awake()
     {
+        disableControls = false;
         currController = XBox360;
         if (detectController())
             listOfConnectedController = Input.GetJoystickNames();
+
+        currController.Start();
         //numberOfControllers = Input.GetJoystickNames().Length;
         //if (Input.GetJoystickNames().Length > (int)playerID)
         //{
@@ -46,6 +51,15 @@ public class PlayerControllerManager : MonoBehaviour
     {
         playerID = number;
         detectController();
+    }
+
+    public void DisableController()
+    {
+        disableControls = true;
+    }
+    public void EnableController()
+    {
+        disableControls = false;
     }
 
     public bool detectController()
@@ -75,27 +89,51 @@ public class PlayerControllerManager : MonoBehaviour
 
     public bool getIsKeyDown(BUTTON_INPUT input)
     {
-        return currController.CheckForKeyPress(input, playerID);
+        if (!disableControls)
+            return currController.CheckForKeyPress(input, playerID);
+        else
+            return false;
     }
 
     public bool getIsKeyDownHold(BUTTON_INPUT input)
     {
-        return currController.CheckForKeyPressHold(input, playerID);
+        if (!disableControls)
+            return currController.CheckForKeyPressHold(input, playerID);
+        else
+            return false;
     }
 
     public bool getIsKeyDownUp(BUTTON_INPUT input)
     {
-        return currController.CheckForKeyPressUp(input, playerID);
+        if (!disableControls)
+            return currController.CheckForKeyPressUp(input, playerID);
+        else
+            return false;
     }
 
 
     public FloatAndBool getValueFromAxis(JOYSTICK_AXIS_INPUT input)
     {
-        return currController.CheckForJoyStickAxis(input, playerID);
+        if (!disableControls)
+            return currController.CheckForJoyStickAxis(input, playerID);
+        else
+        {
+            currController.setFloatBool(0, false);
+            return currController.getFloatBool();
+        }
+            
     }
     public bool getAxisKeyDown(JOYSTICK_AXIS_INPUT input)
     {
-        return currController.CheckForJoyStickAxisDown(input, playerID);
+        if (!disableControls)
+            return currController.CheckForJoyStickAxisDown(input, playerID);
+        else
+            return false;
+    }
+
+    public bool isControllerDisabled()
+    {
+        return disableControls;
     }
 }
 

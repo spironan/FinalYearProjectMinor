@@ -5,188 +5,206 @@ public class PS4ControllerInput : ControllerInput {
     //public int playernum = 
     public override bool CheckForKeyPress(BUTTON_INPUT keyNumber, PLAYER player)
     {
-        if (player == PLAYER.PLAYER_ONE)
+        if(keyNumber < BUTTON_INPUT.TOTAL && player < PLAYER.MAX_PLAYERS)
         {
-            switch (keyNumber)
-            {
-                case BUTTON_INPUT.A:
-                    return Input.GetButtonDown("A_button_PS4");
-                case BUTTON_INPUT.B:
-                    return Input.GetButtonDown("B_button_PS4");
-                case BUTTON_INPUT.X:
-                    return Input.GetButtonDown("X_button_PS4");
-                case BUTTON_INPUT.Y:
-                    return Input.GetButtonDown("Y_button_PS4");
-                case BUTTON_INPUT.L1:
-                    return Input.GetButtonDown("L1_button_PS4");
-                case BUTTON_INPUT.R1:
-                    return Input.GetButtonDown("R1_button_PS4");
-                case BUTTON_INPUT.BACK:
-                    return Input.GetButtonDown("back_button_PS4");
-                case BUTTON_INPUT.START:
-                    return Input.GetButtonDown("start_button_PS4");
-                case BUTTON_INPUT.L3:
-                    return Input.GetButtonDown("L3_button_PS4");
-                case BUTTON_INPUT.R3:
-                    return Input.GetButtonDown("R3_button_PS4");
-
-
-            }
-            
-        }
-        else if (player == PLAYER.PLAYER_TWO)
-        {
-            switch (keyNumber)
-            {
-                case BUTTON_INPUT.A:
-                    return Input.GetButtonDown("A_button_PS4_player2");
-                case BUTTON_INPUT.B:
-                    return Input.GetButtonDown("B_button_PS4_player2");
-                case BUTTON_INPUT.X:
-                    return Input.GetButtonDown("X_button_PS4_player2");
-                case BUTTON_INPUT.Y:
-                    return Input.GetButtonDown("Y_button_PS4_player2");
-                case BUTTON_INPUT.L1:
-                    return Input.GetButtonDown("L1_button_PS4_player2");
-                case BUTTON_INPUT.R1:
-                    return Input.GetButtonDown("R1_button_PS4_player2");
-                case BUTTON_INPUT.BACK:
-                    return Input.GetButtonDown("back_button_PS4_player2");
-                case BUTTON_INPUT.START:
-                    return Input.GetButtonDown("start_button_PS4_player2");
-                case BUTTON_INPUT.L3:
-                    return Input.GetButtonDown("L3_button_PS4_player2");
-                case BUTTON_INPUT.R3:
-                    return Input.GetButtonDown("R3_button_PS4_player2");
-
-
-            }
+            string button = "joystick " + ((int)player+1) + " button " + (int)keyNumber;
+            return Input.GetKeyDown(button);
         }
         return false;
+        //if (player == PLAYER.PLAYER_ONE)
+        //{
+        //    switch (keyNumber)
+        //    {
+        //        case BUTTON_INPUT.A:
+        //            return Input.GetButtonDown("A_button_PS4");
+        //        case BUTTON_INPUT.B:
+        //            return Input.GetButtonDown("B_button_PS4");
+        //        case BUTTON_INPUT.X:
+        //            return Input.GetButtonDown("X_button_PS4");
+        //        case BUTTON_INPUT.Y:
+        //            return Input.GetButtonDown("Y_button_PS4");
+        //        case BUTTON_INPUT.L1:
+        //            return Input.GetButtonDown("L1_button_PS4");
+        //        case BUTTON_INPUT.R1:
+        //            return Input.GetButtonDown("R1_button_PS4");
+        //        case BUTTON_INPUT.BACK:
+        //            return Input.GetButtonDown("back_button_PS4");
+        //        case BUTTON_INPUT.START:
+        //            return Input.GetButtonDown("start_button_PS4");
+        //        case BUTTON_INPUT.L3:
+        //            return Input.GetButtonDown("L3_button_PS4");
+        //        case BUTTON_INPUT.R3:
+        //            return Input.GetButtonDown("R3_button_PS4");
+
+
+        //    }
+            
+        //}
+        //else if (player == PLAYER.PLAYER_TWO)
+        //{
+        //    switch (keyNumber)
+        //    {
+        //        case BUTTON_INPUT.A:
+        //            return Input.GetButtonDown("A_button_PS4_player2");
+        //        case BUTTON_INPUT.B:
+        //            return Input.GetButtonDown("B_button_PS4_player2");
+        //        case BUTTON_INPUT.X:
+        //            return Input.GetButtonDown("X_button_PS4_player2");
+        //        case BUTTON_INPUT.Y:
+        //            return Input.GetButtonDown("Y_button_PS4_player2");
+        //        case BUTTON_INPUT.L1:
+        //            return Input.GetButtonDown("L1_button_PS4_player2");
+        //        case BUTTON_INPUT.R1:
+        //            return Input.GetButtonDown("R1_button_PS4_player2");
+        //        case BUTTON_INPUT.BACK:
+        //            return Input.GetButtonDown("back_button_PS4_player2");
+        //        case BUTTON_INPUT.START:
+        //            return Input.GetButtonDown("start_button_PS4_player2");
+        //        case BUTTON_INPUT.L3:
+        //            return Input.GetButtonDown("L3_button_PS4_player2");
+        //        case BUTTON_INPUT.R3:
+        //            return Input.GetButtonDown("R3_button_PS4_player2");
+
+
+        //    }
+        //}
+        //return false;
     }
 
     public override bool CheckForKeyPressHold(BUTTON_INPUT keyNumber, PLAYER player)
     {
-        if (player == PLAYER.PLAYER_ONE)
+        if (keyNumber < BUTTON_INPUT.TOTAL && player < PLAYER.MAX_PLAYERS)
         {
-            switch (keyNumber)
-            {
-                case BUTTON_INPUT.A:
-                    return Input.GetButton("A_button_PS4");
-                case BUTTON_INPUT.B:
-                    return Input.GetButton("B_button_PS4");
-                case BUTTON_INPUT.X:
-                    return Input.GetButton("X_button_PS4");
-                case BUTTON_INPUT.Y:
-                    return Input.GetButton("Y_button_PS4");
-                case BUTTON_INPUT.L1:
-                    return Input.GetButton("L1_button_PS4");
-                case BUTTON_INPUT.R1:
-                    return Input.GetButton("R1_button_PS4");
-                case BUTTON_INPUT.BACK:
-                    return Input.GetButton("back_button_PS4");
-                case BUTTON_INPUT.START:
-                    return Input.GetButton("start_button_PS4");
-                case BUTTON_INPUT.L3:
-                    return Input.GetButton("L3_button_PS4");
-                case BUTTON_INPUT.R3:
-                    return Input.GetButton("R3_button_PS4");
-
-
-            }
-
-        }
-        else if (player == PLAYER.PLAYER_TWO)
-        {
-            switch (keyNumber)
-            {
-                case BUTTON_INPUT.A:
-                    return Input.GetButton("A_button_PS4_player2");
-                case BUTTON_INPUT.B:
-                    return Input.GetButton("B_button_PS4_player2");
-                case BUTTON_INPUT.X:
-                    return Input.GetButton("X_button_PS4_player2");
-                case BUTTON_INPUT.Y:
-                    return Input.GetButton("Y_button_PS4_player2");
-                case BUTTON_INPUT.L1:
-                    return Input.GetButton("L1_button_PS4_player2");
-                case BUTTON_INPUT.R1:
-                    return Input.GetButton("R1_button_PS4_player2");
-                case BUTTON_INPUT.BACK:
-                    return Input.GetButton("back_button_PS4_player2");
-                case BUTTON_INPUT.START:
-                    return Input.GetButton("start_button_PS4_player2");
-                case BUTTON_INPUT.L3:
-                    return Input.GetButton("L3_button_PS4_player2");
-                case BUTTON_INPUT.R3:
-                    return Input.GetButton("R3_button_PS4_player2");
-
-
-            }
+            string button = "joystick " + ((int)player + 1) + " button " + (int)keyNumber;
+            return Input.GetKey(button);
         }
         return false;
+        //if (player == PLAYER.PLAYER_ONE)
+        //{
+        //    switch (keyNumber)
+        //    {
+        //        case BUTTON_INPUT.A:
+        //            return Input.GetButton("A_button_PS4");
+        //        case BUTTON_INPUT.B:
+        //            return Input.GetButton("B_button_PS4");
+        //        case BUTTON_INPUT.X:
+        //            return Input.GetButton("X_button_PS4");
+        //        case BUTTON_INPUT.Y:
+        //            return Input.GetButton("Y_button_PS4");
+        //        case BUTTON_INPUT.L1:
+        //            return Input.GetButton("L1_button_PS4");
+        //        case BUTTON_INPUT.R1:
+        //            return Input.GetButton("R1_button_PS4");
+        //        case BUTTON_INPUT.BACK:
+        //            return Input.GetButton("back_button_PS4");
+        //        case BUTTON_INPUT.START:
+        //            return Input.GetButton("start_button_PS4");
+        //        case BUTTON_INPUT.L3:
+        //            return Input.GetButton("L3_button_PS4");
+        //        case BUTTON_INPUT.R3:
+        //            return Input.GetButton("R3_button_PS4");
+
+
+        //    }
+
+        //}
+        //else if (player == PLAYER.PLAYER_TWO)
+        //{
+        //    switch (keyNumber)
+        //    {
+        //        case BUTTON_INPUT.A:
+        //            return Input.GetButton("A_button_PS4_player2");
+        //        case BUTTON_INPUT.B:
+        //            return Input.GetButton("B_button_PS4_player2");
+        //        case BUTTON_INPUT.X:
+        //            return Input.GetButton("X_button_PS4_player2");
+        //        case BUTTON_INPUT.Y:
+        //            return Input.GetButton("Y_button_PS4_player2");
+        //        case BUTTON_INPUT.L1:
+        //            return Input.GetButton("L1_button_PS4_player2");
+        //        case BUTTON_INPUT.R1:
+        //            return Input.GetButton("R1_button_PS4_player2");
+        //        case BUTTON_INPUT.BACK:
+        //            return Input.GetButton("back_button_PS4_player2");
+        //        case BUTTON_INPUT.START:
+        //            return Input.GetButton("start_button_PS4_player2");
+        //        case BUTTON_INPUT.L3:
+        //            return Input.GetButton("L3_button_PS4_player2");
+        //        case BUTTON_INPUT.R3:
+        //            return Input.GetButton("R3_button_PS4_player2");
+
+
+        //    }
+        //}
+        //return false;
     }
 
     public override bool CheckForKeyPressUp(BUTTON_INPUT keyNumber, PLAYER player)
     {
-        if (player == PLAYER.PLAYER_ONE)
+        if (keyNumber < BUTTON_INPUT.TOTAL && player < PLAYER.MAX_PLAYERS)
         {
-            switch (keyNumber)
-            {
-                case BUTTON_INPUT.A:
-                    return Input.GetButtonUp("A_button_PS4");
-                case BUTTON_INPUT.B:
-                    return Input.GetButtonUp("B_button_PS4");
-                case BUTTON_INPUT.X:
-                    return Input.GetButtonUp("X_button_PS4");
-                case BUTTON_INPUT.Y:
-                    return Input.GetButtonUp("Y_button_PS4");
-                case BUTTON_INPUT.L1:
-                    return Input.GetButtonUp("L1_button_PS4");
-                case BUTTON_INPUT.R1:
-                    return Input.GetButtonUp("R1_button_PS4");
-                case BUTTON_INPUT.BACK:
-                    return Input.GetButtonUp("back_button_PS4");
-                case BUTTON_INPUT.START:
-                    return Input.GetButtonUp("start_button_PS4");
-                case BUTTON_INPUT.L3:
-                    return Input.GetButtonUp("L3_button_PS4");
-                case BUTTON_INPUT.R3:
-                    return Input.GetButtonUp("R3_button_PS4");
-
-
-            }
-
-        }
-        else if (player == PLAYER.PLAYER_TWO)
-        {
-            switch (keyNumber)
-            {
-                case BUTTON_INPUT.A:
-                    return Input.GetButtonUp("A_button_PS4_player2");
-                case BUTTON_INPUT.B:
-                    return Input.GetButtonUp("B_button_PS4_player2");
-                case BUTTON_INPUT.X:
-                    return Input.GetButtonUp("X_button_PS4_player2");
-                case BUTTON_INPUT.Y:
-                    return Input.GetButtonUp("Y_button_PS4_player2");
-                case BUTTON_INPUT.L1:
-                    return Input.GetButtonUp("L1_button_PS4_player2");
-                case BUTTON_INPUT.R1:
-                    return Input.GetButtonUp("R1_button_PS4_player2");
-                case BUTTON_INPUT.BACK:
-                    return Input.GetButtonUp("back_button_PS4_player2");
-                case BUTTON_INPUT.START:
-                    return Input.GetButtonUp("start_button_PS4_player2");
-                case BUTTON_INPUT.L3:
-                    return Input.GetButtonUp("L3_button_PS4_player2");
-                case BUTTON_INPUT.R3:
-                    return Input.GetButtonUp("R3_button_PS4_player2");
-
-
-            }
+            string button = "joystick " + ((int)player + 1) + " button " + (int)keyNumber;
+            return Input.GetKeyUp(button);
         }
         return false;
+        //if (player == PLAYER.PLAYER_ONE)
+        //{
+        //    switch (keyNumber)
+        //    {
+        //        case BUTTON_INPUT.A:
+        //            return Input.GetButtonUp("A_button_PS4");
+        //        case BUTTON_INPUT.B:
+        //            return Input.GetButtonUp("B_button_PS4");
+        //        case BUTTON_INPUT.X:
+        //            return Input.GetButtonUp("X_button_PS4");
+        //        case BUTTON_INPUT.Y:
+        //            return Input.GetButtonUp("Y_button_PS4");
+        //        case BUTTON_INPUT.L1:
+        //            return Input.GetButtonUp("L1_button_PS4");
+        //        case BUTTON_INPUT.R1:
+        //            return Input.GetButtonUp("R1_button_PS4");
+        //        case BUTTON_INPUT.BACK:
+        //            return Input.GetButtonUp("back_button_PS4");
+        //        case BUTTON_INPUT.START:
+        //            return Input.GetButtonUp("start_button_PS4");
+        //        case BUTTON_INPUT.L3:
+        //            return Input.GetButtonUp("L3_button_PS4");
+        //        case BUTTON_INPUT.R3:
+        //            return Input.GetButtonUp("R3_button_PS4");
+
+
+        //    }
+
+        //}
+        //else if (player == PLAYER.PLAYER_TWO)
+        //{
+        //    switch (keyNumber)
+        //    {
+        //        case BUTTON_INPUT.A:
+        //            return Input.GetButtonUp("A_button_PS4_player2");
+        //        case BUTTON_INPUT.B:
+        //            return Input.GetButtonUp("B_button_PS4_player2");
+        //        case BUTTON_INPUT.X:
+        //            return Input.GetButtonUp("X_button_PS4_player2");
+        //        case BUTTON_INPUT.Y:
+        //            return Input.GetButtonUp("Y_button_PS4_player2");
+        //        case BUTTON_INPUT.L1:
+        //            return Input.GetButtonUp("L1_button_PS4_player2");
+        //        case BUTTON_INPUT.R1:
+        //            return Input.GetButtonUp("R1_button_PS4_player2");
+        //        case BUTTON_INPUT.BACK:
+        //            return Input.GetButtonUp("back_button_PS4_player2");
+        //        case BUTTON_INPUT.START:
+        //            return Input.GetButtonUp("start_button_PS4_player2");
+        //        case BUTTON_INPUT.L3:
+        //            return Input.GetButtonUp("L3_button_PS4_player2");
+        //        case BUTTON_INPUT.R3:
+        //            return Input.GetButtonUp("R3_button_PS4_player2");
+
+
+        //    }
+        //}
+        //return false;
     }
 
     public override FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player)
@@ -311,7 +329,7 @@ public class PS4ControllerInput : ControllerInput {
                     floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_PS4_player2"), false);
                     break;
                 case JOYSTICK_AXIS_INPUT.DPAD_UP:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_PS4_player2"), Input.GetAxis("DPad_Y_PS4_player2_player2") > 0);
+                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_PS4_player2"), Input.GetAxis("DPad_Y_PS4_player2") > 0);
                     break;
                 case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
                     floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_PS4_player2"), Input.GetAxis("DPad_Y_PS4_player2") < 0);

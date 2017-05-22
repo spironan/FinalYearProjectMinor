@@ -40,9 +40,9 @@ public class SkillActivator : MonoBehaviour {
         Vector2 local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
 
         if(player_number == PLAYER.PLAYER_ONE)
-            activator.gameObject.transform.position = new Vector2(0, transform.position.y + local_sprite_size.y + 0.1f);
+            activator.gameObject.transform.position = new Vector3(0, transform.position.y + local_sprite_size.y + 0.1f, activator.gameObject.transform.position.z);
         else if(player_number == PLAYER.PLAYER_TWO)
-            activator.gameObject.transform.position = new Vector2(0, transform.position.y - local_sprite_size.y - 0.1f);
+            activator.gameObject.transform.position = new Vector3(0, transform.position.y - local_sprite_size.y - 0.1f, activator.gameObject.transform.position.z);
 
   
         

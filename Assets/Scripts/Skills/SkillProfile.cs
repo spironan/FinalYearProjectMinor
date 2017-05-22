@@ -5,11 +5,14 @@ public class SkillProfile : MonoBehaviour {
 
     [Range(1,5)]
     public int keysToActivate;
+    [Range(0.0f, 100.0f)]
+    public float stunValuePerHit;
     public PLAYER player_ID;
     public float damagePerSecond;
     public float lifetime;
     public float pSpeed;
     public float gravity;
+    
 
     public CircleCollider2D circleCollider;
 
@@ -97,6 +100,10 @@ public class SkillProfile : MonoBehaviour {
             {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
+                    if(temp.collider.gameObject.GetComponent<StunMeterManager>() != null)
+                    {
+                        temp.collider.gameObject.GetComponent<StunMeterManager>().addStunValue(stunValuePerHit);
+                    }
                     Debug.Log("hit");
                     //gameObject.SetActive(false);
                     return true;

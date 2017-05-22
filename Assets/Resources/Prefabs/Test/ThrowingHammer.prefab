@@ -41,6 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keysToActivate: 1
+  stunValuePerHit: 100
   player_ID: 0
   damagePerSecond: 5
   lifetime: 0
