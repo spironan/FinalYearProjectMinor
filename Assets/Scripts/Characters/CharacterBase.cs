@@ -24,6 +24,7 @@ public class CharacterBase : MonoBehaviour
     Vector2 direction;
     Image characterArt;
     Image characterIcon;
+    Image character;
     Rigidbody2D rigidbody;
 
     //Getter(s)
@@ -32,6 +33,7 @@ public class CharacterBase : MonoBehaviour
     public Vector2 GetDirection() { return direction; }
     public Image GetIcon() { return characterIcon; }
     public CHARACTERS GetName() { return name; }
+    public Image GetCharArt() { return characterArt; }
     //Setter(s)
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
 
