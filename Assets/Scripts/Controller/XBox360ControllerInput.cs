@@ -7,6 +7,7 @@ public class XBox360ControllerInput : ControllerInput
     Dictionary<BUTTON_INPUT, XBOX360> ps4ToXbox360 = new Dictionary<BUTTON_INPUT, XBOX360>();
     public override void Start()
     {
+        base.Start();
         ps4ToXbox360.Clear();
         ps4ToXbox360.Add(BUTTON_INPUT.X, XBOX360.X);
         ps4ToXbox360.Add(BUTTON_INPUT.A, XBOX360.A);
@@ -20,11 +21,8 @@ public class XBox360ControllerInput : ControllerInput
         ps4ToXbox360.Add(BUTTON_INPUT.START, XBOX360.START);
         ps4ToXbox360.Add(BUTTON_INPUT.L3, XBOX360.L3);
         ps4ToXbox360.Add(BUTTON_INPUT.R3, XBOX360.R3);
-        //for (int i = 0; i < (int)XBOX360.TOTAL; ++i)
-        //{
-        //    ps4ToXbox360.Add((BUTTON_INPUT)i, (XBOX360)i);
-        //}
-        //Debug.Log(1);
+        
+        
     }
     
     public override bool CheckForKeyPress(BUTTON_INPUT keyNumber, PLAYER player)
@@ -243,315 +241,149 @@ public class XBox360ControllerInput : ControllerInput
 
     public override FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player )
     {
-        if (player == PLAYER.PLAYER_ONE)
+        nameOfJoystick = joystickEnumToString[joyStickNumber];
+        nameOfJoystick += "_xBox360";
+        if (player == PLAYER.PLAYER_TWO)
+            nameOfJoystick += "_player2";
+
+        valueFromAxis = Input.GetAxis(nameOfJoystick);
+        switch (joyStickNumber)
         {
-
-            switch (joyStickNumber)
-            {
-                case JOYSTICK_AXIS_INPUT.L2:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("L2_button_xBox360") , Input.GetAxis("L2_button_xBox360") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R2:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("R2_button_xBox360") , Input.GetAxis("R2_button_xBox360") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_UP:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360"), Input.GetAxis("leftStick_Y_xBox360") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_DOWN:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360"), Input.GetAxis("leftStick_Y_xBox360") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_LEFT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360"), Input.GetAxis("leftStick_X_xBox360") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_RIGHT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360"), Input.GetAxis("leftStick_X_xBox360") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_Y:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_X:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_UP:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), Input.GetAxis("rightStick_Y_xBox360") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_DOWN:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), Input.GetAxis("rightStick_Y_xBox360") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_LEFT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), Input.GetAxis("rightStick_Y_xBox360") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_RIGHT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), Input.GetAxis("rightStick_Y_xBox360") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_Y:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_X:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_UP:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360"), Input.GetAxis("DPad_Y_xBox360") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360"), Input.GetAxis("DPad_Y_xBox360") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360"), Input.GetAxis("DPad_X_xBox360") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360"), Input.GetAxis("DPad_X_xBox360") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_Y:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_X:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360"), false);
-                    break;
-                default:
-                    floatAndBool.setFloatAndBool(0, false);
-                    break;
-
-            }
-            return floatAndBool;
+            case JOYSTICK_AXIS_INPUT.L2:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R2:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_UP:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_DOWN:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_LEFT:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_RIGHT:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_Y:
+                floatAndBool.setFloatAndBool(valueFromAxis, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_X:
+                floatAndBool.setFloatAndBool(valueFromAxis, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_UP:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_DOWN:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_LEFT:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_RIGHT:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_Y:
+                floatAndBool.setFloatAndBool(valueFromAxis, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_X:
+                floatAndBool.setFloatAndBool(valueFromAxis, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_UP:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_Y:
+                floatAndBool.setFloatAndBool(valueFromAxis, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_X:
+                floatAndBool.setFloatAndBool(valueFromAxis, false);
+                break;
+            default:
+                floatAndBool.setFloatAndBool(0, false);
+                break;
 
         }
-        else if (player == PLAYER.PLAYER_TWO)
-        {
-            switch (joyStickNumber)
-            {
-                case JOYSTICK_AXIS_INPUT.L2:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("L2_button_xBox360_player2") , Input.GetAxis("L2_button_xBox360_player2") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R2:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("R2_button_xBox360_player2"), Input.GetAxis("R2_button_xBox360_player2") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_UP:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360_player2"), Input.GetAxis("leftStick_Y_xBox360_player2") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_DOWN:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360_player2"), Input.GetAxis("leftStick_Y_xBox360_player2") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_LEFT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360_player2"), Input.GetAxis("leftStick_X_xBox360_player2") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_RIGHT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360_player2"), Input.GetAxis("leftStick_X_xBox360_player2") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_Y:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360_player2"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_X:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360_player2"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_UP:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), Input.GetAxis("rightStick_Y_xBox360_player2") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_DOWN:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), Input.GetAxis("rightStick_Y_xBox360_player2") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_LEFT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_xBox360_player2"), Input.GetAxis("rightStick_X_xBox360_player2") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_RIGHT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_xBox360_player2"), Input.GetAxis("rightStick_X_xBox360_player2") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_Y:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_X:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_xBox360_player2"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_UP:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), Input.GetAxis("DPad_Y_xBox360_player2") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), Input.GetAxis("DPad_Y_xBox360_player2") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360_player2"), Input.GetAxis("DPad_X_xBox360_player2") < 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360_player2"), Input.GetAxis("DPad_X_xBox360_player2") > 0);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_Y:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_X:
-                    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360_player2"), false);
-                    break;
-                default:
-                    floatAndBool.setFloatAndBool(0, false);
-                    break;
-
-            }
-            return floatAndBool;
-        }
-        else
-        {
-            floatAndBool.setFloatAndBool(0, false);
-            return floatAndBool;
-        }
+        return floatAndBool;
 
     }
 
     public override bool CheckForJoyStickAxisDown(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player)
     {
-        if (player == PLAYER.PLAYER_ONE)
+        nameOfJoystick = joystickEnumToString[joyStickNumber];
+        nameOfJoystick += "_xBox360";
+        if (player == PLAYER.PLAYER_TWO)
+            nameOfJoystick += "_player2";
+
+        valueFromAxis = Input.GetAxis(nameOfJoystick);
+
+        switch (joyStickNumber)
         {
-
-            switch (joyStickNumber)
-            {
-                case JOYSTICK_AXIS_INPUT.L2:
-                    //L2_button_xBox360
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "L2_button_xBox360", 1.0f);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R2:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "R2_button_xBox360", 1.0f);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_UP:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_xBox360");
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_DOWN:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_xBox360", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_LEFT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_xBox360", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_RIGHT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_xBox360");
-                    break;
-                //case JOYSTICK_AXIS_INPUT.L3_Y:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360"), false);
-                //    break;
-                //case JOYSTICK_AXIS_INPUT.L3_X:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360"), false);
-                //    break;
-                case JOYSTICK_AXIS_INPUT.R3_UP:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_xBox360");
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_DOWN:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_xBox360", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_LEFT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_xBox360", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_RIGHT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_xBox360");
-                    break;
-                //case JOYSTICK_AXIS_INPUT.R3_Y:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), false);
-                //    break;
-                //case JOYSTICK_AXIS_INPUT.R3_X:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), false);
-                //    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_UP:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_xBox360");
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_xBox360", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_xBox360", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_xBox360");
-                    break;
-                //case JOYSTICK_AXIS_INPUT.DPAD_Y:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360"), false);
-                //    break;
-                //case JOYSTICK_AXIS_INPUT.DPAD_X:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360"), false);
-                //    break;
-                default:
-                    floatAndBool.setFloatAndBool(0, false);
-                    break;
-
-            }
-            return floatAndBool.getBool();
+            case JOYSTICK_AXIS_INPUT.L2:
+                //L2_button_xBox360
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                break;
+            case JOYSTICK_AXIS_INPUT.R2:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                break;
+            default:
+                floatAndBool.setFloatAndBool(0, false);
+                break;
 
         }
-        else if (player == PLAYER.PLAYER_TWO)
-        {
-            switch (joyStickNumber)
-            {
-                case JOYSTICK_AXIS_INPUT.L2:
-                    //L2_button_xBox360
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "L2_button_xBox360_player2");
-                    break;
-                case JOYSTICK_AXIS_INPUT.R2:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "R2_button_xBox360_player2");
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_UP:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_xBox360_player2");
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_DOWN:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_xBox360_player2", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_LEFT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_xBox360_player2", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.L3_RIGHT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_xBox360_player2");
-                    break;
-                //case JOYSTICK_AXIS_INPUT.L3_Y:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360_player2"), false);
-                //    break;
-                //case JOYSTICK_AXIS_INPUT.L3_X:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360_player2"), false);
-                //    break;
-                case JOYSTICK_AXIS_INPUT.R3_UP:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_xBox360_player2");
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_DOWN:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_xBox360_player2", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_LEFT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_xBox360_player2", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.R3_RIGHT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_xBox360_player2");
-                    break;
-                //case JOYSTICK_AXIS_INPUT.R3_Y:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), false);
-                //    break;
-                //case JOYSTICK_AXIS_INPUT.R3_X:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), false);
-                //    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_UP:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_xBox360_player2");
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_xBox360_player2", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_xBox360_player2", 0.0f, false);
-                    break;
-                case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
-                    updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_xBox360_player2");
-                    break;
-                //case JOYSTICK_AXIS_INPUT.DPAD_Y:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), false);
-                //    break;
-                //case JOYSTICK_AXIS_INPUT.DPAD_X:
-                //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360_player2"), false);
-                //    break;
-                default:
-                    floatAndBool.setFloatAndBool(0, false);
-                    break;
+        return floatAndBool.getBool();
 
-            }
-            return floatAndBool.getBool();
-        }
-        else
-        {
-            floatAndBool.setFloatAndBool(0, false);
-            return floatAndBool.getBool();
-        }
+        
 
     }
 
-    public override void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber, string rawKeyName, float offset = 0, bool positiveAxis = true)
+    public override void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber, float valueFromAxis, float offset = 0, bool positiveAxis = true)
     {
         if (!isJoystickKeyPressed.ContainsKey(joyStickNumber))
         {
@@ -559,12 +391,12 @@ public class XBox360ControllerInput : ControllerInput
         }
         if (positiveAxis)
         {
-            if (Input.GetAxis(rawKeyName) + offset > 0 && !isJoystickKeyPressed[joyStickNumber])
+            if (valueFromAxis + offset > 0 && !isJoystickKeyPressed[joyStickNumber])
             {
                 keyDown = true;
                 isJoystickKeyPressed[joyStickNumber] = true;
             }
-            else if (Input.GetAxis(rawKeyName) + offset > 0 && isJoystickKeyPressed[joyStickNumber])
+            else if (valueFromAxis + offset > 0 && isJoystickKeyPressed[joyStickNumber])
             {
                 keyDown = false;
             }
@@ -576,12 +408,12 @@ public class XBox360ControllerInput : ControllerInput
         }
         else
         {
-            if (Input.GetAxis(rawKeyName) + offset < 0 && !isJoystickKeyPressed[joyStickNumber])
+            if (valueFromAxis + offset < 0 && !isJoystickKeyPressed[joyStickNumber])
             {
                 keyDown = true;
                 isJoystickKeyPressed[joyStickNumber] = true;
             }
-            else if (Input.GetAxis(rawKeyName) + offset < 0 && isJoystickKeyPressed[joyStickNumber])
+            else if (valueFromAxis + offset < 0 && isJoystickKeyPressed[joyStickNumber])
             {
                 keyDown = false;
             }
@@ -753,3 +585,312 @@ public class XBox360ControllerInput : ControllerInput
         }
         return 0;
     }*/
+/*public override FloatAndBool CheckForJoyStickAxis(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player )
+{
+    if (player == PLAYER.PLAYER_ONE)
+    {
+
+        switch (joyStickNumber)
+        {
+            case JOYSTICK_AXIS_INPUT.L2:
+                floatAndBool.setFloatAndBool(Input.GetAxis("L2_button_xBox360") , Input.GetAxis("L2_button_xBox360") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R2:
+                floatAndBool.setFloatAndBool(Input.GetAxis("R2_button_xBox360") , Input.GetAxis("R2_button_xBox360") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_UP:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360"), Input.GetAxis("leftStick_Y_xBox360") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_DOWN:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360"), Input.GetAxis("leftStick_Y_xBox360") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_LEFT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360"), Input.GetAxis("leftStick_X_xBox360") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_RIGHT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360"), Input.GetAxis("leftStick_X_xBox360") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_Y:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_X:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_UP:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), Input.GetAxis("rightStick_Y_xBox360") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_DOWN:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), Input.GetAxis("rightStick_Y_xBox360") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_LEFT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), Input.GetAxis("rightStick_Y_xBox360") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_RIGHT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), Input.GetAxis("rightStick_Y_xBox360") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_Y:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_X:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_UP:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360"), Input.GetAxis("DPad_Y_xBox360") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360"), Input.GetAxis("DPad_Y_xBox360") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360"), Input.GetAxis("DPad_X_xBox360") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360"), Input.GetAxis("DPad_X_xBox360") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_Y:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_X:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360"), false);
+                break;
+            default:
+                floatAndBool.setFloatAndBool(0, false);
+                break;
+
+        }
+        return floatAndBool;
+
+    }
+    else if (player == PLAYER.PLAYER_TWO)
+    {
+        switch (joyStickNumber)
+        {
+            case JOYSTICK_AXIS_INPUT.L2:
+                floatAndBool.setFloatAndBool(Input.GetAxis("L2_button_xBox360_player2") , Input.GetAxis("L2_button_xBox360_player2") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R2:
+                floatAndBool.setFloatAndBool(Input.GetAxis("R2_button_xBox360_player2"), Input.GetAxis("R2_button_xBox360_player2") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_UP:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360_player2"), Input.GetAxis("leftStick_Y_xBox360_player2") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_DOWN:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360_player2"), Input.GetAxis("leftStick_Y_xBox360_player2") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_LEFT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360_player2"), Input.GetAxis("leftStick_X_xBox360_player2") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_RIGHT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360_player2"), Input.GetAxis("leftStick_X_xBox360_player2") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_Y:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360_player2"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_X:
+                floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360_player2"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_UP:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), Input.GetAxis("rightStick_Y_xBox360_player2") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_DOWN:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), Input.GetAxis("rightStick_Y_xBox360_player2") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_LEFT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_xBox360_player2"), Input.GetAxis("rightStick_X_xBox360_player2") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_RIGHT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_xBox360_player2"), Input.GetAxis("rightStick_X_xBox360_player2") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_Y:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_X:
+                floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_X_xBox360_player2"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_UP:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), Input.GetAxis("DPad_Y_xBox360_player2") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), Input.GetAxis("DPad_Y_xBox360_player2") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360_player2"), Input.GetAxis("DPad_X_xBox360_player2") < 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360_player2"), Input.GetAxis("DPad_X_xBox360_player2") > 0);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_Y:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_X:
+                floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360_player2"), false);
+                break;
+            default:
+                floatAndBool.setFloatAndBool(0, false);
+                break;
+
+        }
+        return floatAndBool;
+    }
+    else
+    {
+        floatAndBool.setFloatAndBool(0, false);
+        return floatAndBool;
+    }
+
+}
+
+public override bool CheckForJoyStickAxisDown(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player)
+{
+    if (player == PLAYER.PLAYER_ONE)
+    {
+
+        switch (joyStickNumber)
+        {
+            case JOYSTICK_AXIS_INPUT.L2:
+                //L2_button_xBox360
+                updateAndReturnIfkeyIsDown(joyStickNumber, "L2_button_xBox360", 1.0f);
+                break;
+            case JOYSTICK_AXIS_INPUT.R2:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "R2_button_xBox360", 1.0f);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_xBox360");
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_xBox360", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_xBox360", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_xBox360");
+                break;
+            //case JOYSTICK_AXIS_INPUT.L3_Y:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360"), false);
+            //    break;
+            //case JOYSTICK_AXIS_INPUT.L3_X:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360"), false);
+            //    break;
+            case JOYSTICK_AXIS_INPUT.R3_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_xBox360");
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_xBox360", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_xBox360", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_xBox360");
+                break;
+            //case JOYSTICK_AXIS_INPUT.R3_Y:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), false);
+            //    break;
+            //case JOYSTICK_AXIS_INPUT.R3_X:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360"), false);
+            //    break;
+            case JOYSTICK_AXIS_INPUT.DPAD_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_xBox360");
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_xBox360", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_xBox360", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_xBox360");
+                break;
+            //case JOYSTICK_AXIS_INPUT.DPAD_Y:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360"), false);
+            //    break;
+            //case JOYSTICK_AXIS_INPUT.DPAD_X:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360"), false);
+            //    break;
+            default:
+                floatAndBool.setFloatAndBool(0, false);
+                break;
+
+        }
+        return floatAndBool.getBool();
+
+    }
+    else if (player == PLAYER.PLAYER_TWO)
+    {
+        switch (joyStickNumber)
+        {
+            case JOYSTICK_AXIS_INPUT.L2:
+                //L2_button_xBox360
+                updateAndReturnIfkeyIsDown(joyStickNumber, "L2_button_xBox360_player2");
+                break;
+            case JOYSTICK_AXIS_INPUT.R2:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "R2_button_xBox360_player2");
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_xBox360_player2");
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_Y_xBox360_player2", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_xBox360_player2", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.L3_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "leftStick_X_xBox360_player2");
+                break;
+            //case JOYSTICK_AXIS_INPUT.L3_Y:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_Y_xBox360_player2"), false);
+            //    break;
+            //case JOYSTICK_AXIS_INPUT.L3_X:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("leftStick_X_xBox360_player2"), false);
+            //    break;
+            case JOYSTICK_AXIS_INPUT.R3_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_xBox360_player2");
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_Y_xBox360_player2", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_xBox360_player2", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.R3_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "rightStick_X_xBox360_player2");
+                break;
+            //case JOYSTICK_AXIS_INPUT.R3_Y:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), false);
+            //    break;
+            //case JOYSTICK_AXIS_INPUT.R3_X:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("rightStick_Y_xBox360_player2"), false);
+            //    break;
+            case JOYSTICK_AXIS_INPUT.DPAD_UP:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_xBox360_player2");
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_Y_xBox360_player2", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_xBox360_player2", 0.0f, false);
+                break;
+            case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
+                updateAndReturnIfkeyIsDown(joyStickNumber, "DPad_X_xBox360_player2");
+                break;
+            //case JOYSTICK_AXIS_INPUT.DPAD_Y:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_Y_xBox360_player2"), false);
+            //    break;
+            //case JOYSTICK_AXIS_INPUT.DPAD_X:
+            //    floatAndBool.setFloatAndBool(Input.GetAxis("DPad_X_xBox360_player2"), false);
+            //    break;
+            default:
+                floatAndBool.setFloatAndBool(0, false);
+                break;
+
+        }
+        return floatAndBool.getBool();
+    }
+    else
+    {
+        floatAndBool.setFloatAndBool(0, false);
+        return floatAndBool.getBool();
+    }
+
+}*/

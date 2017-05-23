@@ -10,7 +10,11 @@ public class ControllerInput : MonoBehaviour {
     protected bool keyDownHold = false;
     protected bool keyUp;
     protected string nameOfKey;
+    protected string nameOfJoystick;
+    protected float valueFromAxis;
     protected Dictionary<JOYSTICK_AXIS_INPUT, bool> isJoystickKeyPressed = new Dictionary<JOYSTICK_AXIS_INPUT, bool>();
+    protected Dictionary<JOYSTICK_AXIS_INPUT, string> joystickEnumToString = new Dictionary<JOYSTICK_AXIS_INPUT, string>();
+    //protected Dictionary<JOYSTICK_AXIS_INPUT, bool> isJoystickKeyPressed = new Dictionary<JOYSTICK_AXIS_INPUT, bool>();
     //protected Dictionary<BUTTON_INPUT, XBOX360> ps4ToXbox360 = new Dictionary<BUTTON_INPUT, XBOX360>();
     //protected Dictionary<BUTTON_INPUT, KeyCode> buttonToKeyCode;
     //protected Dictionary<KeyCode, BUTTON_INPUT> keyCodeToButton;
@@ -19,6 +23,27 @@ public class ControllerInput : MonoBehaviour {
     public virtual void Start()
     {
         //debug.log(1);
+        joystickEnumToString.Clear();
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.L2, "L2_button");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.R2, "R2_button");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.L3_UP, "leftStick_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.L3_DOWN, "leftStick_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.L3_LEFT, "leftStick_X");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.L3_RIGHT, "leftStick_X");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.L3_Y, "leftStick_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.L3_X, "leftStick_X");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.R3_UP, "rightStick_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.R3_DOWN, "rightStick_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.R3_LEFT, "rightStick_X");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.R3_RIGHT, "rightStick_X");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.R3_Y, "rightStick_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.R3_X, "rightStick_X");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.DPAD_UP, "DPad_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.DPAD_DOWN, "DPad_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.DPAD_LEFT, "DPad_X");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.DPAD_RIGHT, "DPad_X");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.DPAD_Y, "DPad_Y");
+        joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.DPAD_X, "DPad_X");
     }
 
     //public virtual void 
@@ -47,7 +72,7 @@ public class ControllerInput : MonoBehaviour {
         return false;
     }
 
-    public virtual void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber,string rawKeyName, float offset = 0,bool positiveAxis = true)
+    public virtual void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber,float valueFromAxis, float offset = 0,bool positiveAxis = true)
     {
 
     }
