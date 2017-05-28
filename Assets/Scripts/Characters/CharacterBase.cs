@@ -67,7 +67,7 @@ public class CharacterBase : MonoBehaviour
         health = 100;
         ultiBar = 0;
         stunMeter = 50;
-        moveSpeed = 15;
+        moveSpeed = 5;
         jumpForce = 100000;
         direction = new Vector2(0, 0);
         this.transform.position = new Vector3(0, -2.5f, 0);
