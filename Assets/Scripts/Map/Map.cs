@@ -5,18 +5,22 @@ using System.Collections.Generic;
 
 public class Map : MonoBehaviour 
 {
-    Image mapImage; // the image of the map for map select
+    //Variable(s)
+    Sprite mapSprite; // the image of the map for map select
     string mapName;//name of the scene to load
     Dictionary<TEAM, Vector2> spawnLocations = new Dictionary<TEAM, Vector2>(); // where the player should spawn
-
+    
+    //Constructor(s)
+    public Map() { mapSprite = null; mapName = ""; spawnLocations.Clear(); }
     public Map(Map copy) 
     {
-        mapImage = copy.GetMapImage();
+        mapSprite = copy.GetMapSprite();
         mapName = copy.GetMapName();
         spawnLocations = copy.GetSpawnLocations();
     }
 
-    public void SetMapImage(Image mapImage) { this.mapImage = mapImage; }
+    //Setter(s)
+    public void SetMapSprite(Sprite mapSprite) { this.mapSprite = mapSprite; }
     public void SetMapName(string mapName) { this.mapName = mapName; }
     public void AddToSpawnLocations(TEAM team, Vector2 position) { spawnLocations.Add(team, position); }
     public void AddToSpawnLocations(int team, Vector2 position) 
@@ -30,9 +34,9 @@ public class Map : MonoBehaviour
         spawnLocations.Add((TEAM)team, position);
     }
 
-    public Image GetMapImage() { return mapImage; }
+    //Getter(s)
+    public Sprite GetMapSprite() { return mapSprite; }
     public string GetMapName() { return mapName; }
-    public Dictionary<TEAM, Vector2> GetSpawnLocations() { return spawnLocations; }
     public Vector2 GetSpawnLocation(TEAM team) 
     {
         foreach (TEAM teamNo in spawnLocations.Keys)
@@ -55,4 +59,5 @@ public class Map : MonoBehaviour
         Debug.Log("No such Team Exist , You Chose Team :" + team);
         return Vector2.zero;
     }
+    public Dictionary<TEAM, Vector2> GetSpawnLocations() { return spawnLocations; }
 }

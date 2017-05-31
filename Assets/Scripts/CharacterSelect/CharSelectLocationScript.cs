@@ -5,7 +5,8 @@ public class CharSelectLocationScript : MonoBehaviour {
 
     GameObject charSlot;
     CharacterSlot charData;
-    bool playerLockedIn = false;
+    bool LockedIn = false;
+
     public void AssignCharSlot(GameObject _charSlot) 
     { 
         this.charSlot = _charSlot;
@@ -19,38 +20,43 @@ public class CharSelectLocationScript : MonoBehaviour {
     {
     }
     
-    public CHARACTERS GetCharName()
+    //public CHARACTERS GetCharName()
+    //{
+    //    return charData.GetChar();
+    //}
+
+    public string GetCharName()
     {
-        return charData.GetChar();
+        return charData.GetCharName();
     }
 
     public void MoveLeft()
     {
-        if (!playerLockedIn && charData && charData.left != null)
+        if (!LockedIn && charData && charData.left != null)
             AssignCharSlot(charData.left);
     }
 
     public void MoveRight()
     {
-        if (!playerLockedIn && charData && charData.right != null)
+        if (!LockedIn && charData && charData.right != null)
             AssignCharSlot(charData.right);
     }
 
     public void MoveUp()
     {
-        if (!playerLockedIn && charData && charData.up != null)
+        if (!LockedIn && charData && charData.up != null)
             AssignCharSlot(charData.up);
     }
 
     public void MoveDown()
     {
-        if (!playerLockedIn && charData && charData.down != null)
+        if (!LockedIn && charData && charData.down != null)
             AssignCharSlot(charData.down);
     }
 
-    public void LockedIn()
+    public void LockIn()
     {
-        playerLockedIn = true;
+        LockedIn = true;
     }
 
 }

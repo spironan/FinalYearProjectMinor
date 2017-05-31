@@ -99,7 +99,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
-            if (playerCharacters[i].GetComponent<CharacterBase>().GetDead())
+            if (playerCharacters[i].GetComponent<CharacterBase>().IsDead())
                 gameWon = true;
         }
     }
@@ -113,8 +113,8 @@ public class BattleSceneManager : MonoBehaviour
     public void EndMatch()
     {
         int winnerID = -1;
-        uint winnerHP = 0;
-        uint curPlayerHp = 0;
+        int winnerHP = 0;
+        int curPlayerHp = 0;
         for (int i = 0; i < playerCharacters.Count; ++i)
         {
             curPlayerHp = playerCharacters[i].GetComponent<CharacterBase>().GetHealth();

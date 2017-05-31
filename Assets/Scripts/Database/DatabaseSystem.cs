@@ -14,30 +14,22 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
         dataBaseSystem.Clear();
     }
 
-    public void InitDataBase(string dataBaseName, string dataBasePath)
+    public Database InitDataBase(string dataBaseName, string dataBasePath)
     {
 #if UNITY_ANDROID
         string actualDBFile = Application.persistentDataPath + "/" + dataBasePath;
-        //string actualDBFile = Application.persistentDataPath + "/StudioProject4DataBase.db";
-        //Debug.Log(actualDBFile);
         string filePath = "URI=file:" + actualDBFile;
-        //Application.persistentDataPath
         if (!File.Exists(actualDBFile))
         {
-            // if it doesn't ->
-            // open StreamingAssets directory and load the db ->
-            //string ExactFilePath = "jar:file://" + Application.dataPath + "!/assets/" + dataBasePath;
-            //Debug.Log(ExactFilePath);
-            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/StudioProject4DataBase.db");  // this is the path to your StreamingAssets in android
-            while (!loadDB.isDone) { }  // CAREFUL here, for safety reasons you shouldn't let this while loop unattended, place a timer and error check
-            // then save to Application.persistentDataPath
+            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/StudioProject4DataBase.db"); 
+            while (!loadDB.isDone) { }  
             File.WriteAllBytes(actualDBFile, loadDB.bytes);
 			Debug.Log("DB successfully created");
         }
 #else
         string filePath = "URI=file:" + Application.dataPath + "/StreamingAssets/" + dataBasePath;
 #endif
-        CreateDataBase(dataBaseName, filePath);
+        return CreateDataBase(dataBaseName, filePath);
     }
 
     public void Clear()

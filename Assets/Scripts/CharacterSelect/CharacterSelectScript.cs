@@ -7,11 +7,10 @@ using System.Collections.Generic;
 public class CharacterSelectScript : MonoBehaviour 
 {
     public GameObject framePrefab;
-    List<GameObject> charSlots = new List<GameObject>();
 
+    List<GameObject> charSlots = new List<GameObject>();
     //Player Prolly Has An Image that i can use instead of a gameobject
     List<CharSelectLocationScript> playerFrames = new List<CharSelectLocationScript>();
-
     GameManager gameManager;
     bool finished = false;
     
@@ -27,9 +26,10 @@ public class CharacterSelectScript : MonoBehaviour
         int maxWidth = (int)(parentSize.x / prefabSize.x);
         float startPointX = -parentSize.x / 2.0f + prefabSize.x/2.0f;
 
+        int charCount = CharacterManager.GetInstance().GetCharCount();
         CharacterSlot tempSlot;
         //Create The Prefabs and add it to a list
-        for (int i = 0; i < (int)CHARACTERS.MAX_CHARACTER; ++i)
+        for (int i = 0; i < charCount/*(int)CHARACTERS.MAX_CHARACTER*/; ++i)
         {
             GameObject slot = Instantiate(framePrefab);
             slot.transform.SetParent(gameObject.transform, false);
@@ -49,9 +49,9 @@ public class CharacterSelectScript : MonoBehaviour
 
 
         //Allocate CharSlots Up Down Left Right for navigation
-        if ((int)CHARACTERS.MAX_CHARACTER > 1)
+        if (/*(int)CHARACTERS.MAX_CHARACTER*/ charCount > 1)
         {
-            int maxIndex = (int)CHARACTERS.MAX_CHARACTER;
+            int maxIndex = /*(int)CHARACTERS.MAX_CHARACTER*/ charCount;
             int spawnIndex = 0;
             for (int i = 0; i < maxIndex; ++i)
             {
@@ -135,23 +135,38 @@ public class CharacterSelectScript : MonoBehaviour
         }
     }
 
-    public void LockInCharacter(PLAYER player,CHARACTERS charaName)
+    //public void LockInCharacter(PLAYER player,CHARACTERS charaName)
+    //{
+    //    //SetCharacter
+    //    //if (!gameManager.GetPlayer(player).GetPickStatus())//If player haven't picked a character
+    //    //{
+    //        gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
+    //        gameManager.GetPlayer(player).PickChar();
+    //        playerFrames[(int)player].LockedIn();
+    //    //}
+    //    //else if (gameManager.GetPlayer(player).GetInGameData().GetChar() == CharacterManager.GetInstance().GetCharacterByName(charaName))//If player press on the same Character
+    //    //{
+    //    //    gameManager.GetPlayer(player).UnPickChar();
+    //    //}
+    //    //else
+    //    //{
+    //    //}
+        
+    //    //temp test shit code
+    //    finished = true;
+    //    if (CheckBothPicked())
+    //    {
+    //        finished = true;
+    //    }
+    //}
+
+    public void LockInCharacter(PLAYER player, string charaName)
     {
         //SetCharacter
-        //if (!gameManager.GetPlayer(player).GetPickStatus())//If player haven't picked a character
-        //{
-            gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
-            gameManager.GetPlayer(player).PickChar();
-            playerFrames[(int)player].LockedIn();
-        //}
-        //else if (gameManager.GetPlayer(player).GetInGameData().GetChar() == CharacterManager.GetInstance().GetCharacterByName(charaName))//If player press on the same Character
-        //{
-        //    gameManager.GetPlayer(player).UnPickChar();
-        //}
-        //else
-        //{
-        //}
-        
+        gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
+        gameManager.GetPlayer(player).PickChar();
+        playerFrames[(int)player].LockIn();
+
         //temp test shit code
         finished = true;
         if (CheckBothPicked())
@@ -159,7 +174,7 @@ public class CharacterSelectScript : MonoBehaviour
             finished = true;
         }
     }
-    
+
     bool CheckBothPicked()
     {
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
@@ -170,11 +185,7 @@ public class CharacterSelectScript : MonoBehaviour
         return true;
     }
 
-    public bool FinishedPicking()
-    {
-        return finished;
-    }
-
+    public bool FinishedPicking() { return finished; }
     public void UnFinish() { finished = false; }
 
     public string GetCurrChara(int playernum)
@@ -187,8 +198,7 @@ public class CharacterSelectScript : MonoBehaviour
 
         return playerFrames[playernum].GetCharName().ToString();
     }
-
-    public Image GetCharaArt(int playernum)
+    public Sprite GetCharaArt(int playernum)
     {
         if (playernum >= (int)PLAYER.MAX_PLAYERS)
         {
@@ -197,5 +207,4 @@ public class CharacterSelectScript : MonoBehaviour
         }
         return CharacterManager.GetInstance().GetCharacterByName(playerFrames[playernum].GetCharName()).GetCharArt();
     }
-
 }

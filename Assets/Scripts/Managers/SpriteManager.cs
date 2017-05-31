@@ -8,11 +8,33 @@ public class SpriteManager : Singleton<SpriteManager>
     public SpriteManager() { }
 
     private Dictionary<string, Sprite> spriteMap = new Dictionary<string, Sprite>();
-    string fullFilePath;
+    //string fullFilePath;
 
     public void ClearMap()
     {
         spriteMap.Clear();
+    }
+
+    public void Initialze(Database database, string tableName)
+    {
+        if (!RanBefore())
+        { 
+            //Create All Unique Characters Data Here through local database server,Should Only Be Ran Once On Initalization
+            database.dbConnection.Open();
+            database.dbCmd = database.dbConnection.CreateCommand();
+            string sqlQuery = "SELECT * FROM " + tableName;
+            database.dbCmd.CommandText = sqlQuery;
+            database.reader = database.dbCmd.ExecuteReader();
+            while (database.reader.Read())
+            {
+                string name = database.reader.GetString(0);
+                if (!HasSprite(name))
+                {
+                    GenerateSprite(database.reader.GetString(0), database.reader.GetString(1));
+                }
+            }
+            database.SoftReset();
+        }
     }
 
     public bool HasSprite(string fileName)
@@ -44,7 +66,7 @@ public class SpriteManager : Singleton<SpriteManager>
             Debug.Log("FileName Already Have an existing Sprite, returning the existing Sprite");
             GetSprite(fileName);
         }
-        fullFilePath = "Images/" + filePath;
+        //fullFilePath = "Images/" + filePath;
         Sprite Sprite = Resources.Load<Sprite>(filePath);
         if (Sprite != null)
         {
@@ -56,5 +78,4 @@ public class SpriteManager : Singleton<SpriteManager>
         Debug.Log("No Such FilePath :" + filePath + " Have you loaded the right file?");
         return null;
     }
-
 }

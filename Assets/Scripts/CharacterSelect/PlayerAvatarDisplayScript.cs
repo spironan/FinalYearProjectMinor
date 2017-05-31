@@ -5,13 +5,13 @@ using System.Collections;
 public class PlayerAvatarDisplayScript : MonoBehaviour 
 {
     public int playerNumber;
-    Image charaArt;
+    Sprite charaArt;
     Text charaName;
     CharacterSelectScript charSelect;
 	// Use this for initialization
 	void Start () {
         charSelect = GameObject.Find("CharacterSelect").GetComponent<CharacterSelectScript>();
-        charaArt = GetComponent<Image>();
+        charaArt = GetComponent<Image>().sprite;
         charaName = GetComponentInChildren<Text>();//might not work
 	}
 	

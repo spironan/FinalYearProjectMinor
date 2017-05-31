@@ -31,19 +31,6 @@ public enum GAME_MODES
     MAX_GAME_MODES
 }
 
-public enum PLAYMAPS
-{
-    MAPS_BEGIN,
-    STANDARD = MAPS_BEGIN,
-    RANDOM,
-    EXTRA,
-    TEST_MAP_1,
-    TEST_MAP_2,
-    TEST_MAP_3,
-    TEST_MAP_4,
-    MAX_MAP
-}
-
 public enum ATTACKTYPE
 {
     GLOBAL,
@@ -52,12 +39,25 @@ public enum ATTACKTYPE
     MAX_ATTACKTYPE
 };
 
-public enum CHARACTERS
-{
-    PLAYTEST_CHAR = 0,
-    PLAYTEST_CHAR_2,
-    MAX_CHARACTER
-};
+//public enum CHARACTERS
+//{
+//    PLAYTEST_CHAR = 0,
+//    PLAYTEST_CHAR_2,
+//    MAX_CHARACTER
+//};
+
+//public enum PLAYMAPS
+//{
+//    MAPS_BEGIN,
+//    STANDARD = MAPS_BEGIN,
+//    RANDOM,
+//    EXTRA,
+//    TEST_MAP_1,
+//    TEST_MAP_2,
+//    TEST_MAP_3,
+//    TEST_MAP_4,
+//    MAX_MAP
+//}
 
 public enum BUTTON_INPUT
 {

@@ -3,14 +3,16 @@ using System.Collections;
 
 public class PlayerCharacterData : MonoBehaviour 
 {
-    CHARACTERS name;
+    //CHARACTERS name;
+    string name;
     uint playerID;
     uint win, lose;
     uint charPts;
 
     void awake()
     {
-        name = CHARACTERS.MAX_CHARACTER;
+        //name = CHARACTERS.MAX_CHARACTER;
+        name = "";
         playerID = win = lose = charPts = 0;
     }
 

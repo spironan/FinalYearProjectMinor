@@ -29,7 +29,7 @@ public class SkillActivator : MonoBehaviour {
     void Awake()
     {
         dpadDown = false;
-        player_number = GetComponent<CharacterBase>().getPlayerID();
+        player_number = GetComponent<CharacterBase>().GetPlayerID();
         playerControllerManager = GetComponent<PlayerControllerManager>();
         playerControllerManager.init(player_number);
         bindedACtions = GetComponent<ListOfControllerActions>();
