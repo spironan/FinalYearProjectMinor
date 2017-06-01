@@ -240,11 +240,11 @@ public class CharacterBase : MonoBehaviour
     }
     
     //To Be Called in the Relevant Places you Deem Fit To Increase Stun Meter
-    public void GainStunMeter(int increaseAmount)
+    public void GainStunMeter(float increaseAmount)
     {
         if (!stunned && increaseAmount > 0 && stunMeter < 100.0f)
         {
-            stunMeter += (float)(increaseAmount * (1.0f - stunResistance));
+            stunMeter += increaseAmount * (1.0f - stunResistance);
             if (stunMeter >= 100.0f)
             {
                 stunMeter = 0.0f;
