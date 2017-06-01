@@ -36,7 +36,7 @@ public class LoadingScreenManager : MonoBehaviour
     AsyncOperation operation;
     Scene currentScene;
 
-    public static string sceneToLoad = "BattleScene";
+    public static string sceneToLoad = "MainMenuScene";
     public static string loadingScene = "LoadingScreen";
 
     public static void LoadScene(string sceneName)
@@ -138,6 +138,5 @@ public class LoadingScreenManager : MonoBehaviour
         //loadingAnimation.gameObject.SetActive(false);
         progressBar.fillAmount = 1f;
     }
-
 
 }

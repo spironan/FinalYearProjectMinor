@@ -43,13 +43,14 @@ public class MapSelectScript : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
         
         //buttonCD = buttonCurrCD = timeToRotate;
-        totalMaps = (int)PLAYMAPS.MAX_MAP;
+        totalMaps = /*(int)PLAYMAPS.MAX_MAP*/MapManager.GetInstance().GetMapCount();
         //shiftAngle = (1.0f / (totalMaps * 1.0f));
         //float circleProgress = 0.0f;
         //float angle,x, z;
 
         offset = new Vector3(itemWidth + spaceBetweenMaps, 0, 0);
-        PLAYMAPS currMap = PLAYMAPS.MAPS_BEGIN;
+        //PLAYMAPS currMap = PLAYMAPS.MAPS_BEGIN;
+
         for (int i = 0; i < totalMaps; ++i)
         {
             //circleProgress = (i * 1.0f) / (totalMaps * 1.0f);
@@ -67,9 +68,9 @@ public class MapSelectScript : MonoBehaviour
             //map.GetComponent<MapSlot>().SetCenter(centrePos);
             //map.GetComponent<MapSlot>().SetRadius(radius);
             //map.GetComponent<MapSlot>().SetCurrAngle(i * shiftAngle);
-            map.GetComponent<MapSlot>().SetID(currMap);
+            map.GetComponent<MapSlot>().SetMapName(/*currMap*/MapManager.GetInstance().GetMapByIndex(i).GetMapName());
             //map.GetComponent<MapSlot>().SetSpeed(currMap);
-            currMap += 1;
+            //currMap += 1;
             //map manager get instance get map icon 
             maps.Add(map);
         }
@@ -151,7 +152,7 @@ public class MapSelectScript : MonoBehaviour
 
     public void PickSelectedMap()
     {
-        gameManager.GetComponent<GameManager>().SetCurrMap(maps[currIndex].GetComponent<MapSlot>().GetMapID());
+        gameManager.GetComponent<GameManager>().SetCurrMap(maps[currIndex].GetComponent<MapSlot>().GetMapName());
         mapPicked = true;
     }
 
@@ -279,7 +280,7 @@ public class MapSelectScript : MonoBehaviour
 
     public string GetCurrentMapName() 
     {
-        return MapManager.GetInstance().GetMap(currIndex).GetMapName();
+        return MapManager.GetInstance().GetMapByIndex(currIndex).GetMapName();
     }
 
 }

@@ -6,7 +6,8 @@ public class CharacterSlot : MonoBehaviour
 {
     public GameObject up = null, down = null, left = null, right = null;
     Image icon;
-    CHARACTERS charName;
+    //CHARACTERS charName;
+    string charName;
 
     void Awake()
     {
@@ -18,7 +19,9 @@ public class CharacterSlot : MonoBehaviour
         icon.sprite = image.sprite;
     }
 
-    public void SetChar(CHARACTERS chara) { charName = chara; }
-    public CHARACTERS GetChar() { return charName; }
+    //public void SetChar(CHARACTERS chara) { charName = chara; }
+    //public CHARACTERS GetChar() { return charName; }
+    public void SetCharName(string charName) { this.charName = charName; }
+    public string GetCharName() { return charName; }
 
 }

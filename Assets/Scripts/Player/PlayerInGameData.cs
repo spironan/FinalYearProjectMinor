@@ -8,8 +8,13 @@ public class PlayerInGameData : MonoBehaviour
     CharacterBase selectedChar;
 
     public CharacterBase GetChar() { return selectedChar; }
-    public void SetChar(CHARACTERS charaName) { selectedChar = CharacterManager.GetInstance().GetCharacterByName(charaName); }
-    public void SetChar(int charaID) { selectedChar = CharacterManager.GetInstance().GetCharacterByID(charaID); }
+    //public void SetChar(CHARACTERS charaName) { selectedChar = CharacterManager.GetInstance().GetCharacterByName(charaName); }
+    //public void SetChar(int charaID) { selectedChar = CharacterManager.GetInstance().GetCharacterByID(charaID); }
+    public void SetChar(string charName) { selectedChar = CharacterManager.GetInstance().GetCharacterByName(charName); }
+    public float GetHealthPercentage()
+    {
+        return selectedChar.GetHealth()/selectedChar.GetMaxHp();
+    }
 
     public TEAM GetTeam() { return playerTeam; }
     public void SetTeam(TEAM newPlayerTeam) { playerTeam = newPlayerTeam; }

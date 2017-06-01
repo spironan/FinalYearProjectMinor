@@ -17,7 +17,7 @@ public class StunMeterManager : MonoBehaviour {
 
         Vector2 local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
 
-        player_number = GetComponent<CharacterBase>().getPlayerID();
+        player_number = GetComponent<CharacterBase>().GetPlayerID();
         if (player_number == PLAYER.PLAYER_ONE)
             stunMeter.gameObject.transform.position = new Vector3(0, transform.position.y - local_sprite_size.y + 0.1f, stunMeter.gameObject.transform.position.z);
         else if (player_number == PLAYER.PLAYER_TWO)

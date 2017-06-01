@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviour
         if (currMap != null)
             LoadingScreenManager.LoadScene(currMap.GetMapName());
     }
-    public void SetCurrMap(int mapID) { currMap = MapManager.GetInstance().GetMap(mapID); }
+    //public void SetCurrMap(int mapID) { currMap = MapManager.GetInstance().GetMap(mapID); }
+    public void SetCurrMap(string mapName) { currMap = MapManager.GetInstance().GetMap(mapName); }
     public Map GetCurrMap() { return currMap; }
 
     //Getter(s)
@@ -61,6 +62,18 @@ public class GameManager : MonoBehaviour
         else 
             return PlayerList[playerNo];
 
+        return null;
+    }
+    public PlayerData GetPlayer(TEAM playerTeam)
+    {
+        foreach (PlayerData player in PlayerList)
+        {
+            if (player.GetInGameData().GetTeam() != playerTeam)
+                continue;
+
+            return player;
+        }
+        Debug.Log("No Player In Team : " + playerTeam + " Are you sure you entered the right one?");
         return null;
     }
     public int GetPlayerSize()

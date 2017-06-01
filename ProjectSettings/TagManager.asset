@@ -17,6 +17,8 @@ TagManager:
   - MapSpawnArea
   - SoundManager
   - CharacterSelect
+  - RedSpawn
+  - BlueSpawn
   layers:
   - Default
   - TransparentFX

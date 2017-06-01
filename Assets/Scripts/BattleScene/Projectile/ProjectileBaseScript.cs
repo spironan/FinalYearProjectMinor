@@ -9,7 +9,7 @@ public class ProjectileBaseScript : MonoBehaviour
     bool canDamage = true;
     float lifetime;
     float pSpeed;
-    uint damage;
+    int damage;
     Vector2 pDireciton;
     Image pImage;
     Rigidbody2D rigidbody;
@@ -25,7 +25,7 @@ public class ProjectileBaseScript : MonoBehaviour
         rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
 	}
     
-    public virtual void Init(float newLifetime, float newSpeed, uint newDamage, Vector2 newDireciton)
+    public virtual void Init(float newLifetime, float newSpeed, int newDamage, Vector2 newDireciton)
     {
         lifetime = newLifetime;
         pSpeed = newSpeed;

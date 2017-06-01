@@ -19,7 +19,7 @@ public class PlayerData : MonoBehaviour
     //the frame outline of the player
     public GameObject selectframe;                                                          
     // Character Data is the progression of the data                                           read from Database As well next time                               
-    PlayerCharacterData[] characterData = new PlayerCharacterData[(int)CHARACTERS.MAX_CHARACTER];
+    PlayerCharacterData[] characterData = new PlayerCharacterData[CharacterManager.GetInstance().GetCharCount()];
     // Player's In Game Data <- Determine which side player is Spawned and used for in game stuff
     PlayerInGameData inGameData = new PlayerInGameData();
     //skillbook
@@ -86,8 +86,26 @@ public class PlayerData : MonoBehaviour
     }
 
     //Getter(s)
-    public PlayerCharacterData GetCharData(CHARACTERS chara) { return characterData[(int)chara]; }
-    public PlayerCharacterData GetCharData(int chara) { return characterData[chara]; }
+    //public PlayerCharacterData GetCharData(CHARACTERS chara) { return characterData[(int)chara]; }
+    public PlayerCharacterData GetCharDataByName(string charName) 
+    {
+        int index = CharacterManager.GetInstance().GetCharacterIndex(charName);
+        if(index != -1)
+        {
+            return characterData[CharacterManager.GetInstance().GetCharacterIndex(charName)]; 
+        }
+        Debug.Log("name you passed in : " + charName + "  is invalid,no such character found");
+        return null;
+    }
+    public PlayerCharacterData GetCharDataByIndex(int index) 
+    {
+        if (index >= 0 && index <= CharacterManager.GetInstance().GetCharCount())
+        {
+            return characterData[index]; 
+        }
+        Debug.Log("index you passed in is invalid at : " + index + ", it is either too low or is bigger then total no of charas at : " + CharacterManager.GetInstance().GetCharCount());
+        return null;
+    }
     public PlayerInGameData GetInGameData() { return inGameData; }
 
 	// Use this for initialization

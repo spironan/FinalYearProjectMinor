@@ -5,7 +5,16 @@ using System.Collections;
 public class MapSlot : MonoBehaviour 
 {
     public GameObject left = null, right = null;
-    PLAYMAPS mapID;
+    string mapName;
+
+    public void SetMapName(string mapName) { this.mapName = mapName; }
+    public string GetMapName() { return mapName; }
+
+    //PLAYMAPS mapID;
+    //public void SetID(PLAYMAPS mapID) { this.mapID = mapID; }
+    //public void SetID(int mapID) { this.mapID = (PLAYMAPS)mapID; }
+    //public int GetMapID() { return (int)mapID; }
+    //public PLAYMAPS GetMapID() { return mapID; }
 
     //public Map map;
     //Vector3 centerPos;
@@ -135,6 +144,4 @@ public class MapSlot : MonoBehaviour
     //    //while (angleToMove < -1.0f)
     //    //    angleToMove += 1.0f;
     //}
-    public void SetID(PLAYMAPS mapID) { this.mapID = mapID; }
-    public int GetMapID() { return (int)mapID; }
 }
