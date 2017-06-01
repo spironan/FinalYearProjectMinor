@@ -38,7 +38,7 @@ public class ReflectSkill : SkillProfile
         {
             if (temp.collider != null)
             {
-                if (temp.collider.gameObject.tag == "SpellSkill" && temp.collider.gameObject.GetComponent<SkillProfile>().owner != owner)
+                if (temp.collider.gameObject.tag == "RangedSkill" && temp.collider.gameObject.GetComponent<SkillProfile>().owner != owner)
                 {
                     Debug.Log("reflect");
                     temp.collider.gameObject.GetComponent<SkillProfile>().reset();
