@@ -4,6 +4,7 @@ using System.Collections;
 public class ThrowingHammerSkill : SkillProfile {
 
     public float speed_Y;
+    float rotatingDir = 1;
     bool runOnce = false;
 
     public override void Start()
@@ -15,15 +16,20 @@ public class ThrowingHammerSkill : SkillProfile {
 
     // Update is called once per frame
     public override void Update () {
-        gameObject.transform.Rotate(Vector3.forward * Time.deltaTime * 200);
+        
 
         if (!runOnce)
         {
             direction = (enemy.transform.position - owner.transform.position).normalized;
             runOnce = true;
             position = gameObject.transform.position;
+            if (direction.x >= 0)
+                rotatingDir = 1;
+            else
+                rotatingDir = -1;
         }
 
+        gameObject.transform.Rotate(Vector3.forward * Time.deltaTime * 200);
         if (distToEnemy() < 1.0f)
         {
             if (checkForCollision())
@@ -73,5 +79,11 @@ public class ThrowingHammerSkill : SkillProfile {
             }
         }
         return false;
+    }
+
+    public override void reset()
+    {
+        runOnce = false;
+        speed_Y = pSpeed;
     }
 }

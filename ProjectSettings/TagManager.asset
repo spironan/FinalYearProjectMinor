@@ -11,9 +11,9 @@ TagManager:
   - GameManager
   - CharacterSlot
   - Canvas
-  - SpellSkill
+  - RangedSkill
   - SpecialSkill
-  - PhysicalSkill
+  - MeleeSkill
   - MapSpawnArea
   - SoundManager
   - CharacterSelect

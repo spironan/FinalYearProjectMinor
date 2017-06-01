@@ -6,6 +6,7 @@ public class BombSkill : SkillProfile {
     public GameObject explosion;
 
     float checkEveryInterval_lifeTime = 0.0f;
+    float throwingDir = 1;
 
     bool runOnce = false;
     bool doDamage = true;
@@ -44,7 +45,12 @@ public class BombSkill : SkillProfile {
             direction = (enemy.transform.position - owner.transform.position).normalized;
             runOnce = true;
             position = gameObject.transform.position;
-            rigidBody.velocity = new Vector2(direction.x * 5, 5);
+
+            if (direction.x > 0)
+                throwingDir = 1;
+            else
+                throwingDir = -1;
+            rigidBody.velocity = new Vector2(throwingDir * 1.5f, 5);
 
 
         }

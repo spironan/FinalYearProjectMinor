@@ -3,7 +3,7 @@ using System.Collections;
 
 //[RequireComponent(typeof(PlayerControllerManager))]
 [RequireComponent(typeof(ListOfControllerActions))]
-[RequireComponent(typeof(CharacterBase))]
+[RequireComponent(typeof(PlayerCharacterLogicScript))]
 public class SkillActivator : MonoBehaviour {
 
     public GameObject skill1;
@@ -40,16 +40,9 @@ public class SkillActivator : MonoBehaviour {
         Vector2 local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
 
         if(player_number == PLAYER.PLAYER_ONE)
-            activator.gameObject.transform.position = new Vector3(0, transform.position.y + local_sprite_size.y + 0.1f, activator.gameObject.transform.position.z);
+            activator.gameObject.transform.position += new Vector3(0, local_sprite_size.y + 0.1f, activator.gameObject.transform.position.z);
         else if(player_number == PLAYER.PLAYER_TWO)
-            activator.gameObject.transform.position = new Vector3(0, transform.position.y - local_sprite_size.y - 0.1f, activator.gameObject.transform.position.z);
-
-  
-        
-
-
-
-
+            activator.gameObject.transform.position += new Vector3(0, -local_sprite_size.y - 0.1f, activator.gameObject.transform.position.z);
 
     }
 

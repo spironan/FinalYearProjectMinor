@@ -45,10 +45,11 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         //name = CHARACTERS.PLAYTEST_CHAR;
         //name = "";
         //type = ATTACKTYPE.MID_RANGE;
-        character = gameObject.GetComponent<CharacterBase>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         controller = GetComponent<PlayerControllerManager>();
         controller.init(playerID);
+        character = gameObject.GetComponent<CharacterBase>();
+        
     }
 
     //Overall Structure of how the code should flow

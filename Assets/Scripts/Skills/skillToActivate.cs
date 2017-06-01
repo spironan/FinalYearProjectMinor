@@ -13,7 +13,7 @@ public class skillToActivate : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //transform.position = Vector2.zero;
-        transform.position = new Vector3(0, transform.position.y,-1);
+        //transform.position = new Vector3(0, transform.position.y,-1);
     }
 	
 	// Update is called once per frame
