@@ -58,6 +58,10 @@ public class ThrowingHammerSkill : SkillProfile {
             {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
+                    if (temp.collider.gameObject.GetComponent<StunMeterManager>() != null)
+                    {
+                        temp.collider.gameObject.GetComponent<StunMeterManager>().addStunValue(stunValuePerHit);
+                    }
                     Debug.Log("hit");
                     //gameObject.SetActive(false);
                     return true;
