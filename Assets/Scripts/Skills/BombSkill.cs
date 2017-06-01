@@ -41,10 +41,10 @@ public class BombSkill : SkillProfile {
 
         if (!runOnce)
         {
-            //direction = (enemy.transform.position - owner.transform.position).normalized;
+            direction = (enemy.transform.position - owner.transform.position).normalized;
             runOnce = true;
             position = gameObject.transform.position;
-            rigidBody.velocity = new Vector2(0, 5);
+            rigidBody.velocity = new Vector2(direction.x * 5, 5);
 
 
         }
