@@ -5,15 +5,15 @@ public class PlayerInGameData : MonoBehaviour
 {
     short wonMatches;
     TEAM playerTeam;
-    CharacterBase selectedChar;
+    CharacterBase selectedCharData;
 
-    public CharacterBase GetChar() { return selectedChar; }
+    public CharacterBase GetCharData() { return selectedCharData; }
     //public void SetChar(CHARACTERS charaName) { selectedChar = CharacterManager.GetInstance().GetCharacterByName(charaName); }
     //public void SetChar(int charaID) { selectedChar = CharacterManager.GetInstance().GetCharacterByID(charaID); }
-    public void SetChar(string charName) { selectedChar = CharacterManager.GetInstance().GetCharacterByName(charName); }
+    public void SetChar(string charName) { selectedCharData = CharacterManager.GetInstance().GetCharacterByName(charName); }
     public float GetHealthPercentage()
     {
-        return selectedChar.GetHealth()/selectedChar.GetMaxHp();
+        return selectedCharData.GetHealth() / selectedCharData.GetMaxHp();
     }
 
     public TEAM GetTeam() { return playerTeam; }

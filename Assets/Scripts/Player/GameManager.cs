@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     //Current State Of The Game
     GAMESTATE currState;
+    //Current Game Mode
+    GAME_MODES currGameMode = GAME_MODES.LOCAL_PVP;
     //Current Number Of Players
     PLAYER playerCount = PLAYER.PLAYER_BEGIN;
     TEAM playerTeam = TEAM.TEAM_BEGIN;
@@ -33,11 +35,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LoadBattleScene()
-    {
-        if (currMap != null)
-            LoadingScreenManager.LoadScene(currMap.GetMapName());
-    }
+    //public void LoadBattleScene()
+    //{
+    //    if (currMap != null)
+    //        LoadingScreenManager.LoadScene(currMap.GetMapName());
+    //}
     //public void SetCurrMap(int mapID) { currMap = MapManager.GetInstance().GetMap(mapID); }
     public void SetCurrMap(string mapName) { currMap = MapManager.GetInstance().GetMap(mapName); }
     public Map GetCurrMap() { return currMap; }
@@ -76,20 +78,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("No Player In Team : " + playerTeam + " Are you sure you entered the right one?");
         return null;
     }
-    public int GetPlayerSize()
-    {
-        return PlayerList.Count;
-    }
-
-    public GAMESTATE GetGameState() { return currState; }
-    //Each Scene Should have their own "Head of Department" that will call this code once to change scene
-    public void ChangeState(GAMESTATE state)
-    {
-        if (currState != state)
-            currState = state;
-        Debug.Log("State Changed to : " + currState);
-    }
-
     public PlayerData GetMasterPlayerData()
     {
         if (HasMasterPlayer())
@@ -99,6 +87,28 @@ public class GameManager : MonoBehaviour
         }
 
         return MasterPlayer.GetComponent<PlayerData>();
+    }
+    public int GetPlayerSize()
+    {
+        return PlayerList.Count;
+    }
+    public GAMESTATE GetGameState() { return currState; }
+    public GAME_MODES GetGameMode() { return currGameMode; }
+
+    //Each Scene Should have their own "Head of Department" that will call this code once to change scene
+    public void ChangeState(GAMESTATE state)
+    {
+        if (currState != state)
+            currState = state;
+        Debug.Log("State Changed to : " + currState);
+    }
+
+    void CreateNewPlayer()
+    {
+        if (!HasMasterPlayer())
+            CreateMasterPlayer();
+        else
+            CreateGuestPlayer();
     }
     public GameObject CreateMasterPlayer()//Takes in a Controller Script
     {
@@ -115,6 +125,26 @@ public class GameManager : MonoBehaviour
         GameObject guest = CreatePlayer();
         //guest.AddComponent<ControllerSupport>();
         return guest;
+    }
+    GameObject CreatePlayer()
+    {
+        if (!CanCreatePlayer())
+        {
+            Debug.Log("Max Number Of Players Created, Cant Create More!");
+            return null;
+        }
+        Debug.Log(playerCount + " before Increment ");
+        GameObject player = Instantiate(PlayerBasePrefab);
+        player.transform.parent = this.transform;
+        PlayerData playerData = player.GetComponent<PlayerData>();
+        playerData.SetPlayerID(playerCount);
+        playerData.GetInGameData().SetTeam(playerTeam);
+        playerData.selectframe = frameObj[(int)playerTeam];
+        PlayerList.Add(playerData);
+        playerTeam++;
+        playerCount++;
+        Debug.Log(playerCount + " after Increment ");
+        return player;
     }
     public bool TransferMasterPlayer(PLAYER playerNo)
     {
@@ -137,14 +167,6 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    void CreateNewPlayer()
-    {
-        if (!HasMasterPlayer())
-            CreateMasterPlayer();
-        else
-            CreateGuestPlayer();
-    }
-
     bool HasMasterPlayer()
     {
         return MasterPlayer != null;
@@ -153,25 +175,4 @@ public class GameManager : MonoBehaviour
     {
         return (playerCount < PLAYER.MAX_PLAYERS);
     }
-    GameObject CreatePlayer()
-    {
-        if (!CanCreatePlayer())
-        {
-            Debug.Log("Max Number Of Players Created, Cant Create More!");
-            return null;
-        }
-        Debug.Log(playerCount + " before Increment ");
-        GameObject player = Instantiate(PlayerBasePrefab);
-        player.transform.parent = this.transform;
-        PlayerData playerData = player.GetComponent<PlayerData>();
-        playerData.SetPlayerID(playerCount);
-        playerData.GetInGameData().SetTeam(playerTeam);
-        playerData.selectframe = frameObj[(int)playerTeam];
-        PlayerList.Add(playerData);
-        playerTeam++;
-        playerCount++;
-        Debug.Log(playerCount + " after Increment ");
-        return player;
-    }
-
 }

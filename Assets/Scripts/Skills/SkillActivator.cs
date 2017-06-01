@@ -29,7 +29,7 @@ public class SkillActivator : MonoBehaviour {
     void Awake()
     {
         dpadDown = false;
-        player_number = GetComponent<CharacterBase>().GetPlayerID();
+        player_number = GetComponent<PlayerCharacterLogicScript>().GetPlayerID();
         playerControllerManager = GetComponent<PlayerControllerManager>();
         playerControllerManager.init(player_number);
         bindedACtions = GetComponent<ListOfControllerActions>();
@@ -213,12 +213,12 @@ public class SkillActivator : MonoBehaviour {
                                                              // GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
                     skill_gameObject.SetActive(true);
                     skill_gameObject.transform.position = transform.position;
-                    skill_gameObject.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<CharacterBase>().GetDirection(), 1);
+                    skill_gameObject.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection(), 1);
                     skill_gameObject.GetComponent<SkillProfile>().player_ID = player_number;
                     skill_gameObject.GetComponent<SkillProfile>().owner = gameObject;
                     skill_gameObject.GetComponent<SkillProfile>().findEnemy();
 
-                    skill_gameObject.GetComponent<SkillProfile>().direction = gameObject.GetComponent<CharacterBase>().GetDirection();
+                    skill_gameObject.GetComponent<SkillProfile>().direction = gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection();
                     keyIterator = 0;
                     dpadDown = false;
                     currentSkillProfile = null;

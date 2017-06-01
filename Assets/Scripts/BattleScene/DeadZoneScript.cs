@@ -7,6 +7,6 @@ public class DeadZoneScript : MonoBehaviour
     {
         Debug.Log("Something Entered : " + other.gameObject.tag);
         if(other.gameObject.tag == "Player")
-            other.gameObject.GetComponent<CharacterBase>().SetDead(true);
+            other.gameObject.GetComponent<PlayerCharacterLogicScript>().SetDead(true);
     }
 }

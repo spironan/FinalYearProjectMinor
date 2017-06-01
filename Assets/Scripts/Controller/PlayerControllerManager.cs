@@ -25,12 +25,12 @@ public class PlayerControllerManager : MonoBehaviour
             listOfConnectedController = Input.GetJoystickNames();
 
         currController.Start();
+
         //numberOfControllers = Input.GetJoystickNames().Length;
         //if (Input.GetJoystickNames().Length > (int)playerID)
         //{
         //    nameOfController = Input.GetJoystickNames()[(int)playerID];
         //}
-
         //Debug.Log(Input.GetJoystickNames().Length);
     }
 

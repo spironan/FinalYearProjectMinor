@@ -14,8 +14,6 @@ public class BattleSceneManager : MonoBehaviour
     bool gameWon = false;
     int currentRound = 1;
 
-    public float GetCurrentBattleTimer() { return curBattleTimer; }
-
     public void SetGameMode(GAME_MODES mode)
     {
         switch (mode)
@@ -27,13 +25,15 @@ public class BattleSceneManager : MonoBehaviour
         ResetTimer();
     }
 
+    public float GetCurrentBattleTimer() { return curBattleTimer; }
     public int GetCurrentRound() { return currentRound; }
 
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         currentMap = gameManager.GetCurrMap();
-        SetGameMode(GAME_MODES.LOCAL_PVP);
+        //SetGameMode(GAME_MODES.LOCAL_PVP);
+        SetGameMode(gameManager.GetGameMode());
         currentRound = 1;
     }
 
@@ -41,7 +41,11 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
-            playerCharacters.Add(gameManager.GetPlayer(i).GetInGameData().GetChar().gameObject);
+            GameObject chara = new GameObject();
+            PlayerCharacterLogicScript charaData = chara.AddComponent<PlayerCharacterLogicScript>();
+            //TODO : ADD DATA TO CHARA DATA BASED ON PLAYER INFO
+
+            //playerCharacters.Add(gameManager.GetPlayer(i).GetInGameData().GetCharData().gameObject);
         }
     }
 
@@ -64,7 +68,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < playerCharacters.Count; ++i)
         {
-            playerCharacters[i].GetComponent<CharacterBase>().Reset();
+            playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().Reset();
         }
     }
 
@@ -77,7 +81,7 @@ public class BattleSceneManager : MonoBehaviour
             playerCharacters[i].transform.position = spawnPoint;
         }
     }
-    
+
     public void Update()
     {
         UpdateTimer();
@@ -99,7 +103,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
-            if (playerCharacters[i].GetComponent<CharacterBase>().IsDead())
+            if (playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().IsDead())
                 gameWon = true;
         }
     }
@@ -126,7 +130,6 @@ public class BattleSceneManager : MonoBehaviour
         }
         if (winnerID != -1)
             gameManager.GetPlayer(winnerID).GetInGameData().WinMatch();
-
 
         ResetMatch();
     }

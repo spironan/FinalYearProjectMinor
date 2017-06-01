@@ -70,13 +70,12 @@ public class CharacterManager : Singleton<CharacterManager>
             database.reader = database.dbCmd.ExecuteReader();
             while (database.reader.Read())
             {
-                string name = database.reader.GetString(1);
+                string name = database.reader.GetString(0);
                 if (!HasCharacter(name))
                 {
                     CharacterBase charBase = new CharacterBase();
                     charBase.SetName(database.reader.GetString(0));
-                    //TODO Convert to enum
-                    //charBase.SetType(database.reader.GetString(1));
+                    charBase.SetType((ATTACKTYPE)ATTACKTYPE.Parse(typeof(ATTACKTYPE), database.reader.GetString(1)));
                     charBase.SetMaxHealth(database.reader.GetInt32(2));
                     charBase.SetJumpForce(database.reader.GetInt32(3));
                     charBase.SetMoveSpeed(database.reader.GetInt32(4));
@@ -87,9 +86,12 @@ public class CharacterManager : Singleton<CharacterManager>
                     charBase.SetCharArt(SpriteManager.GetInstance().GetSprite(database.reader.GetString(9)));
                     charBase.SetCharIcon(SpriteManager.GetInstance().GetSprite(database.reader.GetString(10)));
                     charBase.SetChar(SpriteManager.GetInstance().GetSprite(database.reader.GetString(11)));
+
+                    characterList.Add(charBase.GetName(), charBase);
                 }
             }
             database.SoftReset();
+            Debug.Log("Finished Creating Characters From Database");
         }
     }
 
@@ -124,8 +126,8 @@ public class CharacterManager : Singleton<CharacterManager>
             {
                 if (key == charName)
                 {
-                    CharacterBase avatar = new CharacterBase(characterList[key]);
-                    return avatar;
+                    CharacterBase copy = new CharacterBase(characterList[key]);
+                    return copy;
                 }
             }
         }

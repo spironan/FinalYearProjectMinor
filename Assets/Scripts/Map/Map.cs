@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Map : MonoBehaviour 
+public class Map 
 {
     //Variable(s)
     Sprite mapSprite; // the image of the map for map select

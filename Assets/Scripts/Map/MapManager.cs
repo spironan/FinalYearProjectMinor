@@ -77,7 +77,7 @@ public class MapManager : Singleton<MapManager>
             database.reader = database.dbCmd.ExecuteReader();
             while (database.reader.Read())
             {
-                string name = database.reader.GetString(1);
+                string name = database.reader.GetString(0);
                 TEAM team = TEAM.TEAM_BEGIN;
                 Vector2 newPos;
                 float x, y;
@@ -105,6 +105,7 @@ public class MapManager : Singleton<MapManager>
                 }
             }
             database.SoftReset();
+            Debug.Log("Finished Creating Maps From Database");
         }
     }
 

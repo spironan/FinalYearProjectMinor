@@ -34,6 +34,7 @@ public class SpriteManager : Singleton<SpriteManager>
                 }
             }
             database.SoftReset();
+            Debug.Log("Finished Creating Sprites From Database");
         }
     }
 

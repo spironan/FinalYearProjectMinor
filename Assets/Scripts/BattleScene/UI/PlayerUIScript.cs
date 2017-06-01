@@ -14,7 +14,7 @@ public class PlayerUIScript : MonoBehaviour
 	void Start () {
         playerInfo = GameObject.FindWithTag("GameManager").GetComponent<GameManager>().GetPlayer(playerTeam).GetInGameData();
         charArtSprite = GetComponent<Image>().sprite;
-        charArtSprite = playerInfo.GetChar().GetCharArt();
+        charArtSprite = playerInfo.GetCharData().GetCharArt();
         currHealth = hpObj.GetComponent<Image>();
     }
 	

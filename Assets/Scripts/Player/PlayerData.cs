@@ -43,7 +43,6 @@ public class PlayerData : MonoBehaviour
     //    return controller.getValueFromAxis(input).getBool();
     //}
     
-
     public void SetPlayerID(PLAYER id)
     {
         playerID = id;

@@ -31,7 +31,7 @@ public class SkillProfile : MonoBehaviour {
     public bool activateSkill = false;
 
 
-    private CharacterBase[] listOfPlayers;
+    private PlayerCharacterLogicScript[] listOfPlayers;
 
     protected RaycastHit2D[] collision;
     protected Vector2 position;
@@ -70,8 +70,8 @@ public class SkillProfile : MonoBehaviour {
 
     public virtual void findEnemy()
     {
-        listOfPlayers = GameObject.FindObjectsOfType<CharacterBase>();
-        foreach (CharacterBase cb in listOfPlayers)
+        listOfPlayers = GameObject.FindObjectsOfType<PlayerCharacterLogicScript>();
+        foreach (PlayerCharacterLogicScript cb in listOfPlayers)
         {
             if (cb.gameObject != owner)
             {
