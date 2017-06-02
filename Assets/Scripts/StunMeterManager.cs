@@ -19,9 +19,9 @@ public class StunMeterManager : MonoBehaviour {
 
         player_number = GetComponent<PlayerCharacterLogicScript>().GetPlayerID();
         if (player_number == PLAYER.PLAYER_ONE)
-            stunMeter.gameObject.transform.position = new Vector3(0, transform.position.y - local_sprite_size.y + 0.1f, stunMeter.gameObject.transform.position.z);
+            stunMeter.gameObject.transform.position += new Vector3(0, -local_sprite_size.y - 0.1f, stunMeter.gameObject.transform.position.z);
         else if (player_number == PLAYER.PLAYER_TWO)
-            stunMeter.gameObject.transform.position = new Vector3(0, transform.position.y + local_sprite_size.y - 0.1f, stunMeter.gameObject.transform.position.z);
+            stunMeter.gameObject.transform.position += new Vector3(0, local_sprite_size.y + 0.1f, stunMeter.gameObject.transform.position.z);
     }
 	
 	// Update is called once per frame

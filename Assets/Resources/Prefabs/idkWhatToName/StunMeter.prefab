@@ -24,7 +24,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 485886}
-  - 114: {fileID: 11453070}
+  - 114: {fileID: 11463128}
   m_Layer: 0
   m_Name: StunMeter
   m_TagString: Untagged
@@ -86,7 +86,7 @@ Transform:
   - {fileID: 443152}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11453070
+--- !u!114 &11463128
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -94,10 +94,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 156318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ea9da26901be8e47aa0c532cc6fbf0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 959113c53cdb6bb4da647f2ccfe18457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunValue: 0.01
+  stunValue: 0
   rateOfStunDecay: 15
   border: {fileID: 174208}
   fill: {fileID: 152028}
