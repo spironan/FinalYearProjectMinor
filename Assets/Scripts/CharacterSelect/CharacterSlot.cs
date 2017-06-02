@@ -4,23 +4,16 @@ using System.Collections;
 
 public class CharacterSlot : MonoBehaviour
 {
+    //Links To the Next Character Slots
     public GameObject up = null, down = null, left = null, right = null;
+    //Image To Be Display On the Slot
     Image icon;
-    //CHARACTERS charName;
+    //Name Of Character To Display
     string charName;
 
-    void Awake()
-    {
-        icon = GetComponent<Image>();
-    }
+    void Awake() { icon = GetComponent<Image>(); }
 
-    public void SetImageSprite(Sprite sprite)
-    {
-        icon.sprite = sprite;
-    }
-
-    //public void SetChar(CHARACTERS chara) { charName = chara; }
-    //public CHARACTERS GetChar() { return charName; }
+    public void SetImageSprite(Sprite sprite) { icon.sprite = sprite; }
     public void SetCharName(string charName) { this.charName = charName; }
     public string GetCharName() { return charName; }
 

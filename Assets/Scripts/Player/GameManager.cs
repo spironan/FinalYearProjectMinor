@@ -4,20 +4,28 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour 
 {
+    //Buffer Time The Player Needs to Press Before Actually Creating Player
+    public float holdTime;
+    float curHoldTime;
+
+    //Prefab for PlayerBase
+    public GameObject playerBasePrefab;
+    //Frames Of The Different Players
+    public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
+    //List Of Existing Players
+    List<PlayerData> playerList = new List<PlayerData>();
+    //Master Player Has More Rights then Guest
+    GameObject masterPlayer = null;
+    //Which Map is Being Selected
+    Map currMap = null;
     //Current State Of The Game
     GAMESTATE currState;
     //Current Game Mode
     GAME_MODES currGameMode = GAME_MODES.LOCAL_PVP;
     //Current Number Of Players
     PLAYER playerCount = PLAYER.PLAYER_BEGIN;
+    //Current Team Of the Player
     TEAM playerTeam = TEAM.TEAM_BEGIN;
-    public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
-    List<PlayerData> PlayerList = new List<PlayerData>();
-    //Master Player Has More Rights then Guest
-    GameObject MasterPlayer = null;
-    public GameObject PlayerBasePrefab;
-    //Which Map is Being Selected
-    Map currMap = null;
 
     //Dont destroy on load the manager -> exist permantly
     void Awake()
@@ -25,33 +33,37 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         GetComponent<PlayerControllerManager>().init(PLAYER.PLAYER_ONE);
     }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)
-            ||GetComponent<PlayerControllerManager>().getIsKeyDown(BUTTON_INPUT.START)
+            ||  GetComponent<PlayerControllerManager>().getIsKeyDown(BUTTON_INPUT.START)
             )
         {
-            CreateNewPlayer();
+            curHoldTime += Time.deltaTime;
+            if (curHoldTime >= holdTime)
+            {
+                CreateNewPlayer();
+                curHoldTime = 0.0f;
+            }
         }
     }
-
-    //public void LoadBattleScene()
-    //{
-    //    if (currMap != null)
-    //        LoadingScreenManager.LoadScene(currMap.GetMapName());
-    //}
-    //public void SetCurrMap(int mapID) { currMap = MapManager.GetInstance().GetMap(mapID); }
+    
+    //Setter(s)
     public void SetCurrMap(string mapName) { currMap = MapManager.GetInstance().GetMap(mapName); }
-    public Map GetCurrMap() { return currMap; }
+    //Each Scene Should have their own "Head of Department" that will call this code once to change scene
+    public void ChangeState(GAMESTATE state)
+    {
+        if (currState != state)
+            currState = state;
+        Debug.Log("State Changed to : " + currState);
+    }
 
     //Getter(s)
-    //public PlayerData[] GetPlayers() { return PlayerList; }
     public PlayerData GetPlayer(PLAYER playerNo) 
     {
         if (playerCount >= playerNo)
         {
-            return PlayerList[(int)playerNo]; 
+            return playerList[(int)playerNo];
         }
         Debug.Log("There is No such Player of Index : " + playerCount);
         return null;
@@ -63,13 +75,13 @@ public class GameManager : MonoBehaviour
         else if (playerNo > (int)playerCount)
             Debug.Log("There is No such Player of Index : " + playerCount);
         else 
-            return PlayerList[playerNo];
+            return playerList[playerNo];
 
         return null;
     }
     public PlayerData GetPlayer(TEAM playerTeam)
     {
-        foreach (PlayerData player in PlayerList)
+        foreach (PlayerData player in playerList)
         {
             if (player.GetInGameData().GetTeam() != playerTeam)
                 continue;
@@ -83,48 +95,40 @@ public class GameManager : MonoBehaviour
     {
         if (HasMasterPlayer())
         {
-            Debug.Log("No Master Player Found,Please Create one");
+            Debug.Log("No Master Player Found, Please Create one");
             return null;
         }
 
-        return MasterPlayer.GetComponent<PlayerData>();
+        return masterPlayer.GetComponent<PlayerData>();
     }
-    public int GetPlayerSize()
-    {
-        return PlayerList.Count;
-    }
+    public Map GetCurrMap() { return currMap; }
+    public int GetPlayerSize() { return playerList.Count; }
     public GAMESTATE GetGameState() { return currState; }
     public GAME_MODES GetGameMode() { return currGameMode; }
 
-    //Each Scene Should have their own "Head of Department" that will call this code once to change scene
-    public void ChangeState(GAMESTATE state)
-    {
-        if (currState != state)
-            currState = state;
-        Debug.Log("State Changed to : " + currState);
-    }
-
-    void CreateNewPlayer()
+    public void CreateNewPlayer()
     {
         if (!HasMasterPlayer())
             CreateMasterPlayer();
         else
             CreateGuestPlayer();
     }
-    public GameObject CreateMasterPlayer()//Takes in a Controller Script
+    GameObject CreateMasterPlayer()//Takes in a Controller Script
     {
-        MasterPlayer = CreateGuestPlayer();
-        if (MasterPlayer != null)// if can create
+        masterPlayer = CreatePlayer();
+        if (masterPlayer != null)// if can create
         {
-            MasterPlayer.GetComponent<PlayerData>().IsMaster();
+            masterPlayer.GetComponent<PlayerData>().IsMaster();
             //Add controller support here
         }
-        return MasterPlayer;
+        Debug.Log("Created Master Player");
+        return masterPlayer;
     }
-    public GameObject CreateGuestPlayer()//Takes in a Controller Script
+    GameObject CreateGuestPlayer()//Takes in a Controller Script
     {
         GameObject guest = CreatePlayer();
         //guest.AddComponent<ControllerSupport>();
+        Debug.Log("Created Guest Player");
         return guest;
     }
     GameObject CreatePlayer()
@@ -135,18 +139,19 @@ public class GameManager : MonoBehaviour
             return null;
         }
         Debug.Log(playerCount + " before Increment ");
-        GameObject player = Instantiate(PlayerBasePrefab);
+        GameObject player = Instantiate(playerBasePrefab);
         player.transform.parent = this.transform;
         PlayerData playerData = player.GetComponent<PlayerData>();
         playerData.SetPlayerID(playerCount);
         playerData.GetInGameData().SetTeam(playerTeam);
         playerData.selectframe = frameObj[(int)playerTeam];
-        PlayerList.Add(playerData);
+        playerList.Add(playerData);
         playerTeam++;
         playerCount++;
         Debug.Log(playerCount + " after Increment ");
         return player;
     }
+
     public bool TransferMasterPlayer(PLAYER playerNo)
     {
         if (!HasMasterPlayer())
@@ -155,22 +160,21 @@ public class GameManager : MonoBehaviour
             return false;
         }
 
-        if (MasterPlayer.GetComponent<PlayerData>().GetPlayerID() == playerNo)
+        if (masterPlayer.GetComponent<PlayerData>().GetPlayerID() == playerNo)
         {
             Debug.Log("Already a Master Player,Cant switch with yourself");
             return false;
         }
 
         //swap here
-        MasterPlayer.AddComponent<PlayerData>().IsGuest();
+        masterPlayer.AddComponent<PlayerData>().IsGuest();
         GetPlayer(playerNo).IsMaster();
         Debug.Log("Swapping of Master Successful " + playerNo + " is now the master");
         return true;
     }
-
     bool HasMasterPlayer()
     {
-        return MasterPlayer != null;
+        return masterPlayer != null;
     }
     bool CanCreatePlayer()
     {

@@ -4,15 +4,42 @@ using System.Collections;
 using System.Collections.Generic;
 
 //Overall Manager for the scene
-public class CharacterSelectScript : MonoBehaviour 
+public class CharacterSelectScript : MonoBehaviour
 {
+    /*//public void LockInCharacter(PLAYER player,CHARACTERS charaName)
+    //{
+    //    //SetCharacter
+    //    //if (!gameManager.GetPlayer(player).GetPickStatus())//If player haven't picked a character
+    //    //{
+    //        gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
+    //        gameManager.GetPlayer(player).PickChar();
+    //        playerFrames[(int)player].LockedIn();
+    //    //}
+    //    //else if (gameManager.GetPlayer(player).GetInGameData().GetChar() == CharacterManager.GetInstance().GetCharacterByName(charaName))//If player press on the same Character
+    //    //{
+    //    //    gameManager.GetPlayer(player).UnPickChar();
+    //    //}
+    //    //else
+    //    //{
+    //    //}
+
+    //    //temp test shit code
+    //    finished = true;
+    //    if (CheckBothPicked())
+    //    {
+    //        finished = true;
+    //    }
+    //}*/
+
     //Prefab of the Slots To Spawn
     public GameObject framePrefab;
     //List Of Spawned Prefabs
     List<GameObject> charSlots = new List<GameObject>();
-    //Player Prolly Has An Image that i can use instead of a gameobject
+    //List Of Player's Different Frames
     List<CharSelectLocationScript> playerFrames = new List<CharSelectLocationScript>();
+    //GameManager
     GameManager gameManager;
+    //Is The Character Select Finished
     bool finished = false;
     
 	void Start () 
@@ -29,9 +56,8 @@ public class CharacterSelectScript : MonoBehaviour
 
         int charCount = CharacterManager.GetInstance().GetCharCount();
         CharacterSlot tempSlot;
-        
         //Create The Prefabs and add it to a list
-        for (int i = 0; i < charCount/*(int)CHARACTERS.MAX_CHARACTER*/; ++i)
+        for (int i = 0; i < charCount; ++i)
         {
             GameObject slot = Instantiate(framePrefab);
             slot.transform.SetParent(gameObject.transform, false);
@@ -41,8 +67,6 @@ public class CharacterSelectScript : MonoBehaviour
             CharacterBase charData = CharacterManager.GetInstance().GetCharacterByIndex(i);
             tempSlot.SetCharName(charData.GetName());
             tempSlot.SetImageSprite(charData.GetCharArt());
-            //tempSlot.SetImage(CharacterManager.GetInstance().GetCharacterByID(i).GetIcon());
-            //tempSlot.SetChar(CharacterManager.GetInstance().GetCharacterByID(i).GetName());
             charSlots.Add(slot);
             width++;
             if (width > maxWidth)
@@ -52,11 +76,10 @@ public class CharacterSelectScript : MonoBehaviour
             }
         }
 
-
         //Allocate CharSlots Up Down Left Right for navigation
-        if (/*(int)CHARACTERS.MAX_CHARACTER*/ charCount > 1)
+        if ( charCount > 1)
         {
-            int maxIndex = /*(int)CHARACTERS.MAX_CHARACTER*/ charCount;
+            int maxIndex = charCount;
             int spawnIndex = 0;
             for (int i = 0; i < maxIndex; ++i)
             {
@@ -139,31 +162,6 @@ public class CharacterSelectScript : MonoBehaviour
             }
         }
     }
-
-    //public void LockInCharacter(PLAYER player,CHARACTERS charaName)
-    //{
-    //    //SetCharacter
-    //    //if (!gameManager.GetPlayer(player).GetPickStatus())//If player haven't picked a character
-    //    //{
-    //        gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
-    //        gameManager.GetPlayer(player).PickChar();
-    //        playerFrames[(int)player].LockedIn();
-    //    //}
-    //    //else if (gameManager.GetPlayer(player).GetInGameData().GetChar() == CharacterManager.GetInstance().GetCharacterByName(charaName))//If player press on the same Character
-    //    //{
-    //    //    gameManager.GetPlayer(player).UnPickChar();
-    //    //}
-    //    //else
-    //    //{
-    //    //}
-        
-    //    //temp test shit code
-    //    finished = true;
-    //    if (CheckBothPicked())
-    //    {
-    //        finished = true;
-    //    }
-    //}
 
     public void LockInCharacter(PLAYER player, string charaName)
     {

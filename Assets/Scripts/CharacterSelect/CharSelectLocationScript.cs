@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharSelectLocationScript : MonoBehaviour {
-
+public class CharSelectLocationScript : MonoBehaviour 
+{
     GameObject charSlot;
     CharacterSlot charData;
-    bool LockedIn = false;
+    bool lockedIn = false;
 
     public void AssignCharSlot(GameObject _charSlot) 
     { 
@@ -15,48 +15,30 @@ public class CharSelectLocationScript : MonoBehaviour {
     }
 
     public Vector3 GetSlotLocation() { return charSlot.transform.position; }
-
-    void Update()
-    {
-    }
-    
-    //public CHARACTERS GetCharName()
-    //{
-    //    return charData.GetChar();
-    //}
-
-    public string GetCharName()
-    {
-        return charData.GetCharName();
-    }
+    public string GetCharName() { return charData.GetCharName(); }
 
     public void MoveLeft()
     {
-        if (!LockedIn && charData && charData.left != null)
+        if (!lockedIn && charData && charData.left != null)
             AssignCharSlot(charData.left);
     }
-
     public void MoveRight()
     {
-        if (!LockedIn && charData && charData.right != null)
+        if (!lockedIn && charData && charData.right != null)
             AssignCharSlot(charData.right);
     }
-
     public void MoveUp()
     {
-        if (!LockedIn && charData && charData.up != null)
+        if (!lockedIn && charData && charData.up != null)
             AssignCharSlot(charData.up);
     }
-
     public void MoveDown()
     {
-        if (!LockedIn && charData && charData.down != null)
+        if (!lockedIn && charData && charData.down != null)
             AssignCharSlot(charData.down);
     }
-
     public void LockIn()
     {
-        LockedIn = true;
+        lockedIn = true;
     }
-
 }

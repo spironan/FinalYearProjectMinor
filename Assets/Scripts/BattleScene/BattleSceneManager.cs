@@ -31,10 +31,13 @@ public class BattleSceneManager : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gameManager.ChangeState(GAMESTATE.IN_GAME);
         currentMap = gameManager.GetCurrMap();
-        //SetGameMode(GAME_MODES.LOCAL_PVP);
         SetGameMode(gameManager.GetGameMode());
         currentRound = 1;
+        LoadOncePerScene();
+        StartBattle();
+
     }
 
     public void LoadOncePerScene()
@@ -42,11 +45,18 @@ public class BattleSceneManager : MonoBehaviour
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
             GameObject chara = new GameObject();
-            chara.AddComponent<Rigidbody2D>();
+            chara.tag = "Player";
+            chara.name = "Player" + (i + 1);
             PlayerCharacterLogicScript charaData = chara.AddComponent<PlayerCharacterLogicScript>();
             charaData.SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
             charaData.SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
             charaData.SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
+
+            chara.AddComponent<SpriteRenderer>();
+            chara.GetComponent<SpriteRenderer>().sprite = charaData.GetCharacterData().GetChar();
+            chara.AddComponent<Rigidbody2D>();
+            chara.AddComponent<BoxCollider2D>();
+
             playerCharacters.Add(chara);
         }
     }

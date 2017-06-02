@@ -95,10 +95,7 @@ public class CharacterManager : Singleton<CharacterManager>
         }
     }
 
-    public int GetCharCount()
-    {
-        return characterList.Count;
-    }
+    public int GetCharCount() { return characterList.Count; }
 
     public int GetCharacterIndex(string charName)
     {
@@ -154,15 +151,9 @@ public class CharacterManager : Singleton<CharacterManager>
         return null;
     }
 
-    public bool HasCharacter(string charName)
-    {
-        return characterList.ContainsKey(charName);
-    }
+    public bool HasCharacter(string charName) { return characterList.ContainsKey(charName); }
 
-    public bool HasCharacterIndex(int index)
-    {
-        return (index >= 0 && index <= characterList.Count);
-    }
+    public bool HasCharacterIndex(int index) { return (index >= 0 && index <= characterList.Count); }
 
 }
 
