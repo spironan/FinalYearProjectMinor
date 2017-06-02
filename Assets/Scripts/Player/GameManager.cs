@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     TEAM playerTeam = TEAM.TEAM_BEGIN;
     public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
     List<PlayerData> PlayerList = new List<PlayerData>();
+    //Master Player Has More Rights then Guest
     GameObject MasterPlayer = null;
     public GameObject PlayerBasePrefab;
     //Which Map is Being Selected

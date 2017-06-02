@@ -14,9 +14,9 @@ public class CharacterSlot : MonoBehaviour
         icon = GetComponent<Image>();
     }
 
-    public void SetImage(Image image)
+    public void SetImageSprite(Sprite sprite)
     {
-        icon.sprite = image.sprite;
+        icon.sprite = sprite;
     }
 
     //public void SetChar(CHARACTERS chara) { charName = chara; }

@@ -76,21 +76,24 @@ public class MapSelectScript : MonoBehaviour
         }
 
         // Move map
-        MapSlot tempMap;
-        for (int i = 0; i < totalMaps; ++i)
+        if (totalMaps > 1)
         {
-            tempMap = maps[i].GetComponent<MapSlot>();
+            MapSlot tempMap;
+            for (int i = 0; i < totalMaps; ++i)
+            {
+                tempMap = maps[i].GetComponent<MapSlot>();
 
-            int left = i - 1;
-            int right = i + 1;
+                int left = i - 1;
+                int right = i + 1;
 
-            if (left < 0)
-                left = totalMaps - 1;
-            else if (right > totalMaps - 1)
-                right = 0;
+                if (left < 0)
+                    left = totalMaps - 1;
+                else if (right > totalMaps - 1)
+                    right = 0;
 
-            tempMap.left = maps[left];
-            tempMap.right = maps[right];
+                tempMap.left = maps[left];
+                tempMap.right = maps[right];
+            }
         }
 
         moveBy = new Vector3((itemWidth + spaceBetweenMaps)/619.195f,0,0);

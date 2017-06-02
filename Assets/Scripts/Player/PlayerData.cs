@@ -22,6 +22,7 @@ public class PlayerData : MonoBehaviour
     PlayerCharacterData[] characterData = new PlayerCharacterData[CharacterManager.GetInstance().GetCharCount()];
     // Player's In Game Data <- Determine which side player is Spawned and used for in game stuff
     PlayerInGameData inGameData = new PlayerInGameData();
+
     //skillbook
 
     //if i make a player holds what kind of button is being pressed, am i able to utilize through the fact that this is a player

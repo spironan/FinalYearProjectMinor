@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(PlayerControllerManager))]
+//[RequireComponent(typeof(PlayerControllerManager))]
 public class PlayerCharacterLogicScript : MonoBehaviour
 {
     /// VALUES TO BE CHANGED OVER THE COURSE OF THE BATTLE ///                                
@@ -28,6 +28,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void SetPlayerID(PLAYER id) { playerID = id; }
     public void SetController(PlayerControllerManager controller) { this.controller = controller; }
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
+    public void SetCharacter(CharacterBase charaBase) { character = charaBase; }
 
     public bool IsDead() { return isDead; }
     public bool InAir() { return inAir; }
@@ -47,7 +48,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         //type = ATTACKTYPE.MID_RANGE;
         character = gameObject.GetComponent<CharacterBase>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        controller = GetComponent<PlayerControllerManager>();
+        //controller = GetComponent<PlayerControllerManager>();
         controller.init(playerID);
     }
 

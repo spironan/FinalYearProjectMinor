@@ -8,7 +8,7 @@ public class SpriteManager : Singleton<SpriteManager>
     public SpriteManager() { }
 
     private Dictionary<string, Sprite> spriteMap = new Dictionary<string, Sprite>();
-    //string fullFilePath;
+    string fullFilePath;
 
     public void ClearMap()
     {
@@ -67,8 +67,8 @@ public class SpriteManager : Singleton<SpriteManager>
             Debug.Log("FileName Already Have an existing Sprite, returning the existing Sprite");
             GetSprite(fileName);
         }
-        //fullFilePath = "Images/" + filePath;
-        Sprite Sprite = Resources.Load<Sprite>(filePath);
+        fullFilePath = "Images/" + filePath;
+        Sprite Sprite = Resources.Load<Sprite>(fullFilePath);
         if (Sprite != null)
         {
             Debug.Log("SuccessFully Loaded Sprite File :" + fileName + "at FilePath : " + filePath);
@@ -76,7 +76,7 @@ public class SpriteManager : Singleton<SpriteManager>
             return Sprite;
         }
 
-        Debug.Log("No Such FilePath :" + filePath + " Have you loaded the right file?");
+        Debug.Log("No Such FilePath :" + fullFilePath + " Have you loaded the right file?");
         return null;
     }
 }

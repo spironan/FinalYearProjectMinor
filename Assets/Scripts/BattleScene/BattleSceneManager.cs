@@ -42,10 +42,12 @@ public class BattleSceneManager : MonoBehaviour
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
             GameObject chara = new GameObject();
+            chara.AddComponent<Rigidbody2D>();
             PlayerCharacterLogicScript charaData = chara.AddComponent<PlayerCharacterLogicScript>();
-            //TODO : ADD DATA TO CHARA DATA BASED ON PLAYER INFO
-
-            //playerCharacters.Add(gameManager.GetPlayer(i).GetInGameData().GetCharData().gameObject);
+            charaData.SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
+            charaData.SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
+            charaData.SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
+            playerCharacters.Add(chara);
         }
     }
 
@@ -53,7 +55,9 @@ public class BattleSceneManager : MonoBehaviour
     public void StartBattle()
     {
         //Add in Animation Time,Counter Countdown Time next time here
-        ResetMatch();
+        ResetPlayerCharacters();
+        SetPlayerSpawnPoints();
+        ResetTimer();
     }
 
     public void ResetMatch()

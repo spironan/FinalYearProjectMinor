@@ -6,8 +6,9 @@ using System.Collections.Generic;
 //Overall Manager for the scene
 public class CharacterSelectScript : MonoBehaviour 
 {
+    //Prefab of the Slots To Spawn
     public GameObject framePrefab;
-
+    //List Of Spawned Prefabs
     List<GameObject> charSlots = new List<GameObject>();
     //Player Prolly Has An Image that i can use instead of a gameobject
     List<CharSelectLocationScript> playerFrames = new List<CharSelectLocationScript>();
@@ -28,6 +29,7 @@ public class CharacterSelectScript : MonoBehaviour
 
         int charCount = CharacterManager.GetInstance().GetCharCount();
         CharacterSlot tempSlot;
+        
         //Create The Prefabs and add it to a list
         for (int i = 0; i < charCount/*(int)CHARACTERS.MAX_CHARACTER*/; ++i)
         {
@@ -36,6 +38,9 @@ public class CharacterSelectScript : MonoBehaviour
             slot.transform.localScale = new Vector3(1, 1, 1);
             slot.transform.localPosition = new Vector3(startPointX + (width * prefabSize.x), height * -prefabSize.y, 0);
             tempSlot = slot.GetComponent<CharacterSlot>();
+            CharacterBase charData = CharacterManager.GetInstance().GetCharacterByIndex(i);
+            tempSlot.SetCharName(charData.GetName());
+            tempSlot.SetImageSprite(charData.GetCharArt());
             //tempSlot.SetImage(CharacterManager.GetInstance().GetCharacterByID(i).GetIcon());
             //tempSlot.SetChar(CharacterManager.GetInstance().GetCharacterByID(i).GetName());
             charSlots.Add(slot);
