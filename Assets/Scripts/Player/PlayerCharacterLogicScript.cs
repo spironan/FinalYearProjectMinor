@@ -8,6 +8,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     protected int ultiCharge;       //The Meter that increases and when hit ultiMax,Character can Cast Ultimate
     protected float stunMeter;      //The Meter that increases when player gets hit and Gets Stunned when hit 100%
     protected float stunTimeLeft;   //The Time Left to wait before stunned is finished
+    protected StunMeterManager stunManager;
+
 
     protected bool isDead;          //If The Character is Dead
     protected bool inAir;           //If The Character Is in Air
@@ -22,6 +24,12 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //Public variables (temp for testing)
     public PLAYER playerID;         //ID Used To Determine Owner Of this Character
     public PlayerControllerManager controller;//Controller Attached To determine Controls for Character
+    public GameObject enemy;
+    public SpriteRenderer sprite;
+    [Range(0f, 100f)]
+    public float amountOfManaToStart;
+    [Range(0f,100f)]
+    protected float manaAmount;
     protected Rigidbody2D rigidbody; //The 2d Rigidbody Attached to the Charactere to apply Physics
     protected CharacterBase character; //The Character Data That Stores its Variables
 
@@ -39,7 +47,13 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public Vector2 GetDirection() { return direction; }
     public PLAYER GetPlayerID() { return playerID; }
     public PlayerControllerManager GetController() { return controller; }
+    
+    //mana
+    public float getManaAmount() { return manaAmount; }
+    public void resetManaAmount() { manaAmount = amountOfManaToStart; }
+    public void decreaseMana(float amount) { manaAmount -= amount; }
     public CharacterBase GetCharacterData() { return character; }
+
 
     //This data are always the same,thus been place here
     public void Start()
@@ -48,10 +62,25 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         //name = "";
         //type = ATTACKTYPE.MID_RANGE;
         //controller = GetComponent<PlayerControllerManager>();
-
         //GetComponent<SpriteRenderer>().sprite = character.GetChar();
+        
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         controller.init(playerID);
+
+        PlayerCharacterLogicScript[] listOfPlayers = GameObject.FindObjectsOfType<PlayerCharacterLogicScript>();
+        foreach (PlayerCharacterLogicScript cb in listOfPlayers)
+        {
+            if (cb.gameObject != this.gameObject)
+            {
+                enemy = cb.gameObject;
+            }
+        }
+        //enemy = Object.FindObjectOfType<PlayerCharacterLogicScript>().gameObject;
+        sprite = GetComponent<SpriteRenderer>();
+        stunManager = GetComponent<StunMeterManager>();
+        resetManaAmount();
+        character = gameObject.GetComponent<CharacterBase>();
+        
     }
 
     //Overall Structure of how the code should flow
@@ -69,6 +98,14 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         }
 
         Recalculate();
+        if(enemy.transform.position.x > transform.position.x)
+        {
+            sprite.flipX = true;
+        }
+        else
+        {
+            sprite.flipX = false;
+        }
     }
 
     //This Data Are to Be Loaded from a DataBase Next Time
@@ -170,16 +207,17 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //To Be Called in the Relevant Places you Deem Fit To Increase Stun Meter
     public void GainStunMeter(float increaseAmount)
     {
-        if (!stunned && increaseAmount > 0 && stunMeter < 100.0f)
-        {
-            stunMeter += increaseAmount * (1.0f - character.GetStunResistance());
-            if (stunMeter >= 100.0f)
-            {
-                stunMeter = 0.0f;
-                stunTimeLeft = character.GetStunDuration();
-                stunned = true;
-            }
-        }
+        stunManager.addStunValue(increaseAmount);
+        //if (!stunned && increaseAmount > 0 && stunMeter < 100.0f)
+        //{
+        //    stunMeter += increaseAmount * (1.0f - character.GetStunResistance());
+        //    if (stunMeter >= 100.0f)
+        //    {
+        //        stunMeter = 0.0f;
+        //        stunTimeLeft = character.GetStunDuration();
+        //        stunned = true;
+        //    }
+        //}
     }
 
     public virtual void Attack()

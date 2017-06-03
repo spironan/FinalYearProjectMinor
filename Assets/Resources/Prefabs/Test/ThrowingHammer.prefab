@@ -62,6 +62,7 @@ MonoBehaviour:
   lifetime: 0
   pSpeed: 5
   gravity: 9.8
+  manaCost: 5
   circleCollider: {fileID: 0}
   owner: {fileID: 0}
   enemy: {fileID: 0}

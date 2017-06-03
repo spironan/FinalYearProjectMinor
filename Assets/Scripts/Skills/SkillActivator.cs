@@ -25,11 +25,13 @@ public class SkillActivator : MonoBehaviour {
 
     private bool dpadDown;
 
+    private PlayerCharacterLogicScript owner;
     // Use this for initialization
     void Awake()
     {
         dpadDown = false;
-        player_number = GetComponent<PlayerCharacterLogicScript>().GetPlayerID();
+        owner = GetComponent<PlayerCharacterLogicScript>();
+        player_number = owner.GetPlayerID();
         playerControllerManager = GetComponent<PlayerControllerManager>();
         playerControllerManager.init(player_number);
         bindedACtions = GetComponent<ListOfControllerActions>();
@@ -43,65 +45,22 @@ public class SkillActivator : MonoBehaviour {
             activator.gameObject.transform.position += new Vector3(0, local_sprite_size.y + 0.1f, activator.gameObject.transform.position.z);
         else if(player_number == PLAYER.PLAYER_TWO)
             activator.gameObject.transform.position += new Vector3(0, -local_sprite_size.y - 0.1f, activator.gameObject.transform.position.z);
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(player_number);
-        if (bindedACtions.getButtonAction(ACTIONS.SKILL_ONE) )
-        {
-            Debug.Log(5);
-            currentSkillProfile = skill1.GetComponent<SkillProfile>();
-            createNewSkillObject();
-            keyIterator = 0;
-            
-            //pass skill1 to activator
-            //skill 1
-            activator.generate_keys(currentSkillProfile.gameObject);
-        }
-        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_TWO))
-        {
-            currentSkillProfile = skill2.GetComponent<SkillProfile>();
-            createNewSkillObject();
-            keyIterator = 0;
-            
-            //pass skill2 to activator
-            //skill 2
-            activator.generate_keys(currentSkillProfile.gameObject);
-        }
-        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_FOUR))
-        {
-
-            currentSkillProfile = skill4.GetComponent<SkillProfile>();
-            createNewSkillObject();
-            keyIterator = 0;
-            
-            //pass skill4 to activator
-            //skill 4
-            activator.generate_keys(currentSkillProfile.gameObject);
-        }
-        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_THREE))
-        {
-            
-            currentSkillProfile = skill3.GetComponent<SkillProfile>();
-            createNewSkillObject();
-            keyIterator = 0;
-            
-            //pass skill3 to activator
-            //skill 3
-            activator.generate_keys(currentSkillProfile.gameObject);
-        }
-
-
+        checkSkillToActivate();
         
 
         if(currentSkillProfile != null)
         {
-            
+
             //check for dpad presses
             //Debug.Log(Input.GetAxis("DPad_Y_xBox360"));
+            
             if (keyIterator != currentSkillProfile.keysToActivate)
             {
                 int keyValue = -1;
@@ -200,8 +159,10 @@ public class SkillActivator : MonoBehaviour {
 
             if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.L1))
             {
-                if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null)
+                if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null
+                    && owner.getManaAmount() >= skill_gameObject.GetComponent<SkillProfile>().manaCost)
                 {
+                    owner.decreaseMana(skill_gameObject.GetComponent<SkillProfile>().manaCost);
                     currentSkillProfile.activateSkill = true;// activates the skills
                                                              // GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
                     skill_gameObject.SetActive(true);
@@ -217,6 +178,7 @@ public class SkillActivator : MonoBehaviour {
                     currentSkillProfile = null;
 
                 }
+                
                 activator.closeBorder();
             }
         }
@@ -239,5 +201,59 @@ public class SkillActivator : MonoBehaviour {
     void destroyInactiveSkill()
     {
         Destroy(skill_gameObject);
+    }
+
+    void checkSkillToActivate()
+    {
+        if (bindedACtions.getButtonAction(ACTIONS.SKILL_ONE))
+        {
+            Debug.Log(5);
+            currentSkillProfile = skill1.GetComponent<SkillProfile>();
+            createNewSkillObject();
+            keyIterator = 0;
+
+            //pass skill1 to activator
+            //skill 1
+            activator.generate_keys(currentSkillProfile.gameObject);
+        }
+        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_TWO))
+        {
+            currentSkillProfile = skill2.GetComponent<SkillProfile>();
+            createNewSkillObject();
+            keyIterator = 0;
+
+            //pass skill2 to activator
+            //skill 2
+            activator.generate_keys(currentSkillProfile.gameObject);
+        }
+        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_FOUR))
+        {
+
+            currentSkillProfile = skill4.GetComponent<SkillProfile>();
+            createNewSkillObject();
+            keyIterator = 0;
+
+            //pass skill4 to activator
+            //skill 4
+            activator.generate_keys(currentSkillProfile.gameObject);
+        }
+        else if (bindedACtions.getButtonAction(ACTIONS.SKILL_THREE))
+        {
+
+            currentSkillProfile = skill3.GetComponent<SkillProfile>();
+            createNewSkillObject();
+            keyIterator = 0;
+
+            //pass skill3 to activator
+            //skill 3
+            activator.generate_keys(currentSkillProfile.gameObject);
+        }
+    }
+
+    public void resetCurrentCastingSkill()
+    {
+        activator.closeBorder();
+        destroyInactiveSkill();
+        keyIterator = 0;
     }
 }

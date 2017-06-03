@@ -726,6 +726,56 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 310429581}
+--- !u!1001 &335498027
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 4.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 179196, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_Name
+      value: StunMan (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11451086, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: playerID
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &355743179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,6 +1311,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21160b4ed74e0845a72ddddbb3576ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &585845162
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400602, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &586585698
 GameObject:
   m_ObjectHideFlags: 0
