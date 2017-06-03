@@ -12,6 +12,7 @@ public class SkillProfile : MonoBehaviour {
     public float lifetime;
     public float pSpeed;
     public float gravity;
+    public float manaCost;
     
 
     public CircleCollider2D circleCollider;
@@ -100,10 +101,11 @@ public class SkillProfile : MonoBehaviour {
             {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
-                    if(temp.collider.gameObject.GetComponent<StunMeterManager>() != null)
-                    {
-                        temp.collider.gameObject.GetComponent<StunMeterManager>().addStunValue(stunValuePerHit);
-                    }
+                    //if(temp.collider.gameObject.GetComponent<StunMeterManager>() != null)
+                    //{
+                    //    temp.collider.gameObject.GetComponent<StunMeterManager>().addStunValue(stunValuePerHit);
+                    //}
+                    enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
                     Debug.Log("hit");
                     //gameObject.SetActive(false);
                     return true;

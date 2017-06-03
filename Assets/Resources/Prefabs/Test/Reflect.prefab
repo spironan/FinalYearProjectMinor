@@ -56,11 +56,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keysToActivate: 4
+  stunValuePerHit: 0
   player_ID: 0
   damagePerSecond: 0
   lifetime: 5
   pSpeed: 20
   gravity: 0
+  manaCost: 30
   circleCollider: {fileID: 0}
   owner: {fileID: 0}
   enemy: {fileID: 0}
