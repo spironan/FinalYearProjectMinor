@@ -53,7 +53,8 @@ public class BattleSceneManager : MonoBehaviour
             charaData.SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
 
             chara.AddComponent<SpriteRenderer>();
-            chara.GetComponent<SpriteRenderer>().sprite = charaData.GetCharacterData().GetChar();
+            //Temporary
+            chara.GetComponent<SpriteRenderer>().sprite = SpriteManager.GetInstance().GetSprite("Char_Triangle");
             chara.AddComponent<Rigidbody2D>();
             chara.AddComponent<BoxCollider2D>();
 
@@ -135,7 +136,7 @@ public class BattleSceneManager : MonoBehaviour
         int curPlayerHp = 0;
         for (int i = 0; i < playerCharacters.Count; ++i)
         {
-            curPlayerHp = playerCharacters[i].GetComponent<CharacterBase>().GetHealth();
+            curPlayerHp = playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().GetCharacterData().GetHealth();
             if (curPlayerHp > winnerHP)
             {
                 winnerHP = curPlayerHp;

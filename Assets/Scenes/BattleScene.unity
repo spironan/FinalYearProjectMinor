@@ -2751,7 +2751,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1751541981}
   - 212: {fileID: 1751541980}
-  - 114: {fileID: 1751541984}
   - 50: {fileID: 1751541983}
   - 61: {fileID: 1751541982}
   - 114: {fileID: 1751541985}
@@ -2838,19 +2837,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1751541984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1751541979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4851949783ced4f45b4fa7798326f8c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerID: 0
-  controller: {fileID: 0}
 --- !u!114 &1751541985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3044,7 +3030,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 2027560046}
   - 212: {fileID: 2027560045}
-  - 114: {fileID: 2027560047}
   - 50: {fileID: 2027560048}
   - 61: {fileID: 2027560049}
   - 114: {fileID: 2027560050}
@@ -3100,19 +3085,6 @@ Transform:
   - {fileID: 914858975}
   m_Father: {fileID: 0}
   m_RootOrder: 6
---- !u!114 &2027560047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2027560044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4851949783ced4f45b4fa7798326f8c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerID: 0
-  controller: {fileID: 0}
 --- !u!50 &2027560048
 Rigidbody2D:
   serializedVersion: 2

@@ -76,11 +76,11 @@ public class CharacterSelectScript : MonoBehaviour
             }
         }
 
+        int spawnIndex = 0;
         //Allocate CharSlots Up Down Left Right for navigation
         if ( charCount > 1)
         {
             int maxIndex = charCount;
-            int spawnIndex = 0;
             for (int i = 0; i < maxIndex; ++i)
             {
                 tempSlot = charSlots[i].GetComponent<CharacterSlot>();
@@ -156,6 +156,7 @@ public class CharacterSelectScript : MonoBehaviour
                playerFrames[i].MoveDown();
             }
 
+            //Player Picks Character
             if (player.controller.getButtonAction(ACTIONS.PICK_CHARACTER))
             {
                 LockInCharacter(gameManager.GetPlayer(i).GetPlayerID(), playerFrames[i].GetCharName());

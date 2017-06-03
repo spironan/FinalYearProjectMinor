@@ -71,7 +71,7 @@ public class SpriteManager : Singleton<SpriteManager>
         Sprite Sprite = Resources.Load<Sprite>(fullFilePath);
         if (Sprite != null)
         {
-            Debug.Log("SuccessFully Loaded Sprite File :" + fileName + "at FilePath : " + filePath);
+            Debug.Log("SuccessFully Loaded Sprite File :" + fileName + " at FilePath : " + filePath);
             spriteMap.Add(fileName, Sprite);
             return Sprite;
         }

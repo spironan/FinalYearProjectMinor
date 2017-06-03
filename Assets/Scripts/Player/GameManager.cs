@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)
-            ||  GetComponent<PlayerControllerManager>().getIsKeyDown(BUTTON_INPUT.START)
+            ||  GetComponent<PlayerControllerManager>().getIsKeyDownHold(BUTTON_INPUT.START)
             )
         {
             curHoldTime += Time.deltaTime;

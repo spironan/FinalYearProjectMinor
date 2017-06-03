@@ -48,6 +48,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         //name = "";
         //type = ATTACKTYPE.MID_RANGE;
         //controller = GetComponent<PlayerControllerManager>();
+
+        //GetComponent<SpriteRenderer>().sprite = character.GetChar();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         controller.init(playerID);
     }

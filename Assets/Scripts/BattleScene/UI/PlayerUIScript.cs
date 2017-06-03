@@ -13,8 +13,8 @@ public class PlayerUIScript : MonoBehaviour
 	// Use this for initialization
 	void Start () {
         playerInfo = GameObject.FindWithTag("GameManager").GetComponent<GameManager>().GetPlayer(playerTeam).GetInGameData();
-        charArtSprite = GetComponent<Image>().sprite;
-        charArtSprite = playerInfo.GetCharData().GetCharArt();
+        GetComponent<Image>().sprite = playerInfo.GetCharData().GetCharArt();
+        Debug.Log("Added Character Art Image to UI");
         currHealth = hpObj.GetComponent<Image>();
     }
 	
