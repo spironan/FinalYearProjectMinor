@@ -61,7 +61,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         //name = CHARACTERS.PLAYTEST_CHAR;
         //name = "";
         //type = ATTACKTYPE.MID_RANGE;
-        //controller = GetComponent<PlayerControllerManager>();
+        controller = GetComponent<PlayerControllerManager>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         controller.init(playerID);
 
