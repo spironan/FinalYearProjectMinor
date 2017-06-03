@@ -1,26 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerCharacterData : MonoBehaviour 
+public class PlayerCharacterData 
 {
-    //CHARACTERS name;
     string name;
     uint playerID;
     uint win, lose;
     uint charPts;
 
-    void awake()
+    public void Set(string characterName, uint playerID, uint wins, uint loses, uint charPts)
     {
-        //name = CHARACTERS.MAX_CHARACTER;
-        name = "";
-        playerID = win = lose = charPts = 0;
+        this.name = characterName;
+        this.playerID = playerID;
+        this.win = wins;
+        this.lose = loses;
+        this.charPts = charPts;
     }
 
     void WinandLose() { Win(); Lose(); }
     void Win() { win++; }
     void Lose() { lose++; }
 
-    float GetWinPercentage() { return (win/win+lose)*100.0f; }
+    float GetWinPercentage() { return (win/win+lose) * 100.0f; }
     uint GetWins() { return win; }
     uint GetLose() { return lose; }
     uint GetCharPts() { return charPts; }
@@ -33,5 +34,4 @@ public class PlayerCharacterData : MonoBehaviour
             Debug.Log("Points Used!");
         }
     }
-
 }

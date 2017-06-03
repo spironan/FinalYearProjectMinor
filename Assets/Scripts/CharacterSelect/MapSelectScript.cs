@@ -3,17 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MapSelectScript : MonoBehaviour 
+public class MapSelectScript : MonoBehaviour
 {
-    GameObject gameManager;
-    List<GameObject> maps = new List<GameObject>();
-    public GameObject mapPrefab;
-
-    public Vector3 startPos;
-    public float itemWidth;
-    public float spaceBetweenMaps;
-    Vector3 offset;
-
     //public Vector3 centrePos;
     //public int radius;
     //public float timeToRotate;
@@ -21,76 +12,133 @@ public class MapSelectScript : MonoBehaviour
     //float angularVelocity;
     //float rotationTime;
     //float shiftAngle;
+    //buttonCD = buttonCurrCD = timeToRotate;
+    //shiftAngle = (1.0f / (totalMaps * 1.0f));
+    //float circleProgress = 0.0f;
+    //float angle,x, z;
+    //circleProgress = (i * 1.0f) / (totalMaps * 1.0f);
+    //angle = circleProgress * Mathf.PI * 2;
+    //x = Mathf.Sin(angle) * radius;
+    //z = Mathf.Cos(angle) * radius;
+    //Vector3 pos = new Vector3(x, 0, -z) + centrePos;
+    //map.GetComponent<Image>().color = new Color(x, 0, z);
+    //map.GetComponent<MapSlot>().SetCenter(centrePos);
+    //map.GetComponent<MapSlot>().SetRadius(radius);
+    //map.GetComponent<MapSlot>().SetCurrAngle(i * shiftAngle);
+    //map.GetComponent<MapSlot>().SetSpeed(currMap);
+    //currMap += 1;
+    //map manager get instance get map icon 
+    //for (int i = 0; i < totalMaps; ++i)
+    //{
+    //    if (maps[i].transform.localPosition.z >= cutOffZ)
+    //        maps[i].GetComponent<Image>().CrossFadeAlpha(0, 0.0f, false);
+    //    else
+    //        maps[i].GetComponent<Image>().CrossFadeAlpha(1, 0.0f, false);
+    //}
+    //RotateByFixedAmount(-1);
+    //for (int i = 0; i < totalMaps; ++i)
+    //{
+    //    int prev = i - 1;
+    //    if (prev == -1)
+    //        prev = totalMaps - 1;
+    //    maps[i].GetComponent<MapSlot>().Move(maps[prev].transform.position);
+    //    //maps[i].GetComponent<MapSlot>().Move(shiftAngle, timeToRotate);
+    //}
+    //transform.position = new Vector3(transform.position.x + amountToMove, transform.position.y, transform.position.z);
+
+    //void RotateByFixedAmount(float amount)
+    //{
+    //    float circleProgress = 0.0f;
+    //    int index = 0;
+    //    for (int i = 0; i < totalMaps; ++i)
+    //    {
+    //        circleProgress = (i * 1.0f) / (totalMaps * 1.0f);//0 - 1
+    //        float angle = circleProgress * Mathf.PI * 2;
+    //        float x = Mathf.Sin(angle) * radius;
+    //        float z = Mathf.Cos(angle) * radius;
+    //        Vector3 pos = new Vector3(x, 0, -z) + centrePos;
+
+    //        index = currIndex + i;
+    //        if (index >= totalMaps)
+    //            index -= totalMaps;
+
+    //        maps[index].transform.localPosition = pos;
+
+    //        //if (amount > 0)
+    //        //    maps[index].GetComponent<MapSlot>().MoveLeft();
+    //        //else
+    //        //    maps[index].GetComponent<MapSlot>().MoveRight();
+
+    //        //if (maps[index].transform.localPosition.z >= cutOffZ)
+    //        //    maps[index].SetActive(false);
+    //        //else
+    //        //    maps[index].SetActive(true);
+    //    }
+    //    maps[currIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
+    //}
+
+    public float itemWidth;
+    public float spaceBetweenMaps;
+    public float speed = 2.0f;
+    public GameObject mapPrefab;
+    public Vector3 startPos;
+
     int currIndex = 0;
     int totalMaps = 0;
     float buttonCD;
     float buttonCurrCD;
+    float timeToDest = 0.0f;
     bool canActivate = true;
-
     bool mapPicked = false;
     bool cancelled = false;
+    bool atDest = true;
 
+    List<GameObject> maps = new List<GameObject>();
+    GameObject gameManager;
+    Vector3 offset;
     Vector3 moveBy;
     Vector3 destination = Vector3.zero;
     Vector3 dir = Vector3.zero;
-    public float speed = 2.0f;
-    float timeToDest = 0.0f;
-    bool atDest = true;
 
 	// Use this for initialization
 	void Start ()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        
-        //buttonCD = buttonCurrCD = timeToRotate;
-        totalMaps = /*(int)PLAYMAPS.MAX_MAP*/MapManager.GetInstance().GetMapCount();
-        //shiftAngle = (1.0f / (totalMaps * 1.0f));
-        //float circleProgress = 0.0f;
-        //float angle,x, z;
-
+        totalMaps = MapManager.GetInstance().GetMapCount();
         offset = new Vector3(itemWidth + spaceBetweenMaps, 0, 0);
-        //PLAYMAPS currMap = PLAYMAPS.MAPS_BEGIN;
 
         for (int i = 0; i < totalMaps; ++i)
         {
-            //circleProgress = (i * 1.0f) / (totalMaps * 1.0f);
-            //angle = circleProgress * Mathf.PI * 2;
-            //x = Mathf.Sin(angle) * radius;
-            //z = Mathf.Cos(angle) * radius;
-            //Vector3 pos = new Vector3(x, 0, -z) + centrePos;
             Vector3 position = startPos + offset * i;
 
             GameObject map = Instantiate(mapPrefab);
             map.transform.SetParent(gameObject.transform, false);
             map.transform.localScale = new Vector3(1, 1, 1);
             map.transform.localPosition = position;
-            //map.GetComponent<Image>().color = new Color(x, 0, z);
-            //map.GetComponent<MapSlot>().SetCenter(centrePos);
-            //map.GetComponent<MapSlot>().SetRadius(radius);
-            //map.GetComponent<MapSlot>().SetCurrAngle(i * shiftAngle);
-            map.GetComponent<MapSlot>().SetMapName(/*currMap*/MapManager.GetInstance().GetMapByIndex(i).GetMapName());
-            //map.GetComponent<MapSlot>().SetSpeed(currMap);
-            //currMap += 1;
-            //map manager get instance get map icon 
+            map.GetComponent<MapSlot>().SetMapName(MapManager.GetInstance().GetMapByIndex(i).GetMapName());
+            
             maps.Add(map);
         }
 
         // Move map
-        MapSlot tempMap;
-        for (int i = 0; i < totalMaps; ++i)
+        if (totalMaps > 1)
         {
-            tempMap = maps[i].GetComponent<MapSlot>();
+            MapSlot tempMap;
+            for (int i = 0; i < totalMaps; ++i)
+            {
+                tempMap = maps[i].GetComponent<MapSlot>();
 
-            int left = i - 1;
-            int right = i + 1;
+                int left = i - 1;
+                int right = i + 1;
 
-            if (left < 0)
-                left = totalMaps - 1;
-            else if (right > totalMaps - 1)
-                right = 0;
+                if (left < 0)
+                    left = totalMaps - 1;
+                else if (right > totalMaps - 1)
+                    right = 0;
 
-            tempMap.left = maps[left];
-            tempMap.right = maps[right];
+                tempMap.left = maps[left];
+                tempMap.right = maps[right];
+            }
         }
 
         moveBy = new Vector3((itemWidth + spaceBetweenMaps)/619.195f,0,0);
@@ -105,14 +153,6 @@ public class MapSelectScript : MonoBehaviour
             buttonCurrCD += Time.deltaTime;
         else if (buttonCurrCD > buttonCD)
             canActivate = true;
-
-        //for (int i = 0; i < totalMaps; ++i)
-        //{
-        //    if (maps[i].transform.localPosition.z >= cutOffZ)
-        //        maps[i].GetComponent<Image>().CrossFadeAlpha(0, 0.0f, false);
-        //    else
-        //        maps[i].GetComponent<Image>().CrossFadeAlpha(1, 0.0f, false);
-        //}
 
         ///Controls here
         PlayerData player = gameManager.GetComponent<GameManager>().GetPlayer(0);
@@ -155,7 +195,6 @@ public class MapSelectScript : MonoBehaviour
         gameManager.GetComponent<GameManager>().SetCurrMap(maps[currIndex].GetComponent<MapSlot>().GetMapName());
         mapPicked = true;
     }
-
     public bool CheckMapPicked()
     {
         return mapPicked;
@@ -164,17 +203,10 @@ public class MapSelectScript : MonoBehaviour
     public void SetCancel(bool cancel) { cancelled = cancel; }
     public void Cancel() { cancelled = true; }
     public bool CancelMapSelect() { return cancelled; }
+    public string GetCurrentMapName() { return MapManager.GetInstance().GetMapByIndex(currIndex).GetMapName(); }
 
-    public void ShiftLeft()
-    {
-        Shift("Left");
-    }
-
-    public void ShiftRight()
-    {
-        Shift("Right");
-    }
-
+    public void ShiftLeft() { Shift("Left"); }
+    public void ShiftRight() { Shift("Right"); }
     void Shift(string direction)
     {
         if (canActivate)
@@ -207,51 +239,9 @@ public class MapSelectScript : MonoBehaviour
                     break;
             }
 
-            //RotateByFixedAmount(-1);
-            //for (int i = 0; i < totalMaps; ++i)
-            //{
-            //    int prev = i - 1;
-            //    if (prev == -1)
-            //        prev = totalMaps - 1;
-            //    maps[i].GetComponent<MapSlot>().Move(maps[prev].transform.position);
-            //    //maps[i].GetComponent<MapSlot>().Move(shiftAngle, timeToRotate);
-            //}
-            //transform.position = new Vector3(transform.position.x + amountToMove, transform.position.y, transform.position.z);
-
             ResizeMaps();
         }
     }
-
-    //void RotateByFixedAmount(float amount)
-    //{
-    //    float circleProgress = 0.0f;
-    //    int index = 0;
-    //    for (int i = 0; i < totalMaps; ++i)
-    //    {
-    //        circleProgress = (i * 1.0f) / (totalMaps * 1.0f);//0 - 1
-    //        float angle = circleProgress * Mathf.PI * 2;
-    //        float x = Mathf.Sin(angle) * radius;
-    //        float z = Mathf.Cos(angle) * radius;
-    //        Vector3 pos = new Vector3(x, 0, -z) + centrePos;
-
-    //        index = currIndex + i;
-    //        if (index >= totalMaps)
-    //            index -= totalMaps;
-
-    //        maps[index].transform.localPosition = pos;
-
-    //        //if (amount > 0)
-    //        //    maps[index].GetComponent<MapSlot>().MoveLeft();
-    //        //else
-    //        //    maps[index].GetComponent<MapSlot>().MoveRight();
-
-    //        //if (maps[index].transform.localPosition.z >= cutOffZ)
-    //        //    maps[index].SetActive(false);
-    //        //else
-    //        //    maps[index].SetActive(true);
-    //    }
-    //    maps[currIndex].transform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
-    //}
 
     void IncreaseIndex()
     {
@@ -259,14 +249,12 @@ public class MapSelectScript : MonoBehaviour
         if (currIndex >= totalMaps)
             currIndex -= totalMaps;
     }
-    
     void DecreaseIndex()
     {
         currIndex--;
         if (currIndex < 0)
             currIndex = totalMaps - 1;
     }
-
     void ResizeMaps()
     {
         for (int i = 0; i < totalMaps; ++i)
@@ -276,11 +264,6 @@ public class MapSelectScript : MonoBehaviour
             else
                 maps[i].transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
-    }
-
-    public string GetCurrentMapName() 
-    {
-        return MapManager.GetInstance().GetMapByIndex(currIndex).GetMapName();
     }
 
 }

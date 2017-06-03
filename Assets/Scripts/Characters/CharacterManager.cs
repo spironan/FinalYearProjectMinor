@@ -95,10 +95,7 @@ public class CharacterManager : Singleton<CharacterManager>
         }
     }
 
-    public int GetCharCount()
-    {
-        return characterList.Count;
-    }
+    public int GetCharCount() { return characterList.Count; }
 
     public int GetCharacterIndex(string charName)
     {
@@ -135,10 +132,28 @@ public class CharacterManager : Singleton<CharacterManager>
         return null;
     }
 
-    public bool HasCharacter(string charName)
+    public CharacterBase GetCharacterByIndex(int index)
     {
-        return characterList.ContainsKey(charName);
+        if (HasCharacterIndex(index))
+        {
+            int checker = 0;
+            foreach (string key in characterList.Keys)
+            {
+                if (checker == index)
+                {
+                    CharacterBase copy = new CharacterBase(characterList[key]);
+                    return copy;
+                }
+                checker++;
+            }
+        }
+        Debug.Log("No Such Character with Index Of : " + index + " Exist, Please Make sure index is with the valid range of numbers from 0 to "+ characterList.Count);
+        return null;
     }
+
+    public bool HasCharacter(string charName) { return characterList.ContainsKey(charName); }
+
+    public bool HasCharacterIndex(int index) { return (index >= 0 && index <= characterList.Count); }
 
 }
 

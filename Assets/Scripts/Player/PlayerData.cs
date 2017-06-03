@@ -3,6 +3,15 @@ using System.Collections;
 
 public class PlayerData : MonoBehaviour
 {
+    //Controller For Reading Input
+    public ListOfControllerActions controller;
+    //PlayerControllerManager controller;
+    //the frame outline of the player
+    public GameObject selectframe;
+    // Character Data is the progression of the data, read from Database As well next time                               
+    PlayerCharacterData[] characterData = new PlayerCharacterData[CharacterManager.GetInstance().GetCharCount()];
+    // Player's In Game Data <- Determine which side player is Spawned and used for in game stuff
+    PlayerInGameData inGameData = new PlayerInGameData();
     //Unique Player ID <- Important , used to identify that particular player
     uint UniquePlayerID;
     //Player In Game ID
@@ -13,15 +22,7 @@ public class PlayerData : MonoBehaviour
     bool isMaster = false;
     //Player Char Select Data
     bool pickedChar = false;
-    //Controller For Reading Input
-    public ListOfControllerActions controller;
-    //PlayerControllerManager controller;
-    //the frame outline of the player
-    public GameObject selectframe;                                                          
-    // Character Data is the progression of the data                                           read from Database As well next time                               
-    PlayerCharacterData[] characterData = new PlayerCharacterData[CharacterManager.GetInstance().GetCharCount()];
-    // Player's In Game Data <- Determine which side player is Spawned and used for in game stuff
-    PlayerInGameData inGameData = new PlayerInGameData();
+
     //skillbook
 
     //if i make a player holds what kind of button is being pressed, am i able to utilize through the fact that this is a player
@@ -108,7 +109,7 @@ public class PlayerData : MonoBehaviour
     public PlayerInGameData GetInGameData() { return inGameData; }
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
         //On Initialization should determine player Unique ID and Name
         controller = GetComponent<ListOfControllerActions>();

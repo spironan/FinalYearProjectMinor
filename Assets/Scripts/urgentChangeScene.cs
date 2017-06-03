@@ -1,25 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class urgentChangeScene : MonoBehaviour {
+public class urgentChangeScene : MonoBehaviour 
+{
+    GameManager gameManager;
 
-
-    GameObject gameManager;
 	// Use this for initialization
 	void Start () {
-        gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
     void Update()
     {
-        if (gameManager.GetComponent<GameManager>().GetPlayerSize() > 0
-            //&& gameManager.GetComponent<GameManager>().GetPlayer(PLAYER.PLAYER_ONE).IsKeyDown(BUTTON_INPUT.X)
-            )
-        { 
-            //Debug.Log(gameManager.GetComponent<GameManager>().GetPlayer(PLAYER.PLAYER_ONE).IsKeyDown(BUTTON_INPUT.START));
+        if (gameManager.GetPlayerSize() > 0)
             LoadingScreenManager.LoadScene("CharacterSelectScene");
-        }
-
 	}
 }

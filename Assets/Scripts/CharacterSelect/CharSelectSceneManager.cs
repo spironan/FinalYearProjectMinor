@@ -10,25 +10,25 @@ public class CharSelectSceneManager : MonoBehaviour
         BEGIN_MATCH,
         END_SELECTIONSTAGE
     };
-
     SELECTIONPHASE currentPhase = SELECTIONPHASE.PICKING;
 
     public GameObject charSelectHolder, mapSelectHolder, mapSelectSpawner;
     CharacterSelectScript charSelectData;
     MapSelectScript mapSelectData;
 	GameManager manager;
+
     // Use this for initialization
 	void Start () 
     {
         manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        manager.ChangeState(GAMESTATE.CHAR_SELECT);
         charSelectData = charSelectHolder.GetComponent<CharacterSelectScript>();
         mapSelectHolder.SetActive(false);
-        manager.ChangeState(GAMESTATE.CHAR_SELECT);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update () 
+    {
         switch (currentPhase)
         {
             case SELECTIONPHASE.PICKING:
@@ -43,7 +43,6 @@ public class CharSelectSceneManager : MonoBehaviour
                 break;
             case SELECTIONPHASE.BEGIN_MATCH:
                 {
-                    //Play Some Animation Maybe?
                     GoToNextScene();
                 }
                 break;
@@ -78,8 +77,8 @@ public class CharSelectSceneManager : MonoBehaviour
 
     void GoToNextScene()
     {
+        //Play Some Animation Maybe?
         LoadingScreenManager.LoadScene("BattleScene");
-        //manager.LoadBattleScene();
     }
 
 }

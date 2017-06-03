@@ -23,4 +23,5 @@ public class PlayerUIScript : MonoBehaviour
     {
         currHealth.fillAmount = playerInfo.GetHealthPercentage();
 	}
+
 }

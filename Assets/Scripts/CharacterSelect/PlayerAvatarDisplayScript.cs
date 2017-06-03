@@ -8,19 +8,23 @@ public class PlayerAvatarDisplayScript : MonoBehaviour
     Sprite charaArt;
     Text charaName;
     CharacterSelectScript charSelect;
+
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
         charSelect = GameObject.Find("CharacterSelect").GetComponent<CharacterSelectScript>();
         charaArt = GetComponent<Image>().sprite;
         charaName = GetComponentInChildren<Text>();//might not work
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
         if (charaName.text != charSelect.GetCurrChara(playerNumber))
         {
             charaArt = charSelect.GetCharaArt(playerNumber);
             charaName.text = charSelect.GetCurrChara(playerNumber);
         }
 	}
+
 }

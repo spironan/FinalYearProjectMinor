@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
+//Script to Change Stage Name
 public class StagenameScript : MonoBehaviour 
 {
     MapSelectScript mapselect;
@@ -15,7 +16,6 @@ public class StagenameScript : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-
         if (stageText.text != mapselect.GetCurrentMapName())
             stageText.text = mapselect.GetCurrentMapName().ToUpper();
 	}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(PlayerControllerManager))]
+//[RequireComponent(typeof(PlayerControllerManager))]
 public class PlayerCharacterLogicScript : MonoBehaviour
 {
     /// VALUES TO BE CHANGED OVER THE COURSE OF THE BATTLE ///                                
@@ -36,6 +36,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void SetPlayerID(PLAYER id) { playerID = id; }
     public void SetController(PlayerControllerManager controller) { this.controller = controller; }
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
+    public void SetCharacter(CharacterBase charaBase) { character = charaBase; }
 
     public bool IsDead() { return isDead; }
     public bool InAir() { return inAir; }
@@ -51,6 +52,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public float getManaAmount() { return manaAmount; }
     public void resetManaAmount() { manaAmount = amountOfManaToStart; }
     public void decreaseMana(float amount) { manaAmount -= amount; }
+    public CharacterBase GetCharacterData() { return character; }
+
 
     //This data are always the same,thus been place here
     public void Start()
@@ -58,9 +61,10 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         //name = CHARACTERS.PLAYTEST_CHAR;
         //name = "";
         //type = ATTACKTYPE.MID_RANGE;
+        //controller = GetComponent<PlayerControllerManager>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        controller = GetComponent<PlayerControllerManager>();
         controller.init(playerID);
+
         PlayerCharacterLogicScript[] listOfPlayers = GameObject.FindObjectsOfType<PlayerCharacterLogicScript>();
         foreach (PlayerCharacterLogicScript cb in listOfPlayers)
         {
@@ -134,7 +138,6 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public virtual void ReadControl()
     {
         //WASD for player 1 and up down left right for player 2
-
         //Standard Keyboard Controls
         if (Input.GetKey(KeyCode.A)
             || Input.GetKey(KeyCode.LeftArrow)
