@@ -13,6 +13,11 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     protected float StunResistance = 0;
     protected int GeneralResistance = 0;
 
+    public void setStunResistance(float value) { StunResistance = value; }
+    public void setGeneralResistance(int value) { GeneralResistance = value; }
+    public float getStunResistance() { return StunResistance; }
+    public int getGeneralResistance() { return GeneralResistance; }
+
 
     protected bool isDead;          //If The Character is Dead
     protected bool inAir;           //If The Character Is in Air
