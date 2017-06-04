@@ -18,4 +18,21 @@ public class PreBattleTextScript : MonoBehaviour
         preBattleAnimator.SetInteger("Round",currRound);
         preBattleAnimator.Play(currRound);
     }
+
+    public void DeActivateControllers()
+    {
+        foreach (GameObject player in battleSceneManager.GetPlayers())
+        {
+            player.GetComponent<PlayerControllerManager>().DisableController();
+        }
+    }
+
+    public void ActivateControllers()
+    {
+        foreach (GameObject player in battleSceneManager.GetPlayers())
+        {
+            player.GetComponent<PlayerControllerManager>().EnableController();
+        }
+    }
+
 }

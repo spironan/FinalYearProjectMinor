@@ -273,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &564473158
 RectTransform:
   m_ObjectHideFlags: 0
@@ -408,6 +408,7 @@ GameObject:
   - 114: {fileID: 786817438}
   - 114: {fileID: 786817440}
   - 114: {fileID: 786817441}
+  - 114: {fileID: 786817442}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -470,6 +471,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024758bbbd832684eab1da19b7bf8c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &786817442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 786817437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3675bbe202cc14e4e87c6bcd7c4901a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XBox360: {fileID: 11412620, guid: 3ad19ba470504b142991c5fcf2657598, type: 2}
+  PS4: {fileID: 11462868, guid: d58c10b2e783b1840810c5e9ce520b63, type: 2}
+  currController: {fileID: 0}
+  playerID: 1
+  disableControls: 0
 --- !u!1 &907118467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,6 +1056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520ad12f302e130458848b9c896d6615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: 2
 --- !u!4 &1281875017
 Transform:
   m_ObjectHideFlags: 0
@@ -1294,7 +1312,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1643445869
 RectTransform:
   m_ObjectHideFlags: 0

@@ -840,6 +840,10 @@ Prefab:
       propertyPath: playerID
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 179196, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
   m_IsPrefabParent: 0
@@ -1420,6 +1424,10 @@ Prefab:
     - target: {fileID: 189712, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 179196, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a291ad52e568cae43a40157d330d6b11, type: 2}
@@ -2088,7 +2096,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.25517225, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2115,13 +2123,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1002559864}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 706cac7c8a4dde04f98d3dc37e5a36cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerTeam: 1
   hpObj: {fileID: 611403806}
+  manaObj: {fileID: 1119018591}
 --- !u!1 &1010575279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2155,7 +2164,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 150}
+  m_SizeDelta: {x: 200, y: 175}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1010575281
 MonoBehaviour:
@@ -2186,8 +2195,8 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 99
 --- !u!222 &1010575282
@@ -2256,7 +2265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2290,6 +2299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTeam: 0
   hpObj: {fileID: 918605672}
+  manaObj: {fileID: 112051170}
 --- !u!1 &1088760903
 GameObject:
   m_ObjectHideFlags: 0

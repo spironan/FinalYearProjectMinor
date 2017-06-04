@@ -3,6 +3,7 @@ using System.Collections;
 
 public class urgentChangeScene : MonoBehaviour 
 {
+    public uint players;
     GameManager gameManager;
 
 	// Use this for initialization
@@ -13,7 +14,7 @@ public class urgentChangeScene : MonoBehaviour
 	// Update is called once per frame
     void Update()
     {
-        if (gameManager.GetPlayerSize() > 0)
+        if (gameManager.GetPlayerSize() == players)
             LoadingScreenManager.LoadScene("CharacterSelectScene");
 	}
 }

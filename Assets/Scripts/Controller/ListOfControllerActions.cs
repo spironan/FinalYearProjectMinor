@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof (PlayerControllerManager))]
+//[RequireComponent(typeof (PlayerControllerManager))]
 public class ListOfControllerActions : MonoBehaviour {
     public Dictionary<ACTIONS, BUTTON_INPUT> buttonBinds = new Dictionary<ACTIONS, BUTTON_INPUT>();
     public Dictionary<ACTIONS, JOYSTICK_AXIS_INPUT> joystickBinds = new Dictionary<ACTIONS, JOYSTICK_AXIS_INPUT>();

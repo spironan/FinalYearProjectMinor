@@ -10,12 +10,16 @@ public class BasicAttack : MonoBehaviour {
     PlayerControllerManager playerControllerManager;
     // Use this for initialization
     void Start () {
-        playerControllerManager = GetComponent<PlayerControllerManager>();
+        //playerControllerManager = GetComponent<PlayerControllerManager>();
         timer = skill_cooldown;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        //if (playerControllerManager == null)
+        //    playerControllerManager = GetComponent<PlayerControllerManager>();
+
         timer += Time.deltaTime;
         if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.R1)
             && timer >= skill_cooldown)

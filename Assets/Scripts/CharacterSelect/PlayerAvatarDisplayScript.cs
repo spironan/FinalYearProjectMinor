@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerAvatarDisplayScript : MonoBehaviour 
 {
     public int playerNumber;
-    Sprite charaArt;
+    Image charaArt;
     Text charaName;
     CharacterSelectScript charSelect;
 
@@ -13,7 +13,7 @@ public class PlayerAvatarDisplayScript : MonoBehaviour
 	void Start () 
     {
         charSelect = GameObject.Find("CharacterSelect").GetComponent<CharacterSelectScript>();
-        charaArt = GetComponent<Image>().sprite;
+        charaArt = GetComponent<Image>();
         charaName = GetComponentInChildren<Text>();//might not work
 	}
 	
@@ -22,8 +22,8 @@ public class PlayerAvatarDisplayScript : MonoBehaviour
     {
         if (charaName.text != charSelect.GetCurrChara(playerNumber))
         {
-            charaArt = charSelect.GetCharaArt(playerNumber);
             charaName.text = charSelect.GetCurrChara(playerNumber);
+            charaArt.sprite = charSelect.GetCharaArt(playerNumber);
         }
 	}
 

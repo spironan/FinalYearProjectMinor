@@ -44,21 +44,31 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
-            GameObject chara = new GameObject();
-            chara.tag = "Player";
-            chara.name = "Player" + (i + 1);
-            PlayerCharacterLogicScript charaData = chara.AddComponent<PlayerCharacterLogicScript>();
-            charaData.SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
-            charaData.SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
-            charaData.SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
 
-            chara.AddComponent<SpriteRenderer>();
-            //Temporary
-            chara.GetComponent<SpriteRenderer>().sprite = SpriteManager.GetInstance().GetSprite("Char_Triangle");
-            chara.AddComponent<Rigidbody2D>();
-            chara.AddComponent<BoxCollider2D>();
+            GameObject stunManHardcodingCauseWhyNot = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerPrefab/StunMan"));
+            stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
+            stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
+            stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
 
-            playerCharacters.Add(chara);
+            stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().player_number = gameManager.GetPlayer(i).GetPlayerID();
+            stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().playerControllerManager = gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>();
+            //stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().;
+            //stunManHardcodingCauseWhyNot.GetComponent<StunMeterManager>()
+            playerCharacters.Add(stunManHardcodingCauseWhyNot);
+
+            //GameObject chara = new GameObject();
+            //chara.tag = "Player";
+            //chara.name = "Player" + (i + 1);
+            //PlayerCharacterLogicScript charaData = chara.AddComponent<PlayerCharacterLogicScript>();
+            //charaData.SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
+            //charaData.SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
+            //charaData.SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
+
+            //chara.AddComponent<SpriteRenderer>();
+            //chara.AddComponent<Rigidbody2D>();
+            //chara.AddComponent<BoxCollider2D>();
+
+            //playerCharacters.Add(chara);
         }
     }
 
@@ -159,4 +169,8 @@ public class BattleSceneManager : MonoBehaviour
         return null;
     }
 
+    public List<GameObject> GetPlayers()
+    {
+        return playerCharacters;
+    }
 }

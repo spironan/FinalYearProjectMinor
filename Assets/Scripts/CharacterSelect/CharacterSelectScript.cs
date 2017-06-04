@@ -172,7 +172,7 @@ public class CharacterSelectScript : MonoBehaviour
         playerFrames[(int)player].LockIn();
 
         //temp test shit code
-        finished = true;
+        //finished = true;
         if (CheckBothPicked())
         {
             finished = true;
@@ -200,7 +200,7 @@ public class CharacterSelectScript : MonoBehaviour
             return null;
         }
 
-        return playerFrames[playernum].GetCharName().ToString();
+        return playerFrames[playernum].GetCharName().ToString().ToUpper();
     }
     public Sprite GetCharaArt(int playernum)
     {
@@ -209,6 +209,8 @@ public class CharacterSelectScript : MonoBehaviour
             Debug.Log("You fucked up, you entered a number too big playernum:" + playernum);
             return null;
         }
+
+        Debug.Log("Player Char Name is : " + playerFrames[playernum].GetCharName());
         return CharacterManager.GetInstance().GetCharacterByName(playerFrames[playernum].GetCharName()).GetCharArt();
     }
 }

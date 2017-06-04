@@ -41,6 +41,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void SetController(PlayerControllerManager controller) { this.controller = controller; }
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
     public void SetCharacter(CharacterBase charaBase) { character = charaBase; }
+    public void SetStunManager(StunMeterManager stun) { stunManager = stun; }
 
     public bool IsDead() { return isDead; }
     public bool InAir() { return inAir; }
@@ -65,12 +66,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //This data are always the same,thus been place here
     public void Start()
     {
-        //name = CHARACTERS.PLAYTEST_CHAR;
-        //name = "";
-        //type = ATTACKTYPE.MID_RANGE;
-        //controller = GetComponent<PlayerControllerManager>();
         //GetComponent<SpriteRenderer>().sprite = character.GetChar();
-        
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         controller.init(playerID);
 
@@ -86,7 +82,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         stunManager = GetComponent<StunMeterManager>();
         resetManaAmount();
-        character = gameObject.GetComponent<CharacterBase>();
+        // character = gameObject.GetComponent<CharacterBase>(); should be removed because character base is no longer a component
         
     }
 
@@ -269,15 +265,16 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         if (character.GetHealth() <= 0)
             isDead = true;
     }
-    public virtual int BlockCheck(int damage)
-    {
-        int newDmg = damage;
-        if (isBlocking)
-        {
-            newDmg = (int)(newDmg * character.GetBlockResist());
-        }
-        return newDmg;
-    }
+    //Usable Function next time if you want to transfer Block Check to here
+    //public virtual int BlockCheck(int damage)
+    //{
+    //    int newDmg = damage;
+    //    if (isBlocking)
+    //    {
+    //        newDmg = (int)(newDmg * character.GetBlockResist());
+    //    }
+    //    return newDmg;
+    //}
 
     //When a Character Dies , can only be called internally
     public void Die()

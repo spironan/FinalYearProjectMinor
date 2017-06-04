@@ -15,8 +15,8 @@ public class CharacterBase
     protected int jumpForce;        //The Jumping Force Applied to this Character when it Jumps
     protected int moveSpeed;        //The Movement Speed Applied to this Character when it moves
     protected int ultiMax;          //The Value to Determine when your Ultimate Is Maxed
-    protected float blockResist;    //Resistnace when Blocking,Receive lesser damage by %
-    protected float stunResistance; //The Resistance to Stun that reduces the stun you take by %
+    //protected float blockResist;    //Resistnace when Blocking,Receive lesser damage by %
+    //protected float stunResistance; //The Resistance to Stun that reduces the stun you take by %
     protected float stunDuration;   //The Duration your character Gets Stunned For
     protected Sprite characterArt;  //The Art of the Character Used in Character Select
     protected Sprite characterIcon; //The Icon of the Character used to display the mini icons in Character Select
@@ -31,8 +31,8 @@ public class CharacterBase
     public int GetJumpForce() { return jumpForce; }
     public int GetMoveSpeed() { return moveSpeed; }
     public int GetUltiMax() { return ultiMax; }
-    public float GetBlockResist() { return blockResist; }
-    public float GetStunResistance() { return stunResistance; }
+    //public float GetBlockResist() { return blockResist; }
+    //public float GetStunResistance() { return stunResistance; }
     public float GetStunDuration() { return stunDuration; }
     public Sprite GetCharArt() { return characterArt; }
     public Sprite GetIcon() { return characterIcon; }
@@ -46,8 +46,8 @@ public class CharacterBase
     public void SetJumpForce(int force) { this.jumpForce = force; }
     public void SetMoveSpeed(int movespeed) { this.moveSpeed = movespeed; }
     public void SetUltiMax(int ultiMax) { this.ultiMax = ultiMax; }
-    public void SetBlockResistance(float blockResist) { Mathf.Clamp(blockResist, 0.0f, 1.0f); this.blockResist = blockResist; } // value range should be from 0 - 1
-    public void SetStunResistance(float stunResistance) { Mathf.Clamp(stunResistance, 0.0f, 1.0f); this.stunResistance = stunResistance; } // value range should be from 0 - 1
+    //public void SetBlockResistance(float blockResist) { Mathf.Clamp(blockResist, 0.0f, 1.0f); this.blockResist = blockResist; } // value range should be from 0 - 1
+    //public void SetStunResistance(float stunResistance) { Mathf.Clamp(stunResistance, 0.0f, 1.0f); this.stunResistance = stunResistance; } // value range should be from 0 - 1
     public void SetStunDuration(float stunDuration) { this.stunDuration = stunDuration; }
     public void SetCharArt(Sprite charArt) { this.characterArt = charArt; }
     public void SetCharIcon(Sprite charIcon) { this.characterIcon = charIcon; }
@@ -62,7 +62,8 @@ public class CharacterBase
         maxHp = health = 0;
         moveSpeed = jumpForce = 0;
         ultiMax = 0;
-        stunResistance = stunDuration = 0.0f;
+        //stunResistance = stunDuration = 0.0f;
+        stunDuration = 0.0f;
     }
     public CharacterBase(CharacterBase copy)
     {
@@ -73,8 +74,11 @@ public class CharacterBase
         jumpForce = copy.jumpForce;
         moveSpeed = copy.moveSpeed;
         ultiMax = copy.ultiMax;
-        stunResistance = copy.stunResistance;
+        //stunResistance = copy.stunResistance;
         stunDuration = copy.stunDuration;
+        characterArt = copy.characterArt;
+        characterIcon = copy.characterIcon;
+        character = copy.character;
     }
 
     //Basic Function(s)

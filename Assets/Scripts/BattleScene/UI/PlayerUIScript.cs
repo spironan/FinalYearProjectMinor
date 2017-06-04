@@ -13,11 +13,10 @@ public class PlayerUIScript : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-        playerInfo = GameObject.FindWithTag("BattleSceneManager").GetComponent<BattleSceneManager>().GetPlayerCharacter((int)playerTeam).GetComponent<PlayerCharacterLogicScript>();//GameObject.FindWithTag("GameManager").GetComponent<GameManager>().GetPlayer(playerTeam).GetInGameData();
-        GetComponent<Image>().sprite = playerInfo.GetCharacterData().GetCharArt();
-        Debug.Log("Added Character Art Image to UI");
+        playerInfo = GameObject.FindWithTag("UserInterface").GetComponent<BattleSceneManager>().GetPlayerCharacter((int)playerTeam).GetComponent<PlayerCharacterLogicScript>();
         currHealth = hpObj.GetComponent<Image>();
         currMana = manaObj.GetComponent<Image>();
+        GetComponent<Image>().sprite = playerInfo.GetCharacterData().GetCharArt();
     }
 	
 	// Update is called once per frame

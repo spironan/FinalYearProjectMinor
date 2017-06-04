@@ -2,8 +2,8 @@
 using System.Collections;
 
 //[RequireComponent(typeof(PlayerControllerManager))]
-[RequireComponent(typeof(ListOfControllerActions))]
-[RequireComponent(typeof(PlayerCharacterLogicScript))]
+//[RequireComponent(typeof(ListOfControllerActions))]
+//[RequireComponent(typeof(PlayerCharacterLogicScript))]
 public class SkillActivator : MonoBehaviour {
 
     public GameObject skill1;
@@ -32,8 +32,8 @@ public class SkillActivator : MonoBehaviour {
         dpadDown = false;
         owner = GetComponent<PlayerCharacterLogicScript>();
         player_number = owner.GetPlayerID();
-        playerControllerManager = GetComponent<PlayerControllerManager>();
-        playerControllerManager.init(player_number);
+        //playerControllerManager = GetComponent<PlayerControllerManager>();
+        //playerControllerManager.init(player_number);
         bindedACtions = GetComponent<ListOfControllerActions>();
 
         activator = transform.GetChild(0).GetComponent<skillToActivate>();
@@ -51,6 +51,11 @@ public class SkillActivator : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //if (player_number != owner.GetPlayerID())
+        //    player_number = owner.GetPlayerID();
+        //if(playerControllerManager == null)
+        //    playerControllerManager = GetComponent<PlayerControllerManager>();
+
         //Debug.Log(player_number);
         checkSkillToActivate();
         

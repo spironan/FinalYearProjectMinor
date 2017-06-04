@@ -35,17 +35,24 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)
-            ||  GetComponent<PlayerControllerManager>().getIsKeyDownHold(BUTTON_INPUT.START)
-            )
-        {
-            curHoldTime += Time.deltaTime;
-            if (curHoldTime >= holdTime)
+        //if (Input.GetKeyDown(KeyCode.Space)
+        //    ||  GetComponent<PlayerControllerManager>().getIsKeyDownHold(BUTTON_INPUT.START)
+        //    )
+        //{
+            foreach (PlayerControllerManager controller in GetComponents<PlayerControllerManager>())
             {
-                CreateNewPlayer();
-                curHoldTime = 0.0f;
+                if (controller.getIsKeyDownHold(BUTTON_INPUT.START))
+                {
+                    curHoldTime += Time.deltaTime;
+                    if (curHoldTime >= holdTime)
+                    {
+                        CreateNewPlayer();
+                        curHoldTime = 0.0f;
+                    }
+                }
             }
-        }
+
+        //}
     }
     
     //Setter(s)

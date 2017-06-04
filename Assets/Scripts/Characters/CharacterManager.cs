@@ -80,10 +80,14 @@ public class CharacterManager : Singleton<CharacterManager>
                     charBase.SetJumpForce(database.reader.GetInt32(3));
                     charBase.SetMoveSpeed(database.reader.GetInt32(4));
                     charBase.SetUltiMax(database.reader.GetInt32(5));
-                    charBase.SetBlockResistance(database.reader.GetFloat(6));
-                    charBase.SetStunResistance(database.reader.GetFloat(7));
+                    //charBase.SetBlockResistance(database.reader.GetFloat(6));
+                    //charBase.SetStunResistance(database.reader.GetFloat(7));
                     charBase.SetStunDuration(database.reader.GetFloat(8));
+                    
+                    Debug.Log("Character Art file Location : " + database.reader.GetString(9));
+                    Debug.Log(charBase.GetCharArt());
                     charBase.SetCharArt(SpriteManager.GetInstance().GetSprite(database.reader.GetString(9)));
+                    Debug.Log(charBase.GetCharArt());
                     charBase.SetCharIcon(SpriteManager.GetInstance().GetSprite(database.reader.GetString(10)));
                     charBase.SetChar(SpriteManager.GetInstance().GetSprite(database.reader.GetString(11)));
 
