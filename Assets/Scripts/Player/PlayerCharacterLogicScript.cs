@@ -44,6 +44,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public bool Stunned() { return stunned; }
     public bool Blocking() { return isBlocking; }
     public bool CanUlt() { return canUlti; }
+    public float GetHealthPercentage() { return character.GetHealthPercentage(); }
     public Vector2 GetDirection() { return direction; }
     public PLAYER GetPlayerID() { return playerID; }
     public PlayerControllerManager GetController() { return controller; }

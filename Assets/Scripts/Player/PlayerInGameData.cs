@@ -9,8 +9,7 @@ public class PlayerInGameData
 
     public CharacterBase GetCharData() { return selectedCharData; }
     public void SetChar(string charName) { selectedCharData = CharacterManager.GetInstance().GetCharacterByName(charName); }
-    public float GetHealthPercentage() { return selectedCharData.GetHealth() / selectedCharData.GetMaxHp(); }
-
+    
     public TEAM GetTeam() { return playerTeam; }
     public void SetTeam(TEAM newPlayerTeam) { playerTeam = newPlayerTeam; }
 

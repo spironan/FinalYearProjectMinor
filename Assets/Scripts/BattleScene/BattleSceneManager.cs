@@ -149,4 +149,14 @@ public class BattleSceneManager : MonoBehaviour
         ResetMatch();
     }
 
+    public GameObject GetPlayerCharacter(int id)
+    {
+        if (id >= 0 && id < playerCharacters.Count)
+        {
+            return playerCharacters[id];
+        }
+        Debug.Log("Id must be between 0 and " + playerCharacters.Count+ " You inputted : "+ id);
+        return null;
+    }
+
 }

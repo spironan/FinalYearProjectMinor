@@ -86,5 +86,5 @@ public class CharacterBase
     {
         health -= damage;
     }
-
+    public float GetHealthPercentage() {  return (float)(health / maxHp); }
 }
