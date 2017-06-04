@@ -83,6 +83,8 @@ public class BombSkill : SkillProfile {
                 {
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
                     enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
+                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     Debug.Log("hit");
                     //gameObject.SetActive(false);
                     return true;

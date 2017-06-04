@@ -66,7 +66,9 @@ public class ThrowingHammerSkill : SkillProfile {
                 {
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
                     Debug.Log("hit");
+                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
                     enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     //gameObject.SetActive(false);
                     return true;
                 }

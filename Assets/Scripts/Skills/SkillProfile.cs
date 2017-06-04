@@ -13,8 +13,10 @@ public class SkillProfile : MonoBehaviour {
     public float lifetime;
     public float pSpeed;
     public float gravity;
-    public float manaCost;
+    public int manaCost;
+    public int manaRegenPerHit;
     public float castingCooldown;
+    public int UltGainPerHitForEnemy;
 
     public CircleCollider2D circleCollider;
 
@@ -108,6 +110,8 @@ public class SkillProfile : MonoBehaviour {
                     //}
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
                     enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
+                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     Debug.Log("hit");
                     //gameObject.SetActive(false);
                     return true;
