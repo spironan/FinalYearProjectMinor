@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11456716}
   m_Layer: 0
   m_Name: Explosion
-  m_TagString: Untagged
+  m_TagString: SpecialSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,10 +44,13 @@ MonoBehaviour:
   keysToActivate: 0
   stunValuePerHit: 20
   player_ID: 0
-  damagePerSecond: 0
+  damagePerHit: 5
   lifetime: 0.2
   pSpeed: 0
   gravity: 0
+  manaCost: 15
+  manaRegenPerHit: 10
+  castingCooldown: 1
   circleCollider: {fileID: 0}
   owner: {fileID: 0}
   enemy: {fileID: 0}

@@ -8,12 +8,15 @@ public class SkillProfile : MonoBehaviour {
     [Range(0.0f, 100.0f)]
     public float stunValuePerHit;
     public PLAYER player_ID;
-    public float damagePerSecond;
+    [Range(0, 100)]
+    public int damagePerHit;
     public float lifetime;
     public float pSpeed;
     public float gravity;
-    public float manaCost;
-    
+    public int manaCost;
+    public int manaRegenPerHit;
+    public float castingCooldown;
+    public int UltGainPerHitForEnemy;
 
     public CircleCollider2D circleCollider;
 
@@ -106,6 +109,9 @@ public class SkillProfile : MonoBehaviour {
                     //    temp.collider.gameObject.GetComponent<StunMeterManager>().addStunValue(stunValuePerHit);
                     //}
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
+                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     Debug.Log("hit");
                     //gameObject.SetActive(false);
                     return true;

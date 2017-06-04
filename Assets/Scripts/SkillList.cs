@@ -6,6 +6,11 @@ public class SkillList : MonoBehaviour {
 
     public List<GameObject> ListOfSkills = new List<GameObject>();
 
+    public virtual void Start()
+    {
+
+    }
+
     public virtual GameObject GetSkill(int number)
     {
         if(ListOfSkills[number] != null)

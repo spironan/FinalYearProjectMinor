@@ -30,6 +30,7 @@ public class SkillActivator : MonoBehaviour {
     void Awake()
     {
         dpadDown = false;
+        activator = GetComponentInChildren<skillToActivate>();
         owner = GetComponent<PlayerCharacterLogicScript>();
         player_number = owner.GetPlayerID();
         //playerControllerManager = GetComponent<PlayerControllerManager>();

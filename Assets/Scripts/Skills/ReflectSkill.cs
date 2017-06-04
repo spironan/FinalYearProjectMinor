@@ -44,6 +44,7 @@ public class ReflectSkill : SkillProfile
                     temp.collider.gameObject.GetComponent<SkillProfile>().reset();
                     temp.collider.gameObject.GetComponent<SkillProfile>().enemy = temp.collider.gameObject.GetComponent<SkillProfile>().owner;
                     temp.collider.gameObject.GetComponent<SkillProfile>().owner = owner;
+                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     //gameObject.SetActive(false);
                     return true;
                 }

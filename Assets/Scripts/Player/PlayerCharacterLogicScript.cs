@@ -13,6 +13,11 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     protected float StunResistance = 0;
     protected int GeneralResistance = 0;
 
+    public void setStunResistance(float value) { StunResistance = value; }
+    public void setGeneralResistance(int value) { GeneralResistance = value; }
+    public float getStunResistance() { return StunResistance; }
+    public int getGeneralResistance() { return GeneralResistance; }
+
 
     protected bool isDead;          //If The Character is Dead
     protected bool inAir;           //If The Character Is in Air
@@ -30,10 +35,11 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public GameObject enemy;
     public SpriteRenderer sprite;
     [Range(0f, 100f)]
-    public float amountOfManaToStart;
+    public int amountOfManaToStart;
     [Range(0f,100f)]
-    protected float manaAmount;
-    protected float maxMana = 100;
+    protected int manaAmount;
+    protected int maxMana = 100;
+    protected float timerToIncreaseMana = 0f;
     protected Rigidbody2D rigidbody; //The 2d Rigidbody Attached to the Charactere to apply Physics
     protected CharacterBase character; //The Character Data That Stores its Variables
 
@@ -57,7 +63,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //mana
     public float getManaAmount() { return manaAmount; }
     public void resetManaAmount() { manaAmount = amountOfManaToStart; }
-    public void decreaseMana(float amount) { manaAmount -= amount; }
+    public void decreaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount - amount, 0, 100); }
+    public void increaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount + amount,0,100); }
     public float percentageOfMana() { return manaAmount / maxMana; }
 
     public CharacterBase GetCharacterData() { return character; }
@@ -89,7 +96,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //Overall Structure of how the code should flow
     public virtual void Update()
     {
-        if (stunned)
+        if (stunManager.stunTime > 0)
             UpdateStun();
         else
         {
@@ -108,6 +115,13 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         else
         {
             sprite.flipX = false;
+        }
+        timerToIncreaseMana += Time.deltaTime;
+
+        if(timerToIncreaseMana >= 1f)
+        {
+            timerToIncreaseMana = 0;
+            increaseMana(1);
         }
     }
 

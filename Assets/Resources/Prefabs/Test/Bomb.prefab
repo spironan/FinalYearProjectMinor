@@ -106,11 +106,14 @@ MonoBehaviour:
   keysToActivate: 3
   stunValuePerHit: 100
   player_ID: 0
-  damagePerSecond: 30
+  damagePerHit: 20
   lifetime: 3.2
   pSpeed: 0
   gravity: 0
   manaCost: 10
+  manaRegenPerHit: 50
+  castingCooldown: 0
+  UltGainPerHitForEnemy: 20
   circleCollider: {fileID: 0}
   owner: {fileID: 0}
   enemy: {fileID: 0}

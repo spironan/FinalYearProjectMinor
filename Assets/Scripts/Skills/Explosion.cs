@@ -40,11 +40,11 @@ public class Explosion : SkillProfile
             {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
-                    if (temp.collider.gameObject.GetComponent<StunMeterManager>() != null)
-                    {
-                        temp.collider.gameObject.GetComponent<StunMeterManager>().addStunValue(stunValuePerHit);
-                    }
+                    enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
                     Debug.Log("hit");
+                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     enemySkillActivator.resetCurrentCastingSkill();
                     //gameObject.SetActive(false);
                     return true;
