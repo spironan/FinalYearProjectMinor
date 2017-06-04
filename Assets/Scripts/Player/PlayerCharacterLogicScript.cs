@@ -8,7 +8,10 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     protected int ultiCharge;       //The Meter that increases and when hit ultiMax,Character can Cast Ultimate
     protected float stunMeter;      //The Meter that increases when player gets hit and Gets Stunned when hit 100%
     protected float stunTimeLeft;   //The Time Left to wait before stunned is finished
+
     protected StunMeterManager stunManager;
+    protected float StunResistance = 0;
+    protected int GeneralResistance = 0;
 
 
     protected bool isDead;          //If The Character is Dead
@@ -30,6 +33,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public float amountOfManaToStart;
     [Range(0f,100f)]
     protected float manaAmount;
+    protected float maxMana = 100;
     protected Rigidbody2D rigidbody; //The 2d Rigidbody Attached to the Charactere to apply Physics
     protected CharacterBase character; //The Character Data That Stores its Variables
 
@@ -53,6 +57,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public float getManaAmount() { return manaAmount; }
     public void resetManaAmount() { manaAmount = amountOfManaToStart; }
     public void decreaseMana(float amount) { manaAmount -= amount; }
+    public float percentageOfMana() { return manaAmount / maxMana; }
+
     public CharacterBase GetCharacterData() { return character; }
 
 
@@ -208,7 +214,9 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //To Be Called in the Relevant Places you Deem Fit To Increase Stun Meter
     public void GainStunMeter(float increaseAmount)
     {
-        stunManager.addStunValue(increaseAmount);
+        //float temp = increaseAmount - StunResistance;
+        
+        stunManager.addStunValue(Mathf.Clamp(increaseAmount - StunResistance,0,100));
         //if (!stunned && increaseAmount > 0 && stunMeter < 100.0f)
         //{
         //    stunMeter += increaseAmount * (1.0f - character.GetStunResistance());
@@ -255,8 +263,9 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //Go through this function to make character take damage
     public virtual void TakeDamage(int damage)
     {
-        int calculated_dmg = BlockCheck(damage);
-        character.TakeDamage(damage);
+        //int calculated_dmg = BlockCheck(damage);
+        int calculated_dmg = Mathf.Clamp(damage - GeneralResistance, 0, 100);
+        character.TakeDamage(calculated_dmg);
         if (character.GetHealth() <= 0)
             isDead = true;
     }
