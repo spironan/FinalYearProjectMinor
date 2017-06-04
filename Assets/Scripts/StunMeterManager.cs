@@ -10,8 +10,9 @@ public class StunMeterManager : MonoBehaviour {
     private PlayerControllerManager playerControllerManager;
     public float stunTime = 0.0f;
     // Use this for initialization
-    void Start () {
-        playerControllerManager = GetComponent<PlayerControllerManager>();
+    void Start()
+    {
+        playerControllerManager = GetComponent<PlayerCharacterLogicScript>().GetController();
         stunMeter = GetComponentInChildren<StunMeter>();
         Vector2 sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
 

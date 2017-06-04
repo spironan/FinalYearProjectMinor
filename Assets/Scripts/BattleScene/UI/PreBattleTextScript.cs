@@ -23,7 +23,7 @@ public class PreBattleTextScript : MonoBehaviour
     {
         foreach (GameObject player in battleSceneManager.GetPlayers())
         {
-            player.GetComponent<PlayerControllerManager>().DisableController();
+            player.GetComponent<PlayerCharacterLogicScript>().GetController().DisableController();
         }
     }
 
@@ -31,7 +31,7 @@ public class PreBattleTextScript : MonoBehaviour
     {
         foreach (GameObject player in battleSceneManager.GetPlayers())
         {
-            player.GetComponent<PlayerControllerManager>().EnableController();
+            player.GetComponent<PlayerCharacterLogicScript>().GetController().EnableController();
         }
     }
 

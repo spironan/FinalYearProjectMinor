@@ -65,7 +65,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void resetManaAmount() { manaAmount = amountOfManaToStart; }
     public void decreaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount - amount, 0, 100); }
     public void increaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount + amount,0,100); }
-    public float percentageOfMana() { return manaAmount / maxMana; }
+    public float percentageOfMana() { return (float)((float)manaAmount / (float)maxMana); }
 
     public CharacterBase GetCharacterData() { return character; }
 
@@ -96,9 +96,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //Overall Structure of how the code should flow
     public virtual void Update()
     {
-        if (stunManager.stunTime > 0)
-            UpdateStun();
-        else
+        if (!controller.isControllerDisabled())
         {
             ReadControl();
             if (MoveCondition())
@@ -106,6 +104,12 @@ public class PlayerCharacterLogicScript : MonoBehaviour
             if (JumpCondition())
                 Jump();
         }
+
+        //if (stunManager.stunTime > 0)
+        //    UpdateStun();
+        //else
+        //{
+        //}
 
         Recalculate();
         if(enemy.transform.position.x > transform.position.x)

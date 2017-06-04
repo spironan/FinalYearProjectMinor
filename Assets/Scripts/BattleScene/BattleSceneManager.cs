@@ -46,14 +46,15 @@ public class BattleSceneManager : MonoBehaviour
         {
 
             GameObject stunManHardcodingCauseWhyNot = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerPrefab/StunMan"));
+            
             stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
             stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
             stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
 
             stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().player_number = gameManager.GetPlayer(i).GetPlayerID();
             stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().playerControllerManager = gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>();
-            //stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().;
-            //stunManHardcodingCauseWhyNot.GetComponent<StunMeterManager>()
+            stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().bindedActions = gameManager.GetPlayer(i).gameObject.GetComponent<ListOfControllerActions>();
+            
             playerCharacters.Add(stunManHardcodingCauseWhyNot);
 
             //GameObject chara = new GameObject();

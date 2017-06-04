@@ -10,7 +10,7 @@ public class BasicAttack : MonoBehaviour {
     PlayerControllerManager playerControllerManager;
     // Use this for initialization
     void Start () {
-        //playerControllerManager = GetComponent<PlayerControllerManager>();
+        playerControllerManager = GetComponent<PlayerCharacterLogicScript>().GetController();
         timer = skill_cooldown;
     }
 	

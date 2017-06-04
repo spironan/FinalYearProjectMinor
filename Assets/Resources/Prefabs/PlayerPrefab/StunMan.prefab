@@ -246,13 +246,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 428338}
   - 212: {fileID: 21281508}
+  - 114: {fileID: 11421080}
   - 114: {fileID: 11482576}
   - 61: {fileID: 6123052}
   - 50: {fileID: 5096194}
-  - 114: {fileID: 11415484}
-  - 114: {fileID: 11440722}
   - 114: {fileID: 11420530}
-  - 114: {fileID: 11421080}
   - 114: {fileID: 11411366}
   - 114: {fileID: 11419246}
   m_Layer: 0
@@ -656,22 +654,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill: {fileID: 0}
   skill_cooldown: 1
---- !u!114 &11415484
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3675bbe202cc14e4e87c6bcd7c4901a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  XBox360: {fileID: 11412620, guid: 3ad19ba470504b142991c5fcf2657598, type: 2}
-  PS4: {fileID: 11462868, guid: d58c10b2e783b1840810c5e9ce520b63, type: 2}
-  currController: {fileID: 11412620, guid: 3ad19ba470504b142991c5fcf2657598, type: 2}
-  playerID: 0
-  disableControls: 0
 --- !u!114 &11419246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -731,17 +713,6 @@ MonoBehaviour:
   - {fileID: 118606}
   - {fileID: 143978}
   - {fileID: 112718}
---- !u!114 &11440722
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17cfeedf08c11af478a5a35714eaa6ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11475844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -774,7 +745,7 @@ MonoBehaviour:
   skill4: {fileID: 0}
   activator: {fileID: 0}
   playerControllerManager: {fileID: 0}
-  bindedACtions: {fileID: 0}
+  bindedActions: {fileID: 0}
   player_number: 0
 --- !u!212 &21208346
 SpriteRenderer:
