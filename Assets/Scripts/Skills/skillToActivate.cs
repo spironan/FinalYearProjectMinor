@@ -5,13 +5,17 @@ public class skillToActivate : MonoBehaviour {
 
     public GameObject keyBox;
     public GameObject[] keys;
+    public Sprite[] PS4Keys;
+    public Sprite[] XBOXKeys;
 
     private int numbersOfKeys;
 
     private SkillProfile currentSkillProfile;
+    private string controllerName; 
     //public GameObject skill;
     // Use this for initialization
     void Start () {
+        controllerName = transform.parent.GetComponent<PlayerCharacterLogicScript>().controller.nameOfController();
         //transform.position = Vector2.zero;
         //transform.position = new Vector3(0, transform.position.y,-1);
     }
@@ -38,11 +42,16 @@ public class skillToActivate : MonoBehaviour {
 
         for(int i = 0; i < numbersOfKeys; ++i)
         {
-            keys[i].transform.rotation = Quaternion.Euler(0,0,90 * currentSkillProfile.directionToPress[i]);
+            //keys[i].transform.rotation = Quaternion.Euler(0,0,90 * currentSkillProfile.directionToPress[i]);
             
             
             keys[i].SetActive(true);
             keys[i].transform.GetChild(0).gameObject.SetActive(true);
+            if(controllerName == "PS4")
+                keys[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = PS4Keys[currentSkillProfile.directionToPress[i]];
+            else
+                keys[i].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = XBOXKeys[currentSkillProfile.directionToPress[i]];
+
             keys[i].transform.GetChild(1).gameObject.SetActive(true);
         }
     }

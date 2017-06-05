@@ -21,8 +21,8 @@ public class XBox360ControllerInput : ControllerInput
         ps4ToXbox360.Add(BUTTON_INPUT.START, XBOX360.START);
         ps4ToXbox360.Add(BUTTON_INPUT.L3, XBOX360.L3);
         ps4ToXbox360.Add(BUTTON_INPUT.R3, XBOX360.R3);
-        
-        
+
+        controller_name = "XBOX360";
     }
     
     public override bool CheckForKeyPress(BUTTON_INPUT keyNumber, PLAYER player)
