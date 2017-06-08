@@ -21,7 +21,7 @@ public class BattleSceneManager : MonoBehaviour
         switch (mode)
         {
             case GAME_MODES.LOCAL_PVP:
-                maxBattleTimer = 12.0f;
+                maxBattleTimer = 60.0f;
                 break;
         }
         ResetTimer();
