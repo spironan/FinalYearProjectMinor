@@ -11,7 +11,7 @@ public class CharacterSlot : MonoBehaviour
     //Name Of Character To Display
     string charName;
 
-    void Awake() { icon = GetComponent<Image>(); }
+    void Awake() { icon = transform.Find("SlotImage").GetComponent<Image>();}
 
     public void SetImageSprite(Sprite sprite) { icon.sprite = sprite; }
     public void SetCharName(string charName) { this.charName = charName; }

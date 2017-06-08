@@ -19,6 +19,8 @@ TagManager:
   - CharacterSelect
   - RedSpawn
   - BlueSpawn
+  - PhysicalSkill
+  - PreBattleText
   layers:
   - Default
   - TransparentFX

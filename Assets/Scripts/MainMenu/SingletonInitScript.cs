@@ -13,5 +13,6 @@ public class SingletonInitScript : MonoBehaviour
         SpriteManager.GetInstance().Initialze(db, "Sprites");
         CharacterManager.GetInstance().InitCharacters(db, "Characters");
         MapManager.GetInstance().InitMaps(db, "Maps");
+        PrefabManager.GetInstance().Initialze(db, "Prefabs");
 	}
 }

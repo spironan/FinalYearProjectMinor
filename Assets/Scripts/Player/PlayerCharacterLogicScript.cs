@@ -32,6 +32,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //Public variables (temp for testing)
     public PLAYER playerID;         //ID Used To Determine Owner Of this Character
     public PlayerControllerManager controller;//Controller Attached To determine Controls for Character
+    //public ListOfControllerActions controller;
     public GameObject enemy;
     public SpriteRenderer sprite;
     [Range(0f, 100f)]
@@ -45,6 +46,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
 
     public void SetPlayerID(PLAYER id) { playerID = id; }
     public void SetController(PlayerControllerManager controller) { this.controller = controller; }
+    //public void SetController(ListOfControllerActions controller) { this.controller = controller; }
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
     public void SetCharacter(CharacterBase charaBase) { character = charaBase; }
     public void SetStunManager(StunMeterManager stun) { stunManager = stun; }
@@ -56,9 +58,11 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public bool Blocking() { return isBlocking; }
     public bool CanUlt() { return canUlti; }
     public float GetHealthPercentage() { return character.GetHealthPercentage(); }
+    public float GetUltiPercentage() { return (float)ultiCharge / (float)character.GetUltiMax(); }
     public Vector2 GetDirection() { return direction; }
     public PLAYER GetPlayerID() { return playerID; }
     public PlayerControllerManager GetController() { return controller; }
+    //public ListOfControllerActions GetController() { return controller; }
     
     //mana
     public float getManaAmount() { return manaAmount; }
@@ -66,6 +70,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void decreaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount - amount, 0, 100); }
     public void increaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount + amount,0,100); }
     public float percentageOfMana() { return (float)((float)manaAmount / (float)maxMana); }
+    
 
     public CharacterBase GetCharacterData() { return character; }
 
@@ -196,7 +201,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public virtual void Jump()
     {
         inAir = true;
-        rigidbody.AddForce(new Vector2(0, character.GetJumpForce() * Time.deltaTime));
+        Debug.Log("JumpForce : " + character.GetJumpForce() * Time.deltaTime);
+        rigidbody.AddForce(new Vector2(0, Mathf.Clamp(character.GetJumpForce() * Time.deltaTime,1,1500)));
     }
     public virtual void Recalculate()
     {

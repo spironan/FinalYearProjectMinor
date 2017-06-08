@@ -13,7 +13,7 @@ GameObject:
   - 58: {fileID: 5889128}
   m_Layer: 0
   m_Name: Fire
-  m_TagString: SpellSkill
+  m_TagString: RangedSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

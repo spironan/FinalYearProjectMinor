@@ -5,7 +5,6 @@ public class PlayerData : MonoBehaviour
 {
     //Controller For Reading Input
     public ListOfControllerActions controller;
-    //PlayerControllerManager controller;
     //the frame outline of the player
     public GameObject selectframe;
     // Character Data is the progression of the data, read from Database As well next time                               

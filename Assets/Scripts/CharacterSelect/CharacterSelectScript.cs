@@ -161,6 +161,11 @@ public class CharacterSelectScript : MonoBehaviour
             {
                 LockInCharacter(gameManager.GetPlayer(i).GetPlayerID(), playerFrames[i].GetCharName());
             }
+            //Player Unpick Character
+            if (player.controller.getButtonAction(ACTIONS.UNPICK_CHARACTER))
+            {
+                DeselectCharacter(gameManager.GetPlayer(i).GetPlayerID());
+            }
         }
     }
 
@@ -177,6 +182,13 @@ public class CharacterSelectScript : MonoBehaviour
         {
             finished = true;
         }
+    }
+
+    public void DeselectCharacter(PLAYER player)
+    {
+        //DeselectCharacter        
+        gameManager.GetPlayer(player).UnPickChar();
+        playerFrames[(int)player].UnLock();
     }
 
     bool CheckBothPicked()

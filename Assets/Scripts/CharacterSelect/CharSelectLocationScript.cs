@@ -37,8 +37,6 @@ public class CharSelectLocationScript : MonoBehaviour
         if (!lockedIn && charData && charData.down != null)
             AssignCharSlot(charData.down);
     }
-    public void LockIn()
-    {
-        lockedIn = true;
-    }
+    public void LockIn() { lockedIn = true; }
+    public void UnLock() { lockedIn = false; }
 }

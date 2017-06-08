@@ -8,10 +8,12 @@ public class BattleSceneManager : MonoBehaviour
     GameManager gameManager;
     Map currentMap;
     List<GameObject> playerCharacters = new List<GameObject>();
+    PreBattleTextScript preBattleText;
     float curBattleTimer;
     float maxBattleTimer;
     GAME_MODES gameMode;
     bool gameWon = false;
+    bool timePaused = false;
     int currentRound = 1;
 
     public void SetGameMode(GAME_MODES mode)
@@ -19,7 +21,7 @@ public class BattleSceneManager : MonoBehaviour
         switch (mode)
         {
             case GAME_MODES.LOCAL_PVP:
-                maxBattleTimer = 99.0f;
+                maxBattleTimer = 12.0f;
                 break;
         }
         ResetTimer();
@@ -28,25 +30,23 @@ public class BattleSceneManager : MonoBehaviour
     public float GetCurrentBattleTimer() { return curBattleTimer; }
     public int GetCurrentRound() { return currentRound; }
 
-    void Start()
+    void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gameManager.ChangeState(GAMESTATE.IN_GAME);
+        preBattleText = GameObject.FindGameObjectWithTag("PreBattleText").GetComponent<PreBattleTextScript>();
         currentMap = gameManager.GetCurrMap();
         SetGameMode(gameManager.GetGameMode());
         currentRound = 1;
         LoadOncePerScene();
         StartBattle();
-
     }
 
     public void LoadOncePerScene()
     {
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
-
-            GameObject stunManHardcodingCauseWhyNot = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerPrefab/StunMan"));
-            
+            GameObject stunManHardcodingCauseWhyNot = PrefabManager.GetInstance().GetPrefab("StunMan"); //GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerPrefab/StunMan"));
             stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
             stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
             stunManHardcodingCauseWhyNot.GetComponent<PlayerCharacterLogicScript>().SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
@@ -54,22 +54,7 @@ public class BattleSceneManager : MonoBehaviour
             stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().player_number = gameManager.GetPlayer(i).GetPlayerID();
             stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().playerControllerManager = gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>();
             stunManHardcodingCauseWhyNot.GetComponent<SkillActivator>().bindedActions = gameManager.GetPlayer(i).gameObject.GetComponent<ListOfControllerActions>();
-            
             playerCharacters.Add(stunManHardcodingCauseWhyNot);
-
-            //GameObject chara = new GameObject();
-            //chara.tag = "Player";
-            //chara.name = "Player" + (i + 1);
-            //PlayerCharacterLogicScript charaData = chara.AddComponent<PlayerCharacterLogicScript>();
-            //charaData.SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
-            //charaData.SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
-            //charaData.SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
-
-            //chara.AddComponent<SpriteRenderer>();
-            //chara.AddComponent<Rigidbody2D>();
-            //chara.AddComponent<BoxCollider2D>();
-
-            //playerCharacters.Add(chara);
         }
     }
 
@@ -87,6 +72,7 @@ public class BattleSceneManager : MonoBehaviour
         currentRound++;
         ResetPlayerCharacters();
         SetPlayerSpawnPoints();
+        preBattleText.PlayAnim();
         ResetTimer();
     }
 
@@ -119,10 +105,13 @@ public class BattleSceneManager : MonoBehaviour
 
     void UpdateTimer()
     {
-        if (curBattleTimer > 0)
-            curBattleTimer -= Time.deltaTime;
-        else
-            gameWon = true;
+        if (!timePaused)
+        {
+            if (curBattleTimer > 0)
+                curBattleTimer -= Time.deltaTime;
+            else
+                gameWon = true;
+        }
     }
 
     void CheckForDeath()
@@ -130,15 +119,22 @@ public class BattleSceneManager : MonoBehaviour
         for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
             if (playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().IsDead())
+            {
                 gameWon = true;
+                break;
+            }
         }
     }
 
     void ResetTimer()
     {
         gameWon = false;
+        timePaused = false;
         curBattleTimer = maxBattleTimer;
     }
+
+    public void PauseTimer() { timePaused = true; }
+    public void UnPauseTimer() { timePaused = false; }
 
     public void EndMatch()
     {
@@ -174,4 +170,5 @@ public class BattleSceneManager : MonoBehaviour
     {
         return playerCharacters;
     }
+
 }
