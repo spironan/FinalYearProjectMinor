@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class ControllerInput : MonoBehaviour {
 
     //protected int controllerNumber;
+    protected string controller_name = "";
     protected FloatAndBool floatAndBool = new FloatAndBool();
     protected bool keyDown = false;
     protected bool keyDownHold = false;
@@ -87,4 +88,8 @@ public class ControllerInput : MonoBehaviour {
         floatAndBool.setFloatAndBool(f,b);
     }
 
+    public string getControllerName()
+    {
+        return controller_name;
+    }
 }

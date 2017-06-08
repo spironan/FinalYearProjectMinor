@@ -135,6 +135,11 @@ public class PlayerControllerManager : MonoBehaviour
     {
         return disableControls;
     }
+
+    public string nameOfController()
+    {
+        return currController.getControllerName();
+    }
 }
 
 //public Dictionary<int, int> controllerAssigned = new Dictionary<int, int>();// key is going to be player, value is gonna be controller number // public for now to test

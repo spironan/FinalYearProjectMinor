@@ -58,7 +58,7 @@ MonoBehaviour:
   keysToActivate: 1
   stunValuePerHit: 100
   player_ID: 0
-  damagePerHit: 5
+  damagePerHit: 15
   lifetime: 0
   pSpeed: 5
   gravity: 9.8

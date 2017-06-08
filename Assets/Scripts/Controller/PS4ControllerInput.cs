@@ -6,7 +6,7 @@ public class PS4ControllerInput : ControllerInput {
     public override void Start()
     {
         base.Start();
-
+        controller_name = "PS4";
     }
 
     public override bool CheckForKeyPress(BUTTON_INPUT keyNumber, PLAYER player)
