@@ -505,6 +505,16 @@ MonoBehaviour:
   - {fileID: 165888}
   - {fileID: 107382}
   - {fileID: 125160}
+  PS4Keys:
+  - {fileID: 21300000, guid: 3c26c44809e9d574fb720663be29b68e, type: 3}
+  - {fileID: 21300000, guid: d1de200063a099f44be6b5c3afc1063b, type: 3}
+  - {fileID: 21300000, guid: 88563893665e59a4ab65994b906081ca, type: 3}
+  - {fileID: 21300000, guid: 932ca535ae6908f4488c98513c5e0896, type: 3}
+  XBOXKeys:
+  - {fileID: 21300000, guid: 3b311f6465549524092238c696dfd506, type: 3}
+  - {fileID: 21300000, guid: 9cc1199c0d7d65c408424c03cc7e3253, type: 3}
+  - {fileID: 21300000, guid: 83156e5df87097c449cd19ad6a431a80, type: 3}
+  - {fileID: 21300000, guid: 864cf6fcf323d164cb62ac8e9c8a19dc, type: 3}
 --- !u!212 &21202046
 SpriteRenderer:
   m_ObjectHideFlags: 1

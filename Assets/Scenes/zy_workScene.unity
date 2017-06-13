@@ -1354,6 +1354,52 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1001 &1393135421
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408982, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408982, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408982, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408982, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408982, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408982, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408982, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408982, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 181808, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d9e073c361f10c147bcec52281217bcf, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1420036446
 Prefab:
   m_ObjectHideFlags: 0
@@ -1506,7 +1552,7 @@ GameObject:
   - 4: {fileID: 1711809984}
   - 114: {fileID: 1711809983}
   m_Layer: 0
-  m_Name: SkillActivator
+  m_Name: SkillActivatormmm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

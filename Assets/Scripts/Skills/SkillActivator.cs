@@ -24,6 +24,7 @@ public class SkillActivator : MonoBehaviour {
     private int keyIterator;
 
     private bool dpadDown;
+    private bool selectedSkill = false;
 
     private PlayerCharacterLogicScript owner;
     // Use this for initialization
@@ -58,7 +59,7 @@ public class SkillActivator : MonoBehaviour {
         //    playerControllerManager = GetComponent<PlayerControllerManager>();
 
         //Debug.Log(player_number);
-        checkSkillToActivate();
+        
         
 
         if(currentSkillProfile != null)
@@ -67,7 +68,218 @@ public class SkillActivator : MonoBehaviour {
             //check for dpad presses
             //Debug.Log(Input.GetAxis("DPad_Y_xBox360"));
             
-            if (keyIterator != currentSkillProfile.keysToActivate)
+            if (keyIterator != currentSkillProfile.keysToActivate && selectedSkill)
+            {
+                int keyValue = -1;
+                
+                if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.Y))//up?
+                {
+                    
+                    keyValue = 0;
+                    
+                    if (keyValue == currentSkillProfile.directionToPress[keyIterator]
+                    && !dpadDown)//doing this so it wont keep taking same input IMSORRY IF THIS IS HARDCODE T^T
+                    {
+                        //Debug.Log(player_number);
+                        activator.showPressedCorrect(keyIterator);
+                        keyIterator += 1;
+                        dpadDown = true;
+                    }
+                    else if (keyValue != currentSkillProfile.directionToPress[keyIterator]
+                    && !dpadDown)
+                    {
+                        activator.closeBorder();
+                        destroyInactiveSkill();
+                        keyIterator = 0;
+                        
+                    }
+
+                }
+                else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.A))//down?
+                {
+                    keyValue = 2;
+                    
+                    if (keyValue == currentSkillProfile.directionToPress[keyIterator]
+                     && !dpadDown)//doing this so it wont keep taking same input IMSORRY IF THIS IS HARDCODE T^T
+                    {
+                        activator.showPressedCorrect(keyIterator);
+                        keyIterator += 1;
+                        dpadDown = true;
+                    }
+                    else if (keyValue != currentSkillProfile.directionToPress[keyIterator]
+                    && !dpadDown)
+                    {
+                        activator.closeBorder();
+                        destroyInactiveSkill();
+                        keyIterator = 0;
+                    }
+                }
+                else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.B))//right
+                {
+                    keyValue = 3;
+                    
+                    if (keyValue == currentSkillProfile.directionToPress[keyIterator]
+                     && !dpadDown)//doing this so it wont keep taking same input IMSORRY IF THIS IS HARDCODE T^T
+                    {
+                        activator.showPressedCorrect(keyIterator);
+                        keyIterator += 1;
+                        dpadDown = true;
+                    }
+                    else if (keyValue != currentSkillProfile.directionToPress[keyIterator]
+                    && !dpadDown)
+                    {
+                        activator.closeBorder();
+                        destroyInactiveSkill();
+                        keyIterator = 0;
+                    }
+                }
+                else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.X))//left
+                {
+                    keyValue = 1;
+                    
+                    if (keyValue == currentSkillProfile.directionToPress[keyIterator]
+                     && !dpadDown)//doing this so it wont keep taking same input IMSORRY IF THIS IS HARDCODE T^T
+                    {
+                        activator.showPressedCorrect(keyIterator);
+                        keyIterator += 1;
+                        dpadDown = true;
+                    }
+                    else if (keyValue != currentSkillProfile.directionToPress[keyIterator]
+                    && !dpadDown)
+                    {
+                        activator.closeBorder();
+                        destroyInactiveSkill();
+                        keyIterator = 0;
+                        //dpadDown = false;
+                    }
+                }
+                else
+                {
+                    dpadDown = false;
+                }
+
+                
+
+            }
+            
+            //else if(keyValue != currentSkillProfile.directionToPress[keyIterator]
+            //    && dpadDown)
+            //{
+            //    activator.closeBorder();
+            //    keyIterator = 0;
+            //}
+            //Debug.Log(Input.GetAxis("DPad_Y_xBox360"));
+
+            if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.L1))
+            {
+                selectedSkill = false;
+                if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null
+                    && owner.getManaAmount() >= skill_gameObject.GetComponent<SkillProfile>().manaCost)
+                {
+                    owner.decreaseMana(skill_gameObject.GetComponent<SkillProfile>().manaCost);
+                    currentSkillProfile.activateSkill = true;// activates the skills
+                                                             // GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+                    skill_gameObject.SetActive(true);
+                    skill_gameObject.transform.position = transform.position;
+                    skill_gameObject.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection(), 1);
+                    skill_gameObject.GetComponent<SkillProfile>().player_ID = player_number;
+                    skill_gameObject.GetComponent<SkillProfile>().owner = gameObject;
+                    skill_gameObject.GetComponent<SkillProfile>().findEnemy();
+
+                    skill_gameObject.GetComponent<SkillProfile>().direction = gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection();
+                    keyIterator = 0;
+                    dpadDown = false;
+                    currentSkillProfile = null;
+
+                }
+                
+                activator.closeBorder();
+            }
+        }
+        checkSkillToActivate();
+    }
+
+
+    void createNewSkillObject()
+    {
+        if(skill_gameObject != null)
+        {
+            if (skill_gameObject.activeSelf)
+                skill_gameObject = null;
+            else
+                Destroy(skill_gameObject);
+        }
+        skill_gameObject = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        currentSkillProfile = skill_gameObject.GetComponent<SkillProfile>();
+    }
+
+    void destroyInactiveSkill()
+    {
+        selectedSkill = false;
+        Destroy(skill_gameObject);
+    }
+
+    void checkSkillToActivate()
+    {
+
+        if (!selectedSkill)
+        {
+            if (bindedActions.getButtonAction(ACTIONS.SKILL_ONE))
+            {
+                Debug.Log(5);
+                currentSkillProfile = skill1.GetComponent<SkillProfile>();
+                createNewSkillObject();
+                keyIterator = 0;
+                selectedSkill = true;
+                //pass skill1 to activator
+                //skill 1
+                activator.generate_keys(currentSkillProfile.gameObject);
+            }
+            else if (bindedActions.getButtonAction(ACTIONS.SKILL_TWO))
+            {
+                currentSkillProfile = skill2.GetComponent<SkillProfile>();
+                createNewSkillObject();
+                keyIterator = 0;
+                selectedSkill = true;
+                //pass skill2 to activator
+                //skill 2
+                activator.generate_keys(currentSkillProfile.gameObject);
+            }
+            else if (bindedActions.getButtonAction(ACTIONS.SKILL_FOUR))
+            {
+
+                currentSkillProfile = skill4.GetComponent<SkillProfile>();
+                createNewSkillObject();
+                keyIterator = 0;
+                selectedSkill = true;
+                //pass skill4 to activator
+                //skill 4
+                activator.generate_keys(currentSkillProfile.gameObject);
+            }
+            else if (bindedActions.getButtonAction(ACTIONS.SKILL_THREE))
+            {
+
+                currentSkillProfile = skill3.GetComponent<SkillProfile>();
+                createNewSkillObject();
+                keyIterator = 0;
+                selectedSkill = true;
+                //pass skill3 to activator
+                //skill 3
+                activator.generate_keys(currentSkillProfile.gameObject);
+            }
+        }
+    }
+
+    public void resetCurrentCastingSkill()
+    {
+        activator.closeBorder();
+        destroyInactiveSkill();
+        keyIterator = 0;
+    }
+}
+
+
+/*if (keyIterator != currentSkillProfile.keysToActivate)
             {
                 int keyValue = -1;
                 
@@ -150,116 +362,4 @@ public class SkillActivator : MonoBehaviour {
                 else
                 {
                     dpadDown = false;
-                }
-
-                
-
-            }
-            //else if(keyValue != currentSkillProfile.directionToPress[keyIterator]
-            //    && dpadDown)
-            //{
-            //    activator.closeBorder();
-            //    keyIterator = 0;
-            //}
-            //Debug.Log(Input.GetAxis("DPad_Y_xBox360"));
-
-            if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.L1))
-            {
-                if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null
-                    && owner.getManaAmount() >= skill_gameObject.GetComponent<SkillProfile>().manaCost)
-                {
-                    owner.decreaseMana(skill_gameObject.GetComponent<SkillProfile>().manaCost);
-                    currentSkillProfile.activateSkill = true;// activates the skills
-                                                             // GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
-                    skill_gameObject.SetActive(true);
-                    skill_gameObject.transform.position = transform.position;
-                    skill_gameObject.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection(), 1);
-                    skill_gameObject.GetComponent<SkillProfile>().player_ID = player_number;
-                    skill_gameObject.GetComponent<SkillProfile>().owner = gameObject;
-                    skill_gameObject.GetComponent<SkillProfile>().findEnemy();
-
-                    skill_gameObject.GetComponent<SkillProfile>().direction = gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection();
-                    keyIterator = 0;
-                    dpadDown = false;
-                    currentSkillProfile = null;
-
-                }
-                
-                activator.closeBorder();
-            }
-        }
-    }
-
-
-    void createNewSkillObject()
-    {
-        if(skill_gameObject != null)
-        {
-            if (skill_gameObject.activeSelf)
-                skill_gameObject = null;
-            else
-                Destroy(skill_gameObject);
-        }
-        skill_gameObject = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
-        currentSkillProfile = skill_gameObject.GetComponent<SkillProfile>();
-    }
-
-    void destroyInactiveSkill()
-    {
-        Destroy(skill_gameObject);
-    }
-
-    void checkSkillToActivate()
-    {
-        if (bindedActions.getButtonAction(ACTIONS.SKILL_ONE))
-        {
-            Debug.Log(5);
-            currentSkillProfile = skill1.GetComponent<SkillProfile>();
-            createNewSkillObject();
-            keyIterator = 0;
-
-            //pass skill1 to activator
-            //skill 1
-            activator.generate_keys(currentSkillProfile.gameObject);
-        }
-        else if (bindedActions.getButtonAction(ACTIONS.SKILL_TWO))
-        {
-            currentSkillProfile = skill2.GetComponent<SkillProfile>();
-            createNewSkillObject();
-            keyIterator = 0;
-
-            //pass skill2 to activator
-            //skill 2
-            activator.generate_keys(currentSkillProfile.gameObject);
-        }
-        else if (bindedActions.getButtonAction(ACTIONS.SKILL_FOUR))
-        {
-
-            currentSkillProfile = skill4.GetComponent<SkillProfile>();
-            createNewSkillObject();
-            keyIterator = 0;
-
-            //pass skill4 to activator
-            //skill 4
-            activator.generate_keys(currentSkillProfile.gameObject);
-        }
-        else if (bindedActions.getButtonAction(ACTIONS.SKILL_THREE))
-        {
-
-            currentSkillProfile = skill3.GetComponent<SkillProfile>();
-            createNewSkillObject();
-            keyIterator = 0;
-
-            //pass skill3 to activator
-            //skill 3
-            activator.generate_keys(currentSkillProfile.gameObject);
-        }
-    }
-
-    public void resetCurrentCastingSkill()
-    {
-        activator.closeBorder();
-        destroyInactiveSkill();
-        keyIterator = 0;
-    }
-}
+                }*/
