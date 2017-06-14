@@ -32,7 +32,7 @@ public class Explosion : SkillProfile
     public override bool checkForCollision()
     {
         //Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(),owner.GetComponent<Collider2D>());
-        collision = Physics2D.CircleCastAll(transform.position, 2.5f, Vector2.zero, 0);
+        collision = Physics2D.CircleCastAll(transform.position, 2f, Vector2.zero, 0);
 
         foreach (RaycastHit2D temp in collision)
         {
@@ -41,7 +41,7 @@ public class Explosion : SkillProfile
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
                     Debug.Log("hit");
                     owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);

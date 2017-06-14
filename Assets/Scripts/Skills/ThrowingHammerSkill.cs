@@ -29,7 +29,7 @@ public class ThrowingHammerSkill : SkillProfile {
                 rotatingDir = -1;
         }
 
-        gameObject.transform.Rotate(Vector3.forward * Time.deltaTime * 200);
+        gameObject.transform.Rotate(Vector3.forward * rotatingDir * Time.deltaTime * 200);
         if (distToEnemy() < 1.0f)
         {
             if (checkForCollision())
@@ -67,7 +67,7 @@ public class ThrowingHammerSkill : SkillProfile {
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
                     Debug.Log("hit");
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
                     owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     //gameObject.SetActive(false);
                     return true;

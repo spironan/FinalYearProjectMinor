@@ -7,19 +7,22 @@ public class BombSkill : SkillProfile {
 
     float checkEveryInterval_lifeTime = 0.0f;
     float throwingDir = 1;
-
+    
     bool runOnce = false;
     bool doDamage = true;
     bool enableCollisionToOwner = false;
 
-
+             
     //private CircleCollider2D circleColliderSelf;
-    private Rigidbody2D rigidBody;
+    Rigidbody2D rigidBody;
+    ParticleSystem particles;
 
     public override void Start()
     {
         base.Start();
         rigidBody = GetComponent<Rigidbody2D>();
+        particles = GetComponentInChildren<ParticleSystem>();
+        
         //circleColliderSelf = GetComponent<CircleCollider2D>();
     }
     // Update is called once per frame
@@ -82,7 +85,7 @@ public class BombSkill : SkillProfile {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
                     owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     Debug.Log("hit");
@@ -97,10 +100,11 @@ public class BombSkill : SkillProfile {
     {
         runOnce = false;
         checkEveryInterval_lifeTime = 0;
+        particles.time = 0;
     }
 
-    public float distToOwner()
-    {
-        return (transform.position - owner.transform.position).magnitude;
-    }
+    //public float distToOwner()
+    //{
+    //    return (transform.position - owner.transform.position).magnitude;
+    //}
 }

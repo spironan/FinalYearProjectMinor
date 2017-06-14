@@ -3,11 +3,11 @@ using System.Collections;
 
 public class FireSkill : SkillProfile {
     
-    float checkEveryInterval_lifeTime = 0.0f;
-    
-    bool runOnce = false;
+    protected float checkEveryInterval_lifeTime = 0.0f;
 
-    
+    protected bool runOnce = false;
+    protected float rotatingDir = 1;
+
 
     // Update is called once per frame
     public override void Update () {
@@ -36,6 +36,10 @@ public class FireSkill : SkillProfile {
             direction = (enemy.transform.position - owner.transform.position).normalized;
             runOnce = true;
             position = gameObject.transform.position;
+            if (direction.x >= 0)
+                rotatingDir = 1;
+            else
+                rotatingDir = -1;
         }
 	    
         position.x += direction.x * pSpeed * Time.deltaTime;

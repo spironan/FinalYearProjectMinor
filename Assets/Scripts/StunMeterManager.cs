@@ -4,11 +4,14 @@ using System.Collections;
 public class StunMeterManager : MonoBehaviour {
 
     public StunMeter stunMeter;
+    public Wordings StunnedTitle;
     //public bool isStunned;
 
     private PLAYER player_number;
     private PlayerControllerManager playerControllerManager;
     public float stunTime = 0.0f;
+
+    private SkillActivator activator;
     // Use this for initialization
     void Start()
     {
@@ -23,6 +26,10 @@ public class StunMeterManager : MonoBehaviour {
             stunMeter.gameObject.transform.position += new Vector3(0, -local_sprite_size.y - 0.1f, stunMeter.gameObject.transform.position.z);
         else if (player_number == PLAYER.PLAYER_TWO)
             stunMeter.gameObject.transform.position += new Vector3(0, local_sprite_size.y + 0.1f, stunMeter.gameObject.transform.position.z);
+        activator = GetComponent<SkillActivator>();
+
+        StunnedTitle = GetComponentInChildren<Wordings>();
+        StunnedTitle.changeWording(WORDING_TYPES.STUNNED,player_number);
     }
 	
 	// Update is called once per frame
@@ -46,10 +53,12 @@ public class StunMeterManager : MonoBehaviour {
         if(stunMeter.getStunValue() == 100 && !playerControllerManager.isControllerDisabled())
         {
             playerControllerManager.DisableController();
-            
+            activator.resetCurrentCastingSkill();
+            StunnedTitle.showWording();
         }
         else if(stunTime >= 3.0f && playerControllerManager.isControllerDisabled())
         {
+            StunnedTitle.hideWording();
             playerControllerManager.EnableController();
             stunTime = 0;
         }
