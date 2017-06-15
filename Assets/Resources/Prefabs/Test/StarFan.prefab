@@ -39,18 +39,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b5263ab930dd74487a333fffb8afcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameOfSkill: 
-  descriptionOfSkill: 
-  keysToActivate: 0
+  nameOfSkill: StarFan
+  descriptionOfSkill: Throws multiple ninja stars in a fan formation.
+  keysToActivate: 3
   stunValuePerHit: 0
   player_ID: 0
   damagePerHit: 0
   lifetime: 0
   pSpeed: 0
   gravity: 0
-  manaCost: 0
+  manaCost: 50
   manaRegenPerHit: 0
-  castingCooldown: 0
+  castingCooldown: 5
   UltGainPerHitForEnemy: 0
   circleCollider: {fileID: 0}
   owner: {fileID: 0}
@@ -58,6 +58,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   directionToPress: 0000000000000000000000000000000000000000
   activateSkill: 0
+  ninjaStarskill: {fileID: 174230, guid: 6c4b25cf61fa8384595601cc3f4f5a74, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -9,7 +9,7 @@ public class DecoySkill : SkillProfile {
     float throwingDir = 1;
 
     bool runOnce = false;
-    bool doDamage = true;
+    //bool doDamage = true;
     bool enableCollisionToOwner = false;
 
     Rigidbody2D rigidBody;
@@ -30,12 +30,12 @@ public class DecoySkill : SkillProfile {
             //send this object to despawn
             checkEveryInterval_lifeTime = 0;
         }
-        if (checkEveryInterval_lifeTime > lifetime - 0.2f && doDamage)
-        {
-            //checkForCollision();
-            //do poof effect
-            doDamage = false;
-        }
+        //if (checkEveryInterval_lifeTime > lifetime - 0.2f && doDamage)
+        //{
+        //    //checkForCollision();
+        //    //do poof effect
+        //    doDamage = false;
+        //}
 
 
         if (!runOnce)

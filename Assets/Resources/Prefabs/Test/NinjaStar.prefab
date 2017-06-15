@@ -39,19 +39,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d0cec4aad40764aa98e54dc7a7b0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameOfSkill: 
-  descriptionOfSkill: 
-  keysToActivate: 0
-  stunValuePerHit: 0
+  nameOfSkill: Ninja Star
+  descriptionOfSkill: A throwing star that ninja used to throw.
+  keysToActivate: 2
+  stunValuePerHit: 10
   player_ID: 0
   damagePerHit: 0
-  lifetime: 0
-  pSpeed: 0
+  lifetime: 5
+  pSpeed: 10
   gravity: 0
-  manaCost: 0
-  manaRegenPerHit: 0
-  castingCooldown: 0
-  UltGainPerHitForEnemy: 0
+  manaCost: 20
+  manaRegenPerHit: 10
+  castingCooldown: 1
+  UltGainPerHitForEnemy: 20
   circleCollider: {fileID: 0}
   owner: {fileID: 0}
   enemy: {fileID: 0}

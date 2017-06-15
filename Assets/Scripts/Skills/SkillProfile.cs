@@ -138,4 +138,9 @@ public class SkillProfile : MonoBehaviour {
     {
 
     }
+
+    public virtual void setDirection(Vector2 dir)
+    {
+        direction = dir;
+    }
 }
