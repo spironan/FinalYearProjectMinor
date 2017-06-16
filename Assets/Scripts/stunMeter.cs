@@ -13,6 +13,7 @@ public class StunMeter : MonoBehaviour
 
 
     private float maxStunValue = 100.0f;
+    private bool stopStunValueSecrease = false;
     //// Use this for initialization
     //void Start()
     //{
@@ -22,11 +23,13 @@ public class StunMeter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        //stunValue = Mathf.Clamp(stunValue, 0.1f, 100.0f);
-        stunValue -= rateOfStunDecay * Time.deltaTime;
-        stunValue = Mathf.Clamp(stunValue, 0.1f, 100.0f);
-        fill.transform.localScale = new Vector3(stunValue / 100, 1, 1);
+        if (!stopStunValueSecrease)
+        {
+            //stunValue = Mathf.Clamp(stunValue, 0.1f, 100.0f);
+            stunValue -= rateOfStunDecay * Time.deltaTime;
+            stunValue = Mathf.Clamp(stunValue, 0.1f, 100.0f);
+            fill.transform.localScale = new Vector3(stunValue / 100, 1, 1);
+        }
     }
 
     public float getStunValue()
@@ -48,4 +51,18 @@ public class StunMeter : MonoBehaviour
     {
         transform.position.Set(x, y, z);
     }
+
+    public void setToStopStunDecrease(bool trigger)
+    {
+        stopStunValueSecrease = trigger;
+    }
+    //public void pauseStunDecrease()
+    //{
+    //    stopStunValueSecrease = true;
+    //}
+
+    //public void resumeStunDecrease()
+    //{
+    //    stopStunValueSecrease = false;
+    //}
 }

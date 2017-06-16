@@ -99,6 +99,11 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         basicAttack.enabled = true;
     }
 
+    public void ResetStunValue()
+    {
+        stunManager.resetStunValue();
+    }
+
     //This data are always the same,thus been place here
     public void Start()
     {
@@ -120,9 +125,13 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         stunManager = GetComponent<StunMeterManager>();
         skillActivator = GetComponent<SkillActivator>();
         basicAttack = GetComponent<BasicAttack>();
+        character.ResetHealth();
+        stunManager.resetStunValue();
         resetManaAmount();
+        skillActivator.resetCurrentCastingSkill();
+        basicAttack.resetTimer();
         // character = gameObject.GetComponent<CharacterBase>(); should be removed because character base is no longer a component
-        
+
     }
 
     //Overall Structure of how the code should flow
@@ -172,7 +181,12 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         isDead = false;
         inAir = stunned = isBlocking = canUlti = false;
         canJump = true;
+        //resets
         character.ResetHealth();
+        stunManager.resetStunValue();
+        resetManaAmount();
+        skillActivator.resetCurrentCastingSkill();
+        basicAttack.resetTimer();
 
         direction = new Vector2(0, 0);
         //this.transform.position = new Vector3(0, -2.5f, 0);
@@ -180,17 +194,17 @@ public class PlayerCharacterLogicScript : MonoBehaviour
             rigidbody.velocity = new Vector2(0, 0);
     }
 
-    //Function Called To Update Stun
-    public virtual void UpdateStun()
-    {
-        if (stunTimeLeft > 0.0f)
-            stunTimeLeft -= Time.deltaTime;
-        else
-        {
-            stunTimeLeft = 0.0f;
-            stunned = false;
-        }
-    }
+    //Function Called To Update Stun//dont need this -3-
+    //public virtual void UpdateStun()
+    //{
+    //    if (stunTimeLeft > 0.0f)
+    //        stunTimeLeft -= Time.deltaTime;
+    //    else
+    //    {
+    //        stunTimeLeft = 0.0f;
+    //        stunned = false;
+    //    }
+    //}
 
     //Read the Different Inputs and convert into the same input
     public virtual void ReadControl()

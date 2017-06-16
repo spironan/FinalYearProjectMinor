@@ -73,4 +73,19 @@ public class StunMeterManager : MonoBehaviour {
         if(!playerControllerManager.isControllerDisabled())
             stunMeter.addStunValue(value);
     }
+
+    public void resetStunValue()
+    {
+        stunMeter.setStunValue(0f);
+    }
+
+    public void pauseStunDecrease()
+    {
+        stunMeter.setToStopStunDecrease(true);
+    }
+
+    public void resumeStunDecrease()
+    {
+        stunMeter.setToStopStunDecrease(false);
+    }
 }
