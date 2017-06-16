@@ -14,17 +14,18 @@ public class PlayerAvatarDisplayScript : MonoBehaviour
     {
         charSelect = GameObject.Find("CharacterSelect").GetComponent<CharacterSelectScript>();
         charaArt = GetComponent<Image>();
-        charaName = GetComponentInChildren<Text>();//might not work
+        charaName = GetComponentInChildren<Text>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        if (charaName.text != charSelect.GetCurrChara(playerNumber))
-        {
-            charaName.text = charSelect.GetCurrChara(playerNumber);
-            charaArt.sprite = charSelect.GetCharaArt(playerNumber);
-        }
+        if(charSelect.GetCurrChara(playerNumber) != null)
+            if (charaName.text != charSelect.GetCurrChara(playerNumber))
+            {
+                charaName.text = charSelect.GetCurrChara(playerNumber);
+                charaArt.sprite = charSelect.GetCharaArt(playerNumber);
+            }
 	}
 
 }

@@ -21,6 +21,8 @@ public class PlayerData : MonoBehaviour
     bool isMaster = false;
     //Player Char Select Data
     bool pickedChar = false;
+    //Whether Player Has Already Assigned itself
+    bool assigned = false;
 
     //skillbook
 
@@ -53,6 +55,10 @@ public class PlayerData : MonoBehaviour
     {
         return playerID;
     }
+
+    public void Assign() { assigned = true; }
+    public void UnAssign() { assigned = false; }
+    public bool IsAssigned() { return assigned; }
 
     public void IsMaster()
     {
@@ -108,11 +114,13 @@ public class PlayerData : MonoBehaviour
     public PlayerInGameData GetInGameData() { return inGameData; }
 
 	// Use this for initialization
-	void Awake ()
+	void Start ()
     {
         //On Initialization should determine player Unique ID and Name
         controller = GetComponent<ListOfControllerActions>();
+        Debug.Log("Finished Initializing Player Data for :" + playerID);
 	}
+
 	// Update is called once per frame
 	void Update () 
     {

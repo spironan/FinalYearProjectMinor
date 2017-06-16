@@ -4,6 +4,7 @@ using System.Collections;
 //[RequireComponent(typeof(PlayerControllerManager))]
 public class PlayerCharacterLogicScript : MonoBehaviour
 {
+    private bool toUpdate = true;
     /// VALUES TO BE CHANGED OVER THE COURSE OF THE BATTLE ///                                
     protected int ultiCharge;       //The Meter that increases and when hit ultiMax,Character can Cast Ultimate
     protected float stunMeter;      //The Meter that increases when player gets hit and Gets Stunned when hit 100%
@@ -78,6 +79,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //This data are always the same,thus been place here
     public void Start()
     {
+        toUpdate = true;
         //GetComponent<SpriteRenderer>().sprite = character.GetChar();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         controller.init(playerID);
@@ -101,36 +103,39 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //Overall Structure of how the code should flow
     public virtual void Update()
     {
-        if (!controller.isControllerDisabled())
+        if (toUpdate)
         {
-            ReadControl();
-            if (MoveCondition())
-                Move();
-            if (JumpCondition())
-                Jump();
-        }
+            if (!controller.isControllerDisabled())
+            {
+                ReadControl();
+                if (MoveCondition())
+                    Move();
+                if (JumpCondition())
+                    Jump();
+            }
 
-        //if (stunManager.stunTime > 0)
-        //    UpdateStun();
-        //else
-        //{
-        //}
+            //if (stunManager.stunTime > 0)
+            //    UpdateStun();
+            //else
+            //{
+            //}
 
-        Recalculate();
-        if(enemy.transform.position.x > transform.position.x)
-        {
-            sprite.flipX = true;
-        }
-        else
-        {
-            sprite.flipX = false;
-        }
-        timerToIncreaseMana += Time.deltaTime;
+            Recalculate();
+            if (enemy.transform.position.x > transform.position.x)
+            {
+                sprite.flipX = true;
+            }
+            else
+            {
+                sprite.flipX = false;
+            }
+            timerToIncreaseMana += Time.deltaTime;
 
-        if(timerToIncreaseMana >= 1f)
-        {
-            timerToIncreaseMana = 0;
-            increaseMana(1);
+            if (timerToIncreaseMana >= 1f)
+            {
+                timerToIncreaseMana = 0;
+                increaseMana(1);
+            }
         }
     }
 
@@ -314,5 +319,15 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     {
         Init();
         Debug.Log("Reset");
+    }
+
+    public void StopUpdate()
+    {
+        toUpdate = false;
+    }
+
+    public void StartUpdate()
+    {
+        toUpdate = true;
     }
 }

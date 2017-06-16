@@ -32,7 +32,6 @@ public class XBox360ControllerInput : ControllerInput
             && player < PLAYER.MAX_PLAYERS
             && ps4ToXbox360.ContainsKey(keyNumber))
         {
-            
             string button = "joystick " + ((int)player + 1) + " button " + (int)ps4ToXbox360[keyNumber];
             return Input.GetKeyDown(button);
         }

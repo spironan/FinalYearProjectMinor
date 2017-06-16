@@ -108,22 +108,27 @@ public class CharacterSelectScript : MonoBehaviour
 
                     tempSlot.up = charSlots[up];
                     tempSlot.down = charSlots[down];
-                    spawnIndex = (int)(maxWidth * 0.5f);
                 }
                 spawnIndex = (int)(maxIndex * 0.5f);
             }
 
-            for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
-            {
-                GameObject frame = Instantiate(gameManager.GetPlayer(i).GetComponent<PlayerData>().selectframe);
-                frame.transform.SetParent(gameObject.transform, false);
-                frame.transform.localScale = new Vector3(1, 1, 1);
-                frame.GetComponent<CharSelectLocationScript>().AssignCharSlot(charSlots[spawnIndex]);
-                playerFrames.Add(frame.GetComponent<CharSelectLocationScript>());
-            }
         }
         
 	}
+
+    public void CreatePlayerFrame(int playerID)
+    {
+        GameObject frame = Instantiate(gameManager.GetPlayer(playerID).GetComponent<PlayerData>().selectframe);
+        if (frame != null)
+        {
+            frame.transform.SetParent(gameObject.transform, false);
+            frame.transform.localScale = new Vector3(1, 1, 1);
+            frame.GetComponent<CharSelectLocationScript>().AssignCharSlot(charSlots[0]);
+            playerFrames.Add(frame.GetComponent<CharSelectLocationScript>());
+        }
+        else
+            Debug.Log("Unable to Create Player Frame for :" + playerID + "as it is null");
+    }
 
     public void Update()
     {
@@ -133,33 +138,36 @@ public class CharacterSelectScript : MonoBehaviour
 
     void NavigateSelect()
     {
-        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+        for (int i = 0; i < playerFrames.Count; ++i)
         {
             PlayerData player = gameManager.GetPlayer(i);
+            if (!player.IsAssigned())
+                continue;
+            int team = (int)player.GetInGameData().GetTeam();
             //Move Left Right
             if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
             {
-                playerFrames[i].MoveLeft();
+                playerFrames[team].MoveLeft();
             }
             else if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT)) 
             {
-               playerFrames[i].MoveRight();
+                playerFrames[team].MoveRight();
             }
 
             // Move Up Down
             if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_UP))
             {
-               playerFrames[i].MoveUp();
+                playerFrames[team].MoveUp();
             }
             else if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
             {
-               playerFrames[i].MoveDown();
+                playerFrames[team].MoveDown();
             }
 
             //Player Picks Character
             if (player.controller.getButtonAction(ACTIONS.PICK_CHARACTER))
             {
-                LockInCharacter(gameManager.GetPlayer(i).GetPlayerID(), playerFrames[i].GetCharName());
+                LockInCharacter(gameManager.GetPlayer(i).GetPlayerID(), playerFrames[team].GetCharName());
             }
             //Player Unpick Character
             if (player.controller.getButtonAction(ACTIONS.UNPICK_CHARACTER))
@@ -206,6 +214,11 @@ public class CharacterSelectScript : MonoBehaviour
 
     public string GetCurrChara(int playernum)
     {
+        if (playernum >= playerFrames.Count)
+        {
+            Debug.Log("You fucked up, you entered a number too when frames havent got created yet! playernum entered :" + playernum);
+            return null;
+        }
         if (playernum >= (int)PLAYER.MAX_PLAYERS)
         { 
             Debug.Log("You fucked up, you entered a number too big playernum:" + playernum);

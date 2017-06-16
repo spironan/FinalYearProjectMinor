@@ -60,10 +60,7 @@ public class MapManager : Singleton<MapManager>
 
     public MapManager() { } 
 
-    public void Clear()
-    {
-        maps.Clear();
-    }
+    public void Clear() { maps.Clear(); }
 
     public void InitMaps(Database database, string tableName)
     {
@@ -78,7 +75,7 @@ public class MapManager : Singleton<MapManager>
             while (database.reader.Read())
             {
                 string name = database.reader.GetString(0);
-                TEAM team = TEAM.TEAM_BEGIN;
+                TEAM team = TEAM.RED_TEAM;
                 Vector2 newPos;
                 float x, y;
                 int readFrom;
@@ -99,8 +96,6 @@ public class MapManager : Singleton<MapManager>
                         newMap.AddToSpawnLocations(team, newPos);
                         team++;
                     }
-                    //PLAYMAPS parsed_enum = (PLAYMAPS)System.Enum.Parse(typeof(PLAYMAPS), newMap.GetMapName());
-                    //maps.Add(parsed_enum, newMap);
                     maps.Add(newMap.GetMapName(), newMap);
                 }
             }

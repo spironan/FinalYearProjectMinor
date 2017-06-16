@@ -13,6 +13,7 @@ public class ListOfControllerActions : MonoBehaviour {
         playerControllerManager = GetComponent<PlayerControllerManager>();
         defaultButtonBinds();
         defaultAxisBinds();
+        Debug.Log("Finished Initializing List of Controller Action for :" + playerControllerManager.playerID);
 	}
 
     //*********************************************************************************************

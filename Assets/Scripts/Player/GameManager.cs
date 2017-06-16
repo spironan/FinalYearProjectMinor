@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour 
 {
     //Buffer Time The Player Needs to Press Before Actually Creating Player
-    public float holdTime;
-    float curHoldTime;
+    //public float holdTime;
+    //float curHoldTime;
 
     //Prefab for PlayerBase
     public GameObject playerBasePrefab;
     //Frames Of The Different Players
-    public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
+    //public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
     //List Of Existing Players
     List<PlayerData> playerList = new List<PlayerData>();
     //Master Player Has More Rights then Guest
@@ -23,35 +23,42 @@ public class GameManager : MonoBehaviour
     //Current Game Mode
     GAME_MODES currGameMode = GAME_MODES.LOCAL_PVP;
     //Current Number Of Players
-    PLAYER playerCount = PLAYER.PLAYER_BEGIN;
+    PLAYER playerCount = PLAYER.PLAYER_ONE;
     //Current Team Of the Player
-    TEAM playerTeam = TEAM.TEAM_BEGIN;
+    //TEAM playerTeam = TEAM.TEAM_BEGIN;
+    SoundController soundController;
 
     //Dont destroy on load the manager -> exist permantly
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-        GetComponent<PlayerControllerManager>().init(PLAYER.PLAYER_ONE);
+        //Let Player 1 Control The Main Menu Regardless Is Who
+        //GetComponent<PlayerControllerManager>().init(PLAYER.PLAYER_ONE);
+        //Create All Players
+        for (int i = 0; i < (int)PLAYER.MAX_PLAYERS; ++i)
+            CreateNewPlayer();
+
+        soundController = GameObject.FindWithTag("SoundController").GetComponent<SoundController>();
     }
+
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.Space)
         //    ||  GetComponent<PlayerControllerManager>().getIsKeyDownHold(BUTTON_INPUT.START)
         //    )
         //{
-            foreach (PlayerControllerManager controller in GetComponents<PlayerControllerManager>())
-            {
-                if (controller.getIsKeyDownHold(BUTTON_INPUT.START))
-                {
-                    curHoldTime += Time.deltaTime;
-                    if (curHoldTime >= holdTime)
-                    {
-                        CreateNewPlayer();
-                        curHoldTime = 0.0f;
-                    }
-                }
-            }
-
+            //foreach (PlayerControllerManager controller in GetComponents<PlayerControllerManager>())
+            //{
+            //    if (controller.getIsKeyDownHold(BUTTON_INPUT.START))
+            //    {
+            //        curHoldTime += Time.deltaTime;
+            //        if (curHoldTime >= holdTime)
+            //        {
+            //            CreateNewPlayer();
+            //            curHoldTime = 0.0f;
+            //        }
+            //    }
+            //}
         //}
     }
     
@@ -62,25 +69,49 @@ public class GameManager : MonoBehaviour
     {
         if (currState != state)
             currState = state;
+
+        switch (currState)
+        { 
+            case GAMESTATE.MAIN_MENU:
+                soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("MainMenu"));
+                break;
+            case GAMESTATE.CHAR_SELECT:
+                soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("CharSelect"));
+                break;
+            case GAMESTATE.IN_GAME:
+                soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("Infinite_Azure"));
+                break;
+
+        }
+
         Debug.Log("State Changed to : " + currState);
+    }
+    //Set The Game Mode Of which Game Type Is chosen
+    public void SetGameMode(GAME_MODES mode) 
+    {
+        if(currGameMode != mode)
+            this.currGameMode = mode;
+
+        Debug.Log("GameMode Changed to : " + currGameMode);
+
     }
 
     //Getter(s)
     public PlayerData GetPlayer(PLAYER playerNo) 
     {
-        if (playerCount >= playerNo)
+        if (playerList.Count >= (int)playerNo)
         {
             return playerList[(int)playerNo];
         }
-        Debug.Log("There is No such Player of Index : " + playerCount);
+        Debug.Log("There is No such Player of Index : " + playerNo);
         return null;
     }
     public PlayerData GetPlayer(int playerNo) 
     {
         if (playerNo < 0)
             Debug.Log("PlayerNo must be Positive");
-        else if (playerNo > (int)playerCount)
-            Debug.Log("There is No such Player of Index : " + playerCount);
+        else if (playerNo > playerList.Count)
+            Debug.Log("There is No such Player of Index : " + playerNo);
         else 
             return playerList[playerNo];
 
@@ -100,7 +131,7 @@ public class GameManager : MonoBehaviour
     }
     public PlayerData GetMasterPlayerData()
     {
-        if (HasMasterPlayer())
+        if (!HasMasterPlayer())
         {
             Debug.Log("No Master Player Found, Please Create one");
             return null;
@@ -126,6 +157,7 @@ public class GameManager : MonoBehaviour
         if (masterPlayer != null)// if can create
         {
             masterPlayer.GetComponent<PlayerData>().IsMaster();
+            //masterPlayer.AddComponent<PlayerControllerManager>
             //Add controller support here
         }
         Debug.Log("Created Master Player");
@@ -145,17 +177,16 @@ public class GameManager : MonoBehaviour
             Debug.Log("Max Number Of Players Created, Cant Create More!");
             return null;
         }
-        Debug.Log(playerCount + " before Increment ");
         GameObject player = Instantiate(playerBasePrefab);
-        player.transform.parent = this.transform;
         PlayerData playerData = player.GetComponent<PlayerData>();
         playerData.SetPlayerID(playerCount);
-        playerData.GetInGameData().SetTeam(playerTeam);
-        playerData.selectframe = frameObj[(int)playerTeam];
+        player.transform.parent = this.transform;
         playerList.Add(playerData);
-        playerTeam++;
         playerCount++;
-        Debug.Log(playerCount + " after Increment ");
+        //playerData.GetInGameData().SetTeam(playerTeam);
+        //playerData.selectframe = frameObj[(int)playerTeam];
+        //playerTeam++;
+        Debug.Log("Player Created with Id Of : " + playerData.GetPlayerID());
         return player;
     }
 
@@ -185,6 +216,7 @@ public class GameManager : MonoBehaviour
     }
     bool CanCreatePlayer()
     {
-        return (playerCount < PLAYER.MAX_PLAYERS);
+        return (playerList.Count < (int)PLAYER.MAX_PLAYERS);
     }
+
 }

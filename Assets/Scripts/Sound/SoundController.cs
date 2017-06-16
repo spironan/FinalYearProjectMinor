@@ -9,6 +9,7 @@ public class SoundController : MonoBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(this);
         SoundManager = GameObject.FindWithTag("SoundManager");
         if (SoundManager == null)
             Debug.Log("SoundManager Could Not Be found, have you initialized it?");

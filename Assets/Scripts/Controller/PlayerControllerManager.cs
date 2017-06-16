@@ -17,7 +17,7 @@ public class PlayerControllerManager : MonoBehaviour
     //private int numberOfControllers;
     private string[] listOfConnectedController;
 
-    public void Awake()
+    public void Start()
     {
         disableControls = false;
         currController = XBox360;
@@ -25,7 +25,7 @@ public class PlayerControllerManager : MonoBehaviour
             listOfConnectedController = Input.GetJoystickNames();
 
         currController.Start();
-
+        Debug.Log("Finished Initializing Player Controller for :" + playerID);
         //numberOfControllers = Input.GetJoystickNames().Length;
         //if (Input.GetJoystickNames().Length > (int)playerID)
         //{

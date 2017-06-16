@@ -151,7 +151,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AKUMA
+  m_Text: 
 --- !u!222 &41599610
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -582,6 +582,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11456028, guid: 893373050a298cb4cbb0f784dec6dae6, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 83156e5df87097c449cd19ad6a431a80,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 893373050a298cb4cbb0f784dec6dae6, type: 2}
   m_IsPrefabParent: 0
@@ -656,7 +661,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: JACK-7
+  m_Text: 
 --- !u!222 &846330171
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -767,7 +772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1056447133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1280,7 +1285,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1915311393}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -300}
@@ -1435,8 +1440,8 @@ RectTransform:
   - {fileID: 2064891380}
   - {fileID: 1056447133}
   - {fileID: 2122810262}
-  - {fileID: 1919533800}
   - {fileID: 1560292430}
+  - {fileID: 1919533800}
   - {fileID: 513180738}
   - {fileID: 1554830213}
   - {fileID: 756083555}
@@ -1462,6 +1467,9 @@ MonoBehaviour:
   charSelectHolder: {fileID: 1560292429}
   mapSelectHolder: {fileID: 513180737}
   mapSelectSpawner: {fileID: 1019733190}
+  frameObj:
+  - {fileID: 112498, guid: b4e720d94b47cfe4695f24a290ef4869, type: 2}
+  - {fileID: 176360, guid: 9ed8bff48ac5cda4fbb35abf69c4cc79, type: 2}
 --- !u!1 &1919533799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,7 +1500,7 @@ RectTransform:
   m_Children:
   - {fileID: 846330169}
   m_Father: {fileID: 1915311393}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 500, y: -50}
@@ -1517,7 +1525,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6d947382904890241bf70d5798f1359d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9b821cc7fb534ce45ac7ebebd7c767fb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1654,6 +1662,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11456028, guid: 893373050a298cb4cbb0f784dec6dae6, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 864cf6fcf323d164cb62ac8e9c8a19dc,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 893373050a298cb4cbb0f784dec6dae6, type: 2}
   m_IsPrefabParent: 0
@@ -2014,7 +2027,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0661e3560ab518849aa1b32f1493b62f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9b821cc7fb534ce45ac7ebebd7c767fb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

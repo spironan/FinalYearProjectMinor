@@ -8,8 +8,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 489006}
-  - 114: {fileID: 11449928}
   - 114: {fileID: 11408700}
+  - 114: {fileID: 11449928}
   - 114: {fileID: 11403976}
   m_Layer: 0
   m_Name: PlayerPrefab
@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7601a5f8e280c347b2565a6441aa914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   selectframe: {fileID: 0}
 --- !u!114 &11449928
 MonoBehaviour:
@@ -68,6 +69,7 @@ MonoBehaviour:
   PS4: {fileID: 11462868, guid: d58c10b2e783b1840810c5e9ce520b63, type: 2}
   currController: {fileID: 0}
   playerID: 0
+  disableControls: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

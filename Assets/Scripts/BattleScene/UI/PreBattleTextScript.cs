@@ -14,13 +14,22 @@ public class PreBattleTextScript : MonoBehaviour
         preBattleAnimator = GetComponent<Animator>();
 	}
 
-    public void PlayAnim()
+    public void PlayAnim(int currRound)
     {
-        GetComponent<Image>().CrossFadeAlpha(1.0f,0.0f,false);
-
-        int currRound = battleSceneManager.GetCurrentRound();
+        if(preBattleAnimator == null)
+            preBattleAnimator = GetComponent<Animator>();
         preBattleAnimator.SetInteger("Round",currRound);
-        preBattleAnimator.Play(currRound);
+        preBattleAnimator.Play("PreBattleTextImage");
+    }
+    
+    public void FinishAnim()
+    {
+        preBattleAnimator.SetBool("SetFinish", true);
+    }
+
+    public void ResetAnim()
+    {
+        preBattleAnimator.SetBool("SetFinish", false);
     }
 
     public void DeActivateControllers()
@@ -30,6 +39,7 @@ public class PreBattleTextScript : MonoBehaviour
             player.GetComponent<PlayerCharacterLogicScript>().GetController().DisableController();
         }
         battleSceneManager.PauseTimer();
+        Debug.Log("Deactivate controllers");
     }
 
     public void ActivateControllers()
@@ -39,6 +49,7 @@ public class PreBattleTextScript : MonoBehaviour
             player.GetComponent<PlayerCharacterLogicScript>().GetController().EnableController();
         }
         battleSceneManager.UnPauseTimer();
+        Debug.Log("Activate controllers");
     }
 
 }

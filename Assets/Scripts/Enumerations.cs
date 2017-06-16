@@ -11,22 +11,24 @@ public enum GAMESTATE
 
 public enum TEAM
 {
-    TEAM_BEGIN,
-    RED_TEAM = TEAM_BEGIN,
+    //TEAM_BEGIN,
+    RED_TEAM,// = TEAM_BEGIN,
     BLUE_TEAM,
     MAX_TEAM
 };
 
 public enum PLAYER
 {
-    PLAYER_BEGIN,
-    PLAYER_ONE = PLAYER_BEGIN,
+    //PLAYER_BEGIN,
+    PLAYER_ONE,// = PLAYER_BEGIN,
     PLAYER_TWO,
     MAX_PLAYERS,
 };
 
 public enum GAME_MODES
 {
+    PRACTICE,
+    VS_AI,
     LOCAL_PVP,
     MAX_GAME_MODES
 }

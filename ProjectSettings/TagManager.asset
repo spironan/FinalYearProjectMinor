@@ -21,6 +21,9 @@ TagManager:
   - BlueSpawn
   - PhysicalSkill
   - PreBattleText
+  - VictoryDisplay
+  - SoundController
+  - EndDisplay
   layers:
   - Default
   - TransparentFX
