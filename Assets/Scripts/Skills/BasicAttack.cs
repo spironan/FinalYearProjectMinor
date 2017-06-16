@@ -3,20 +3,25 @@ using System.Collections;
 
 public class BasicAttack : MonoBehaviour {
     public GameObject skill;
-    public float skill_cooldown;
+    public float skill_cooldown = 0;
 
-    float timer;
+    float timer = 0;
     GameObject spawning_skill;
     PlayerControllerManager playerControllerManager;
     // Use this for initialization
     void Start () {
         playerControllerManager = GetComponent<PlayerCharacterLogicScript>().GetController();
-        timer = skill_cooldown;
+        
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-
+        if(skill_cooldown == 0)
+        {
+            skill_cooldown = skill.GetComponent<SkillProfile>().castingCooldown;
+            timer = skill_cooldown;
+        }
         //if (playerControllerManager == null)
         //    playerControllerManager = GetComponent<PlayerControllerManager>();
 

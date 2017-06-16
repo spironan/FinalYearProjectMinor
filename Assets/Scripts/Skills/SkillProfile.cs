@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class SkillProfile : MonoBehaviour {
-
+    public string nameOfSkill;
+    public string descriptionOfSkill;
     [Range(1,5)]
     public int keysToActivate;
     [Range(0.0f, 100.0f)]
@@ -41,7 +42,7 @@ public class SkillProfile : MonoBehaviour {
     protected Vector2 position;
     protected Vector2 sprite_size;
     protected Vector2 local_sprite_size;
-
+    protected int damageMultipler = 1; 
 
     public virtual void determineKeyDirections()//virtual, so if dont want random spawn, we can set it ourselves
     {
@@ -109,7 +110,7 @@ public class SkillProfile : MonoBehaviour {
                     //    temp.collider.gameObject.GetComponent<StunMeterManager>().addStunValue(stunValuePerHit);
                     //}
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit);
+                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
                     enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
                     owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     Debug.Log("hit");
@@ -129,9 +130,17 @@ public class SkillProfile : MonoBehaviour {
     {
         return (enemy.transform.position - transform.position).magnitude;
     }
-
+    public virtual float distToOwner()
+    {
+        return (owner.transform.position - transform.position).magnitude;
+    }
     public virtual void reset()
     {
 
+    }
+
+    public virtual void setDirection(Vector2 dir)
+    {
+        direction = dir;
     }
 }

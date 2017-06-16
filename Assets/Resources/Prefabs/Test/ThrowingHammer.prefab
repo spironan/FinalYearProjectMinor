@@ -55,6 +55,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8826a8ac32dc2c94495d480636bb9c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameOfSkill: Throwing Hammer
+  descriptionOfSkill: A Hammer that is thrown into the sky. Deals massive stun damage
+    when hit.
   keysToActivate: 1
   stunValuePerHit: 100
   player_ID: 0
@@ -62,7 +65,7 @@ MonoBehaviour:
   lifetime: 0
   pSpeed: 5
   gravity: 9.8
-  manaCost: 0
+  manaCost: 15
   manaRegenPerHit: 0
   castingCooldown: 0
   UltGainPerHitForEnemy: 10
