@@ -16,7 +16,7 @@ public class StunMeterManager : MonoBehaviour {
     void Start()
     {
         playerControllerManager = GetComponent<PlayerCharacterLogicScript>().GetController();
-        stunMeter = GetComponentInChildren<StunMeter>();
+        //stunMeter = GetComponentInChildren<StunMeter>();
         Vector2 sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
 
         Vector2 local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
@@ -28,7 +28,7 @@ public class StunMeterManager : MonoBehaviour {
             stunMeter.gameObject.transform.position += new Vector3(0, local_sprite_size.y + 0.1f, stunMeter.gameObject.transform.position.z);
         activator = GetComponent<SkillActivator>();
 
-        StunnedTitle = GetComponentInChildren<Wordings>();
+        //StunnedTitle = GetComponentInChildren<Wordings>();
         StunnedTitle.changeWording(WORDING_TYPES.STUNNED,player_number);
     }
 	
