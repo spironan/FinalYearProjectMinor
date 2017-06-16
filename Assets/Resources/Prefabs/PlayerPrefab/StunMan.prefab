@@ -707,8 +707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03b51f8599b65040bb14231cfb2dd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunMeter: {fileID: 0}
-  StunnedTitle: {fileID: 0}
+  stunMeter: {fileID: 11475844}
+  StunnedTitle: {fileID: 11456082}
   stunTime: 0
 --- !u!114 &11421080
 MonoBehaviour:
@@ -765,6 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa8359b7e88c1348ad67180f33f0e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRendererOfWording: {fileID: 0}
   wordings:
   - {fileID: 21300000, guid: 079c7dd944de7c447b8be46a9809799c, type: 3}
 --- !u!114 &11475844
