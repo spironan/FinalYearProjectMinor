@@ -79,7 +79,7 @@ public class BattleSceneManager : MonoBehaviour
     public void StartBattle()
     {
         //Add in Animation Time, Counter Countdown Time next time here
-        ResetPlayerCharacters();
+        //ResetPlayerCharacters();
         SetPlayerSpawnPoints();
         ResetTimer();
         preBattleText.PlayAnim(currentRound);
@@ -104,10 +104,12 @@ public class BattleSceneManager : MonoBehaviour
         foreach (GameObject player in playerCharacters)
         {
             player.GetComponent<PlayerCharacterLogicScript>().StartUpdate(); // Start Updating Players again
+            player.GetComponent<PlayerCharacterLogicScript>().EnableAllAttacks();
         }
         endDisplay.SetActive(false);
         gameEnd = false;
         currentRound = 1;
+        ResetPlayerCharacters();
         StartBattle();
     }
 
@@ -171,6 +173,7 @@ public class BattleSceneManager : MonoBehaviour
 
     public void PauseTimer() { timePaused = true; }
     public void UnPauseTimer() { timePaused = false; }
+    public bool IsPaused() { return timePaused; }
 
     public void EndMatch()
     {
@@ -229,7 +232,10 @@ public class BattleSceneManager : MonoBehaviour
     {
         preBattleText.FinishAnim();
         foreach (GameObject player in playerCharacters)
+        { 
             player.GetComponent<PlayerCharacterLogicScript>().StopUpdate();
+            player.GetComponent<PlayerCharacterLogicScript>().DisableAndResetAllAttacks();
+        }
 
         foreach (VictoryDisplayScript victoryUI in victoryInterface)
             victoryUI.ResetVictories();
