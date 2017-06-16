@@ -38,6 +38,10 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public SpriteRenderer sprite;
     [Range(0f, 100f)]
     public int amountOfManaToStart;
+
+    SkillActivator skillActivator;
+    BasicAttack basicAttack;
+
     [Range(0f,100f)]
     protected int manaAmount;
     protected int maxMana = 100;
@@ -75,6 +79,25 @@ public class PlayerCharacterLogicScript : MonoBehaviour
 
     public CharacterBase GetCharacterData() { return character; }
 
+    public void DisableAndResetAllAttacks()// if you wan the combos to be resetted
+    {
+        skillActivator.resetCurrentCastingSkill();
+        skillActivator.enabled = false;
+        basicAttack.resetTimer();
+        basicAttack.enabled = false;
+    }
+
+    public void DisableAllAttacks()// disable the component from updating
+    {
+        skillActivator.enabled = false;
+        basicAttack.enabled = false;
+    }
+
+    public void EnableAllAttacks()//enable the componets to use skills again
+    {
+        skillActivator.enabled = true;
+        basicAttack.enabled = true;
+    }
 
     //This data are always the same,thus been place here
     public void Start()
@@ -95,6 +118,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         //enemy = Object.FindObjectOfType<PlayerCharacterLogicScript>().gameObject;
         sprite = GetComponent<SpriteRenderer>();
         stunManager = GetComponent<StunMeterManager>();
+        skillActivator = GetComponent<SkillActivator>();
+        basicAttack = GetComponent<BasicAttack>();
         resetManaAmount();
         // character = gameObject.GetComponent<CharacterBase>(); should be removed because character base is no longer a component
         

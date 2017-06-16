@@ -41,4 +41,13 @@ public class BasicAttack : MonoBehaviour {
             spawning_skill.GetComponent<SkillProfile>().direction = gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection();
         }
 	}
+
+    public void resetTimer()
+    {
+        if (skill_cooldown == 0)
+        {
+            skill_cooldown = skill.GetComponent<SkillProfile>().castingCooldown;
+        }
+        timer = skill_cooldown;
+    }
 }
