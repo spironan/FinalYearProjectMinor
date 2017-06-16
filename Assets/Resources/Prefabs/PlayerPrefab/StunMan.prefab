@@ -798,7 +798,7 @@ MonoBehaviour:
   skill2: {fileID: 0}
   skill3: {fileID: 0}
   skill4: {fileID: 0}
-  activator: {fileID: 0}
+  activator: {fileID: 11438210}
   playerControllerManager: {fileID: 0}
   bindedActions: {fileID: 0}
   player_number: 0
