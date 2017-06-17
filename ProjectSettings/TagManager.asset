@@ -24,6 +24,7 @@ TagManager:
   - VictoryDisplay
   - SoundController
   - EndDisplay
+  - MapHolder
   layers:
   - Default
   - TransparentFX

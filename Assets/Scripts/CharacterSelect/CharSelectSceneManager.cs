@@ -13,23 +13,28 @@ public class CharSelectSceneManager : MonoBehaviour
     };
     SELECTIONPHASE currentPhase = SELECTIONPHASE.PLAYER_ASSIGN;
 
-    public GameObject charSelectHolder, mapSelectHolder, mapSelectSpawner;
-    CharacterSelectScript charSelectData;
-    MapSelectScript mapSelectData;
-	GameManager manager;
-
     //Frames Of The Different Players
     public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
-    //Current Team Of the Player
+    //Current Team Of the Player used to assign player team
     TEAM playerTeam = TEAM.RED_TEAM;
 
+    //public GameObject charSelectHolder, mapSelectHolder, mapSelectSpawner;
+    GameObject mapSelectHolder;
+    CharacterSelectScript charSelectData;
+    MapSelectScript mapSelectData;
+	GameManager gameManager;
+
     // Use this for initialization
-	void Start () 
+	void Awake () 
     {
-        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        manager.ChangeState(GAMESTATE.CHAR_SELECT);
-        charSelectData = charSelectHolder.GetComponent<CharacterSelectScript>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gameManager.ChangeState(GAMESTATE.CHAR_SELECT);
+        charSelectData = GameObject.FindGameObjectWithTag("CharacterSelect").GetComponent<CharacterSelectScript>();
+        mapSelectData = GameObject.FindGameObjectWithTag("MapSpawnArea").GetComponent<MapSelectScript>();
+        mapSelectHolder = GameObject.FindGameObjectWithTag("MapHolder");
         mapSelectHolder.SetActive(false);
+        //charSelectData = charSelectHolder.GetComponent<CharacterSelectScript>();
+        //mapSelectHolder.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -63,9 +68,9 @@ public class CharSelectSceneManager : MonoBehaviour
     void UpdatePlayerAssign()
     {
         bool gotoCharSelect = true;
-        for (int i = 0; i < manager.GetPlayerSize(); ++i)
+        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
         {
-            PlayerData player = manager.GetPlayer(i);
+            PlayerData player = gameManager.GetPlayer(i);
             if (!player.IsAssigned())
             {
                 gotoCharSelect = false;
@@ -95,7 +100,7 @@ public class CharSelectSceneManager : MonoBehaviour
         {
             //Turn On Map Straight away
             mapSelectHolder.SetActive(true);
-            mapSelectData = mapSelectSpawner.GetComponent<MapSelectScript>();
+            //mapSelectData = mapSelectSpawner.GetComponent<MapSelectScript>();
             currentPhase = SELECTIONPHASE.MAP_PICK;
         }
     }

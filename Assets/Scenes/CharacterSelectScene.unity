@@ -317,11 +317,11 @@ GameObject:
   - 114: {fileID: 513180739}
   m_Layer: 5
   m_Name: MapHolder
-  m_TagString: Untagged
+  m_TagString: MapHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &513180738
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1303,7 +1303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8b60544b592ca48a54979363bab3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  framePrefab: {fileID: 193272, guid: a82197c60fa646541aafe6630950cfa4, type: 2}
 --- !u!114 &1560292432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,9 +1463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c928e657ecc2c0d46a64b0fb52d0a610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charSelectHolder: {fileID: 1560292429}
-  mapSelectHolder: {fileID: 513180737}
-  mapSelectSpawner: {fileID: 1019733190}
   frameObj:
   - {fileID: 112498, guid: b4e720d94b47cfe4695f24a290ef4869, type: 2}
   - {fileID: 176360, guid: 9ed8bff48ac5cda4fbb35abf69c4cc79, type: 2}
@@ -1550,7 +1546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224b4c278dd48f84d9cbc77c99abe765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 1
+  playerTeam: 1
 --- !u!1001 &1952660413
 Prefab:
   m_ObjectHideFlags: 0
@@ -2052,4 +2048,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224b4c278dd48f84d9cbc77c99abe765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
+  playerTeam: 0

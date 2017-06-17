@@ -8,7 +8,6 @@ public class DynamicFightingCameraScript : MonoBehaviour
     GameObject[] players;
     Vector3 p1pos;
     Vector3 p2pos;
-    Vector3 camOriginalPos;
     Camera thisCam;
     float newOrthoSize;
     float camX;         
@@ -18,7 +17,6 @@ public class DynamicFightingCameraScript : MonoBehaviour
     {
         thisCam = GetComponent<Camera>();
         players = GameObject.FindGameObjectsWithTag("Player");
-        camOriginalPos = transform.position;
 	}
 	
 	void Update ()

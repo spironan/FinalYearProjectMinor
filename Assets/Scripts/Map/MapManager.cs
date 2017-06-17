@@ -4,58 +4,6 @@ using System.Collections.Generic;
 
 public class MapManager : Singleton<MapManager>
 {
-    //private Dictionary<PLAYMAPS, Map> maps = new Dictionary<PLAYMAPS, Map>();
-    //public Map GetMap(int mapID)
-    //{
-    //    if (HasMap(mapID))
-    //    {
-    //        foreach (PLAYMAPS key in maps.Keys)
-    //        {
-    //            if (key == (PLAYMAPS)mapID)
-    //            {
-    //                Map avatar = new Map(maps[key]);
-    //                return avatar;
-    //            }
-    //        }
-    //    }
-    //    Debug.Log("No Such Map of ID : " + mapID + " Exist, Please Create It First");
-    //    return null;
-    //}
-    //public Map GetMap(PLAYMAPS mapID)
-    //{
-    //    if (HasMap(mapID))
-    //    {
-    //        foreach (PLAYMAPS key in maps.Keys)
-    //        {
-    //            if (key == mapID)
-    //            {
-    //                Map avatar = new Map(maps[key]);
-    //                return avatar;
-    //            }
-    //        }
-    //    }
-    //    Debug.Log("No Such Map : " + mapID.ToString() + " Exist, Please Create It First");
-    //    return null;
-    //}
-
-    //public bool HasMap(int mapID)
-    //{
-    //    return maps.ContainsKey((PLAYMAPS)mapID);
-    //}
-    //public bool HasMap(PLAYMAPS mapID)
-    //{
-    //    return maps.ContainsKey(mapID);
-    //}
-    //public bool HasMap(string mapName)
-    //{
-    //    foreach (PLAYMAPS key in maps.Keys)
-    //    {
-    //        if (maps[key].GetMapName() == mapName)
-    //            return true;
-    //    }
-    //    return false;
-    //}
-
     private Dictionary<string, Map> maps = new Dictionary<string, Map>();
 
     public MapManager() { } 

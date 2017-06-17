@@ -53,7 +53,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void SetController(PlayerControllerManager controller) { this.controller = controller; }
     //public void SetController(ListOfControllerActions controller) { this.controller = controller; }
     public void SetDead(bool newIsDead) { isDead = newIsDead; }
-    public void SetCharacter(CharacterBase charaBase) { character = charaBase; }
+    public void SetCharacter(CharacterBase charaBase) { character = charaBase;  }
+    public void SetCharacter(string charaName) { character = CharacterManager.GetInstance().GetCharacterByName(charaName); }
     public void SetStunManager(StunMeterManager stun) { stunManager = stun; }
 
     public bool IsDead() { return isDead; }

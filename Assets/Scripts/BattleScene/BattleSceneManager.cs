@@ -63,8 +63,8 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < noOfPlayers; ++i)
         {
-            GameObject character = PrefabManager.GetInstance().GetPrefab(gameManager.GetPlayer(i).GetInGameData().GetCharData().GetName()); //"StunMan" //GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerPrefab/StunMan"));
-            character.GetComponent<PlayerCharacterLogicScript>().SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharData());
+            GameObject character = PrefabManager.GetInstance().GetPrefab(gameManager.GetPlayer(i).GetInGameData().GetCharName()); //"StunMan" //GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerPrefab/StunMan"));
+            character.GetComponent<PlayerCharacterLogicScript>().SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharName());
             character.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
             character.GetComponent<PlayerCharacterLogicScript>().SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
             //character.GetComponent<SkillActivator>().player_number = gameManager.GetPlayer(i).GetPlayerID();
@@ -77,7 +77,6 @@ public class BattleSceneManager : MonoBehaviour
     //Called Once when a Player Starts
     public void StartBattle()
     {
-        //Add in Animation Time, Counter Countdown Time next time here
         //ResetPlayerCharacters();
         SetPlayerSpawnPoints();
         ResetTimer();

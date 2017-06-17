@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerAvatarDisplayScript : MonoBehaviour 
 {
-    public int playerNumber;
+    public TEAM playerTeam;
     Image charaArt;
     Text charaName;
     CharacterSelectScript charSelect;
@@ -20,11 +20,11 @@ public class PlayerAvatarDisplayScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if(charSelect.GetCurrChara(playerNumber) != null)
-            if (charaName.text != charSelect.GetCurrChara(playerNumber))
+        if (charSelect.GetCurrChara(playerTeam) != null)
+            if (charaName.text != charSelect.GetCurrChara(playerTeam))
             {
-                charaName.text = charSelect.GetCurrChara(playerNumber);
-                charaArt.sprite = charSelect.GetCharaArt(playerNumber);
+                charaName.text = charSelect.GetCurrChara(playerTeam);
+                charaArt.sprite = charSelect.GetCharaArt(playerTeam);
             }
 	}
 

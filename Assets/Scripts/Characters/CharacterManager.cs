@@ -4,54 +4,6 @@ using System.Collections.Generic;
 
 public class CharacterManager : Singleton<CharacterManager>
 {
-    //private Dictionary<CHARACTERS,CharacterBase> characterList = new Dictionary<CHARACTERS,CharacterBase>();
-    //public CharacterBase GetCharacterByID(int charID)
-    //{
-    //    if (HasCharacter(charID))
-    //    {
-    //        foreach (CHARACTERS key in characterList.Keys)
-    //        {
-    //            if (key == (CHARACTERS)charID)
-    //            {
-    //                CharacterBase avatar = new CharacterBase(characterList[key]);
-    //                return avatar;
-    //            }
-    //        }
-    //    }
-    //    Debug.Log("No Such Character of ID : " + charID + " Exist, Please Create It First");
-    //    return null;
-    //}
-    //public CharacterBase GetCharacterByName(CHARACTERS character)
-    //{
-    //    if (HasCharacter(character))
-    //    {
-    //        foreach (CHARACTERS key in characterList.Keys)
-    //        {
-    //            if (key == character)
-    //            {
-    //                CharacterBase avatar = new CharacterBase(characterList[key]);
-    //                return avatar;
-    //            }
-    //        }
-    //    }
-    //    Debug.Log("No Such Character : " + character.ToString() + " Exist, Please Create It First");
-    //    return null;
-    //}
-
-    //public bool HasCharacter(int charID)
-    //{
-    //    return characterList.ContainsKey((CHARACTERS)charID);
-    //}
-    //public bool HasCharacter(CHARACTERS charName)
-    //{
-    //    return characterList.ContainsKey(charName);
-    //}
-    //public bool HasCharacter(string charName)
-    //{ 
-    //    CHARACTERS go = (CHARACTERS)System.Enum.Parse(typeof(CHARACTERS), charName);
-    //    return characterList.ContainsKey(go);
-    //}
-
     private Dictionary<string, CharacterBase> characterList = new Dictionary<string, CharacterBase>();
 
     public CharacterManager() { } 
@@ -84,12 +36,9 @@ public class CharacterManager : Singleton<CharacterManager>
                     //charBase.SetStunResistance(database.reader.GetFloat(7));
                     charBase.SetStunDuration(database.reader.GetFloat(8));
                     
-                    Debug.Log("Character Art file Location : " + database.reader.GetString(9));
-                    Debug.Log(charBase.GetCharArt());
                     charBase.SetCharArt(SpriteManager.GetInstance().GetSprite(database.reader.GetString(9)));
-                    Debug.Log(charBase.GetCharArt());
                     charBase.SetCharIcon(SpriteManager.GetInstance().GetSprite(database.reader.GetString(10)));
-                    charBase.SetChar(SpriteManager.GetInstance().GetSprite(database.reader.GetString(11)));
+                    //charBase.SetChar(SpriteManager.GetInstance().GetSprite(database.reader.GetString(11)));
 
                     characterList.Add(charBase.GetName(), charBase);
                 }

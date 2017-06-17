@@ -6,33 +6,8 @@ using System.Collections.Generic;
 //Overall Manager for the scene
 public class CharacterSelectScript : MonoBehaviour
 {
-    /*//public void LockInCharacter(PLAYER player,CHARACTERS charaName)
-    //{
-    //    //SetCharacter
-    //    //if (!gameManager.GetPlayer(player).GetPickStatus())//If player haven't picked a character
-    //    //{
-    //        gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
-    //        gameManager.GetPlayer(player).PickChar();
-    //        playerFrames[(int)player].LockedIn();
-    //    //}
-    //    //else if (gameManager.GetPlayer(player).GetInGameData().GetChar() == CharacterManager.GetInstance().GetCharacterByName(charaName))//If player press on the same Character
-    //    //{
-    //    //    gameManager.GetPlayer(player).UnPickChar();
-    //    //}
-    //    //else
-    //    //{
-    //    //}
-
-    //    //temp test shit code
-    //    finished = true;
-    //    if (CheckBothPicked())
-    //    {
-    //        finished = true;
-    //    }
-    //}*/
-
     //Prefab of the Slots To Spawn
-    public GameObject framePrefab;
+    GameObject framePrefab;
     //List Of Spawned Prefabs
     List<GameObject> charSlots = new List<GameObject>();
     //List Of Player's Different Frames
@@ -41,20 +16,30 @@ public class CharacterSelectScript : MonoBehaviour
     GameManager gameManager;
     //Is The Character Select Finished
     bool finished = false;
-    
+    //The Max Amount of width before going upwards
+    int maxWidth;
+    //The Number of Slots to Create for each character
+    int charCount;
+
 	void Start () 
     {
+        framePrefab = PrefabManager.GetInstance().GetPrefab("CharacterSlot");
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        charCount = CharacterManager.GetInstance().GetCharCount();
         finished = false;
+        SpawnSlots();
+        LinkSlots();
+	}
 
+    void SpawnSlots()
+    {
         Vector2 parentSize = GetComponent<RectTransform>().rect.size;
         Vector2 prefabSize = framePrefab.GetComponent<RectTransform>().rect.size;
         int width = 0;
         int height = 0;
-        int maxWidth = (int)(parentSize.x / prefabSize.x);
-        float startPointX = -parentSize.x / 2.0f + prefabSize.x/2.0f;
+        maxWidth = (int)(parentSize.x / prefabSize.x);
+        float startPointX = -parentSize.x / 2.0f + prefabSize.x / 2.0f;
 
-        int charCount = CharacterManager.GetInstance().GetCharCount();
         CharacterSlot tempSlot;
         //Create The Prefabs and add it to a list
         for (int i = 0; i < charCount; ++i)
@@ -64,10 +49,12 @@ public class CharacterSelectScript : MonoBehaviour
             slot.transform.localScale = new Vector3(1, 1, 1);
             slot.transform.localPosition = new Vector3(startPointX + (width * prefabSize.x), height * -prefabSize.y, 0);
             tempSlot = slot.GetComponent<CharacterSlot>();
+
             CharacterBase charData = CharacterManager.GetInstance().GetCharacterByIndex(i);
             tempSlot.SetCharName(charData.GetName());
             tempSlot.SetImageSprite(charData.GetCharArt());
             charSlots.Add(slot);
+
             width++;
             if (width > maxWidth)
             {
@@ -75,10 +62,14 @@ public class CharacterSelectScript : MonoBehaviour
                 width = 0;
             }
         }
+    }
 
+    void LinkSlots()
+    {
+        CharacterSlot tempSlot;
         int spawnIndex = 0;
         //Allocate CharSlots Up Down Left Right for navigation
-        if ( charCount > 1)
+        if (charCount > 1)
         {
             int maxIndex = charCount;
             for (int i = 0; i < maxIndex; ++i)
@@ -113,8 +104,7 @@ public class CharacterSelectScript : MonoBehaviour
             }
 
         }
-        
-	}
+    }
 
     public void CreatePlayerFrame(int playerID)
     {
@@ -143,36 +133,37 @@ public class CharacterSelectScript : MonoBehaviour
             PlayerData player = gameManager.GetPlayer(i);
             if (!player.IsAssigned())
                 continue;
+            ListOfControllerActions playerController = player.controller;
             int team = (int)player.GetInGameData().GetTeam();
             //Move Left Right
-            if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
+            if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
             {
                 playerFrames[team].MoveLeft();
             }
-            else if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT)) 
+            else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT)) 
             {
                 playerFrames[team].MoveRight();
             }
 
             // Move Up Down
-            if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_UP))
+            if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
             {
                 playerFrames[team].MoveUp();
             }
-            else if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
+            else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
             {
                 playerFrames[team].MoveDown();
             }
 
             //Player Picks Character
-            if (player.controller.getButtonAction(ACTIONS.PICK_CHARACTER))
+            if (playerController.getButtonAction(ACTIONS.PICK_CHARACTER))
             {
-                LockInCharacter(gameManager.GetPlayer(i).GetPlayerID(), playerFrames[team].GetCharName());
+                LockInCharacter(player.GetPlayerID(), playerFrames[team].GetCharName());
             }
             //Player Unpick Character
-            if (player.controller.getButtonAction(ACTIONS.UNPICK_CHARACTER))
+            else if (playerController.getButtonAction(ACTIONS.UNPICK_CHARACTER))
             {
-                DeselectCharacter(gameManager.GetPlayer(i).GetPlayerID());
+                DeselectCharacter(player.GetPlayerID());
             }
         }
     }
@@ -180,12 +171,13 @@ public class CharacterSelectScript : MonoBehaviour
     public void LockInCharacter(PLAYER player, string charaName)
     {
         //SetCharacter
-        gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
+        //gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
+        //TESTCODE
+        gameManager.GetPlayer(player).GetInGameData().SetCharName(charaName);
+
         gameManager.GetPlayer(player).PickChar();
         playerFrames[(int)player].LockIn();
 
-        //temp test shit code
-        //finished = true;
         if (CheckBothPicked())
         {
             finished = true;
@@ -212,30 +204,31 @@ public class CharacterSelectScript : MonoBehaviour
     public bool FinishedPicking() { return finished; }
     public void UnFinish() { finished = false; }
 
-    public string GetCurrChara(int playernum)
+    public string GetCurrChara(TEAM playerteam)
     {
-        if (playernum >= playerFrames.Count)
+        if ((int)playerteam >= playerFrames.Count)
         {
-            Debug.Log("You fucked up, you entered a number too when frames havent got created yet! playernum entered :" + playernum);
+            Debug.Log("Havent Created Frame Yet For Team : ,Returning Null. You entered a teamNumber :" + playerteam + " Current number of frames created : " + playerFrames.Count);
             return null;
         }
-        if (playernum >= (int)PLAYER.MAX_PLAYERS)
-        { 
-            Debug.Log("You fucked up, you entered a number too big playernum:" + playernum);
+        if (playerteam >= TEAM.MAX_TEAM)
+        {
+            Debug.Log("You fucked up, you entered a teamNumber too big :" + (int)playerteam + " Max team number is : " + (int)TEAM.MAX_TEAM);
             return null;
         }
 
-        return playerFrames[playernum].GetCharName().ToString().ToUpper();
+        return playerFrames[(int)playerteam].GetCharName().ToString().ToUpper();
     }
-    public Sprite GetCharaArt(int playernum)
+    public Sprite GetCharaArt(TEAM playerteam)
     {
-        if (playernum >= (int)PLAYER.MAX_PLAYERS)
+        if (playerteam >= TEAM.MAX_TEAM)
         {
-            Debug.Log("You fucked up, you entered a number too big playernum:" + playernum);
+            Debug.Log("You fucked up, you entered a teamNumber too big :" + (int)playerteam + " Max team number is : " + (int)TEAM.MAX_TEAM);
             return null;
         }
 
-        Debug.Log("Player Char Name is : " + playerFrames[playernum].GetCharName());
-        return CharacterManager.GetInstance().GetCharacterByName(playerFrames[playernum].GetCharName()).GetCharArt();
+        Debug.Log("Player Char Name is : " + playerFrames[(int)playerteam].GetCharName());
+        return CharacterManager.GetInstance().GetCharacterByName(playerFrames[(int)playerteam].GetCharName()).GetCharArt();
     }
+
 }

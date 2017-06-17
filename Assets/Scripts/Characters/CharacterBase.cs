@@ -20,7 +20,7 @@ public class CharacterBase
     protected float stunDuration;   //The Duration your character Gets Stunned For
     protected Sprite characterArt;  //The Art of the Character Used in Character Select
     protected Sprite characterIcon; //The Icon of the Character used to display the mini icons in Character Select
-    protected Sprite character;     //The Actual Art of the Character in the BattleScene
+    //protected Sprite character;     //The Actual Art of the Character in the BattleScene
 
     //Getter(s)
     //public CHARACTERS GetName() { return name; }
@@ -36,7 +36,7 @@ public class CharacterBase
     public float GetStunDuration() { return stunDuration; }
     public Sprite GetCharArt() { return characterArt; }
     public Sprite GetIcon() { return characterIcon; }
-    public Sprite GetChar() { return character; }
+    //public Sprite GetChar() { return character; }
 
     //Setter(s)
     //public void SetName(CHARACTERS name) { this.name = name; }
@@ -51,7 +51,7 @@ public class CharacterBase
     public void SetStunDuration(float stunDuration) { this.stunDuration = stunDuration; }
     public void SetCharArt(Sprite charArt) { this.characterArt = charArt; }
     public void SetCharIcon(Sprite charIcon) { this.characterIcon = charIcon; }
-    public void SetChar(Sprite chara) { this.character = chara; }
+    //public void SetChar(Sprite chara) { this.character = chara; }
 
     //Constructor(s)
     public CharacterBase()
@@ -78,7 +78,7 @@ public class CharacterBase
         stunDuration = copy.stunDuration;
         characterArt = copy.characterArt;
         characterIcon = copy.characterIcon;
-        character = copy.character;
+        //character = copy.character;
     }
 
     //Basic Function(s)
