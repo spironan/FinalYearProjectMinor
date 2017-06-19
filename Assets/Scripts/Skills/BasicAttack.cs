@@ -34,7 +34,7 @@ public class BasicAttack : MonoBehaviour {
             timer = 0;
             if(owner == null)
                 owner = GetComponent<PlayerCharacterLogicScript>();
-            owner.decreaseMana(spawning_skill.GetComponent<SkillProfile>().manaCost);
+            owner.decreaseMana(skill.GetComponent<SkillProfile>().manaCost);
             spawning_skill = Instantiate(skill, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
             spawning_skill.SetActive(true);
             spawning_skill.transform.position = transform.position;

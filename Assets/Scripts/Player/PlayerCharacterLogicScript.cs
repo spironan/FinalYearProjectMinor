@@ -38,6 +38,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public SpriteRenderer sprite;
     [Range(0f, 100f)]
     public int amountOfManaToStart;
+    public GameObject player1Aura;
+    public GameObject player2Aura;
 
     SkillActivator skillActivator;
     BasicAttack basicAttack;
@@ -140,6 +142,16 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     {
         if (toUpdate)
         {
+            if(playerID == PLAYER.PLAYER_ONE)
+            {
+                player1Aura.SetActive(true);
+                player2Aura.SetActive(false);
+            }
+            else
+            {
+                player1Aura.SetActive(false);
+                player2Aura.SetActive(true);
+            }
             if (!controller.isControllerDisabled())
             {
                 ReadControl();
