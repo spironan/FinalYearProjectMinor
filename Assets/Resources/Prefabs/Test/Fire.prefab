@@ -103,6 +103,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   direction: {x: 0, y: 0}
   directionToPress: 030000000300000002000000ffffffffffffffff
+  skillIcon: {fileID: 21300000, guid: 7b5f3a55fe7fc114bae92e9a1106c741, type: 3}
   activateSkill: 1
 --- !u!198 &19804606
 ParticleSystem:
@@ -1670,8 +1671,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 91f3c5fab3a511b45ad377355da29697, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c84fefda395756f41abfba6c9edcf8cd, type: 3}
+  m_Color: {r: 0.9686275, g: 0.9686275, b: 0.9686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000

@@ -31,7 +31,7 @@ public class SkillProfile : MonoBehaviour {
 
     [HideInInspector]
     public int[] directionToPress = new int[5];
-
+    public Sprite skillIcon;
     //[HideInInspector]
     public bool activateSkill = false;
 

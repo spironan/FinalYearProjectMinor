@@ -57,6 +57,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   direction: {x: 0, y: 0}
   directionToPress: 0000000000000000000000000000000000000000
+  skillIcon: {fileID: 21300000, guid: c5fec8a1826957747b7a07f14d79245c, type: 3}
   activateSkill: 0
   ninjaStarskill: {fileID: 174230, guid: 6c4b25cf61fa8384595601cc3f4f5a74, type: 2}
 --- !u!1001 &100100000

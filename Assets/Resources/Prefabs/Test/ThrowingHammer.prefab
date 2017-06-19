@@ -74,6 +74,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   direction: {x: 0, y: 0}
   directionToPress: 0000000000000000000000000000000000000000
+  skillIcon: {fileID: 21300000, guid: 84696f88535c6ad49b7c156f135f29e3, type: 3}
   activateSkill: 0
   speed_Y: 0
 --- !u!212 &21264808
