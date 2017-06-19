@@ -64,12 +64,15 @@ public class ThrowingHammerSkill : SkillProfile {
             {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
-                    enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
-                    Debug.Log("hit");
-                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
-                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
-                    //gameObject.SetActive(false);
+                    if (temp.collider.gameObject.GetComponent<PlayerCharacterLogicScript>() != null)
+                    {
+                        enemyLogic.GainStunMeter(stunValuePerHit);
+                        //Debug.Log("hit");
+                        enemyLogic.GainUltMeter(UltGainPerHitForEnemy);
+                        enemyLogic.TakeDamage(damagePerHit * damageMultipler);
+                        ownerLogic.increaseMana(manaRegenPerHit);
+                        //gameObject.SetActive(false);
+                    }
                     return true;
                 }
                 else if(temp.collider.gameObject.tag == "Ground")

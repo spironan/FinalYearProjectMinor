@@ -109,7 +109,7 @@ MonoBehaviour:
   stunValuePerHit: 100
   player_ID: 0
   damagePerHit: 0
-  lifetime: 1.7
+  lifetime: 0.7
   pSpeed: 0
   gravity: 0
   manaCost: 25
@@ -130,7 +130,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160758}
   serializedVersion: 2
-  lengthInSec: 1.7
+  lengthInSec: 0.7
   startDelay:
     scalar: 0
     maxCurve:
@@ -551,7 +551,7 @@ ParticleSystem:
     cntmax1: 30
     cntmax2: 30
     cntmax3: 30
-    time0: 1.5
+    time0: 0.5
     time1: 0
     time2: 0
     time3: 0

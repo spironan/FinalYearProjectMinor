@@ -8,11 +8,13 @@ public class BasicAttack : MonoBehaviour {
     float timer = 0;
     GameObject spawning_skill;
     PlayerControllerManager playerControllerManager;
+    PlayerCharacterLogicScript owner;
     // Use this for initialization
     void Start () {
         playerControllerManager = GetComponent<PlayerCharacterLogicScript>().GetController();
-        
-        
+        owner = GetComponent<PlayerCharacterLogicScript>();
+
+
     }
 	
 	// Update is called once per frame
@@ -30,6 +32,7 @@ public class BasicAttack : MonoBehaviour {
             && timer >= skill_cooldown)
         {
             timer = 0;
+            owner.decreaseMana(spawning_skill.GetComponent<SkillProfile>().manaCost);
             spawning_skill = Instantiate(skill, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
             spawning_skill.SetActive(true);
             spawning_skill.transform.position = transform.position;

@@ -27,6 +27,7 @@ public class SkillActivator : MonoBehaviour {
     private bool selectedSkill = false;
 
     private PlayerCharacterLogicScript owner;
+    private WordingsHolder wordingsHolder;
     // Use this for initialization
     void Start()
     {
@@ -48,7 +49,8 @@ public class SkillActivator : MonoBehaviour {
             activator.gameObject.transform.position += new Vector3(0, local_sprite_size.y + 0.1f, activator.gameObject.transform.position.z);
         else if(player_number == PLAYER.PLAYER_TWO)
             activator.gameObject.transform.position += new Vector3(0, -local_sprite_size.y - 0.1f, activator.gameObject.transform.position.z);
-        
+
+        wordingsHolder = GetComponent<WordingsHolder>();
     }
 
     // Update is called once per frame
@@ -192,6 +194,10 @@ public class SkillActivator : MonoBehaviour {
                     dpadDown = false;
                     currentSkillProfile = null;
 
+                }
+                else if(owner.getManaAmount() < skill_gameObject.GetComponent<SkillProfile>().manaCost)
+                {
+                    wordingsHolder.showAndSetTiming(WORDING_TYPES.NOMANA, 1f);
                 }
                 
                 activator.closeBorder();

@@ -38,6 +38,8 @@ public class SkillProfile : MonoBehaviour {
 
     private PlayerCharacterLogicScript[] listOfPlayers;
 
+    protected PlayerCharacterLogicScript enemyLogic;
+    protected PlayerCharacterLogicScript ownerLogic;
     protected RaycastHit2D[] collision;
     protected Vector2 position;
     protected Vector2 sprite_size;
@@ -66,6 +68,8 @@ public class SkillProfile : MonoBehaviour {
         sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
         Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>());
         local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        enemyLogic = enemy.GetComponent<PlayerCharacterLogicScript>();
+        ownerLogic = owner.GetComponent<PlayerCharacterLogicScript>();
     }
 
     public virtual void Update()
@@ -105,16 +109,14 @@ public class SkillProfile : MonoBehaviour {
             {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
-                    //if(temp.collider.gameObject.GetComponent<StunMeterManager>() != null)
-                    //{
-                    //    temp.collider.gameObject.GetComponent<StunMeterManager>().addStunValue(stunValuePerHit);
-                    //}
-                    enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
-                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
-                    Debug.Log("hit");
-                    //gameObject.SetActive(false);
+                    if (temp.collider.gameObject.GetComponent<PlayerCharacterLogicScript>() != null)
+                    {
+                        enemyLogic.GainStunMeter(stunValuePerHit);
+                        enemyLogic.TakeDamage(damagePerHit * damageMultipler);
+                        enemyLogic.GainUltMeter(UltGainPerHitForEnemy);
+                        ownerLogic.increaseMana(manaRegenPerHit);
+                        //Debug.Log("hit");
+                    }
                     return true;
                 }
             }

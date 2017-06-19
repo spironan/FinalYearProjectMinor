@@ -84,11 +84,11 @@ public class BombSkill : SkillProfile {
             {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
-                    enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
-                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
-                    Debug.Log("hit");
+                    enemyLogic.GainStunMeter(stunValuePerHit);
+                    enemyLogic.TakeDamage(damagePerHit * damageMultipler);
+                    enemyLogic.GainUltMeter(UltGainPerHitForEnemy);
+                    ownerLogic.increaseMana(manaRegenPerHit);
+                    //Debug.Log("hit");
                     //gameObject.SetActive(false);
                     return true;
                 }

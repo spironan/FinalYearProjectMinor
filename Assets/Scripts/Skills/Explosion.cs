@@ -9,7 +9,11 @@ public class Explosion : SkillProfile
     public override void Start () {
         //base.Start();
         enemySkillActivator = enemy.GetComponent<SkillActivator>();
-
+        //sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
+        //Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>());
+        //local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        enemyLogic = enemy.GetComponent<PlayerCharacterLogicScript>();
+        ownerLogic = owner.GetComponent<PlayerCharacterLogicScript>();
     }
 	
 	// Update is called once per frame
@@ -40,13 +44,15 @@ public class Explosion : SkillProfile
             {
                 if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
                 {
-                    enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
-                    enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
-                    Debug.Log("hit");
-                    owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
-                    enemySkillActivator.resetCurrentCastingSkill();
-                    //gameObject.SetActive(false);
+                    if (temp.collider.gameObject.GetComponent<PlayerCharacterLogicScript>() != null)
+                    {
+                        enemy.GetComponent<PlayerCharacterLogicScript>().GainStunMeter(stunValuePerHit);
+                        enemy.GetComponent<PlayerCharacterLogicScript>().TakeDamage(damagePerHit * damageMultipler);
+                        enemy.GetComponent<PlayerCharacterLogicScript>().GainUltMeter(UltGainPerHitForEnemy);
+                        Debug.Log("hit");
+                        owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
+                        enemySkillActivator.resetCurrentCastingSkill();
+                    }
                     return true;
                 }
             }

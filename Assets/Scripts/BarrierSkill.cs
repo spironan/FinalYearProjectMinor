@@ -8,14 +8,18 @@ public class BarrierSkill : SkillProfile
     [Range(0, 100)]
     public float StunResistance;
     float checkEveryInterval_lifeTime = 0.0f;
-    PlayerCharacterLogicScript ownerLogic;
+    //PlayerCharacterLogicScript ownerLogic;
     //bool runOnce = false;
 
 
     // Use this for initialization
     public override void Start()
     {
+        //sprite_size = GetComponent<SpriteRenderer>().sprite.rect.size;
+        //Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>());
+        //local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
         ownerLogic = owner.GetComponent<PlayerCharacterLogicScript>();
+        //enemyLogic = enemy.GetComponent<PlayerCharacterLogicScript>();
         ownerLogic.setGeneralResistance(Defence);
         ownerLogic.setStunResistance(StunResistance);
     }

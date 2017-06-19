@@ -4,7 +4,7 @@ using System.Collections;
 public class StunMeterManager : MonoBehaviour {
 
     public StunMeter stunMeter;
-    public Wordings StunnedTitle;
+    public WordingsHolder StunnedTitle;
     //public bool isStunned;
 
     private PLAYER player_number;
@@ -28,8 +28,8 @@ public class StunMeterManager : MonoBehaviour {
             stunMeter.gameObject.transform.position += new Vector3(0, local_sprite_size.y + 0.1f, stunMeter.gameObject.transform.position.z);
         activator = GetComponent<SkillActivator>();
 
-        //StunnedTitle = GetComponentInChildren<Wordings>();
-        StunnedTitle.changeWording(WORDING_TYPES.STUNNED,player_number);
+        StunnedTitle = GetComponentInChildren<WordingsHolder>();
+        //.changeWording(WORDING_TYPES.STUNNED,player_number);
     }
 	
 	// Update is called once per frame
@@ -54,18 +54,18 @@ public class StunMeterManager : MonoBehaviour {
         {
             playerControllerManager.DisableController();
             activator.resetCurrentCastingSkill();
-            StunnedTitle.showWording();
+            StunnedTitle.showAndSetTiming(WORDING_TYPES.STUNNED,3f);
         }
         else if(stunTime >= 3.0f && playerControllerManager.isControllerDisabled())
         {
-            StunnedTitle.hideWording();
+            //StunnedTitle.hideWording();
             playerControllerManager.EnableController();
             stunTime = 0;
         }
-        if (Input.GetKey(KeyCode.Z))
-        {
-            addStunValue(10);
-        }
+        //if (Input.GetKey(KeyCode.Z))
+        //{
+        //    addStunValue(10);
+        //}
     }
 
     public void addStunValue(float value)

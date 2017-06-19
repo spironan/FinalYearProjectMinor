@@ -20,10 +20,10 @@ public class StarFanSkill : SkillProfile
             spawning_skill = Instantiate(ninjaStarskill, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
             spawning_skill.SetActive(true);
             spawning_skill.transform.position = transform.position;
-            spawning_skill.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection(), 1);
+            spawning_skill.GetComponent<SkillProfile>().offSetSpawn(owner.GetComponent<PlayerCharacterLogicScript>().GetDirection(), 1);
             spawning_skill.GetComponent<SkillProfile>().player_ID = playerControllerManager.playerID;
-            spawning_skill.GetComponent<SkillProfile>().owner = gameObject;
-            spawning_skill.GetComponent<SkillProfile>().findEnemy();
+            spawning_skill.GetComponent<SkillProfile>().owner = owner;
+            spawning_skill.GetComponent<SkillProfile>().enemy = enemy;
             if(i == 0)
             {
                 //west
