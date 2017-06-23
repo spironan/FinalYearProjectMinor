@@ -19,7 +19,7 @@ public class PreBattleTextScript : MonoBehaviour
         if(preBattleAnimator == null)
             preBattleAnimator = GetComponent<Animator>();
         preBattleAnimator.SetInteger("Round",currRound);
-        preBattleAnimator.Play("PreBattleTextImage");
+        //preBattleAnimator.Play("PreBattleTextImage");
     }
     
     public void FinishAnim()

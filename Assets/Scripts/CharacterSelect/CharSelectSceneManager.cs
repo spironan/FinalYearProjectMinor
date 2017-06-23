@@ -23,6 +23,7 @@ public class CharSelectSceneManager : MonoBehaviour
     CharacterSelectScript charSelectData;
     MapSelectScript mapSelectData;
 	GameManager gameManager;
+    bool autoCreateSlots = true;
 
     // Use this for initialization
 	void Awake () 
@@ -33,6 +34,7 @@ public class CharSelectSceneManager : MonoBehaviour
         mapSelectData = GameObject.FindGameObjectWithTag("MapSpawnArea").GetComponent<MapSelectScript>();
         mapSelectHolder = GameObject.FindGameObjectWithTag("MapHolder");
         mapSelectHolder.SetActive(false);
+        autoCreateSlots = true;
         //charSelectData = charSelectHolder.GetComponent<CharacterSelectScript>();
         //mapSelectHolder.SetActive(false);
 	}
@@ -63,6 +65,7 @@ public class CharSelectSceneManager : MonoBehaviour
                 }
                 break;
         }
+
     }
 
     void UpdatePlayerAssign()
@@ -76,6 +79,7 @@ public class CharSelectSceneManager : MonoBehaviour
                 gotoCharSelect = false;
                 if(player.controller.getButtonAction(ACTIONS.START))
                 {
+                    autoCreateSlots = false;
                     player.Assign();
                     player.GetInGameData().SetTeam(playerTeam);
                     player.selectframe = frameObj[(int)playerTeam];
@@ -86,8 +90,16 @@ public class CharSelectSceneManager : MonoBehaviour
             }
         }
 
+
         if (gotoCharSelect)
         {
+            if (autoCreateSlots)
+            {
+                for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+                {
+                    charSelectData.CreatePlayerFrame((int)gameManager.GetPlayer(i).GetPlayerID());
+                }
+            }
             currentPhase = SELECTIONPHASE.PICKING;
         }
 
@@ -98,6 +110,8 @@ public class CharSelectSceneManager : MonoBehaviour
         ///Check for controls and navigation of picture here
         if (charSelectData.FinishedPicking())
         {
+            //Lock In All frames
+            charSelectData.LockAllFrames();
             //Turn On Map Straight away
             mapSelectHolder.SetActive(true);
             //mapSelectData = mapSelectSpawner.GetComponent<MapSelectScript>();

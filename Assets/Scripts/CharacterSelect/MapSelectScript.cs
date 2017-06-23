@@ -116,7 +116,7 @@ public class MapSelectScript : MonoBehaviour
             map.transform.localScale = new Vector3(1, 1, 1);
             map.transform.localPosition = position;
             map.GetComponent<MapSlot>().SetMapName(MapManager.GetInstance().GetMapByIndex(i).GetMapName());
-            
+            map.GetComponent<MapSlot>().SetMapSprite(MapManager.GetInstance().GetMapByIndex(i).GetMapSprite());
             maps.Add(map);
         }
 
@@ -170,6 +170,7 @@ public class MapSelectScript : MonoBehaviour
         }
         else if (player.controller.getButtonAction(ACTIONS.CANCEL_MAP_SELECT))
         {
+            GameObject.FindWithTag("CharacterSelect").GetComponent<CharacterSelectScript>().DeselectCharacter(player.GetInGameData().GetTeam());
             Cancel();
         }
 	}

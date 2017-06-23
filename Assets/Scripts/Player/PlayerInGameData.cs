@@ -6,7 +6,7 @@ public class PlayerInGameData
     short wonMatches;
     TEAM playerTeam;
     //CharacterBase selectedCharData;
-    string characterName;
+    string characterName = "";
 
     //public CharacterBase GetCharData() { return selectedCharData; }
     //public void SetChar(string charName) { selectedCharData = CharacterManager.GetInstance().GetCharacterByName(charName); }

@@ -25,6 +25,9 @@ TagManager:
   - SoundController
   - EndDisplay
   - MapHolder
+  - BackToMain
+  - Stages
+  - EventSystem
   layers:
   - Default
   - TransparentFX

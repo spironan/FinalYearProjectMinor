@@ -79,9 +79,8 @@ public class GameManager : MonoBehaviour
                 soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("CharSelect"));
                 break;
             case GAMESTATE.IN_GAME:
-                soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("Infinite_Azure"));
+                soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()));
                 break;
-
         }
 
         Debug.Log("State Changed to : " + currState);
