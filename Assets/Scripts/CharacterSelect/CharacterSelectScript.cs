@@ -14,19 +14,26 @@ public class CharacterSelectScript : MonoBehaviour
     List<CharSelectLocationScript> playerFrames = new List<CharSelectLocationScript>();
     //GameManager
     GameManager gameManager;
-    //Is The Character Select Finished
-    bool finished = false;
+    //Back To Main Menu Obj
+    GameObject backToMainObj;
     //The Max Amount of width before going upwards
     int maxWidth;
     //The Number of Slots to Create for each character
     int charCount;
+    //Is The Character Select Finished
+    bool finished = false;
+    //To Determine Whether or not To Take In Input Of Players
+    bool updateNavigation = true;
 
 	void Start () 
     {
         framePrefab = PrefabManager.GetInstance().GetPrefab("CharacterSlot");
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         charCount = CharacterManager.GetInstance().GetCharCount();
+        backToMainObj = GameObject.FindGameObjectWithTag("BackToMain");
+        backToMainObj.GetComponent<ToggleActiveScript>().ToggleActive();
         finished = false;
+        updateNavigation = true;
         SpawnSlots();
         LinkSlots();
 	}
@@ -108,13 +115,18 @@ public class CharacterSelectScript : MonoBehaviour
 
     public void CreatePlayerFrame(int playerID)
     {
-        GameObject frame = Instantiate(gameManager.GetPlayer(playerID).GetComponent<PlayerData>().selectframe);
+        PlayerData player = gameManager.GetPlayer(playerID).GetComponent<PlayerData>();
+        GameObject frame = Instantiate(player.selectframe);
         if (frame != null)
         {
             frame.transform.SetParent(gameObject.transform, false);
             frame.transform.localScale = new Vector3(1, 1, 1);
-            frame.GetComponent<CharSelectLocationScript>().AssignCharSlot(charSlots[0]);
-            playerFrames.Add(frame.GetComponent<CharSelectLocationScript>());
+            CharSelectLocationScript framescript = frame.GetComponent<CharSelectLocationScript>();
+            if (player.GetInGameData().GetCharName() != "")
+                framescript.AssignCharSlot(charSlots[CharacterManager.GetInstance().GetCharacterIndex(player.GetInGameData().GetCharName())]);
+            else
+                framescript.AssignCharSlot(charSlots[0]);
+            playerFrames.Add(framescript);
         }
         else
             Debug.Log("Unable to Create Player Frame for :" + playerID + "as it is null");
@@ -124,71 +136,95 @@ public class CharacterSelectScript : MonoBehaviour
     {
         if(!finished)
             NavigateSelect();
+
+        if (CheckBothPicked())
+            finished = true;
     }
 
     void NavigateSelect()
     {
-        for (int i = 0; i < playerFrames.Count; ++i)
+        if (updateNavigation)
         {
-            PlayerData player = gameManager.GetPlayer(i);
-            if (!player.IsAssigned())
-                continue;
-            ListOfControllerActions playerController = player.controller;
-            int team = (int)player.GetInGameData().GetTeam();
-            //Move Left Right
-            if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
+            for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
             {
-                playerFrames[team].MoveLeft();
-            }
-            else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT)) 
-            {
-                playerFrames[team].MoveRight();
-            }
+                PlayerData player = gameManager.GetPlayer(i);
+                if (!player.IsAssigned())
+                    continue;
+                ListOfControllerActions playerController = player.controller;
+                int team = (int)player.GetInGameData().GetTeam();
+                //Move Left Right
+                if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
+                {
+                    playerFrames[team].MoveLeft();
+                }
+                else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT))
+                {
+                    playerFrames[team].MoveRight();
+                }
 
-            // Move Up Down
-            if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
-            {
-                playerFrames[team].MoveUp();
-            }
-            else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
-            {
-                playerFrames[team].MoveDown();
-            }
+                // Move Up Down
+                if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
+                {
+                    playerFrames[team].MoveUp();
+                }
+                else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
+                {
+                    playerFrames[team].MoveDown();
+                }
 
-            //Player Picks Character
-            if (playerController.getButtonAction(ACTIONS.PICK_CHARACTER))
-            {
-                LockInCharacter(player.GetPlayerID(), playerFrames[team].GetCharName());
+                //Player Picks Character
+                if (playerController.getButtonAction(ACTIONS.PICK_CHARACTER))
+                {
+                    LockInCharacter(player.GetInGameData().GetTeam(), playerFrames[team].GetCharName());
+                }
+                //Player Unpick Character
+                else if (playerController.getButtonAction(ACTIONS.UNPICK_CHARACTER))
+                {
+                    if (player.GetPickStatus())
+                        DeselectCharacter(player.GetInGameData().GetTeam());
+                    else
+                        ActivateExitConfirmation(playerController);
+                }
             }
-            //Player Unpick Character
-            else if (playerController.getButtonAction(ACTIONS.UNPICK_CHARACTER))
-            {
-                DeselectCharacter(player.GetPlayerID());
-            }
+        }
+        else if(!backToMainObj.activeSelf)
+        {
+            updateNavigation = true;
         }
     }
 
-    public void LockInCharacter(PLAYER player, string charaName)
+
+    void ActivateExitConfirmation(ListOfControllerActions controller)
+    {
+        backToMainObj.GetComponent<ToggleActiveScript>().ToggleActive();
+        backToMainObj.GetComponent<BackToMainScript>().SetControllerToReadFrom(controller);
+        backToMainObj.GetComponent<BackToMainScript>().Reset();
+        updateNavigation = false;
+    }
+
+    public void LockInCharacter(TEAM playerTeam, string charaName)
     {
         //SetCharacter
         //gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
         //TESTCODE
-        gameManager.GetPlayer(player).GetInGameData().SetCharName(charaName);
-
-        gameManager.GetPlayer(player).PickChar();
-        playerFrames[(int)player].LockIn();
-
-        if (CheckBothPicked())
-        {
-            finished = true;
-        }
+        gameManager.GetPlayer(playerTeam).GetInGameData().SetCharName(charaName);
+        gameManager.GetPlayer(playerTeam).PickChar();
+        playerFrames[(int)playerTeam].LockIn();
     }
 
-    public void DeselectCharacter(PLAYER player)
+    public void DeselectCharacter(TEAM playerTeam)
     {
         //DeselectCharacter        
-        gameManager.GetPlayer(player).UnPickChar();
-        playerFrames[(int)player].UnLock();
+        gameManager.GetPlayer(playerTeam).UnPickChar();
+        playerFrames[(int)playerTeam].UnLock();
+    }
+
+    public void LockAllFrames()
+    {
+        for (int i = 0; i < playerFrames.Count; ++i)
+        {
+            playerFrames[i].LockIn();
+        }
     }
 
     bool CheckBothPicked()

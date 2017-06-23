@@ -19,10 +19,10 @@ public class PlayerData : MonoBehaviour
     string PlayerName;   
     //whether the player is master or guest
     bool isMaster = false;
-    //Player Char Select Data
-    bool pickedChar = false;
-    //Whether Player Has Already Assigned itself
+    //Whether Player Has Already Assigned itself To be Which Player
     bool assigned = false;
+    //Whether Player Has Picked A Character in Character Select
+    bool pickedChar = false;
 
     //skillbook
 

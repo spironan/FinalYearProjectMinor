@@ -2,9 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class EndDisplayScript : MonoBehaviour 
 {
+    EventSystem eventSystem;
     enum BUTTON_OPTIONS
     {
         REMATCH,
@@ -16,7 +18,13 @@ public class EndDisplayScript : MonoBehaviour
     BUTTON_OPTIONS button = BUTTON_OPTIONS.REMATCH;
     Button[] buttons = null;
     ListOfControllerActions masterController = null;
-    bool reset = false;
+    PointerEventData pointer;
+
+    void Awake()
+    {
+        eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
+        pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
+    }
 
 	// Use this for initialization
 	public void Reset () {
@@ -25,17 +33,18 @@ public class EndDisplayScript : MonoBehaviour
             buttons = GetComponentsInChildren<Button>();
         if(masterController == null)
             masterController = GameObject.FindWithTag("GameManager").GetComponent<GameManager>().GetMasterPlayerData().controller;
-        reset = true;
+        StartCoroutine(HighlightButton());
     }
-	
+
+    IEnumerator HighlightButton()
+    {
+        eventSystem.SetSelectedGameObject(null);
+        yield return new WaitForEndOfFrame();
+        eventSystem.SetSelectedGameObject(buttons[(int)button].gameObject);
+    }
+
 	// Update is called once per frame
 	void Update () {
-
-        if (reset)
-        {
-            buttons[(int)button].Select();
-            reset = false;
-        }
 
         if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
         {
@@ -55,7 +64,10 @@ public class EndDisplayScript : MonoBehaviour
         }
 
         if (masterController.getButtonAction(ACTIONS.SELECT))
-            buttons[(int)button].onClick.Invoke();
+        {
+            ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
+            //buttons[(int)button].onClick.Invoke();
+        }
 	}
 
 }

@@ -99,6 +99,11 @@ public class BattleSceneManager : MonoBehaviour
         {
             gameManager.GetPlayer(i).GetInGameData().StartMatch();// Reset Matches
         }
+    }
+
+    public void Rematch()
+    {
+        ResetEntireSet();
         foreach (GameObject player in playerCharacters)
         {
             player.GetComponent<PlayerCharacterLogicScript>().StartUpdate(); // Start Updating Players again
