@@ -105,6 +105,8 @@ MonoBehaviour:
   directionToPress: 030000000300000002000000ffffffffffffffff
   skillIcon: {fileID: 21300000, guid: 7b5f3a55fe7fc114bae92e9a1106c741, type: 3}
   activateSkill: 1
+  particles:
+  - {fileID: 170810, guid: cc79bf24c3c65e1459f58e5deebfb4f9, type: 2}
 --- !u!198 &19804606
 ParticleSystem:
   m_ObjectHideFlags: 1

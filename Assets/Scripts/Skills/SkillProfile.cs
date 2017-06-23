@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum PARTICLE_TYPE
+{
+    DISAPPEAR,
+    TOTAL,
+};
+
 public class SkillProfile : MonoBehaviour {
     public string nameOfSkill;
     public string descriptionOfSkill;
@@ -34,7 +40,7 @@ public class SkillProfile : MonoBehaviour {
     public Sprite skillIcon;
     //[HideInInspector]
     public bool activateSkill = false;
-
+    public GameObject[] particles;
 
     private PlayerCharacterLogicScript[] listOfPlayers;
 
@@ -144,5 +150,11 @@ public class SkillProfile : MonoBehaviour {
     public virtual void setDirection(Vector2 dir)
     {
         direction = dir;
+    }
+
+    public virtual void spawnParticleEffect(PARTICLE_TYPE type)
+    {
+        if(particles[(int)type] != null)
+            Instantiate(particles[(int)type], transform.position, Quaternion.Euler(0, 0, 0));
     }
 }

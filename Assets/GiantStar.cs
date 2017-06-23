@@ -41,6 +41,7 @@ public class GiantStar : SkillProfile
         {
             isComingBack = false;
             gameObject.SetActive(false);
+            spawnParticleEffect(PARTICLE_TYPE.DISAPPEAR);
             Destroy(gameObject);
         }
 

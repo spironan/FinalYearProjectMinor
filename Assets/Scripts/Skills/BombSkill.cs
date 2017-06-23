@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class BombSkill : SkillProfile {
-    public GameObject explosion;
+    //public GameObject explosion;
 
     float checkEveryInterval_lifeTime = 0.0f;
     float throwingDir = 1;
@@ -11,17 +11,16 @@ public class BombSkill : SkillProfile {
     bool runOnce = false;
     bool doDamage = true;
     bool enableCollisionToOwner = false;
-
-             
+   
     //private CircleCollider2D circleColliderSelf;
     Rigidbody2D rigidBody;
-    ParticleSystem particles;
+    ParticleSystem particles_bomb;
 
     public override void Start()
     {
         base.Start();
         rigidBody = GetComponent<Rigidbody2D>();
-        particles = GetComponentInChildren<ParticleSystem>();
+        particles_bomb = GetComponentInChildren<ParticleSystem>();
         
         //circleColliderSelf = GetComponent<CircleCollider2D>();
     }
@@ -100,7 +99,7 @@ public class BombSkill : SkillProfile {
     {
         runOnce = false;
         checkEveryInterval_lifeTime = 0;
-        particles.time = 0;
+        particles_bomb.time = 0;
     }
 
     //public float distToOwner()

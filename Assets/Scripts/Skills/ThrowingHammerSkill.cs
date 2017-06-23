@@ -34,7 +34,7 @@ public class ThrowingHammerSkill : SkillProfile {
         {
             if (checkForCollision())
             {
-
+                spawnParticleEffect(PARTICLE_TYPE.DISAPPEAR);
                 gameObject.SetActive(false);
                 Destroy(gameObject);
                 //send this object to despawn
@@ -43,9 +43,10 @@ public class ThrowingHammerSkill : SkillProfile {
 
         if( position.y < -10)
         {
+            spawnParticleEffect(PARTICLE_TYPE.DISAPPEAR);
             gameObject.SetActive(false);
             Destroy(gameObject);
-
+            
         }
         position.x += direction.x * pSpeed * Time.deltaTime;
         position.y += speed_Y * Time.deltaTime;

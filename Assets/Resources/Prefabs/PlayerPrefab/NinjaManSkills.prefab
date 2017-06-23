@@ -40,6 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListOfSkills:
+  - {fileID: 102982, guid: 5c2bb2e978957e5479d906438ffca11f, type: 2}
   - {fileID: 187210, guid: 88a94c1e1c55ba642bc79351ec4ccc59, type: 2}
   - {fileID: 189492, guid: 2c99013572211f642a1fc9a3e1aa4d8a, type: 2}
   - {fileID: 176048, guid: 595a06e2e05461e40a06e0c32fd512ea, type: 2}

@@ -15,8 +15,10 @@ public class FireSkill : SkillProfile {
         checkEveryInterval_lifeTime += Time.deltaTime;
         if (checkEveryInterval_lifeTime > lifetime)
         {
+            spawnParticleEffect(PARTICLE_TYPE.DISAPPEAR);
             gameObject.SetActive(false);
             Destroy(gameObject);
+            
             //send this object to despawn
             checkEveryInterval_lifeTime = 0;
         }
@@ -24,7 +26,7 @@ public class FireSkill : SkillProfile {
         {
             if(checkForCollision())
             {
-                
+                spawnParticleEffect(PARTICLE_TYPE.DISAPPEAR);
                 gameObject.SetActive(false);
                 Destroy(gameObject);
                 //send this object to despawn

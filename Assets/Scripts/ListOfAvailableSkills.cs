@@ -15,12 +15,12 @@ public class ListOfAvailableSkills : MonoBehaviour {
         skillActivator = GetComponent<SkillActivator>();
         basicAttack = GetComponent<BasicAttack>();
 
-        skillActivator.skill1 = skillList.ListOfSkills[0];
-        skillActivator.skill2 = skillList.ListOfSkills[1];
-        skillActivator.skill3 = skillList.ListOfSkills[2];
-        skillActivator.skill4 = skillList.ListOfSkills[3];
+        skillActivator.skill1 = skillList.ListOfSkills[1];
+        skillActivator.skill2 = skillList.ListOfSkills[2];
+        skillActivator.skill3 = skillList.ListOfSkills[3];
+        skillActivator.skill4 = skillList.ListOfSkills[4];
 
-        basicAttack.skill = skillList.ListOfSkills[4];
+        basicAttack.skill = skillList.ListOfSkills[5];
         basicAttack.skill_cooldown = basicAttack.skill.GetComponent<SkillProfile>().castingCooldown;
     }
 

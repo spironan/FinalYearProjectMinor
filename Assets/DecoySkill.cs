@@ -25,6 +25,7 @@ public class DecoySkill : SkillProfile {
         checkEveryInterval_lifeTime += Time.deltaTime;
         if (checkEveryInterval_lifeTime > lifetime)
         {
+            spawnParticleEffect(PARTICLE_TYPE.DISAPPEAR);
             gameObject.SetActive(false);
             Destroy(gameObject);
             //send this object to despawn
