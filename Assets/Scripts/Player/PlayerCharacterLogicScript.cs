@@ -40,9 +40,14 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public int amountOfManaToStart;
     public GameObject player1Aura;
     public GameObject player2Aura;
+    ParticleSystem mainAuraParticles;
+    float minimumNumOfParticlesForAura;
+    bool isSetAura = false;
+
 
     SkillActivator skillActivator;
     BasicAttack basicAttack;
+    WordingsHolder wordingsHolder;
 
     [Range(0f,100f)]
     protected int manaAmount;
@@ -67,6 +72,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public bool CanUlt() { return canUlti; }
     public float GetHealthPercentage() { return character.GetHealthPercentage(); }
     public float GetUltiPercentage() { return (float)ultiCharge / (float)character.GetUltiMax(); }
+    public void SetUltiChargeAmount(int value) { ultiCharge = value; }
     public Vector2 GetDirection() { return direction; }
     public PLAYER GetPlayerID() { return playerID; }
     public PlayerControllerManager GetController() { return controller; }
@@ -128,11 +134,14 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         stunManager = GetComponent<StunMeterManager>();
         skillActivator = GetComponent<SkillActivator>();
         basicAttack = GetComponent<BasicAttack>();
+        wordingsHolder = GetComponent<WordingsHolder>();
         character.ResetHealth();
         stunManager.resetStunValue();
         resetManaAmount();
         skillActivator.resetCurrentCastingSkill();
         basicAttack.resetTimer();
+        wordingsHolder.resetWordings();
+        DestroySkillObjects();
         // character = gameObject.GetComponent<CharacterBase>(); should be removed because character base is no longer a component
 
     }
@@ -142,15 +151,45 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     {
         if (toUpdate)
         {
-            if(playerID == PLAYER.PLAYER_ONE)
+            if (!isSetAura)
             {
-                player1Aura.SetActive(true);
-                player2Aura.SetActive(false);
+                if (playerID == PLAYER.PLAYER_ONE)
+                {
+                    isSetAura = true;
+                    mainAuraParticles = player1Aura.GetComponent<ParticleSystem>();
+                    minimumNumOfParticlesForAura = 20;
+                    player1Aura.SetActive(true);
+                    player2Aura.SetActive(false);
+                }
+                else
+                {
+                    isSetAura = true;
+                    mainAuraParticles = player2Aura.GetComponent<ParticleSystem>();
+                    minimumNumOfParticlesForAura = 20;
+                    player1Aura.SetActive(false);
+                    player2Aura.SetActive(true);
+                }
+            }
+            if(skillActivator.GetIsCastingUlti())
+            {
+                //if(mainAuraParticles.emission.rate.constantMin != minimumNumOfParticlesForAura * 5)
+                {
+                    mainAuraParticles.startSpeed = 2;
+                    mainAuraParticles.gravityModifier = -0.5f;
+                    //temp = new ParticleSystem.MinMaxCurve(minimumNumOfParticlesForAura * 5.0f);
+                    //    .rate.mode = ParticleSystemCurveMode.Constant;
+                    //mainAuraParticles.emission.rate.constantMin = minimumNumOfParticlesForAura * 5;
+                }
             }
             else
             {
-                player1Aura.SetActive(false);
-                player2Aura.SetActive(true);
+                //if (mainAuraParticles.emission.rate.constantMin != minimumNumOfParticlesForAura)
+                {
+                    mainAuraParticles.startLifetime = 1;
+                    mainAuraParticles.gravityModifier = -0.1f;
+                    //    .rate.mode = ParticleSystemCurveMode.Constant;
+                    //mainAuraParticles.emission.rate.constantMin = minimumNumOfParticlesForAura * 5;
+                }
             }
             if (!controller.isControllerDisabled())
             {
@@ -200,7 +239,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         resetManaAmount();
         skillActivator.resetCurrentCastingSkill();
         basicAttack.resetTimer();
-
+        wordingsHolder.resetWordings();
+        DestroySkillObjects();
         direction = new Vector2(0, 0);
         //this.transform.position = new Vector3(0, -2.5f, 0);
         if (rigidbody != null)
@@ -381,5 +421,18 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void StartUpdate()
     {
         toUpdate = true;
+    }
+
+    public void DestroySkillObjects()
+    {
+        SkillProfile[] temp = FindObjectsOfType<SkillProfile>();
+        if (temp.Length > 0)
+        {
+            for (int i = 0; i < temp.Length; ++i)
+            {
+                Destroy(temp[i].gameObject);
+            }
+
+        }
     }
 }

@@ -14,6 +14,14 @@ public class WordingsHolder : MonoBehaviour {
         wordings[(int)types].gameObject.SetActive(true);
         wordings[(int)types].lifeTime = lifeTime;
     }
+
+    public void resetWordings()
+    {
+        foreach(Wordings wording in wordings)
+        {
+            wording.lifeTime = 0f;
+        }
+    }
 	//// Use this for initialization
 	//void Start () {
 	

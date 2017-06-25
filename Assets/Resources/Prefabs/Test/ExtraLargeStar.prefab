@@ -13,7 +13,7 @@ GameObject:
   - 58: {fileID: 5865980}
   m_Layer: 0
   m_Name: ExtraLargeStar
-  m_TagString: Untagged
+  m_TagString: PhysicalSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,12 +63,12 @@ MonoBehaviour:
   player_ID: 0
   damagePerHit: 20
   lifetime: 10
-  pSpeed: 30
+  pSpeed: 10
   gravity: 0
   manaCost: 0
   manaRegenPerHit: 10
   castingCooldown: 0
-  UltGainPerHitForEnemy: 0
+  UltGainPerHitForEnemy: 40
   circleCollider: {fileID: 0}
   owner: {fileID: 0}
   enemy: {fileID: 0}

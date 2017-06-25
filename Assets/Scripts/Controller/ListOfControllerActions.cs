@@ -88,6 +88,7 @@ public class ListOfControllerActions : MonoBehaviour {
         buttonBinds.Add(ACTIONS.SKILL_TWO, BUTTON_INPUT.Y);
         buttonBinds.Add(ACTIONS.SKILL_THREE, BUTTON_INPUT.B);
         buttonBinds.Add(ACTIONS.SKILL_FOUR, BUTTON_INPUT.A);
+        buttonBinds.Add(ACTIONS.SKILL_ULTIMATE, BUTTON_INPUT.R3);
 
         buttonBinds.Add(ACTIONS.START, BUTTON_INPUT.START);
         buttonBinds.Add(ACTIONS.SELECT, BUTTON_INPUT.A);
@@ -103,6 +104,7 @@ public class ListOfControllerActions : MonoBehaviour {
         joystickBinds.Add(ACTIONS.MOVE_DOWN, JOYSTICK_AXIS_INPUT.DPAD_DOWN);
         joystickBinds.Add(ACTIONS.MOVE_LEFT, JOYSTICK_AXIS_INPUT.DPAD_LEFT);
         joystickBinds.Add(ACTIONS.MOVE_RIGHT, JOYSTICK_AXIS_INPUT.DPAD_RIGHT);
+        
     }
 
     public void bindButton(ACTIONS action, BUTTON_INPUT button)
@@ -127,6 +129,7 @@ public class ListOfControllerActions : MonoBehaviour {
         joystickBinds.Add(ACTIONS.MOVE_LEFT, JOYSTICK_AXIS_INPUT.DPAD_LEFT);
         joystickBinds.Add(ACTIONS.MOVE_RIGHT, JOYSTICK_AXIS_INPUT.DPAD_RIGHT);
 
+        //joystickBinds.Add(ACTIONS.SKILL_ULTIMATE, JOYSTICK_AXIS_INPUT.R2);
 
         joystickBinds.Add(ACTIONS.GAME_UP, JOYSTICK_AXIS_INPUT.DPAD_UP);
         joystickBinds.Add(ACTIONS.GAME_DOWN, JOYSTICK_AXIS_INPUT.DPAD_DOWN);

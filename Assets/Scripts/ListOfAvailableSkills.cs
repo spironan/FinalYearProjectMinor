@@ -14,6 +14,7 @@ public class ListOfAvailableSkills : MonoBehaviour {
         //skillList
         skillActivator = GetComponent<SkillActivator>();
         basicAttack = GetComponent<BasicAttack>();
+        skillActivator.skillULTIMATE = skillList.ListOfSkills[0];
 
         skillActivator.skill1 = skillList.ListOfSkills[1];
         skillActivator.skill2 = skillList.ListOfSkills[2];

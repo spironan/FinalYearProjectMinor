@@ -14,6 +14,7 @@ public class FireBallStreamSkill : SkillProfile
     {
         //base.Start();
         transform.parent = owner.transform;
+        timerForInterval = spawning_interval;
         playerControllerManager = owner.GetComponent<PlayerCharacterLogicScript>().GetController();
     }
 

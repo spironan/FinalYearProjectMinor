@@ -563,6 +563,7 @@ MonoBehaviour:
   skill2: {fileID: 136856, guid: f3a25172a87874f4da823eabdb5f4cbd, type: 2}
   skill3: {fileID: 970309588}
   skill4: {fileID: 162578, guid: 160d2055aad161d4fb21ef54169d7861, type: 2}
+  skillULTIMATE: {fileID: 0}
   activator: {fileID: 1807847850}
   playerControllerManager: {fileID: 0}
   bindedActions: {fileID: 0}

@@ -10,6 +10,7 @@ public class SkillActivator : MonoBehaviour {
     public GameObject skill2;
     public GameObject skill3;
     public GameObject skill4;
+    public GameObject skillULTIMATE;
 
     public skillToActivate activator;
 
@@ -25,9 +26,11 @@ public class SkillActivator : MonoBehaviour {
 
     private bool dpadDown;
     private bool selectedSkill = false;
+    private bool isCastingUlti = false;
 
     private PlayerCharacterLogicScript owner;
     private WordingsHolder wordingsHolder;
+    public bool GetIsCastingUlti() { return isCastingUlti; }
     // Use this for initialization
     void Start()
     {
@@ -175,11 +178,14 @@ public class SkillActivator : MonoBehaviour {
 
             if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.L1))
             {
-                selectedSkill = false;
+                
                 if (currentSkillProfile.keysToActivate == keyIterator && currentSkillProfile != null
                     && owner.getManaAmount() >= skill_gameObject.GetComponent<SkillProfile>().manaCost)
                 {
-                    owner.decreaseMana(skill_gameObject.GetComponent<SkillProfile>().manaCost);
+                    if (!isCastingUlti)
+                        owner.decreaseMana(skill_gameObject.GetComponent<SkillProfile>().manaCost);
+                    else
+                        owner.SetUltiChargeAmount(0);
                     currentSkillProfile.activateSkill = true;// activates the skills
                                                              // GameObject temp = Instantiate(currentSkillProfile.gameObject, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
                     skill_gameObject.SetActive(true);
@@ -199,7 +205,8 @@ public class SkillActivator : MonoBehaviour {
                 {
                     wordingsHolder.showAndSetTiming(WORDING_TYPES.NOMANA, 1f);
                 }
-                
+                selectedSkill = false;
+                isCastingUlti = false;
                 activator.closeBorder();
             }
         }
@@ -274,11 +281,23 @@ public class SkillActivator : MonoBehaviour {
                 //skill 3
                 activator.generate_keys(currentSkillProfile.gameObject);
             }
+            else if (bindedActions.getButtonAction(ACTIONS.SKILL_ULTIMATE) && owner.GetUltiPercentage() >= 1f)
+            {
+                currentSkillProfile = skillULTIMATE.GetComponent<SkillProfile>();
+                createNewSkillObject();
+                keyIterator = 0;
+                selectedSkill = true;
+                isCastingUlti = true;
+                //pass ulti to activator
+                //skill ulti
+                activator.generate_keys(currentSkillProfile.gameObject);
+            }
         }
     }
 
     public void resetCurrentCastingSkill()
     {
+        isCastingUlti = false;
         activator.closeBorder();
         destroyInactiveSkill();
         keyIterator = 0;

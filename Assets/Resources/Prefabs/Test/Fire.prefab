@@ -97,7 +97,7 @@ MonoBehaviour:
   manaCost: 10
   manaRegenPerHit: 20
   castingCooldown: 0
-  UltGainPerHitForEnemy: 15
+  UltGainPerHitForEnemy: 40
   circleCollider: {fileID: 0}
   owner: {fileID: 0}
   enemy: {fileID: 0}

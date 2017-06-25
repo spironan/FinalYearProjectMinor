@@ -806,6 +806,7 @@ MonoBehaviour:
   skill2: {fileID: 0}
   skill3: {fileID: 0}
   skill4: {fileID: 0}
+  skillULTIMATE: {fileID: 0}
   activator: {fileID: 11486290}
   playerControllerManager: {fileID: 0}
   bindedActions: {fileID: 0}
@@ -977,7 +978,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1271,7 +1272,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     randomizeRotationDirection: 0
-    gravityModifier: 0
+    gravityModifier: -0.1
     maxNumParticles: 1000
     rotation3D: 0
   ShapeModule:
@@ -2466,7 +2467,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2760,7 +2761,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     randomizeRotationDirection: 0
-    gravityModifier: 0
+    gravityModifier: -0.1
     maxNumParticles: 1000
     rotation3D: 0
   ShapeModule:
