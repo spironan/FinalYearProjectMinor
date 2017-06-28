@@ -246,25 +246,29 @@ public class XBox360ControllerInput : ControllerInput
             nameOfJoystick += "_player2";
 
         valueFromAxis = Input.GetAxis(nameOfJoystick);
+        if (valueFromAxis < 0.1f && valueFromAxis > -0.1f)
+        {
+            valueFromAxis = 0f;
+        }
         switch (joyStickNumber)
         {
             case JOYSTICK_AXIS_INPUT.L2:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.R2:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_UP:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_DOWN:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < -0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_LEFT:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < -0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_RIGHT:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_Y:
                 floatAndBool.setFloatAndBool(valueFromAxis, false);
@@ -273,16 +277,16 @@ public class XBox360ControllerInput : ControllerInput
                 floatAndBool.setFloatAndBool(valueFromAxis, false);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_UP:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_DOWN:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < -0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_LEFT:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < -0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_RIGHT:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_Y:
                 floatAndBool.setFloatAndBool(valueFromAxis, false);
@@ -291,16 +295,16 @@ public class XBox360ControllerInput : ControllerInput
                 floatAndBool.setFloatAndBool(valueFromAxis, false);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_UP:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < -0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis < -0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
-                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0);
+                floatAndBool.setFloatAndBool(valueFromAxis, valueFromAxis > 0.9f);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_Y:
                 floatAndBool.setFloatAndBool(valueFromAxis, false);
@@ -325,7 +329,10 @@ public class XBox360ControllerInput : ControllerInput
             nameOfJoystick += "_player2";
 
         valueFromAxis = Input.GetAxis(nameOfJoystick);
-
+        if(valueFromAxis < 0.1f && valueFromAxis > -0.1f)
+        {
+            valueFromAxis = 0f;
+        }
         switch (joyStickNumber)
         {
             case JOYSTICK_AXIS_INPUT.L2:
@@ -376,6 +383,7 @@ public class XBox360ControllerInput : ControllerInput
                 break;
 
         }
+        
         return floatAndBool.getBool();
 
         
@@ -390,12 +398,12 @@ public class XBox360ControllerInput : ControllerInput
         }
         if (positiveAxis)
         {
-            if (valueFromAxis + offset > 0 && !isJoystickKeyPressed[joyStickNumber])
+            if (valueFromAxis + offset > 0.9f && !isJoystickKeyPressed[joyStickNumber])
             {
                 keyDown = true;
                 isJoystickKeyPressed[joyStickNumber] = true;
             }
-            else if (valueFromAxis + offset > 0 && isJoystickKeyPressed[joyStickNumber])
+            else if (valueFromAxis + offset > 0.9f && isJoystickKeyPressed[joyStickNumber])
             {
                 keyDown = false;
             }
@@ -407,12 +415,12 @@ public class XBox360ControllerInput : ControllerInput
         }
         else
         {
-            if (valueFromAxis + offset < 0 && !isJoystickKeyPressed[joyStickNumber])
+            if (valueFromAxis + offset < -0.9f && !isJoystickKeyPressed[joyStickNumber])
             {
                 keyDown = true;
                 isJoystickKeyPressed[joyStickNumber] = true;
             }
-            else if (valueFromAxis + offset < 0 && isJoystickKeyPressed[joyStickNumber])
+            else if (valueFromAxis + offset < -0.9f && isJoystickKeyPressed[joyStickNumber])
             {
                 keyDown = false;
             }

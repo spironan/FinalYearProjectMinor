@@ -337,7 +337,7 @@ InputManager:
     dead: 0
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
     axis: 1
     joyNum: 1
@@ -353,7 +353,7 @@ InputManager:
     dead: 0
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
     axis: 1
     joyNum: 1
@@ -369,7 +369,7 @@ InputManager:
     dead: 0
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
     axis: 1
     joyNum: 2
@@ -385,7 +385,7 @@ InputManager:
     dead: 0
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
     axis: 1
     joyNum: 2
@@ -465,7 +465,7 @@ InputManager:
     dead: 0
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
     axis: 4
     joyNum: 1
@@ -481,9 +481,9 @@ InputManager:
     dead: 0
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
-    axis: 3
+    axis: 5
     joyNum: 1
   - serializedVersion: 3
     m_Name: rightStick_Y_xBox360_player2
@@ -497,7 +497,7 @@ InputManager:
     dead: 0
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
     axis: 4
     joyNum: 2
@@ -513,9 +513,9 @@ InputManager:
     dead: 0
     sensitivity: 1
     snap: 0
-    invert: 0
+    invert: 1
     type: 2
-    axis: 3
+    axis: 5
     joyNum: 2
   - serializedVersion: 3
     m_Name: L1_button_xBox360
@@ -658,7 +658,7 @@ InputManager:
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 0
+    type: 2
     axis: 8
     joyNum: 1
   - serializedVersion: 3
@@ -674,8 +674,8 @@ InputManager:
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 0
-    axis: 4
+    type: 2
+    axis: 3
     joyNum: 1
   - serializedVersion: 3
     m_Name: L2_button_xBox360_player2
@@ -690,7 +690,7 @@ InputManager:
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 0
+    type: 2
     axis: 8
     joyNum: 2
   - serializedVersion: 3
@@ -706,8 +706,8 @@ InputManager:
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 0
-    axis: 4
+    type: 2
+    axis: 3
     joyNum: 2
   - serializedVersion: 3
     m_Name: R2_button_xBox360
@@ -722,7 +722,7 @@ InputManager:
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 0
+    type: 2
     axis: 9
     joyNum: 1
   - serializedVersion: 3
@@ -738,8 +738,8 @@ InputManager:
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 0
-    axis: 5
+    type: 2
+    axis: 4
     joyNum: 1
   - serializedVersion: 3
     m_Name: R2_button_xBox360_player2
@@ -754,7 +754,7 @@ InputManager:
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 0
+    type: 2
     axis: 9
     joyNum: 2
   - serializedVersion: 3
@@ -770,8 +770,8 @@ InputManager:
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 0
-    axis: 5
+    type: 2
+    axis: 4
     joyNum: 2
   - serializedVersion: 3
     m_Name: back_button_xBox360

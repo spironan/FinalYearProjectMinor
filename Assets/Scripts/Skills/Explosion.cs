@@ -14,6 +14,7 @@ public class Explosion : SkillProfile
         //local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
         enemyLogic = enemy.GetComponent<PlayerCharacterLogicScript>();
         ownerLogic = owner.GetComponent<PlayerCharacterLogicScript>();
+        UltGainPerHitForEnemy = 2 * damagePerHit;
     }
 	
 	// Update is called once per frame
