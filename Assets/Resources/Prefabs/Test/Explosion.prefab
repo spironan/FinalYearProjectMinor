@@ -43,10 +43,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameOfSkill: Explosion
   descriptionOfSkill: 'Basic attack. Disrupts the enemy''s skill activation. '
-  keysToActivate: 0
-  stunValuePerHit: 20
+  keysToActivate: 3
+  stunValuePerHit: 35
   player_ID: 0
-  damagePerHit: 15
+  damagePerHit: 30
   lifetime: 0.2
   pSpeed: 0
   gravity: 0

@@ -76,6 +76,8 @@ public class SkillProfile : MonoBehaviour {
         local_sprite_size = sprite_size / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
         enemyLogic = enemy.GetComponent<PlayerCharacterLogicScript>();
         ownerLogic = owner.GetComponent<PlayerCharacterLogicScript>();
+
+        UltGainPerHitForEnemy = 2 * damagePerHit;
     }
 
     public virtual void Update()

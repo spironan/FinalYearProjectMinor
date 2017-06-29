@@ -275,9 +275,9 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         }
         //xBox360 Controller Support
         else if (controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_X).getFloat() != 0
-            || controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_Y).getFloat() < -0.9)
+            || controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_Y).getFloat() > 0.9)
         {
-            if (controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_Y).getFloat() > -0.9)
+            if (controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_Y).getFloat() < 0.9)
                 direction.Set(controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_X).getFloat(), 0);
             else
                 direction.Set(controller.getValueFromAxis(JOYSTICK_AXIS_INPUT.L3_X).getFloat(), 1);
@@ -311,7 +311,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     //Check to See if Player Touch the ground,so that it can jump again
     public virtual void OnCollisionStay2D(Collision2D other)
     {
-        if (other.collider.tag == "Ground" && inAir)
+        if (other.collider.tag == "Ground" && inAir && other.collider.gameObject.transform.position.y < transform.position.y)
             inAir = false;
     }
 
