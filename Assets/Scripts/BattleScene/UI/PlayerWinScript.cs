@@ -7,12 +7,11 @@ public class PlayerWinScript : MonoBehaviour
     Text Wintext;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         Wintext = GetComponent<Text>();
-        DisplayPlayerVictory();
 	}
 
-    void DisplayPlayerVictory()
+    public void DisplayPlayerVictory()
     {
         GameManager gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 

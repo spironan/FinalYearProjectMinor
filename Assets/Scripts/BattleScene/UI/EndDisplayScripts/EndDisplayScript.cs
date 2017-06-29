@@ -19,20 +19,24 @@ public class EndDisplayScript : MonoBehaviour
     ListOfControllerActions masterController = null;
     PointerEventData pointer;
     EventSystem eventSystem;
+    PlayerWinScript winScript;
 
     void Awake()
     {
         eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
         pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
+        winScript = transform.parent.gameObject.GetComponentInChildren<PlayerWinScript>();
     }
 
 	// Use this for initialization
 	public void Reset () {
+
         button = ENDGAME_OPTIONS.REMATCH;
         if(buttons == null)
             buttons = GetComponentsInChildren<Button>();
         if(masterController == null)
             masterController = GameObject.FindWithTag("GameManager").GetComponent<GameManager>().GetMasterPlayerData().controller;
+        winScript.DisplayPlayerVictory();
         StartCoroutine(HighlightButton());
     }
 

@@ -17,6 +17,7 @@ public class PauseMenuScript : MonoBehaviour
     };
 
     PAUSE_OPTIONS button = PAUSE_OPTIONS.RESUME;
+    Image backgroundImage = null;
     Button[] buttons = null;
     Text textDisplay = null;
     ListOfControllerActions controller = null;
@@ -26,6 +27,7 @@ public class PauseMenuScript : MonoBehaviour
 
     void Awake()
     {
+        backgroundImage = transform.parent.GetComponent<Image>();
         eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
         pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -40,7 +42,7 @@ public class PauseMenuScript : MonoBehaviour
         //if (controller == null)
         controller = gameManager.GetPlayer(playerID).controller;
         Debug.Log("Player ID entered : " +playerID + "Controller of player ID : " + GameObject.FindWithTag("GameManager").GetComponent<GameManager>().GetPlayer(playerID).GetPlayerID());
-
+        backgroundImage.sprite = SpriteManager.GetInstance().GetSprite("PauseBG_Player" + (playerID+1));
         if (textDisplay == null)
             textDisplay = gameObject.transform.parent.GetComponentInChildren<Text>();
         textDisplay.text = "Player " + (playerID + 1) + " Paused";

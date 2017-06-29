@@ -115,7 +115,7 @@ public class CharacterSelectScript : MonoBehaviour
 
     public void CreatePlayerFrame(PLAYER playerID)
     {
-        PlayerData player = gameManager.GetPlayer(playerID).GetComponent<PlayerData>();
+        PlayerData player = gameManager.GetPlayer(playerID);
         GameObject frame = Instantiate(player.selectframe);
         if (frame != null)
         {

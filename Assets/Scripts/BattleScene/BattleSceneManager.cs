@@ -317,6 +317,7 @@ public class BattleSceneManager : MonoBehaviour
         PauseTimer();
         endDisplay.SetActive(true);
         endDisplay.GetComponentInChildren<EndDisplayScript>().Reset();
+
     }
 
 }
