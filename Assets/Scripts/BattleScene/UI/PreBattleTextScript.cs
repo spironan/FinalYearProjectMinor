@@ -34,21 +34,21 @@ public class PreBattleTextScript : MonoBehaviour
 
     public void DeActivateControllers()
     {
+        battleSceneManager.PauseTimer();
         foreach (GameObject player in battleSceneManager.GetPlayers())
         {
             player.GetComponent<PlayerCharacterLogicScript>().GetController().DisableController();
         }
-        battleSceneManager.PauseTimer();
         Debug.Log("Deactivate controllers");
     }
 
     public void ActivateControllers()
     {
+        battleSceneManager.UnPauseTimer();
         foreach (GameObject player in battleSceneManager.GetPlayers())
         {
             player.GetComponent<PlayerCharacterLogicScript>().GetController().EnableController();
         }
-        battleSceneManager.UnPauseTimer();
         Debug.Log("Activate controllers");
     }
 

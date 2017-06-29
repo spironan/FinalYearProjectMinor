@@ -16,7 +16,7 @@ public class ParallaxScrollingScript : MonoBehaviour
     private float lastCameraX;
 
 	// Use this for initialization
-	void Start () 
+	void Start ()
     {
         if (camera == null)
             camera = Camera.main;

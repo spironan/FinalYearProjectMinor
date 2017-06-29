@@ -113,7 +113,7 @@ public class CharacterSelectScript : MonoBehaviour
         }
     }
 
-    public void CreatePlayerFrame(int playerID)
+    public void CreatePlayerFrame(PLAYER playerID)
     {
         PlayerData player = gameManager.GetPlayer(playerID).GetComponent<PlayerData>();
         GameObject frame = Instantiate(player.selectframe);
@@ -126,6 +126,7 @@ public class CharacterSelectScript : MonoBehaviour
                 framescript.AssignCharSlot(charSlots[CharacterManager.GetInstance().GetCharacterIndex(player.GetInGameData().GetCharName())]);
             else
                 framescript.AssignCharSlot(charSlots[0]);
+            Debug.Log("Created Frame For PlayerID :" + playerID);
             playerFrames.Add(framescript);
         }
         else
@@ -148,8 +149,10 @@ public class CharacterSelectScript : MonoBehaviour
             for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
             {
                 PlayerData player = gameManager.GetPlayer(i);
+                Debug.Log("Player ID :" + player.GetPlayerID() + " Of Team : " + player.GetInGameData().GetTeam() + " Is Assigned : " + player.IsAssigned());
                 if (!player.IsAssigned())
                     continue;
+
                 ListOfControllerActions playerController = player.controller;
                 int team = (int)player.GetInGameData().GetTeam();
                 //Move Left Right
@@ -175,6 +178,8 @@ public class CharacterSelectScript : MonoBehaviour
                 //Player Picks Character
                 if (playerController.getButtonAction(ACTIONS.PICK_CHARACTER))
                 {
+                    Debug.Log("Locking In Character : " + playerFrames[team].GetCharName() +
+                       " By Team :" + player.GetInGameData().GetTeam() + " Of Player ID :" + player.GetPlayerID());
                     LockInCharacter(player.GetInGameData().GetTeam(), playerFrames[team].GetCharName());
                 }
                 //Player Unpick Character
@@ -193,7 +198,6 @@ public class CharacterSelectScript : MonoBehaviour
         }
     }
 
-
     void ActivateExitConfirmation(ListOfControllerActions controller)
     {
         backToMainObj.GetComponent<ToggleActiveScript>().ToggleActive();
@@ -204,12 +208,10 @@ public class CharacterSelectScript : MonoBehaviour
 
     public void LockInCharacter(TEAM playerTeam, string charaName)
     {
-        //SetCharacter
-        //gameManager.GetPlayer(player).GetInGameData().SetChar(charaName);
-        //TESTCODE
         gameManager.GetPlayer(playerTeam).GetInGameData().SetCharName(charaName);
         gameManager.GetPlayer(playerTeam).PickChar();
         playerFrames[(int)playerTeam].LockIn();
+        Debug.Log("Player Team : " + playerTeam + " Of ID : "+ gameManager.GetPlayer(playerTeam).GetPlayerID() + " Locked in character : " + charaName);
     }
 
     public void DeselectCharacter(TEAM playerTeam)
@@ -244,7 +246,7 @@ public class CharacterSelectScript : MonoBehaviour
     {
         if ((int)playerteam >= playerFrames.Count)
         {
-            Debug.Log("Havent Created Frame Yet For Team : ,Returning Null. You entered a teamNumber :" + playerteam + " Current number of frames created : " + playerFrames.Count);
+            Debug.Log("Havent Created Frame Yet For Team : " + playerteam + " Returning Null. You entered a teamNumber :" + playerteam + " Current number of frames created : " + playerFrames.Count);
             return null;
         }
         if (playerteam >= TEAM.MAX_TEAM)
@@ -263,7 +265,7 @@ public class CharacterSelectScript : MonoBehaviour
             return null;
         }
 
-        Debug.Log("Player Char Name is : " + playerFrames[(int)playerteam].GetCharName());
+        //Debug.Log("Player Char Name is : " + playerFrames[(int)playerteam].GetCharName());
         return CharacterManager.GetInstance().GetCharacterByName(playerFrames[(int)playerteam].GetCharName()).GetCharArt();
     }
 

@@ -4,12 +4,10 @@ using System.Collections;
 public class PlayerInGameData 
 {
     short wonMatches;
+    short winsToCompleteSet;
     TEAM playerTeam;
-    //CharacterBase selectedCharData;
     string characterName = "";
-
-    //public CharacterBase GetCharData() { return selectedCharData; }
-    //public void SetChar(string charName) { selectedCharData = CharacterManager.GetInstance().GetCharacterByName(charName); }
+    bool winSet = false;
 
     public string GetCharName() { return characterName; }
     public void SetCharName(string charName) { characterName = charName; }
@@ -18,9 +16,24 @@ public class PlayerInGameData
     public void SetTeam(TEAM newPlayerTeam) { playerTeam = newPlayerTeam; }
 
     //Call Init When Game Starts
-    public void StartMatch() { wonMatches = 0; }
+    public void SetWinCondition(short winsToCompleteSet) 
+    {
+        if (winsToCompleteSet < 0)
+        {
+            Debug.Log("Win Condition must be larger than zero, you inputted : " + winsToCompleteSet);
+        }
+        this.winsToCompleteSet = winsToCompleteSet;
+    }
 
-    public void WinMatch() { wonMatches++; }
+    public void StartMatch() { winSet = false; wonMatches = 0; }
+
+    public void WinMatch() 
+    {
+        wonMatches++;
+        if (wonMatches == winsToCompleteSet)
+            winSet = true;
+    }
     public short GetMatchWins() { return wonMatches; }
-    
+
+    public bool GetSetWon() { return winSet; }
 }

@@ -28,6 +28,8 @@ TagManager:
   - BackToMain
   - Stages
   - EventSystem
+  - PauseDisplay
+  - SoundSystem
   layers:
   - Default
   - TransparentFX

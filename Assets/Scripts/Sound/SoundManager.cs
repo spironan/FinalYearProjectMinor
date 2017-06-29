@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource sfxSource;
     public AudioSource musicSource;
+    public List<AudioSource> sfxSource;
 
-    //Range of +- 10% pitch to have a slight difference in sound everytime.
-    public float lowPitchRange = 0.9f;
-    public float highPitchRange = 1.1f;
+    //Range of +- 5% pitch to have a slight difference in sound everytime.
+    public float lowPitchRange = 0.95f;
+    public float highPitchRange = 1.05f;
 
     public bool muteSFX = false;
     public bool muteBGM = false;
@@ -18,6 +19,8 @@ public class SoundManager : MonoBehaviour
 
     public static SoundManager instance = null;
 
+    AudioSource defaultSfxSource;
+    
     void Awake()
     {
         if (instance == null)
@@ -26,13 +29,14 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         Debug.Log("Finished SoundInit Script");
         DontDestroyOnLoad(gameObject);
+        defaultSfxSource = sfxSource[0];
     }
 
     /// <summary>
     /// Plays a Single Clip, Usually Used for The Main Looping Music Source
     /// </summary>
     /// <param name="clip"></param>
-    public void PlaySingle(AudioClip clip)
+    public void PlaySingle(AudioClip clip, int sourceNum)
     {
         if (muteSFX)
         {
@@ -42,9 +46,9 @@ public class SoundManager : MonoBehaviour
 
         float randomPitch = Random.Range(lowPitchRange, highPitchRange);
 
-        sfxSource.pitch = randomPitch;
-        sfxSource.clip = clip;
-        sfxSource.Play();
+        sfxSource[sourceNum].pitch = randomPitch;
+        sfxSource[sourceNum].clip = clip;
+        sfxSource[sourceNum].Play();
     }
 
     /// <summary>
@@ -52,7 +56,7 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     /// params is used by adding a passing in a comma separated list e.g. movestep1,movestep2,...
     /// <param name="clips"></param>
-    public void PlayRandomSfx(params AudioClip[] clips)
+    public void PlayRandomSfx(int sourceNum, params AudioClip[] clips)
     {
         if (muteSFX)
         {
@@ -63,9 +67,9 @@ public class SoundManager : MonoBehaviour
         int randomIndex = Random.Range(0, clips.Length);
         float randomPitch = Random.Range(lowPitchRange, highPitchRange);
 
-        sfxSource.pitch = randomPitch;
-        sfxSource.clip = clips[randomIndex];
-        sfxSource.Play();
+        sfxSource[sourceNum].pitch = randomPitch;
+        sfxSource[sourceNum].clip = clips[randomIndex];
+        sfxSource[sourceNum].Play();
     }
 
 }

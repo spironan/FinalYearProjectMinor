@@ -10,29 +10,41 @@ public class BattleSceneManager : MonoBehaviour
     List<GameObject> playerCharacters = new List<GameObject>();
     PreBattleTextScript preBattleText;
     List<VictoryDisplayScript> victoryInterface = new List<VictoryDisplayScript>();
-    GameObject endDisplay;
+    GameObject pauseDisplay, endDisplay;
+    SoundSystem soundSystem;
     float curBattleTimer;
     float maxBattleTimer;
     GAME_MODES gameMode;
     bool gameWon = false;
     bool timePaused = false;
     bool gameEnd = false;
+    bool gamePaused = false;
     int currentRound = 1;
-    int noOfPlayers;
+    int noOfPlayers = 0;
 
     public void SetGameMode(GAME_MODES mode)
     {
         switch (mode)
         {
             case GAME_MODES.PRACTICE:
+                SetWinCondition(1);
                 maxBattleTimer = 100000.0f;
                 break;
             case GAME_MODES.VS_AI:
             case GAME_MODES.LOCAL_PVP:
+                SetWinCondition(2);
                 maxBattleTimer = 60.0f;
                 break;
         }
         ResetTimer();
+    }
+
+    void SetWinCondition(short wins)
+    {
+        for (int i = 0; i < noOfPlayers; ++i)
+        {
+            gameManager.GetPlayer(i).GetInGameData().SetWinCondition(wins);
+        }
     }
 
     public float GetCurrentBattleTimer() { return curBattleTimer; }
@@ -40,16 +52,19 @@ public class BattleSceneManager : MonoBehaviour
 
     void Awake()
     {
-        endDisplay = GameObject.FindWithTag("EndDisplay");
-        endDisplay.SetActive(false);
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         gameManager.ChangeState(GAMESTATE.IN_GAME);
+        soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
         noOfPlayers = gameManager.GetPlayerSize();
         preBattleText = GameObject.FindGameObjectWithTag("PreBattleText").GetComponent<PreBattleTextScript>();
         foreach (GameObject display in GameObject.FindGameObjectsWithTag("VictoryDisplay"))
             victoryInterface.Add(display.GetComponent<VictoryDisplayScript>());
         currentMap = gameManager.GetCurrMap();
         SetGameMode(gameManager.GetGameMode());
+        endDisplay = GameObject.FindWithTag("EndDisplay");
+        endDisplay.SetActive(false);
+        pauseDisplay = GameObject.FindWithTag("PauseDisplay");
+        pauseDisplay.SetActive(false);
         currentRound = 1;
         LoadOncePerScene();
     }
@@ -61,17 +76,29 @@ public class BattleSceneManager : MonoBehaviour
 
     public void LoadOncePerScene()
     {
-        for (int i = 0; i < noOfPlayers; ++i)
+        for (TEAM currentTeam = TEAM.RED_TEAM; (int)currentTeam < noOfPlayers; ++currentTeam)
         {
-            GameObject character = PrefabManager.GetInstance().GetPrefab(gameManager.GetPlayer(i).GetInGameData().GetCharName()); //"StunMan" //GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/PlayerPrefab/StunMan"));
-            character.GetComponent<PlayerCharacterLogicScript>().SetCharacter(gameManager.GetPlayer(i).GetInGameData().GetCharName());
-            character.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(gameManager.GetPlayer(i).GetPlayerID());
-            character.GetComponent<PlayerCharacterLogicScript>().SetController(gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>());
-            //character.GetComponent<SkillActivator>().player_number = gameManager.GetPlayer(i).GetPlayerID();
-            //character.GetComponent<SkillActivator>().playerControllerManager = gameManager.GetPlayer(i).gameObject.GetComponent<PlayerControllerManager>();
-            character.GetComponent<SkillActivator>().bindedActions = gameManager.GetPlayer(i).gameObject.GetComponent<ListOfControllerActions>();
+            PlayerData player = gameManager.GetPlayer(currentTeam);
+            GameObject character = PrefabManager.GetInstance().GetPrefab(player.GetInGameData().GetCharName());
+            character.GetComponent<PlayerCharacterLogicScript>().SetCharacter(player.GetInGameData().GetCharName());
+            character.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(player.GetPlayerID());
+            character.GetComponent<PlayerCharacterLogicScript>().SetController(player.gameObject.GetComponent<PlayerControllerManager>());
+            character.GetComponent<SkillActivator>().bindedActions = player.gameObject.GetComponent<ListOfControllerActions>();
             playerCharacters.Add(character);
         }
+
+        //TEAM currentTeam = TEAM.RED_TEAM;
+        //for (int i = 0; i < noOfPlayers; ++i)
+        //{
+        //    PlayerData player = gameManager.GetPlayer(currentTeam);
+        //    GameObject character = PrefabManager.GetInstance().GetPrefab(player.GetInGameData().GetCharName());
+        //    character.GetComponent<PlayerCharacterLogicScript>().SetCharacter(player.GetInGameData().GetCharName());
+        //    character.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(player.GetPlayerID());
+        //    character.GetComponent<PlayerCharacterLogicScript>().SetController(player.gameObject.GetComponent<PlayerControllerManager>());
+        //    character.GetComponent<SkillActivator>().bindedActions = player.gameObject.GetComponent<ListOfControllerActions>();
+        //    playerCharacters.Add(character);
+        //    currentTeam++;
+        //}
     }
 
     //Called Once when a Player Starts
@@ -81,6 +108,33 @@ public class BattleSceneManager : MonoBehaviour
         SetPlayerSpawnPoints();
         ResetTimer();
         preBattleText.PlayAnim(currentRound);
+    }
+
+    void PauseGame(int playerID)
+    {
+        gamePaused = true;
+
+        Time.timeScale = 0.0f;
+        pauseDisplay.SetActive(true);
+        pauseDisplay.GetComponentInChildren<PauseMenuScript>().Pause(playerID);
+        foreach (GameObject player in playerCharacters)
+        {
+            player.GetComponent<PlayerCharacterLogicScript>().StopUpdate();
+            player.GetComponent<PlayerCharacterLogicScript>().DisableAllAttacks();
+        }
+    }
+
+    public void UnPauseGame()
+    {
+        gamePaused = false;
+
+        Time.timeScale = 1.0f;
+        pauseDisplay.SetActive(false);
+        foreach (GameObject player in playerCharacters)
+        {
+            player.GetComponent<PlayerCharacterLogicScript>().StartUpdate(); // Start Updating Players again
+            player.GetComponent<PlayerCharacterLogicScript>().EnableAllAttacks();
+        }
     }
 
     public void ResetMatch()
@@ -112,6 +166,7 @@ public class BattleSceneManager : MonoBehaviour
         endDisplay.SetActive(false);
         gameEnd = false;
         currentRound = 1;
+        soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC,AudioClipManager.GetInstance().GetAudioClip(currentMap.GetMapName()),true);
         ResetPlayerCharacters();
         StartBattle();
     }
@@ -141,13 +196,15 @@ public class BattleSceneManager : MonoBehaviour
 
     public void Update()
     {
-        if (!gameEnd)
+        if (!gameEnd && !gamePaused)
         {
             UpdateTimer();
             CheckForDeath();
 
             if (gameWon)
                 EndMatch();
+
+            CheckForPause();
         }
     }
 
@@ -174,6 +231,18 @@ public class BattleSceneManager : MonoBehaviour
         }
     }
 
+    void CheckForPause()
+    {
+        for (int i = 0; i < noOfPlayers; ++i)
+        {
+            if (gameManager.GetPlayer(i).controller.getButtonAction(ACTIONS.START))
+            {
+                PauseGame(i);
+                break;
+            }
+        }
+    }
+
     public void PauseTimer() { timePaused = true; }
     public void UnPauseTimer() { timePaused = false; }
     public bool IsPaused() { return timePaused; }
@@ -183,13 +252,12 @@ public class BattleSceneManager : MonoBehaviour
         bool doubleKO = true;
         for (int i = 0; i < noOfPlayers; ++i)
         {
-            if (!playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().IsDead())
-            {
-                doubleKO = false;
-                gameManager.GetPlayer(i).GetInGameData().WinMatch();
-                victoryInterface[i].WinMatch();
-                break;
-            }
+            if (playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().IsDead())
+                continue;
+
+            doubleKO = false;
+            gameManager.GetPlayer(i).GetInGameData().WinMatch();
+            victoryInterface[i].WinMatch();
         }
         if (doubleKO)
         {
@@ -200,19 +268,20 @@ public class BattleSceneManager : MonoBehaviour
             }
         }
 
+        //Determine if Set Won By Anyone
         bool displayEndScreen = false;
         for (int i = 0; i < noOfPlayers; ++i)
         {
-            if (gameManager.GetPlayer(i).GetInGameData().GetMatchWins() >= 2)
+            if (gameManager.GetPlayer(i).GetInGameData().GetSetWon())
             {
+                SetPlayerSpawnPoints();
+                DisplayWinResult();
                 displayEndScreen = true;
                 break;
             }
         }
 
-        if (displayEndScreen)
-            DisplayWinResult();
-        else
+        if (!displayEndScreen)
             ResetMatch();
     }
 

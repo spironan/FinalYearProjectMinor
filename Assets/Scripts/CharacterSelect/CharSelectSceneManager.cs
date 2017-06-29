@@ -35,8 +35,6 @@ public class CharSelectSceneManager : MonoBehaviour
         mapSelectHolder = GameObject.FindGameObjectWithTag("MapHolder");
         mapSelectHolder.SetActive(false);
         autoCreateSlots = true;
-        //charSelectData = charSelectHolder.GetComponent<CharacterSelectScript>();
-        //mapSelectHolder.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -83,13 +81,12 @@ public class CharSelectSceneManager : MonoBehaviour
                     player.Assign();
                     player.GetInGameData().SetTeam(playerTeam);
                     player.selectframe = frameObj[(int)playerTeam];
-                    charSelectData.CreatePlayerFrame((int)player.GetPlayerID());
+                    charSelectData.CreatePlayerFrame(player.GetPlayerID());
+                    Debug.Log("Assigned Player ID: " + player.GetPlayerID() + " To Team : " + playerTeam);
                     playerTeam++;
-                    Debug.Log("Assigned Player ID +" + player.GetPlayerID() + " To Team : " + playerTeam);
                 }
             }
         }
-
 
         if (gotoCharSelect)
         {
@@ -97,7 +94,7 @@ public class CharSelectSceneManager : MonoBehaviour
             {
                 for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
                 {
-                    charSelectData.CreatePlayerFrame((int)gameManager.GetPlayer(i).GetPlayerID());
+                    charSelectData.CreatePlayerFrame(gameManager.GetPlayer(i).GetPlayerID());
                 }
             }
             currentPhase = SELECTIONPHASE.PICKING;

@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 
 public class EndDisplayScript : MonoBehaviour 
 {
-    EventSystem eventSystem;
-    enum BUTTON_OPTIONS
+    enum ENDGAME_OPTIONS
     {
         REMATCH,
         MAP_SELECT,
@@ -15,10 +14,11 @@ public class EndDisplayScript : MonoBehaviour
         BACK_TO_MAIN
     };
 
-    BUTTON_OPTIONS button = BUTTON_OPTIONS.REMATCH;
+    ENDGAME_OPTIONS button = ENDGAME_OPTIONS.REMATCH;
     Button[] buttons = null;
     ListOfControllerActions masterController = null;
     PointerEventData pointer;
+    EventSystem eventSystem;
 
     void Awake()
     {
@@ -28,7 +28,7 @@ public class EndDisplayScript : MonoBehaviour
 
 	// Use this for initialization
 	public void Reset () {
-        button = BUTTON_OPTIONS.REMATCH;
+        button = ENDGAME_OPTIONS.REMATCH;
         if(buttons == null)
             buttons = GetComponentsInChildren<Button>();
         if(masterController == null)
@@ -48,7 +48,7 @@ public class EndDisplayScript : MonoBehaviour
 
         if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
         {
-            if(button < BUTTON_OPTIONS.BACK_TO_MAIN)
+            if (button < ENDGAME_OPTIONS.BACK_TO_MAIN)
             {
                 button++;
                 buttons[(int)button].Select();
@@ -56,7 +56,7 @@ public class EndDisplayScript : MonoBehaviour
         }
         else if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
         {
-            if (button > BUTTON_OPTIONS.REMATCH)
+            if (button > ENDGAME_OPTIONS.REMATCH)
             {
                 button--;
                 buttons[(int)button].Select();

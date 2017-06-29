@@ -80,9 +80,9 @@ public class MapSelectScript : MonoBehaviour
     public float itemWidth;
     public float spaceBetweenMaps;
     public float speed = 2.0f;
-    public GameObject mapPrefab;
     public Vector3 startPos;
 
+    GameObject mapPrefab;
     int currIndex = 0;
     int totalMaps = 0;
     float buttonCD;
@@ -103,6 +103,7 @@ public class MapSelectScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        mapPrefab = PrefabManager.GetInstance().GetPrefab("MapSlot");
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
         totalMaps = MapManager.GetInstance().GetMapCount();
         offset = new Vector3(itemWidth + spaceBetweenMaps, 0, 0);

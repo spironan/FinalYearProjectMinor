@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     PLAYER playerCount = PLAYER.PLAYER_ONE;
     //Current Team Of the Player
     //TEAM playerTeam = TEAM.TEAM_BEGIN;
-    SoundController soundController;
-
+    //SoundController soundController;
+    SoundSystem soundSystem;
     //Dont destroy on load the manager -> exist permantly
     void Awake()
     {
@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < (int)PLAYER.MAX_PLAYERS; ++i)
             CreateNewPlayer();
 
-        soundController = GameObject.FindWithTag("SoundController").GetComponent<SoundController>();
+        //soundController = GameObject.FindWithTag("SoundController").GetComponent<SoundController>();
+        soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
     }
 
     void Update()
@@ -73,13 +74,16 @@ public class GameManager : MonoBehaviour
         switch (currState)
         { 
             case GAMESTATE.MAIN_MENU:
-                soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("MainMenu"));
+                //soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("MainMenu"));
+                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
                 break;
             case GAMESTATE.CHAR_SELECT:
-                soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("CharSelect"));
+                //soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("CharSelect"));
+                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("CharSelect"), true);
                 break;
             case GAMESTATE.IN_GAME:
-                soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()));
+                //soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()));
+                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()), true);
                 break;
         }
 
@@ -120,6 +124,9 @@ public class GameManager : MonoBehaviour
     {
         foreach (PlayerData player in playerList)
         {
+            if (!player.IsAssigned())
+                continue;
+
             if (player.GetInGameData().GetTeam() != playerTeam)
                 continue;
 

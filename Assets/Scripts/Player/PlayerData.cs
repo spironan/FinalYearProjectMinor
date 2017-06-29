@@ -3,6 +3,12 @@ using System.Collections;
 
 public class PlayerData : MonoBehaviour
 {
+    //Unique Player ID <- Important , used to identify that particular player
+    uint UniquePlayerID;
+    //Player In Game ID
+    PLAYER playerID;
+    //PlayerName <- Name of the Player           
+    string PlayerName;   
     //Controller For Reading Input
     public ListOfControllerActions controller;
     //the frame outline of the player
@@ -11,12 +17,6 @@ public class PlayerData : MonoBehaviour
     PlayerCharacterData[] characterData = new PlayerCharacterData[CharacterManager.GetInstance().GetCharCount()];
     // Player's In Game Data <- Determine which side player is Spawned and used for in game stuff
     PlayerInGameData inGameData = new PlayerInGameData();
-    //Unique Player ID <- Important , used to identify that particular player
-    uint UniquePlayerID;
-    //Player In Game ID
-    PLAYER playerID;
-    //PlayerName <- Name of the Player           
-    string PlayerName;   
     //whether the player is master or guest
     bool isMaster = false;
     //Whether Player Has Already Assigned itself To be Which Player

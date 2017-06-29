@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class BackToMainScript : MonoBehaviour 
 {
@@ -13,15 +14,29 @@ public class BackToMainScript : MonoBehaviour
     BUTTON_OPTIONS button = BUTTON_OPTIONS.NO;
     Button[] buttons = null;
     ListOfControllerActions controller = null;
-    bool reset = false;
+    PointerEventData pointer;
+    EventSystem eventSystem;
+
+    void Awake()
+    {
+        eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
+        pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
+    }
 
     // Use this for initialization
     public void Reset()
     {
         button = BUTTON_OPTIONS.NO;
         if (buttons == null)
-            buttons = GetComponentsInChildren<Button>();
-        reset = true;
+            buttons = GetComponentsInChildren<Button>(); 
+        StartCoroutine(HighlightButton());
+    }
+
+    IEnumerator HighlightButton()
+    {
+        eventSystem.SetSelectedGameObject(null);
+        yield return new WaitForEndOfFrame();
+        eventSystem.SetSelectedGameObject(buttons[(int)button].gameObject);
     }
 
     public void SetControllerToReadFrom(ListOfControllerActions newController)
@@ -32,11 +47,6 @@ public class BackToMainScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (reset)
-        {
-            buttons[(int)button].Select();
-            reset = false;
-        }
         if (controller != null)
         {
             if (controller.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT))
@@ -46,12 +56,6 @@ public class BackToMainScript : MonoBehaviour
                     button = BUTTON_OPTIONS.NO;
                     buttons[(int)button].Select();
                 }
-
-                //if (button < BUTTON_OPTIONS.NO)
-                //{
-                //    button++;
-                //    buttons[(int)button].Select();
-                //}
             }
             else if (controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
             {
@@ -61,16 +65,13 @@ public class BackToMainScript : MonoBehaviour
                     button = BUTTON_OPTIONS.YES;
                     buttons[(int)button].Select();
                 }
-
-                //if (button > BUTTON_OPTIONS.REMATCH)
-                //{
-                //    button--;
-                //    buttons[(int)button].Select();
-                //}
             }
 
             if (controller.getButtonAction(ACTIONS.SELECT))
-                buttons[(int)button].onClick.Invoke();
+            {
+                ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
+                //buttons[(int)button].onClick.Invoke();
+            }
         }
     }
 }

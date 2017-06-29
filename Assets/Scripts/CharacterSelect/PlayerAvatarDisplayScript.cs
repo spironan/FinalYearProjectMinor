@@ -20,10 +20,11 @@ public class PlayerAvatarDisplayScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (charSelect.GetCurrChara(playerTeam) != null)
-            if (charaName.text != charSelect.GetCurrChara(playerTeam))
+        string currentChar = charSelect.GetCurrChara(playerTeam);
+        if (currentChar != null)
+            if (charaName.text != currentChar)
             {
-                charaName.text = charSelect.GetCurrChara(playerTeam);
+                charaName.text = currentChar;
                 charaArt.sprite = charSelect.GetCharaArt(playerTeam);
             }
 	}

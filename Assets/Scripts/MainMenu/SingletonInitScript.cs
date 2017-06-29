@@ -9,11 +9,13 @@ public class SingletonInitScript : MonoBehaviour
         //Init Database
         Database db = DatabaseSystem.GetInstance().InitDataBase("FYPJ2Database", "FYPJ2Database.db");
 
-	    //Init Managers,Order Matters!
+	    //Init Universal Managers here
         SpriteManager.GetInstance().Initialze(db, "Sprites");
-        CharacterManager.GetInstance().InitCharacters(db, "Characters");
-        MapManager.GetInstance().InitMaps(db, "Maps");
         PrefabManager.GetInstance().Initialze(db, "Prefabs");
         AudioClipManager.GetInstance().Initialze(db, "AudioClips");
+
+        //Init Game Specific DB here,Order Matters!
+        CharacterManager.GetInstance().InitCharacters(db, "Characters");
+        MapManager.GetInstance().InitMaps(db, "Maps");
 	}
 }
