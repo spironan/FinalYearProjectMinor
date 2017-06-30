@@ -266,6 +266,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 313944107}
   - 82: {fileID: 313944108}
+  - 114: {fileID: 313944109}
   m_Layer: 0
   m_Name: GenericGameAudio
   m_TagString: Untagged
@@ -295,7 +296,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -359,6 +360,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &313944109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 313944106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650141f89eb8d2b48aebe82fd4bb8f1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  mode: 0
+  hasMaximumBacklog: 0
+  maxBacklog: 0
 --- !u!1 &564473157
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  mode: 1
+  mode: 0
   hasMaximumBacklog: 0
   maxBacklog: 0
 --- !u!82 &820459426
@@ -713,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  mode: 1
+  mode: 0
   hasMaximumBacklog: 0
   maxBacklog: 0
 --- !u!82 &873231882
@@ -843,7 +859,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 4b055cfb906de254b8cbee6ff03dc6c4, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1437,14 +1453,6 @@ Prefab:
     - target: {fileID: 22426786, guid: 8cd9a2456660c664bae3eb43eb81a66c, type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11406972, guid: 8cd9a2456660c664bae3eb43eb81a66c, type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11483896, guid: 8cd9a2456660c664bae3eb43eb81a66c, type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8cd9a2456660c664bae3eb43eb81a66c, type: 2}

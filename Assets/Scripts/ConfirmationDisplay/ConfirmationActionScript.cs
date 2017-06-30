@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public enum EXECUTE_ACTION
 {
@@ -16,46 +17,25 @@ public class ConfirmationActionScript : MonoBehaviour
 
     EXECUTE_ACTION currAction = EXECUTE_ACTION.NOTHING;
     GAMESTATE currState;
+    Button currentButton;
+    PointerEventData pointer;
 
     //Function to be called by button to run the appropriate Action at the appropriate points
     public void ExecuteEvent()
     {
-        Debug.Log("Current State : " + currState);
-        switch (currState)
+        if (currentButton != null)
         {
-            case GAMESTATE.MAIN_MENU:
-            {
-            }
-            break;
-            case GAMESTATE.CHAR_SELECT:
-            {
-                if (currAction == EXECUTE_ACTION.BACK_TO_MAIN)
-                {
-                    LoadingScreenManager.LoadScene("MainMenuScene");
-                }
-            }
-            break;
-            case GAMESTATE.IN_GAME:
-            {
-                GameObject battleSceneObj = GameObject.FindWithTag("UserInterface");
-                if (currAction == EXECUTE_ACTION.BACK_TO_MAIN)
-                {
-                    LoadingScreenManager.LoadScene("MainMenuScene");
-                    battleSceneObj.GetComponent<BattleSceneManager>().ResetEntireSet();
-                }
-                else if (currAction == EXECUTE_ACTION.BACK_TO_CHARSELECT)
-                {
-                    LoadingScreenManager.LoadScene("CharacterSelectScene");
-                    battleSceneObj.GetComponent<ResetCharSelectScript>().ResetCharacterSelect();
-                    battleSceneObj.GetComponent<BattleSceneManager>().ResetEntireSet();
-                }
-                else if (currAction == EXECUTE_ACTION.BACK_TO_MAPSELECT)
-                {
-                    LoadingScreenManager.LoadScene("CharacterSelectScene");
-                    battleSceneObj.GetComponent<BattleSceneManager>().ResetEntireSet();
-                }
-            }
-            break;
+            pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
+            ExecuteEvents.Execute(currentButton.gameObject, pointer, ExecuteEvents.submitHandler);
+        }
+    }
+
+    //Function to be executed when you close the button
+    public void ExecuteClose()
+    {
+        if (currentButton != null)
+        {
+            currentButton.Select();
         }
     }
 
@@ -74,9 +54,16 @@ public class ConfirmationActionScript : MonoBehaviour
             currState = gameState;
     }
 
-    public void SetStateAndAction(GAMESTATE gameState, EXECUTE_ACTION action)
+    public void SetButton(Button newButton)
+    {
+        if (currentButton != newButton)
+            currentButton = newButton;
+    }
+
+    public void SetStateButtonAction(GAMESTATE gameState, Button newButton, EXECUTE_ACTION action)
     {
         SetState(gameState);
+        SetButton(newButton);
         SetAction(action);
     }
 

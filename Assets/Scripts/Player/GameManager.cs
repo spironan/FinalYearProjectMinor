@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour 
 {
-    //Buffer Time The Player Needs to Press Before Actually Creating Player
-    //public float holdTime;
-    //float curHoldTime;
-
     //Prefab for PlayerBase
     public GameObject playerBasePrefab;
-    //Frames Of The Different Players
-    //public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
     //List Of Existing Players
     List<PlayerData> playerList = new List<PlayerData>();
     //Master Player Has More Rights then Guest
@@ -24,8 +19,6 @@ public class GameManager : MonoBehaviour
     GAME_MODES currGameMode = GAME_MODES.LOCAL_PVP;
     //Current Number Of Players
     PLAYER playerCount = PLAYER.PLAYER_ONE;
-    //Current Team Of the Player
-    //TEAM playerTeam = TEAM.TEAM_BEGIN;
     //SoundController soundController;
     public SoundSystem soundSystem;
     //Confirmation Display
@@ -48,12 +41,12 @@ public class GameManager : MonoBehaviour
         confirmationDisplay.GetComponent<ToggleActiveScript>().ToggleActive(false);
     }
 
-    public void ToggleConfirmationDisplay(ListOfControllerActions controller, EXECUTE_ACTION action = EXECUTE_ACTION.NOTHING, bool playSound = true)
+    public void ToggleConfirmationDisplay(ListOfControllerActions controller, Button button, EXECUTE_ACTION action = EXECUTE_ACTION.NOTHING, bool playSound = true)
     {
         confirmationDisplay.GetComponent<ToggleActiveScript>().ToggleActive(playSound);
         if (confirmationDisplay.activeSelf)
         { 
-            confirmationDisplay.GetComponent<ConfirmationActionScript>().SetStateAndAction(currState, action);
+            confirmationDisplay.GetComponent<ConfirmationActionScript>().SetStateButtonAction(currState, button, action);
             confirmationDisplay.GetComponent<ConfirmationDisplayScript>().SetControllerToReadFrom(controller);
             confirmationDisplay.GetComponent<ConfirmationDisplayScript>().Reset();
         }
@@ -66,24 +59,25 @@ public class GameManager : MonoBehaviour
 
     //Setter(s)
     public void SetCurrMap(string mapName) { currMap = MapManager.GetInstance().GetMap(mapName); }
+
     //Each Scene Should have their own "Head of Department" that will call this code once to change scene
     public void ChangeState(GAMESTATE state)
     {
         if (currState != state)
             currState = state;
 
-        //switch (currState)
-        //{ 
-        //    case GAMESTATE.MAIN_MENU:
-        //        soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
-        //        break;
-        //    case GAMESTATE.CHAR_SELECT:
-        //        soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("CharSelect"), true);
-        //        break;
-        //    case GAMESTATE.IN_GAME:
-        //        soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()), true);
-        //        break;
-        //}
+        switch (currState)
+        {
+            case GAMESTATE.MAIN_MENU:
+                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
+                break;
+            case GAMESTATE.CHAR_SELECT:
+                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("CharSelect"), true);
+                break;
+            case GAMESTATE.IN_GAME:
+                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()), true);
+                break;
+        }
 
         Debug.Log("State Changed to : " + currState);
     }

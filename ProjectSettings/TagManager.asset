@@ -30,6 +30,7 @@ TagManager:
   - PauseDisplay
   - SoundSystem
   - ConfirmationDisplay
+  - ChangeSceneButton
   layers:
   - Default
   - TransparentFX

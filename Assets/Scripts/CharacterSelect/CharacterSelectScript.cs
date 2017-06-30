@@ -61,7 +61,7 @@ public class CharacterSelectScript : MonoBehaviour
 
             CharacterBase charData = CharacterManager.GetInstance().GetCharacterByIndex(i);
             tempSlot.SetCharName(charData.GetName());
-            tempSlot.SetImageSprite(charData.GetCharArt());
+            tempSlot.SetImageSprite(charData.GetIcon());
             charSlots.Add(slot);
 
             width++;
@@ -207,7 +207,7 @@ public class CharacterSelectScript : MonoBehaviour
 
     void ActivateExitConfirmation(ListOfControllerActions controller)
     {
-        gameManager.ToggleConfirmationDisplay(controller, EXECUTE_ACTION.BACK_TO_MAIN);
+        gameManager.ToggleConfirmationDisplay(controller, GameObject.FindWithTag("ChangeSceneButton").GetComponent<Button>(),EXECUTE_ACTION.BACK_TO_MAIN);
         updateNavigation = false;
     }
 

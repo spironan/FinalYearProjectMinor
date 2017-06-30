@@ -9,13 +9,11 @@ public class ConfirmationInterfaceScript : MonoBehaviour
 	void Start () {
         if (confirmationObj == null)
             confirmationObj = GameObject.FindWithTag("ConfirmationDisplay");//.GetComponent<ConfirmationDisplayScript>();
-
 	}
 	
     public void ActivateDisplay()
     {
         confirmationObj.GetComponent<ToggleActiveScript>().ToggleActive();
-
     }
 
 	// Update is called once per frame

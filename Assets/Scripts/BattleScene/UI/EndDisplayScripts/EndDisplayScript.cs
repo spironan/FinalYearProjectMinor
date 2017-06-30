@@ -32,7 +32,6 @@ public class EndDisplayScript : MonoBehaviour
 
 	// Use this for initialization
 	public void Reset () {
-
         button = ENDGAME_OPTIONS.REMATCH;
         if(buttons == null)
             buttons = GetComponentsInChildren<Button>();
@@ -86,21 +85,20 @@ public class EndDisplayScript : MonoBehaviour
                         break;
                     case ENDGAME_OPTIONS.MAP_SELECT:
                         {
-                            gameManager.ToggleConfirmationDisplay(masterController, EXECUTE_ACTION.BACK_TO_MAPSELECT);
+                            gameManager.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAPSELECT);
                         }
                         break;
                     case ENDGAME_OPTIONS.CHARACTER_SELECT:
                         {
-                            gameManager.ToggleConfirmationDisplay(masterController, EXECUTE_ACTION.BACK_TO_CHARSELECT);
+                            gameManager.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
                         }
                         break;
                     case ENDGAME_OPTIONS.BACK_TO_MAIN:
                         {
-                            gameManager.ToggleConfirmationDisplay(masterController, EXECUTE_ACTION.BACK_TO_MAIN);
+                            gameManager.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
                         }
                         break;
                 }
-                //buttons[(int)button].onClick.Invoke();
             }
         }
 	}

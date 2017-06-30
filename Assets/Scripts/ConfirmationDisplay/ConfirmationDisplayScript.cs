@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class ConfirmationDisplayScript : MonoBehaviour 
 {
-    enum BUTTON_OPTIONS
+    public enum BUTTON_OPTIONS
     {
         NO,
         YES
@@ -24,17 +24,20 @@ public class ConfirmationDisplayScript : MonoBehaviour
     }
 
     // Use this for initialization
-    public void Reset()
+    public void Reset(BUTTON_OPTIONS defaultButton = BUTTON_OPTIONS.NO)
     {
         eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
         pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
+
         if (selectOption == null)
             selectOption = AudioClipManager.GetInstance().GetAudioClip("SelectOption");
         if (executeOption == null)
             executeOption = AudioClipManager.GetInstance().GetAudioClip("ExecuteOption");
-        button = BUTTON_OPTIONS.NO;
+
+        button = defaultButton;
         if (buttons == null)
             buttons = GetComponentsInChildren<Button>(); 
+
         StartCoroutine(HighlightButton());
     }
 
@@ -47,7 +50,8 @@ public class ConfirmationDisplayScript : MonoBehaviour
 
     public void SetControllerToReadFrom(ListOfControllerActions newController)
     {
-        controller = newController;
+        if(controller != newController)
+            controller = newController;
     }
 
     // Update is called once per frame
@@ -78,8 +82,8 @@ public class ConfirmationDisplayScript : MonoBehaviour
 
             if (controller.getButtonAction(ACTIONS.SELECT))
             {
-                ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
                 soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, executeOption);
+                ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
                 //soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("ExecuteOption"));
                 //buttons[(int)button].onClick.Invoke();
             }

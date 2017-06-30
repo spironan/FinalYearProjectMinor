@@ -930,7 +930,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
+  - time: 0.016666668
     functionName: DeActivateControllers
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -944,7 +944,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.8333334
+  - time: 1.9666667
     functionName: ActivateControllers
     data: 
     objectReferenceParameter: {fileID: 0}
