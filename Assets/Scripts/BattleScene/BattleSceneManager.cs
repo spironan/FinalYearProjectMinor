@@ -64,7 +64,7 @@ public class BattleSceneManager : MonoBehaviour
         endDisplay = GameObject.FindWithTag("EndDisplay");
         endDisplay.SetActive(false);
         pauseDisplay = GameObject.FindWithTag("PauseDisplay");
-        pauseDisplay.SetActive(false);
+        pauseDisplay.GetComponent<ToggleActiveScript>().ToggleActive(false);
         currentRound = 1;
         LoadOncePerScene();
     }
@@ -115,7 +115,7 @@ public class BattleSceneManager : MonoBehaviour
         gamePaused = true;
 
         Time.timeScale = 0.0f;
-        pauseDisplay.SetActive(true);
+        pauseDisplay.GetComponent<ToggleActiveScript>().ToggleActive();
         pauseDisplay.GetComponentInChildren<PauseMenuScript>().Pause(playerID);
         foreach (GameObject player in playerCharacters)
         {
@@ -129,7 +129,7 @@ public class BattleSceneManager : MonoBehaviour
         gamePaused = false;
 
         Time.timeScale = 1.0f;
-        pauseDisplay.SetActive(false);
+        pauseDisplay.GetComponent<ToggleActiveScript>().ToggleActive();
         foreach (GameObject player in playerCharacters)
         {
             player.GetComponent<PlayerCharacterLogicScript>().StartUpdate(); // Start Updating Players again

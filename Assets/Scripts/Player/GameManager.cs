@@ -27,42 +27,43 @@ public class GameManager : MonoBehaviour
     //Current Team Of the Player
     //TEAM playerTeam = TEAM.TEAM_BEGIN;
     //SoundController soundController;
-    SoundSystem soundSystem;
+    public SoundSystem soundSystem;
+    //Confirmation Display
+    GameObject confirmationDisplay;
+
     //Dont destroy on load the manager -> exist permantly
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         //Let Player 1 Control The Main Menu Regardless Is Who
         //GetComponent<PlayerControllerManager>().init(PLAYER.PLAYER_ONE);
+
         //Create All Players
         for (int i = 0; i < (int)PLAYER.MAX_PLAYERS; ++i)
             CreateNewPlayer();
 
         //soundController = GameObject.FindWithTag("SoundController").GetComponent<SoundController>();
         soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
+        confirmationDisplay = GameObject.FindWithTag("ConfirmationDisplay");
+        confirmationDisplay.GetComponent<ToggleActiveScript>().ToggleActive(false);
     }
 
-    void Update()
+    public void ToggleConfirmationDisplay(ListOfControllerActions controller, EXECUTE_ACTION action = EXECUTE_ACTION.NOTHING, bool playSound = true)
     {
-        //if (Input.GetKeyDown(KeyCode.Space)
-        //    ||  GetComponent<PlayerControllerManager>().getIsKeyDownHold(BUTTON_INPUT.START)
-        //    )
-        //{
-            //foreach (PlayerControllerManager controller in GetComponents<PlayerControllerManager>())
-            //{
-            //    if (controller.getIsKeyDownHold(BUTTON_INPUT.START))
-            //    {
-            //        curHoldTime += Time.deltaTime;
-            //        if (curHoldTime >= holdTime)
-            //        {
-            //            CreateNewPlayer();
-            //            curHoldTime = 0.0f;
-            //        }
-            //    }
-            //}
-        //}
+        confirmationDisplay.GetComponent<ToggleActiveScript>().ToggleActive(playSound);
+        if (confirmationDisplay.activeSelf)
+        { 
+            confirmationDisplay.GetComponent<ConfirmationActionScript>().SetStateAndAction(currState, action);
+            confirmationDisplay.GetComponent<ConfirmationDisplayScript>().SetControllerToReadFrom(controller);
+            confirmationDisplay.GetComponent<ConfirmationDisplayScript>().Reset();
+        }
     }
-    
+
+    public bool GetConfirmationDisplayActive()
+    {
+        return confirmationDisplay.activeSelf;
+    }
+
     //Setter(s)
     public void SetCurrMap(string mapName) { currMap = MapManager.GetInstance().GetMap(mapName); }
     //Each Scene Should have their own "Head of Department" that will call this code once to change scene
@@ -71,21 +72,18 @@ public class GameManager : MonoBehaviour
         if (currState != state)
             currState = state;
 
-        switch (currState)
-        { 
-            case GAMESTATE.MAIN_MENU:
-                //soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("MainMenu"));
-                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
-                break;
-            case GAMESTATE.CHAR_SELECT:
-                //soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("CharSelect"));
-                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("CharSelect"), true);
-                break;
-            case GAMESTATE.IN_GAME:
-                //soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()));
-                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()), true);
-                break;
-        }
+        //switch (currState)
+        //{ 
+        //    case GAMESTATE.MAIN_MENU:
+        //        soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
+        //        break;
+        //    case GAMESTATE.CHAR_SELECT:
+        //        soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("CharSelect"), true);
+        //        break;
+        //    case GAMESTATE.IN_GAME:
+        //        soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()), true);
+        //        break;
+        //}
 
         Debug.Log("State Changed to : " + currState);
     }

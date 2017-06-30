@@ -13,8 +13,8 @@ public class urgentChangeScene : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         //soundController = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
         //soundController.ChangeBGM(AudioClipManager.GetInstance().GetAudioClip("MainMenu"));
-        soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
-        soundSystem.PlayClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
+        //soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
+        //soundSystem.PlayClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
 	}
 	
 	// Update is called once per frame

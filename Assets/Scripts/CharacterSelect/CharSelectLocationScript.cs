@@ -7,6 +7,7 @@ public class CharSelectLocationScript : MonoBehaviour
     CharacterSlot charData;
     bool lockedIn = false;
 
+
     public void AssignCharSlot(GameObject _charSlot) 
     { 
         this.charSlot = _charSlot;

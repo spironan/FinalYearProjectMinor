@@ -76,6 +76,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public Vector2 GetDirection() { return direction; }
     public PLAYER GetPlayerID() { return playerID; }
     public PlayerControllerManager GetController() { return controller; }
+    public SkillActivator GetSkillActivator() { return skillActivator; }
     //public ListOfControllerActions GetController() { return controller; }
     
     //mana
@@ -299,7 +300,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     {
         inAir = true;
         Debug.Log("JumpForce : " + character.GetJumpForce() * Time.deltaTime);
-        rigidbody.AddForce(new Vector2(0, Mathf.Clamp(character.GetJumpForce() * Time.deltaTime,1,1500)));
+        rigidbody.AddForce(new Vector2(0, Mathf.Clamp(character.GetJumpForce() * Time.deltaTime,1,2500)));
     }
     public virtual void Recalculate()
     {

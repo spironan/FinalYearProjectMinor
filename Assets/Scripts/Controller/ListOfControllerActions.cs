@@ -19,6 +19,11 @@ public class ListOfControllerActions : MonoBehaviour {
     //*********************************************************************************************
     //getters
     //*********************************************************************************************
+    public PlayerControllerManager GetControllerManager()
+    {
+        return playerControllerManager;
+    }
+
     public bool getButtonAction(ACTIONS action)
     {
         return playerControllerManager.getIsKeyDown(buttonBinds[action]);

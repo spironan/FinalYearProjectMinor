@@ -10,11 +10,12 @@ public class PlayerUIScript : MonoBehaviour
     public GameObject manaObj;
     public GameObject ultibarObj;
     PlayerCharacterLogicScript playerInfo;
-    Image charArt,currHealth, currMana, ultibar;
-
+    Image charArt, currHealth, currMana, ultibar;
+    public PlayerSkillsDisplayScript playerSkills;
     float ultAmountToReach = 0.0f;
     bool updateUltMeter = false;
 
+    bool runOnce = true;
 
 	// Use this for initialization
 	void Start () 
@@ -28,11 +29,17 @@ public class PlayerUIScript : MonoBehaviour
 
         ultAmountToReach = 0.0f;
         updateUltMeter = false;
+
     }
 	
 	// Update is called once per frame
 	void Update () 
     {
+        if (runOnce)
+        {
+            playerSkills.SetSkillsIcon(playerInfo.GetSkillActivator());
+            runOnce = false;
+        }
         currHealth.fillAmount = playerInfo.GetHealthPercentage();
         currMana.fillAmount = playerInfo.percentageOfMana();
 
@@ -43,18 +50,5 @@ public class PlayerUIScript : MonoBehaviour
             ultibar.fillAmount += 0.01f;
         else if(ultAmountToReach == 0.0f)
             ultibar.fillAmount = 0.0f;
-
-        //if (updateUltMeter)
-        //{
-        //    ultibar.fillAmount += (ultAmountToReach - ultibar.fillAmount) * 0.01f;
-        //    if (ultibar.fillAmount == ultAmountToReach)
-        //        updateUltMeter = false;
-        //}
-        //else if (ultibar.fillAmount != playerInfo.GetUltiPercentage())
-        //{
-        //    ultAmountToReach = playerInfo.GetUltiPercentage();
-        //    updateUltMeter = true;
-        //}
-
 	}
 }

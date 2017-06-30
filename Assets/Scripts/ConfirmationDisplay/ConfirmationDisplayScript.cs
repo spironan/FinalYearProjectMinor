@@ -3,29 +3,35 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class BackToMainScript : MonoBehaviour 
+public class ConfirmationDisplayScript : MonoBehaviour 
 {
     enum BUTTON_OPTIONS
     {
         NO,
         YES
     };
-
     BUTTON_OPTIONS button = BUTTON_OPTIONS.NO;
     Button[] buttons = null;
     ListOfControllerActions controller = null;
     PointerEventData pointer;
     EventSystem eventSystem;
+    SoundSystem soundSystem;
+    AudioClip selectOption, executeOption;
 
     void Awake()
     {
-        eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
-        pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
+        soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
     }
 
     // Use this for initialization
     public void Reset()
     {
+        eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
+        pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
+        if (selectOption == null)
+            selectOption = AudioClipManager.GetInstance().GetAudioClip("SelectOption");
+        if (executeOption == null)
+            executeOption = AudioClipManager.GetInstance().GetAudioClip("ExecuteOption");
         button = BUTTON_OPTIONS.NO;
         if (buttons == null)
             buttons = GetComponentsInChildren<Button>(); 
@@ -55,23 +61,29 @@ public class BackToMainScript : MonoBehaviour
                 {
                     button = BUTTON_OPTIONS.NO;
                     buttons[(int)button].Select();
+                    //soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectOption);
+                    soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
                 }
             }
             else if (controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
             {
-
                 if (button != BUTTON_OPTIONS.YES)
                 {
                     button = BUTTON_OPTIONS.YES;
                     buttons[(int)button].Select();
+                    soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectOption);
+                    //soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
                 }
             }
 
             if (controller.getButtonAction(ACTIONS.SELECT))
             {
                 ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
+                soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, executeOption);
+                //soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("ExecuteOption"));
                 //buttons[(int)button].onClick.Invoke();
             }
         }
     }
+
 }

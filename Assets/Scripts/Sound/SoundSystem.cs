@@ -66,9 +66,9 @@ public class SoundSystem : MonoBehaviour {
         return null;
     }
 
-    public void PlayClip(AUDIO_TYPE audioType, AudioClip clip, bool toLoop = false)
+    public void PlayClip(AUDIO_TYPE audioType, AudioClip clip, bool toLoop = false, string audioSourceName = "", bool playNext = false, bool replaceNext = false)
     {
-        GetAudioManagerByType(audioType).PlayClip(clip, toLoop);
+        GetAudioManagerByType(audioType).PlayClip(clip, toLoop, audioSourceName, playNext, replaceNext);
     }
 
     public void ChangeClip(AUDIO_TYPE audioType, AudioClip clip, bool toLoop = false, float pitch = 1.0f, bool replaceNext = false, string audioSourceName = "")

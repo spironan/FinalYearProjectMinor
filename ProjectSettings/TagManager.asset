@@ -25,11 +25,11 @@ TagManager:
   - SoundController
   - EndDisplay
   - MapHolder
-  - BackToMain
   - Stages
   - EventSystem
   - PauseDisplay
   - SoundSystem
+  - ConfirmationDisplay
   layers:
   - Default
   - TransparentFX
@@ -39,7 +39,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - ConfirmationDisplay
   - 
   - 
   - 

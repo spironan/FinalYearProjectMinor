@@ -20,9 +20,11 @@ public class EndDisplayScript : MonoBehaviour
     PointerEventData pointer;
     EventSystem eventSystem;
     PlayerWinScript winScript;
+    GameManager gameManager;
 
     void Awake()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
         pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
         winScript = transform.parent.gameObject.GetComponentInChildren<PlayerWinScript>();
@@ -50,27 +52,56 @@ public class EndDisplayScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 
-        if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
+        if (!gameManager.GetConfirmationDisplayActive())
         {
-            if (button < ENDGAME_OPTIONS.BACK_TO_MAIN)
+            if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
             {
-                button++;
-                buttons[(int)button].Select();
+                if (button < ENDGAME_OPTIONS.BACK_TO_MAIN)
+                {
+                    button++;
+                    buttons[(int)button].Select();
+                    gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
+                }
             }
-        }
-        else if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
-        {
-            if (button > ENDGAME_OPTIONS.REMATCH)
+            else if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
             {
-                button--;
-                buttons[(int)button].Select();
+                if (button > ENDGAME_OPTIONS.REMATCH)
+                {
+                    button--;
+                    buttons[(int)button].Select();
+                    gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
+                }
             }
-        }
 
-        if (masterController.getButtonAction(ACTIONS.SELECT))
-        {
-            ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
-            //buttons[(int)button].onClick.Invoke();
+            if (masterController.getButtonAction(ACTIONS.SELECT))
+            {
+                gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("ExecuteOption"));
+                switch (button)
+                {
+                    case ENDGAME_OPTIONS.REMATCH:
+                        {
+                            ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
+                            //buttons[(int)button].onClick.Invoke();
+                        }
+                        break;
+                    case ENDGAME_OPTIONS.MAP_SELECT:
+                        {
+                            gameManager.ToggleConfirmationDisplay(masterController, EXECUTE_ACTION.BACK_TO_MAPSELECT);
+                        }
+                        break;
+                    case ENDGAME_OPTIONS.CHARACTER_SELECT:
+                        {
+                            gameManager.ToggleConfirmationDisplay(masterController, EXECUTE_ACTION.BACK_TO_CHARSELECT);
+                        }
+                        break;
+                    case ENDGAME_OPTIONS.BACK_TO_MAIN:
+                        {
+                            gameManager.ToggleConfirmationDisplay(masterController, EXECUTE_ACTION.BACK_TO_MAIN);
+                        }
+                        break;
+                }
+                //buttons[(int)button].onClick.Invoke();
+            }
         }
 	}
 

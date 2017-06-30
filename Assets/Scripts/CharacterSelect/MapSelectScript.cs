@@ -94,17 +94,19 @@ public class MapSelectScript : MonoBehaviour
     bool atDest = true;
 
     List<GameObject> maps = new List<GameObject>();
-    GameObject gameManager;
+    GameManager gameManager;
     Vector3 offset;
     Vector3 moveBy;
     Vector3 destination = Vector3.zero;
     Vector3 dir = Vector3.zero;
+    AudioClip select;
 
 	// Use this for initialization
 	void Start ()
     {
+        select = AudioClipManager.GetInstance().GetAudioClip("Select");
         mapPrefab = PrefabManager.GetInstance().GetPrefab("MapSlot");
-        gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         totalMaps = MapManager.GetInstance().GetMapCount();
         offset = new Vector3(itemWidth + spaceBetweenMaps, 0, 0);
 
@@ -156,7 +158,7 @@ public class MapSelectScript : MonoBehaviour
             canActivate = true;
 
         ///Controls here
-        PlayerData player = gameManager.GetComponent<GameManager>().GetPlayer(0);
+        PlayerData player = gameManager.GetPlayer(0);
         if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
         {
             ShiftLeft(); // Shift The Things To The Left 
@@ -194,7 +196,8 @@ public class MapSelectScript : MonoBehaviour
 
     public void PickSelectedMap()
     {
-        gameManager.GetComponent<GameManager>().SetCurrMap(maps[currIndex].GetComponent<MapSlot>().GetMapName());
+        gameManager.SetCurrMap(maps[currIndex].GetComponent<MapSlot>().GetMapName());
+        gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("PickMap"));
         mapPicked = true;
     }
     public bool CheckMapPicked()
@@ -240,7 +243,7 @@ public class MapSelectScript : MonoBehaviour
                     }
                     break;
             }
-
+            gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, select);
             ResizeMaps();
         }
     }
