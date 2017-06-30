@@ -84,27 +84,18 @@ public class PauseMenuScript : MonoBehaviour
             if (controller.getButtonAction(ACTIONS.SELECT))
             {
                 gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("ExecuteOption"));
-                switch (button)
+                
+                if(button == PAUSE_OPTIONS.CHARACTER_SELECT)
                 {
-                    case PAUSE_OPTIONS.CHARACTER_SELECT:
-                        {
-                            gameManager.ToggleConfirmationDisplay(controller, EXECUTE_ACTION.BACK_TO_CHARSELECT);
-                        }
-                        break;
-                    case PAUSE_OPTIONS.BACK_TO_MAIN:
-                        {
-                            gameManager.ToggleConfirmationDisplay(controller, EXECUTE_ACTION.BACK_TO_MAIN);
-                        }
-                        break;
-                    case PAUSE_OPTIONS.RESUME:
-                    case PAUSE_OPTIONS.MOVE_LIST:
-                    case PAUSE_OPTIONS.SOUND_OPTION:
-                    case PAUSE_OPTIONS.CONTROLLER_SETTINGS:
-                        {
-                            ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
-                            //buttons[(int)button].onClick.Invoke();
-                        }
-                        break;
+                    gameManager.ToggleConfirmationDisplay(controller, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
+                }
+                else if(button == PAUSE_OPTIONS.BACK_TO_MAIN)
+                {
+                    gameManager.ToggleConfirmationDisplay(controller, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
+                }
+                else
+                {
+                    ExecuteEvents.Execute(buttons[(int)button].gameObject, pointer, ExecuteEvents.submitHandler);
                 }
             }
         }
