@@ -230,6 +230,7 @@ public class SkillActivator : MonoBehaviour {
     void destroyInactiveSkill()
     {
         selectedSkill = false;
+        isCastingUlti = false;
         Destroy(skill_gameObject);
     }
 
