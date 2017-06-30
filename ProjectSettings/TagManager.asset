@@ -30,6 +30,8 @@ TagManager:
   - PauseDisplay
   - SoundSystem
   - ConfirmationDisplay
+  - MainMenuOptionsHolder
+  - ConfirmationToQuitHolder
   layers:
   - Default
   - TransparentFX

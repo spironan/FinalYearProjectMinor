@@ -135,6 +135,7 @@ public enum ACTIONS
 
     START,
     SELECT,
+    BACK,
     ACTIVATE,
 
     MOVE_UP,

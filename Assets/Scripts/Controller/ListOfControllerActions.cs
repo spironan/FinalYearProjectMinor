@@ -96,6 +96,7 @@ public class ListOfControllerActions : MonoBehaviour {
         buttonBinds.Add(ACTIONS.SKILL_ULTIMATE, BUTTON_INPUT.R3);
 
         buttonBinds.Add(ACTIONS.START, BUTTON_INPUT.START);
+        buttonBinds.Add(ACTIONS.BACK, BUTTON_INPUT.B);
         buttonBinds.Add(ACTIONS.SELECT, BUTTON_INPUT.A);
         buttonBinds.Add(ACTIONS.ACTIVATE, BUTTON_INPUT.L1);
 
