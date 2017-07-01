@@ -1184,6 +1184,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: -490.16003
       objectReference: {fileID: 0}
+    - target: {fileID: 11433548, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e4671781763d79b429109e3447f1203a,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
   m_IsPrefabParent: 0
@@ -1716,6 +1721,10 @@ Prefab:
     - target: {fileID: 22426786, guid: 8cd9a2456660c664bae3eb43eb81a66c, type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11419694, guid: 8cd9a2456660c664bae3eb43eb81a66c, type: 2}
+      propertyPath: m_Text
+      value: Head Back To The Main Menu?
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8cd9a2456660c664bae3eb43eb81a66c, type: 2}
@@ -2338,7 +2347,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ver 0.03 BETA
+  m_Text: Ver 0.05 PLAYTEST
 --- !u!222 &1925265946
 CanvasRenderer:
   m_ObjectHideFlags: 0
