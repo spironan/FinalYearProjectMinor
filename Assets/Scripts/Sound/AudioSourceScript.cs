@@ -10,8 +10,8 @@ public enum AUDIO_TYPE
     END,
 };
 
-public class GenericAudioSource : MonoBehaviour {
-
+public class AudioSourceScript : MonoBehaviour 
+{
     public AUDIO_TYPE type = AUDIO_TYPE.BACKGROUND_MUSIC;
 
     public enum MODES
@@ -20,34 +20,16 @@ public class GenericAudioSource : MonoBehaviour {
         BACKLOG_MODE,
     };
     public MODES mode = MODES.SINGLE;
-
     public bool hasMaximumBacklog = false;
     public uint maxBacklog = 0;
 
     AudioSource audioSource;
     List<AudioClipData> audioBacklog = null;
-
     bool hasBacklog = false;
     bool isMaxed = false;
 
     bool stopPlaying = false;
-    string name = "GenericAudioSource";
-
-    protected void SetName(string name)
-    {
-        this.name = name;
-    }
-
-    protected string GetName()
-    {
-        return name;
-    }
-
-    public void SetVolume(float volume)
-    {
-        if(volume >= 0.0f && volume <= 1.0f)
-            audioSource.volume = volume;
-    }
+    string name = "AudioSource";
 
     // Use this for initialization
     void Awake()
@@ -60,6 +42,34 @@ public class GenericAudioSource : MonoBehaviour {
         }
     }
 
+    public void SetName(string name)
+    {
+        this.name = name;
+    }
+
+    public string GetName()
+    {
+        return name;
+    }
+
+
+    public void SetVolume(float volume)
+    {
+        if(volume >= 0.0f && volume <= 1.0f)
+            audioSource.volume = volume;
+    }
+
+    public float GetVolume()
+    {
+        return audioSource.volume;
+    }
+
+    public bool IsPlaying()
+    {
+        return audioSource.isPlaying;
+    }
+
+
     public bool HasBacklog()
     {
         return hasBacklog;
@@ -70,11 +80,6 @@ public class GenericAudioSource : MonoBehaviour {
         return isMaxed;
     }
 
-    public bool IsPlaying()
-    {
-        return audioSource.isPlaying;
-    }
-
     void CheckIfMaxed()
     {
         if (mode == MODES.BACKLOG_MODE && hasMaximumBacklog)
@@ -83,6 +88,7 @@ public class GenericAudioSource : MonoBehaviour {
             else
                 isMaxed = false;
     }
+
 
     public void PlayOnSchedule(AudioClip newClip, bool toLoop = false, float pitch = 1.0f)
     {
@@ -125,7 +131,6 @@ public class GenericAudioSource : MonoBehaviour {
                 Debug.Log("Maximum Limit of Sounds Set to : " + maxBacklog + " Cant Play Anymore Sounds Because backlog is full alr");
                 return;
             }
-
             List<AudioClipData> newBackLog = new List<AudioClipData>();
             newBackLog.Add(clip);
             for (int i = 0; i < audioBacklog.Count; ++i)
@@ -156,6 +161,8 @@ public class GenericAudioSource : MonoBehaviour {
         audioBacklog.Remove(newClip);
     }
 
+
+
     public void StopImmediately()
     {
         audioSource.Stop();
@@ -180,6 +187,8 @@ public class GenericAudioSource : MonoBehaviour {
         StopImmediately();
     }
 
+
+
     public void ClearAndPlay(AudioClip newClip, bool toLoop = false, float pitch = 1.0f)
     {
         if (hasBacklog)
@@ -198,6 +207,7 @@ public class GenericAudioSource : MonoBehaviour {
     {
         if (hasBacklog)
             StopImmediately();
+
         if (toReplace)
             ReplaceNext(newClip, toLoop, pitch);
         else
@@ -234,22 +244,20 @@ public class GenericAudioSource : MonoBehaviour {
                 }
                 break;
         }
-
     }
+
 }
 
-[CustomEditor(typeof(GenericAudioSource))]
-public class MyScriptEditor : Editor
-{
-    void OnInspectorGUI()
-    {
-        GenericAudioSource myScript = target as GenericAudioSource;
-
-        //if (myScript.HasBacklog())
-            //GUILayout.Toggle(myScript.hasMaximumBacklog, "Maximum backlog");
-
-        //if (myScript.hasMaximumBacklog)
-        //    GUILayout.Toggle(myScript.maxBacklog, "Flag");
-        //myScript.i = EditorGUILayout.IntSlider("I field:", myScript.i, 1, 100);
-    }
-}
+//[CustomEditor(typeof(GenericAudioSource))]
+//public class MyScriptEditor : Editor
+//{
+//    void OnInspectorGUI()
+//    {
+//        GenericAudioSource myScript = target as GenericAudioSource;
+//        //if (myScript.HasBacklog())
+//            //GUILayout.Toggle(myScript.hasMaximumBacklog, "Maximum backlog");
+//        //if (myScript.hasMaximumBacklog)
+//        //    GUILayout.Toggle(myScript.maxBacklog, "Flag");
+//        //myScript.i = EditorGUILayout.IntSlider("I field:", myScript.i, 1, 100);
+//    }
+//}

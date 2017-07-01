@@ -10,7 +10,8 @@ public class SoundSystem : MonoBehaviour {
     public static SoundSystem instance = null;
 
 	// Use this for initialization
-	void Awake () {
+	void Awake () 
+    {
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -23,23 +24,50 @@ public class SoundSystem : MonoBehaviour {
             audioList.Add(i, newAudioManager);
         }
 
-        foreach (GenericAudioSource audioSource in GetComponentsInChildren<GenericAudioSource>())
+        foreach (AudioSourceScript audioSource in GetComponentsInChildren<AudioSourceScript>())
         {
             AddAudioSource(audioSource);
         }
 
-        Debug.Log("Finished SoundInit Script");
+        Initialze(DatabaseSystem.GetInstance().GetDataBase("FYPJ2Database"), "VolumeData");
+        Debug.Log("Finished SoundSystem Initialization");
 	}
 
-    void AddAudioSource(GenericAudioSource audioSource)
+    void Initialze(Database database, string tableName)
     {
+        database.dbConnection.Open();
+        database.dbCmd = database.dbConnection.CreateCommand();
+        string sqlQuery = "SELECT * FROM " + tableName;
+        database.dbCmd.CommandText = sqlQuery;
+        database.reader = database.dbCmd.ExecuteReader();
+        while (database.reader.Read())
+        {
+            for (AUDIO_TYPE i = AUDIO_TYPE.BACKGROUND_MUSIC; i < AUDIO_TYPE.END; ++i)
+            {
+                GetAudioManagerByType(i).SetAllVolume(database.reader.GetFloat((int)i));
+            }
+        }
+        database.SoftReset();
+        Debug.Log("Finished Creating AudioClip From Database");
+    }
+
+    void AddAudioSource(AudioSourceScript audioSource)
+    {
+        if(CheckIfExist(audioSource.gameObject.name))
+        { 
+            Debug.Log("Already Have AudioSource with name : " + audioSource + " Please Set it to a different name in the editor");
+            return;
+        }
         foreach (KeyValuePair<AUDIO_TYPE, AudioManager> entry in audioList)
         {
             if (entry.Key == audioSource.type)
+            {
                 entry.Value.AddAudioSource(audioSource.gameObject.name,audioSource);
+            }
         }
     }
 
+    // Get AudioManager
     public AudioManager GetAudioManagerByType(AUDIO_TYPE type)
     {
         if(CheckIfExist(type))
@@ -66,26 +94,20 @@ public class SoundSystem : MonoBehaviour {
         return null;
     }
 
-    public void PlayClip(AUDIO_TYPE audioType, AudioClip clip, bool toLoop = false, string audioSourceName = "", bool playNext = false, bool replaceNext = false)
+    public AudioManager GetAudioManagerByName(string name)
     {
-        GetAudioManagerByType(audioType).PlayClip(clip, toLoop, audioSourceName, playNext, replaceNext);
-    }
-
-    public void ChangeClip(AUDIO_TYPE audioType, AudioClip clip, bool toLoop = false, float pitch = 1.0f, bool replaceNext = false, string audioSourceName = "")
-    {
-        GetAudioManagerByType(audioType).ChangeClip(clip, toLoop, pitch, replaceNext, audioSourceName);
-    }
-
-    //On Value Change for Slider effects on SFX
-    public void OnValueChanged(Slider slider, AUDIO_TYPE audioType)
-    {
-        Debug.Log(" Volume Changed!");
-        GetAudioManagerByType(audioType).SetAllVolume(slider.value);
-    }
-
-    public void ToggleMute(AUDIO_TYPE type)
-    {
-        GetAudioManagerByType(type).ToggleMute();
+        if (CheckIfExist(name))
+        {
+            foreach (KeyValuePair<AUDIO_TYPE, AudioManager> entry in audioList)
+            {
+                if (entry.Value.gameObject.name == name)
+                {
+                    return entry.Value;
+                }
+            }
+        }
+        Debug.Log("No Such audioSource with name : " + name + " Please Check you have an audioSource with that name with matching case");
+        return null;
     }
 
     public bool CheckIfExist(AUDIO_TYPE type)
@@ -97,5 +119,65 @@ public class SoundSystem : MonoBehaviour {
     {
         return index >= 0 && index <= audioList.Count;
     }
+
+    public bool CheckIfExist(string name)
+    {
+        foreach (KeyValuePair<AUDIO_TYPE, AudioManager> entry in audioList)
+        {
+            if (entry.Value.gameObject.name == name)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Play Clip In Variant
+
+    public void PlayClip(AUDIO_TYPE audioType, AudioClip clip, bool toLoop = false, string audioSourceName = "", bool playNext = false, bool replaceNext = false)
+    {
+        GetAudioManagerByType(audioType).PlayClip(clip, toLoop, audioSourceName, playNext, replaceNext);
+    }
+
+    public void ChangeClip(AUDIO_TYPE audioType, AudioClip clip, bool toLoop = false, float pitch = 1.0f, bool replaceNext = false, string audioSourceName = "")
+    {
+        GetAudioManagerByType(audioType).ChangeClip(clip, toLoop, pitch, replaceNext, audioSourceName);
+    }
+
+
+
+
+
+    //Everything Volume
+    public void ToggleMute(AUDIO_TYPE type)
+    {
+        GetAudioManagerByType(type).ToggleMute();
+    }
+
+    //On Value Change for Slider effects on SFX
+    public void OnValueChanged(Slider slider, AUDIO_TYPE audioType)
+    {
+        Debug.Log(" Volume Changed!");
+        GetAudioManagerByType(audioType).SetAllVolume(slider.value);
+    }
+
+    public void ChangeAllVolume(float volume)
+    {
+        foreach (KeyValuePair<AUDIO_TYPE, AudioManager> entry in audioList)
+        {
+            entry.Value.SetAllVolume(volume);
+        }
+    }
+
+    public void ChangeVolume(float volume, AUDIO_TYPE audioType)
+    {
+        GetAudioManagerByType(audioType).SetAllVolume(volume);
+    }
+
+    public float GetVolumeByType(AUDIO_TYPE audioType)
+    {
+        return GetAudioManagerByType(audioType).GetVolume();
+    }
+
 
 }

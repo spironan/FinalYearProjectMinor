@@ -17,5 +17,6 @@ public class SingletonInitScript : MonoBehaviour
         //Init Game Specific DB here,Order Matters!
         CharacterManager.GetInstance().InitCharacters(db, "Characters");
         MapManager.GetInstance().InitMaps(db, "Maps");
+
 	}
 }

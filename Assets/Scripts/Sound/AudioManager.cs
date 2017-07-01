@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour 
 {
-    Dictionary<string, GenericAudioSource> audioSources = new Dictionary<string, GenericAudioSource>();
+    Dictionary<string, AudioSourceScript> audioSources = new Dictionary<string, AudioSourceScript>();
+    AudioSourceScript defaultAudioSource = null;
     bool muted = false;
     float curVol = 1.0f;
-    GenericAudioSource defaultAudioSource = null;
 
     //Range given to  pitch to have a slight difference in sound everytime.
     bool hasRandomPitch = false;
@@ -23,15 +23,8 @@ public class AudioManager : MonoBehaviour
     public void ToggleMute()
     {
         muted = !muted;
-        if (muted)
-        {
-            SetAllVolume(0.0f);
-        }
-        else
-        {
-            SetAllVolume(curVol);
-        }
     }
+
 
     public bool HasRandomPitch()
     {
@@ -56,19 +49,27 @@ public class AudioManager : MonoBehaviour
             currentPitch = newPitch;
     }
 
+
     public int GetAudioCount()
     {
         return audioSources.Count;
     }
 
+
     public void SetAllVolume(float volume)
     {
         if (volume < 0.0f)
+        {
             Debug.Log("Volume Can't Be Set To Below Zero");
+            return;
+        }
         else if (volume > 1.0f)
+        { 
             Debug.Log("Volume Can't Be Set to Above One");
+            return;
+        }
 
-        foreach (KeyValuePair<string, GenericAudioSource> entry in audioSources)
+        foreach (KeyValuePair<string, AudioSourceScript> entry in audioSources)
         {
             entry.Value.SetVolume(volume);
         }
@@ -76,14 +77,20 @@ public class AudioManager : MonoBehaviour
         Debug.Log("Volume(s) Set To : " + volume);
     }
 
-    public void AddAudioSource(string audioSourceName , GenericAudioSource audioSource)
+    public float GetVolume()
+    {
+        return curVol;
+    }
+
+
+    public void AddAudioSource(string audioSourceName, AudioSourceScript audioSource)
     {
         audioSources.Add(audioSourceName, audioSource);
         if (defaultAudioSource == null)
             defaultAudioSource = audioSource;
     }
 
-    public GenericAudioSource GetAudioSource(string audioSourceName)
+    public AudioSourceScript GetAudioSource(string audioSourceName)
     {
         if (CheckIfExist(audioSourceName)) 
             foreach (string key in audioSources.Keys)
@@ -100,7 +107,7 @@ public class AudioManager : MonoBehaviour
         return null;
     }
 
-    public GenericAudioSource GetAudioSourceByIndex(int index)
+    public AudioSourceScript GetAudioSourceByIndex(int index)
     {
         if (CheckIfExist(index))
         {
@@ -127,6 +134,7 @@ public class AudioManager : MonoBehaviour
     {
         return (index >= 0 && index <= audioSources.Count);
     }
+
 
     public void PlayRandomClip(bool toLoop = false, bool replaceNext = false, string audioSourceName = "", params AudioClip[] clips)
     {
@@ -159,58 +167,61 @@ public class AudioManager : MonoBehaviour
 
     void Play(AudioClip clip, string audioSourceName = "", bool toLoop = false, float pitch = 1.0f, bool playNext = false, bool replaceNext = false)
     {
-        GenericAudioSource audioSource = GetAudioSource(audioSourceName);
+        AudioSourceScript audioSource = GetAudioSource(audioSourceName);
         if (audioSource != null)
         {
-            if (audioSource.HasBacklog() && audioSource.IsMaxed())
+            //if (audioSource.HasBacklog() && audioSource.IsMaxed())
+            //{
+            //    Debug.Log(audioSourceName + " Is Full, Trying to search for another audioSource to Take Over the Job");
+            //    bool found = false;
+            //    foreach (KeyValuePair<string, AudioSourceScript> entry in audioSources)
+            //    {
+            //        if (!entry.Value.HasBacklog())
+            //        { 
+            //            if (entry.Value.IsPlaying())
+            //                continue;
+            //        }
+            //        else if (entry.Value.IsMaxed())
+            //                continue;
+            //        found = true;
+            //        audioSource = entry.Value;
+            //        break;
+            //    }
+            //    if (!found)
+            //    {
+            //        Debug.Log(" Can't Find Suitable Role to Take Over the Job, Using Default to take over");
+            //        audioSource = defaultAudioSource;
+            //    }
+            //    if (playNext)
+            //        if (replaceNext)
+            //            defaultAudioSource.ReplaceNext(clip, toLoop, pitch);
+            //        else
+            //            defaultAudioSource.PlayNext(clip, toLoop, pitch);
+            //    else
+            //        defaultAudioSource.PlayOnSchedule(clip, toLoop, pitch);
+            //}
+            //else
+            if (playNext)
             {
-                Debug.Log(audioSourceName + " Is Full, Trying to search for another audioSource to Take Over the Job");
-                bool found = false;
-                foreach (KeyValuePair<string, GenericAudioSource> entry in audioSources)
-                {
-                    if (!entry.Value.HasBacklog())
-                    { 
-                        if (entry.Value.IsPlaying())
-                            continue;
-                    }
-                    else if (entry.Value.IsMaxed())
-                            continue;
-
-                    found = true;
-                    audioSource = entry.Value;
-
-                    break;
-                }
-                if (!found)
-                {
-                    Debug.Log(" Can't Find Suitable Role to Take Over the Job, Using Default to take over");
-                    audioSource = defaultAudioSource;
-                }
-                if (playNext)
-                    if (replaceNext)
-                        defaultAudioSource.ReplaceNext(clip, toLoop, pitch);
-                    else
-                        defaultAudioSource.PlayNext(clip, toLoop, pitch);
-                else
-                    defaultAudioSource.PlayOnSchedule(clip, toLoop, pitch);
-            }
-            else if (playNext)
                 if (replaceNext)
                     audioSource.ReplaceNext(clip, toLoop, pitch);
                 else
                     audioSource.PlayNext(clip, toLoop, pitch);
+            }
             else
                 audioSource.PlayOnSchedule(clip, toLoop, pitch);
+            
         }
         else
         {
             Debug.Log("Cant Find AudioSource of name : " + audioSourceName + " Are you sure you entered the right name ?");
+            return;
         }
     }
 
     public void ChangeClip(AudioClip clip, bool toLoop = false, float pitch = 1.0f, bool replaceNext = false, string audioSourceName = "")
     {
-        GenericAudioSource audioSource = GetAudioSource(audioSourceName);
+        AudioSourceScript audioSource = GetAudioSource(audioSourceName);
         if (audioSource != null)
         {
             audioSource.ChangeClip(clip, toLoop, pitch, replaceNext);
@@ -218,6 +229,8 @@ public class AudioManager : MonoBehaviour
         else
         {
             Debug.Log("Cant Find AudioSourceName : " + audioSourceName + " Are you sure youve entered the right name?");
+            return;
         }
     }
+
 }

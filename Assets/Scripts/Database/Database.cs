@@ -190,12 +190,16 @@ public class Database
         ExecuteReset();
     }
 
-    public void UpdateLine(string tableName, string variableName, string condition)
+    public void UpdateLine(string tableName, string variableName, string condition = "")
     {
         if (dbConnection.State != ConnectionState.Open)
             dbConnection.Open();
         dbCmd = dbConnection.CreateCommand();
-        string sqlQuery = String.Format("UPDATE {0} SET {1} WHERE {2}", tableName, variableName, condition);
+        string sqlQuery;
+        if(condition != "")
+            sqlQuery = String.Format("UPDATE {0} SET {1} WHERE {2}", tableName, variableName, condition);
+        else
+            sqlQuery = String.Format("UPDATE {0} SET {1} ", tableName, variableName);
         Debug.Log(sqlQuery);
         dbCmd.CommandText = sqlQuery;
         dbCmd.ExecuteScalar();
