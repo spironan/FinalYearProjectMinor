@@ -202,7 +202,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 case QUIT_OPTIONS.YES:
                     {
                         //app should close here do saving here
-                        //ExitGameScript.ExitApplication();
+                        ExitGameScript.ExitApplication();
                         Application.Quit();
                     }
                     break;
