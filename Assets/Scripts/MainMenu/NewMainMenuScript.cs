@@ -44,6 +44,8 @@ public class NewMainMenuScript : MonoBehaviour {
     bool disableConfirmationToQuit = true;
     bool disableSettings = true;
 
+    bool runOnce = false;
+
     // Use this for initialization
     void Awake() {
         eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
@@ -59,11 +61,10 @@ public class NewMainMenuScript : MonoBehaviour {
         if (settings_buttons == null)
             settings_buttons = settingsHolder.GetComponentsInChildren<Button>();
 
-        foreach(Button button in settings_buttons)
-        {
-            Slider temp = button.gameObject.GetComponentInChildren<Slider>();
-            //set all sliders value to be the same as the volume.
-        }
+
+        
+        //set all sliders value to be the same as the volume.
+
 
         confirmationToquitHolder.SetActive(false);
         settingsHolder.SetActive(false);
@@ -93,6 +94,16 @@ public class NewMainMenuScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if(!runOnce)
+        {
+            Slider temp = settings_buttons[(int)SETTINGS_OPTIONS.BGM].gameObject.GetComponentInChildren<Slider>();
+            temp.value = SoundSystem.Instance.GetVolumeByType((AUDIO_TYPE.BACKGROUND_MUSIC));
+
+            Slider temp2 = settings_buttons[(int)SETTINGS_OPTIONS.SFX].gameObject.GetComponentInChildren<Slider>();
+            temp2.value = SoundSystem.Instance.GetVolumeByType(AUDIO_TYPE.SOUND_EFFECTS);
+
+            runOnce = true;
+        }
         if (!disableMainMenu)
         {
             MainActions();
@@ -190,6 +201,8 @@ public class NewMainMenuScript : MonoBehaviour {
             {
                 case QUIT_OPTIONS.YES:
                     {
+                        //app should close here do saving here
+                        //ExitGameScript.ExitApplication();
                         Application.Quit();
                     }
                     break;
