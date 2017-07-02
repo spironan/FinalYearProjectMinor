@@ -2,7 +2,7 @@
 using System.Collections;
 
 //Script to initialize Read from Database once
-public class SingletonInitScript : MonoBehaviour 
+public class SingletonInitScript : SingletonScript
 {
 	void Awake () 
     {
@@ -17,6 +17,5 @@ public class SingletonInitScript : MonoBehaviour
         //Init Game Specific DB here,Order Matters!
         CharacterManager.GetInstance().InitCharacters(db, "Characters");
         MapManager.GetInstance().InitMaps(db, "Maps");
-
 	}
 }

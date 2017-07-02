@@ -6,7 +6,7 @@ public class VictoryDisplayScript : MonoBehaviour
 {
     //public TEAM playerTeam;
     Image[] victory;
-    PlayerInGameData playerInfo;
+    //PlayerInGameData playerInfo;
     int count;
 
     void Start()

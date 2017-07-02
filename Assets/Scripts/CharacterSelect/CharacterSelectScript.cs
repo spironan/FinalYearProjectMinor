@@ -12,8 +12,6 @@ public class CharacterSelectScript : MonoBehaviour
     List<GameObject> charSlots = new List<GameObject>();
     //List Of Player's Different Frames
     List<CharSelectLocationScript> playerFrames = new List<CharSelectLocationScript>();
-    //GameManager
-    GameManager gameManager;
     //The Max Amount of width before going upwards
     int maxWidth;
     //The Number of Slots to Create for each character
@@ -32,7 +30,6 @@ public class CharacterSelectScript : MonoBehaviour
         selectChar = AudioClipManager.GetInstance().GetAudioClip("Select");
         pickChar = AudioClipManager.GetInstance().GetAudioClip("PickChar");
         framePrefab = PrefabManager.GetInstance().GetPrefab("CharacterSlot");
-        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         charCount = CharacterManager.GetInstance().GetCharCount();
         finished = false;
         updateNavigation = true;
@@ -117,7 +114,7 @@ public class CharacterSelectScript : MonoBehaviour
 
     public void CreatePlayerFrame(PLAYER playerID)
     {
-        PlayerData player = gameManager.GetPlayer(playerID);
+        PlayerData player = GameManager.Instance.GetPlayer(playerID);
         GameObject frame = Instantiate(player.selectframe);
         if (frame != null)
         {
@@ -130,7 +127,7 @@ public class CharacterSelectScript : MonoBehaviour
                 framescript.AssignCharSlot(charSlots[0]);
             Debug.Log("Created Frame For PlayerID :" + playerID);
             playerFrames.Add(framescript);
-            gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, startSound, false, "SFX_Player" + ((int)playerID + 1));
+            SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, startSound, false, "SFX_Player" + ((int)playerID + 1));
         }
         else
             Debug.Log("Unable to Create Player Frame for :" + playerID + "as it is null");
@@ -149,9 +146,9 @@ public class CharacterSelectScript : MonoBehaviour
     {
         if (updateNavigation)
         {
-            for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+            for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
             {
-                PlayerData player = gameManager.GetPlayer(i);
+                PlayerData player = GameManager.Instance.GetPlayer(i);
                 Debug.Log("Player ID :" + player.GetPlayerID() + " Of Team : " + player.GetInGameData().GetTeam() + " Is Assigned : " + player.IsAssigned());
                 if (!player.IsAssigned())
                     continue;
@@ -162,24 +159,24 @@ public class CharacterSelectScript : MonoBehaviour
                 if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
                 {
                     playerFrames[team].MoveLeft();
-                    gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
                 }
                 else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT))
                 {
                     playerFrames[team].MoveRight();
-                    gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
                 }
 
                 // Move Up Down
                 if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
                 {
                     playerFrames[team].MoveUp();
-                    gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
                 }
                 else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
                 {
                     playerFrames[team].MoveDown();
-                    gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
                 }
 
                 //Player Picks Character
@@ -199,7 +196,7 @@ public class CharacterSelectScript : MonoBehaviour
                 }
             }
         }
-        else if (!gameManager.GetConfirmationDisplayActive())
+        else if (!GameManager.Instance.GetConfirmationDisplayActive())
         {
             updateNavigation = true;
         }
@@ -207,28 +204,28 @@ public class CharacterSelectScript : MonoBehaviour
 
     void ActivateExitConfirmation(ListOfControllerActions controller)
     {
-        gameManager.ToggleConfirmationDisplay(controller, GameObject.FindWithTag("ChangeSceneButton").GetComponent<Button>(),EXECUTE_ACTION.BACK_TO_MAIN);
+        GameManager.Instance.ToggleConfirmationDisplay(controller, GameObject.FindWithTag("ChangeSceneButton").GetComponent<Button>(), EXECUTE_ACTION.BACK_TO_MAIN);
         updateNavigation = false;
     }
 
     public void LockInCharacter(TEAM playerTeam, string charaName)
     {
-        if (!gameManager.GetPlayer(playerTeam).GetPickStatus())
-        { 
-            gameManager.GetPlayer(playerTeam).GetInGameData().SetCharName(charaName);
-            gameManager.GetPlayer(playerTeam).PickChar();
+        if (!GameManager.Instance.GetPlayer(playerTeam).GetPickStatus())
+        {
+            GameManager.Instance.GetPlayer(playerTeam).GetInGameData().SetCharName(charaName);
+            GameManager.Instance.GetPlayer(playerTeam).PickChar();
             playerFrames[(int)playerTeam].LockIn();
-            gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, pickChar, false, "SFX_Player" + ((int)gameManager.GetPlayer(playerTeam).GetPlayerID() + 1));
-            Debug.Log("Player Team : " + playerTeam + " Of ID : "+ gameManager.GetPlayer(playerTeam).GetPlayerID() + " Locked in character : " + charaName);
+            SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, pickChar, false, "SFX_Player" + ((int)GameManager.Instance.GetPlayer(playerTeam).GetPlayerID() + 1));
+            Debug.Log("Player Team : " + playerTeam + " Of ID : " + GameManager.Instance.GetPlayer(playerTeam).GetPlayerID() + " Locked in character : " + charaName);
         }
     }
 
     public void DeselectCharacter(TEAM playerTeam)
     {
         //DeselectCharacter        
-        if (gameManager.GetPlayer(playerTeam).GetPickStatus())
+        if (GameManager.Instance.GetPlayer(playerTeam).GetPickStatus())
         {
-            gameManager.GetPlayer(playerTeam).UnPickChar();
+            GameManager.Instance.GetPlayer(playerTeam).UnPickChar();
             playerFrames[(int)playerTeam].UnLock();
         }
     }
@@ -243,9 +240,9 @@ public class CharacterSelectScript : MonoBehaviour
 
     bool CheckBothPicked()
     {
-        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+        for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
         {
-            if (gameManager.GetPlayer(i).GetPickStatus() == false)
+            if (GameManager.Instance.GetPlayer(i).GetPickStatus() == false)
                 return false;
         }
         return true;

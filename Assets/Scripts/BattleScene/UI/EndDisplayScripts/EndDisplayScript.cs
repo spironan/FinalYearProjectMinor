@@ -20,11 +20,9 @@ public class EndDisplayScript : MonoBehaviour
     PointerEventData pointer;
     EventSystem eventSystem;
     PlayerWinScript winScript;
-    GameManager gameManager;
 
     void Awake()
     {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
         pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
         winScript = transform.parent.gameObject.GetComponentInChildren<PlayerWinScript>();
@@ -36,7 +34,7 @@ public class EndDisplayScript : MonoBehaviour
         if(buttons == null)
             buttons = GetComponentsInChildren<Button>();
         if(masterController == null)
-            masterController = GameObject.FindWithTag("GameManager").GetComponent<GameManager>().GetMasterPlayerData().controller;
+            masterController = GameManager.Instance.GetMasterPlayerData().controller;
         winScript.DisplayPlayerVictory();
         StartCoroutine(HighlightButton());
     }
@@ -51,7 +49,7 @@ public class EndDisplayScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 
-        if (!gameManager.GetConfirmationDisplayActive())
+        if (!GameManager.Instance.GetConfirmationDisplayActive())
         {
             if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
             {
@@ -59,7 +57,7 @@ public class EndDisplayScript : MonoBehaviour
                 {
                     button++;
                     buttons[(int)button].Select();
-                    gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
                 }
             }
             else if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
@@ -68,13 +66,13 @@ public class EndDisplayScript : MonoBehaviour
                 {
                     button--;
                     buttons[(int)button].Select();
-                    gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
+                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
                 }
             }
 
             if (masterController.getButtonAction(ACTIONS.SELECT))
             {
-                gameManager.soundSystem.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("ExecuteOption"));
+                SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("ExecuteOption"));
                 switch (button)
                 {
                     case ENDGAME_OPTIONS.REMATCH:
@@ -85,17 +83,17 @@ public class EndDisplayScript : MonoBehaviour
                         break;
                     case ENDGAME_OPTIONS.MAP_SELECT:
                         {
-                            gameManager.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAPSELECT);
+                            GameManager.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAPSELECT);
                         }
                         break;
                     case ENDGAME_OPTIONS.CHARACTER_SELECT:
                         {
-                            gameManager.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
+                            GameManager.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
                         }
                         break;
                     case ENDGAME_OPTIONS.BACK_TO_MAIN:
                         {
-                            gameManager.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
+                            GameManager.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
                         }
                         break;
                 }

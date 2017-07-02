@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour 
+public class GameManager : MonoBehaviourSingletonPersistent<GameManager> 
 {
     //Prefab for PlayerBase
     public GameObject playerBasePrefab;
@@ -19,24 +19,16 @@ public class GameManager : MonoBehaviour
     GAME_MODES currGameMode = GAME_MODES.LOCAL_PVP;
     //Current Number Of Players
     PLAYER playerCount = PLAYER.PLAYER_ONE;
-    //SoundController soundController;
-    public SoundSystem soundSystem;
     //Confirmation Display
     GameObject confirmationDisplay;
 
     //Dont destroy on load the manager -> exist permantly
-    void Awake()
+    void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
-        //Let Player 1 Control The Main Menu Regardless Is Who
-        //GetComponent<PlayerControllerManager>().init(PLAYER.PLAYER_ONE);
-
         //Create All Players
         for (int i = 0; i < (int)PLAYER.MAX_PLAYERS; ++i)
             CreateNewPlayer();
 
-        //soundController = GameObject.FindWithTag("SoundController").GetComponent<SoundController>();
-        soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
         confirmationDisplay = GameObject.FindWithTag("ConfirmationDisplay");
         confirmationDisplay.GetComponent<ToggleActiveScript>().ToggleActive(false);
     }
@@ -69,13 +61,13 @@ public class GameManager : MonoBehaviour
         switch (currState)
         {
             case GAMESTATE.MAIN_MENU:
-                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
+                SoundSystem.Instance.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("MainMenu"), true);
                 break;
             case GAMESTATE.CHAR_SELECT:
-                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("CharSelect"), true);
+                SoundSystem.Instance.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip("CharSelect"), true);
                 break;
             case GAMESTATE.IN_GAME:
-                soundSystem.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()), true);
+                SoundSystem.Instance.ChangeClip(AUDIO_TYPE.BACKGROUND_MUSIC, AudioClipManager.GetInstance().GetAudioClip(currMap.GetMapName()), true);
                 break;
         }
 
@@ -155,8 +147,6 @@ public class GameManager : MonoBehaviour
         if (masterPlayer != null)// if can create
         {
             masterPlayer.GetComponent<PlayerData>().IsMaster();
-            //masterPlayer.AddComponent<PlayerControllerManager>
-            //Add controller support here
         }
         Debug.Log("Created Master Player");
         return masterPlayer;
@@ -164,7 +154,6 @@ public class GameManager : MonoBehaviour
     GameObject CreateGuestPlayer()//Takes in a Controller Script
     {
         GameObject guest = CreatePlayer();
-        //guest.AddComponent<ControllerSupport>();
         Debug.Log("Created Guest Player");
         return guest;
     }
@@ -181,9 +170,6 @@ public class GameManager : MonoBehaviour
         player.transform.parent = this.transform;
         playerList.Add(playerData);
         playerCount++;
-        //playerData.GetInGameData().SetTeam(playerTeam);
-        //playerData.selectframe = frameObj[(int)playerTeam];
-        //playerTeam++;
         Debug.Log("Player Created with Id Of : " + playerData.GetPlayerID());
         return player;
     }

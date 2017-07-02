@@ -13,18 +13,13 @@ public class InstructionButtonChanger : MonoBehaviour {
     public ControllerInput PS4;
     public ControllerInput XBOX360;
 
-    GameManager gameManager;
     // Use this for initialization
     void Start () {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-
-        
-        
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (gameManager.GetMasterPlayerData().controller.GetControllerManager().currController == PS4)
+        if (GameManager.Instance.GetMasterPlayerData().controller.GetControllerManager().currController == PS4)
         {
             if(confirmButton.GetComponent<Image>().sprite != confirmPS4
                 && backButton.GetComponent<Image>().sprite != backPS4)

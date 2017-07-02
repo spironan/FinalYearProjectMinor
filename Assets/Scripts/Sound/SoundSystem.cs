@@ -3,21 +3,13 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SoundSystem : MonoBehaviour {
+public class SoundSystem : MonoBehaviourSingletonPersistent<SoundSystem> {
 
     Dictionary<AUDIO_TYPE, AudioManager> audioList = new Dictionary<AUDIO_TYPE, AudioManager>();
 
-    public static SoundSystem instance = null;
-
 	// Use this for initialization
-	void Awake () 
+	void Start () 
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
-
         for (AUDIO_TYPE i = AUDIO_TYPE.BACKGROUND_MUSIC; i < AUDIO_TYPE.END; ++i)
         {
             AudioManager newAudioManager = gameObject.AddComponent<AudioManager>();
@@ -66,6 +58,7 @@ public class SoundSystem : MonoBehaviour {
             }
         }
     }
+
 
     // Get AudioManager
     public AudioManager GetAudioManagerByType(AUDIO_TYPE type)
@@ -132,6 +125,8 @@ public class SoundSystem : MonoBehaviour {
         return false;
     }
 
+
+
     //Play Clip In Variant
 
     public void PlayClip(AUDIO_TYPE audioType, AudioClip clip, bool toLoop = false, string audioSourceName = "", bool playNext = false, bool replaceNext = false)
@@ -143,9 +138,6 @@ public class SoundSystem : MonoBehaviour {
     {
         GetAudioManagerByType(audioType).ChangeClip(clip, toLoop, pitch, replaceNext, audioSourceName);
     }
-
-
-
 
 
     //Everything Volume

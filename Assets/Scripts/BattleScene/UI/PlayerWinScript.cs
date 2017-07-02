@@ -13,11 +13,9 @@ public class PlayerWinScript : MonoBehaviour
 
     public void DisplayPlayerVictory()
     {
-        GameManager gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-
-        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+        for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
         {
-            if (!gameManager.GetPlayer(i).GetInGameData().GetSetWon())
+            if (!GameManager.Instance.GetPlayer(i).GetInGameData().GetSetWon())
                 continue;
 
             Wintext.text = "Player " + (i + 1) + " Win";

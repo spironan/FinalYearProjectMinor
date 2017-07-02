@@ -22,14 +22,12 @@ public class CharSelectSceneManager : MonoBehaviour
     GameObject mapSelectHolder;
     CharacterSelectScript charSelectData;
     MapSelectScript mapSelectData;
-	GameManager gameManager;
     bool autoCreateSlots = true;
 
     // Use this for initialization
 	void Awake () 
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        gameManager.ChangeState(GAMESTATE.CHAR_SELECT);
+        GameManager.Instance.ChangeState(GAMESTATE.CHAR_SELECT);
         charSelectData = GameObject.FindGameObjectWithTag("CharacterSelect").GetComponent<CharacterSelectScript>();
         mapSelectData = GameObject.FindGameObjectWithTag("MapSpawnArea").GetComponent<MapSelectScript>();
         mapSelectHolder = GameObject.FindGameObjectWithTag("MapHolder");
@@ -69,9 +67,9 @@ public class CharSelectSceneManager : MonoBehaviour
     void UpdatePlayerAssign()
     {
         bool gotoCharSelect = true;
-        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+        for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
         {
-            PlayerData player = gameManager.GetPlayer(i);
+            PlayerData player = GameManager.Instance.GetPlayer(i);
             if (!player.IsAssigned())
             {
                 gotoCharSelect = false;
@@ -92,9 +90,9 @@ public class CharSelectSceneManager : MonoBehaviour
         {
             if (autoCreateSlots)
             {
-                for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+                for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
                 {
-                    charSelectData.CreatePlayerFrame(gameManager.GetPlayer(i).GetPlayerID());
+                    charSelectData.CreatePlayerFrame(GameManager.Instance.GetPlayer(i).GetPlayerID());
                 }
             }
             currentPhase = SELECTIONPHASE.PICKING;

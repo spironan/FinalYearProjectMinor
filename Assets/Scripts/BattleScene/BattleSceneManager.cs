@@ -5,7 +5,6 @@ using System.Collections.Generic;
 //Should Be the one handling the Timer, which player spawns where
 public class BattleSceneManager : MonoBehaviour
 {
-    GameManager gameManager;
     Map currentMap;
     List<GameObject> playerCharacters = new List<GameObject>();
     PreBattleTextScript preBattleText;
@@ -43,7 +42,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < noOfPlayers; ++i)
         {
-            gameManager.GetPlayer(i).GetInGameData().SetWinCondition(wins);
+            GameManager.Instance.GetPlayer(i).GetInGameData().SetWinCondition(wins);
         }
     }
 
@@ -52,15 +51,14 @@ public class BattleSceneManager : MonoBehaviour
 
     void Awake()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        gameManager.ChangeState(GAMESTATE.IN_GAME);
+        GameManager.Instance.ChangeState(GAMESTATE.IN_GAME);
         soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
-        noOfPlayers = gameManager.GetPlayerSize();
+        noOfPlayers = GameManager.Instance.GetPlayerSize();
         preBattleText = GameObject.FindGameObjectWithTag("PreBattleText").GetComponent<PreBattleTextScript>();
         foreach (GameObject display in GameObject.FindGameObjectsWithTag("VictoryDisplay"))
             victoryInterface.Add(display.GetComponent<VictoryDisplayScript>());
-        currentMap = gameManager.GetCurrMap();
-        SetGameMode(gameManager.GetGameMode());
+        currentMap = GameManager.Instance.GetCurrMap();
+        SetGameMode(GameManager.Instance.GetGameMode());
         endDisplay = GameObject.FindWithTag("EndDisplay");
         endDisplay.SetActive(false);
         pauseDisplay = GameObject.FindWithTag("PauseDisplay");
@@ -78,7 +76,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (TEAM currentTeam = TEAM.RED_TEAM; (int)currentTeam < noOfPlayers; ++currentTeam)
         {
-            PlayerData player = gameManager.GetPlayer(currentTeam);
+            PlayerData player = GameManager.Instance.GetPlayer(currentTeam);
             GameObject character = PrefabManager.GetInstance().GetPrefab(player.GetInGameData().GetCharName());
             character.GetComponent<PlayerCharacterLogicScript>().SetCharacter(player.GetInGameData().GetCharName());
             character.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(player.GetPlayerID());
@@ -86,19 +84,6 @@ public class BattleSceneManager : MonoBehaviour
             character.GetComponent<SkillActivator>().bindedActions = player.gameObject.GetComponent<ListOfControllerActions>();
             playerCharacters.Add(character);
         }
-
-        //TEAM currentTeam = TEAM.RED_TEAM;
-        //for (int i = 0; i < noOfPlayers; ++i)
-        //{
-        //    PlayerData player = gameManager.GetPlayer(currentTeam);
-        //    GameObject character = PrefabManager.GetInstance().GetPrefab(player.GetInGameData().GetCharName());
-        //    character.GetComponent<PlayerCharacterLogicScript>().SetCharacter(player.GetInGameData().GetCharName());
-        //    character.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(player.GetPlayerID());
-        //    character.GetComponent<PlayerCharacterLogicScript>().SetController(player.gameObject.GetComponent<PlayerControllerManager>());
-        //    character.GetComponent<SkillActivator>().bindedActions = player.gameObject.GetComponent<ListOfControllerActions>();
-        //    playerCharacters.Add(character);
-        //    currentTeam++;
-        //}
     }
 
     //Called Once when a Player Starts
@@ -151,7 +136,7 @@ public class BattleSceneManager : MonoBehaviour
         preBattleText.ResetAnim();
         for (int i = 0; i < noOfPlayers; ++i)
         {
-            gameManager.GetPlayer(i).GetInGameData().StartMatch();// Reset Matches
+            GameManager.Instance.GetPlayer(i).GetInGameData().StartMatch();// Reset Matches
         }
     }
 
@@ -235,7 +220,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < noOfPlayers; ++i)
         {
-            if (gameManager.GetPlayer(i).controller.getButtonAction(ACTIONS.START))
+            if (GameManager.Instance.GetPlayer(i).controller.getButtonAction(ACTIONS.START))
             {
                 PauseGame(i);
                 break;
@@ -256,14 +241,14 @@ public class BattleSceneManager : MonoBehaviour
                 continue;
 
             doubleKO = false;
-            gameManager.GetPlayer(i).GetInGameData().WinMatch();
+            GameManager.Instance.GetPlayer(i).GetInGameData().WinMatch();
             victoryInterface[i].WinMatch();
         }
         if (doubleKO)
         {
             for (int i = 0; i < noOfPlayers; ++i)
             {
-                gameManager.GetPlayer(i).GetInGameData().WinMatch();
+                GameManager.Instance.GetPlayer(i).GetInGameData().WinMatch();
                 victoryInterface[i].WinMatch();
             }
         }
@@ -272,7 +257,7 @@ public class BattleSceneManager : MonoBehaviour
         bool displayEndScreen = false;
         for (int i = 0; i < noOfPlayers; ++i)
         {
-            if (gameManager.GetPlayer(i).GetInGameData().GetSetWon())
+            if (GameManager.Instance.GetPlayer(i).GetInGameData().GetSetWon())
             {
                 SetPlayerSpawnPoints();
                 DisplayWinResult();

@@ -5,11 +5,9 @@ public class ResetCharSelectScript : MonoBehaviour {
 
     public void ResetCharacterSelect()
     {
-        GameManager gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        for (int i = 0; i < gameManager.GetPlayerSize(); ++i)
+        for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
         {
-            gameManager.GetPlayer(i).UnPickChar();
+            GameManager.Instance.GetPlayer(i).UnPickChar();
         }
-
     }
 }

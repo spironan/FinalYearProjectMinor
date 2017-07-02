@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SingletonScript : MonoBehaviour
+public class SingletonScript : MonoBehaviour 
 {
-    public static SingletonScript instance = null;
+    private static SingletonScript instance = null;
 
 	// Use this for initialization
 	void Awake () {
@@ -13,4 +13,12 @@ public class SingletonScript : MonoBehaviour
             Destroy(gameObject);
         DontDestroyOnLoad(this.gameObject);
 	}
+
+    public static SingletonScript Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
 }

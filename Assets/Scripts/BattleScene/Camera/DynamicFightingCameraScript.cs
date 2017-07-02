@@ -1,45 +1,63 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DynamicFightingCameraScript : MonoBehaviour 
+public class DynamicFightingCameraScript : MonoBehaviour
 {
     public float nearestZoom;
-    public float furthestZoom;
+    float mapLength, mapHeight;
+    float floor, ceiling;
+    float leftBorder, rightBorder;
+    float maxOrthoSize;
+    Vector2 mapCenter;
+    
+    Camera thisCam;
+    float newOrthoSize;
+    float camX, camY;
+    
     GameObject[] players;
     Vector3 p1pos;
     Vector3 p2pos;
-    Camera thisCam;
-    float newOrthoSize;
-    float camX;         
-    float camY;
 
-	void Start ()
+    void Start()
     {
         thisCam = GetComponent<Camera>();
         players = GameObject.FindGameObjectsWithTag("Player");
-	}
-	
-	void Update ()
+    }
+
+    public void SetMapLengthHeight(Vector3 center, Vector3 size)
     {
-        if(players == null)
+        this.mapLength = size.x;
+        this.mapHeight = size.y;
+        maxOrthoSize = mapHeight / 2.0f;
+        mapCenter = center;
+        leftBorder = center.x - maxOrthoSize + nearestZoom;
+        rightBorder = center.x + maxOrthoSize - nearestZoom;
+        floor = center.y - maxOrthoSize + nearestZoom;
+        ceiling = center.y + maxOrthoSize - nearestZoom;
+
+        Debug.Log("floor :" + floor + " ceiling :" + ceiling);
+        Debug.Log("Camera Length :  " + mapLength + " Camera Height :  " + mapHeight);
+        Debug.Log("Max Ortho Size : " + maxOrthoSize + " Map Center is " + mapCenter);
+    }
+
+    void Update()
+    {
+        if (players == null)
             players = GameObject.FindGameObjectsWithTag("Player");
+
         p1pos = players[0].transform.position;
         p2pos = players[1].transform.position;
 
-        newOrthoSize = Vector2.Distance(p1pos, p2pos)/2.0f;
-        //If Too Small
-        if (newOrthoSize < nearestZoom)
-            thisCam.orthographicSize = nearestZoom;
-        //Else if Too Big
-        else if (newOrthoSize > furthestZoom)
-            thisCam.orthographicSize = furthestZoom;
-        //Else Just Nice
-        else
-            thisCam.orthographicSize = newOrthoSize;
-
         camX = (p1pos.x + p2pos.x) / 2.0f;
-        camY = (p1pos.y + p2pos.y) / 2.0f + thisCam.orthographicSize / 4.0f;
+        camX= Mathf.Clamp(camX, leftBorder, rightBorder);
+
+        camY = (p1pos.y + p2pos.y) / 2.0f;
+        camY = Mathf.Clamp(camY, floor, ceiling);
+
+        newOrthoSize = Vector2.Distance(p1pos, p2pos) / 2.0f;
+        newOrthoSize = Mathf.Clamp(newOrthoSize, nearestZoom, maxOrthoSize);
+
+        thisCam.orthographicSize = newOrthoSize;
         transform.position = new Vector3(camX, camY, transform.position.z);
-        
-	}   
+    }
 }

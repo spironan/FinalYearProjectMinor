@@ -22,7 +22,7 @@ public class MainMenuScript : MonoBehaviour
     {
         currentState = MainStates.MainStatesBegin;
         stateChanged = true;
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().ChangeState(GAMESTATE.MAIN_MENU);
+        GameManager.Instance.ChangeState(GAMESTATE.MAIN_MENU);
     }
 
     void Update()

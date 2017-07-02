@@ -31,6 +31,9 @@ TagManager:
   - SoundSystem
   - ConfirmationDisplay
   - ChangeSceneButton
+  - ConfirmationToQuitHolder
+  - MainMenuOptionsHolder
+  - GlobalUIDisplay
   layers:
   - Default
   - TransparentFX

@@ -8,12 +8,12 @@ public class ParallaxScrollingScript : MonoBehaviour
     public float parallaxSpeed;
     public Camera camera;
 
-    private Transform cameraTransform;
-    private Transform[] layers;
-    private float viewZone = 10;
-    private int leftIndex;
-    private int rightIndex;
-    private float lastCameraX;
+    Transform cameraTransform;
+    Transform[] layers;
+    float viewZone = 10;
+    int leftIndex;
+    int rightIndex;
+    float lastCameraX;
 
 	// Use this for initialization
 	void Start ()
@@ -30,9 +30,6 @@ public class ParallaxScrollingScript : MonoBehaviour
 
         leftIndex = 0;
         rightIndex = layers.Length - 1;
-        
-        if (parallaxSpeed > 0)
-            hasParallax = true;
 	}
 	
 	// Update is called once per frame
@@ -42,6 +39,7 @@ public class ParallaxScrollingScript : MonoBehaviour
         {
             float deltaX = cameraTransform.position.x - lastCameraX;
             transform.position += Vector3.right * (deltaX * parallaxSpeed);
+            Debug.Log("Paralex position moved : " + Vector3.right * (deltaX * parallaxSpeed));
         }
 
         lastCameraX = cameraTransform.position.x;
@@ -57,7 +55,7 @@ public class ParallaxScrollingScript : MonoBehaviour
         
     } 
 	
-    private void ScrollLeft()
+    void ScrollLeft()
     {
         //int lastRight = rightIndex; never used
         layers[rightIndex].position = Vector3.right * (layers[leftIndex].position.x - backgroundSize);
@@ -67,7 +65,7 @@ public class ParallaxScrollingScript : MonoBehaviour
             rightIndex = layers.Length - 1;
     }
 
-    private void ScrollRight()
+    void ScrollRight()
     {
         //int lastleft = leftIndex; never used
         layers[leftIndex].position = Vector3.right * (layers[rightIndex].position.x + backgroundSize);
@@ -76,5 +74,6 @@ public class ParallaxScrollingScript : MonoBehaviour
         if (leftIndex == layers.Length)
             leftIndex = 0;
     }
+
 }
 
