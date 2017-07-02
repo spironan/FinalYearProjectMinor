@@ -28,14 +28,12 @@ public class ExitGameScript : MonoBehaviour
         Database database = DatabaseSystem.GetInstance().GetDataBase("FYPJ2Database");
         if (database != null)
         {
-            SoundSystem soundSystem = GameObject.FindWithTag("SoundSystem").GetComponent<SoundSystem>();
             database.UpdateLine(
                 "VolumeData",
-                "BGMVolume = " + soundSystem.GetAudioManagerByType(AUDIO_TYPE.BACKGROUND_MUSIC).GetVolume() +
-                ", SFXVolume = " + soundSystem.GetAudioManagerByType(AUDIO_TYPE.SOUND_EFFECTS).GetVolume()
+                "BGMVolume = " + SoundSystem.Instance.GetAudioManagerByType(AUDIO_TYPE.BACKGROUND_MUSIC).GetVolume() +
+                ", SFXVolume = " + SoundSystem.Instance.GetAudioManagerByType(AUDIO_TYPE.SOUND_EFFECTS).GetVolume()
                 );
         }
-
     }
 
     //public static void SavePlayerData(int playerID)

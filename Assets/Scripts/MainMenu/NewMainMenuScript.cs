@@ -71,6 +71,11 @@ public class NewMainMenuScript : MonoBehaviour {
         StartCoroutine(MainMenu_HighlightButton());
     }
 
+    void Start()
+    {
+        GameManager.Instance.ChangeState(GAMESTATE.MAIN_MENU);
+    }
+
     public IEnumerator MainMenu_HighlightButton()
     {
         eventSystem.SetSelectedGameObject(null);
