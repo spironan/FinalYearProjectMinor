@@ -4,7 +4,7 @@ using System.Collections;
 
 public class ExitGameScript : MonoBehaviour 
 {    
-    public void ExitApplication()
+    public static void ExitApplication()
     {
         if (SceneManager.GetActiveScene().name != "MainMenuScene")
         {
@@ -13,7 +13,7 @@ public class ExitGameScript : MonoBehaviour
         }
 
         //Save all The Neccesary Data Needed to be Saved Here
-        SaveStorage();
+        SaveVolume();
 
         //LoopThrough All DataBase and Clear Them up
         DatabaseSystem.GetInstance().Clear();
@@ -23,7 +23,7 @@ public class ExitGameScript : MonoBehaviour
         Application.Quit();
     }
 
-    void SaveStorage()
+    public static void SaveVolume()
     {
         Database database = DatabaseSystem.GetInstance().GetDataBase("FYPJ2Database");
         if (database != null)
