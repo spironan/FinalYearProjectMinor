@@ -156,7 +156,7 @@ public class MapSelectScript : MonoBehaviour
             canActivate = true;
 
         ///Controls here
-        PlayerData player = GameManager.Instance.GetPlayer(0);
+        PlayerData player = GameManager.Instance.GetMasterPlayerData();
         if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
         {
             ShiftLeft(); // Shift The Things To The Left 
@@ -175,7 +175,6 @@ public class MapSelectScript : MonoBehaviour
             Cancel();
         }
 	}
-
     void FixedUpdate()
     {
         if (timeToDest > Time.deltaTime)

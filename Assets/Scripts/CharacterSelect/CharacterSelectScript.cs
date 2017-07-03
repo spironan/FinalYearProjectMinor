@@ -155,6 +155,8 @@ public class CharacterSelectScript : MonoBehaviour
 
                 ListOfControllerActions playerController = player.controller;
                 int team = (int)player.GetInGameData().GetTeam();
+                Debug.Log("Player ID : " + player.controller.GetControllerManager().playerID);
+
                 //Move Left Right
                 if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
                 {
@@ -196,7 +198,7 @@ public class CharacterSelectScript : MonoBehaviour
                 }
             }
         }
-        else if (!GameManager.Instance.GetConfirmationDisplayActive())
+        else if (!GlobalUI.Instance.GetConfirmationDisplayActive())
         {
             updateNavigation = true;
         }
@@ -204,7 +206,7 @@ public class CharacterSelectScript : MonoBehaviour
 
     void ActivateExitConfirmation(ListOfControllerActions controller)
     {
-        GameManager.Instance.ToggleConfirmationDisplay(controller, GameObject.FindWithTag("ChangeSceneButton").GetComponent<Button>(), EXECUTE_ACTION.BACK_TO_MAIN);
+        GlobalUI.Instance.ToggleConfirmationDisplay(controller, GameObject.FindWithTag("ChangeSceneButton").GetComponent<Button>(), EXECUTE_ACTION.BACK_TO_MAIN);
         updateNavigation = false;
     }
 
@@ -274,7 +276,6 @@ public class CharacterSelectScript : MonoBehaviour
             return null;
         }
 
-        //Debug.Log("Player Char Name is : " + playerFrames[(int)playerteam].GetCharName());
         return CharacterManager.GetInstance().GetCharacterByName(playerFrames[(int)playerteam].GetCharName()).GetCharArt();
     }
 

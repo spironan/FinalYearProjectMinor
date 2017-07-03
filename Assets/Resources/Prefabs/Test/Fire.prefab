@@ -92,7 +92,7 @@ MonoBehaviour:
   player_ID: 2
   damagePerHit: 20
   lifetime: 5
-  pSpeed: 10
+  pSpeed: 20
   gravity: 0
   manaCost: 10
   manaRegenPerHit: 20

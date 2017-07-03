@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviourSingletonPersistent<GameManager> 
 {
     //Prefab for PlayerBase
-    public GameObject playerBasePrefab;
+    GameObject playerBasePrefab;
     //List Of Existing Players
     List<PlayerData> playerList = new List<PlayerData>();
     //Master Player Has More Rights then Guest
@@ -19,34 +19,14 @@ public class GameManager : MonoBehaviourSingletonPersistent<GameManager>
     GAME_MODES currGameMode = GAME_MODES.LOCAL_PVP;
     //Current Number Of Players
     PLAYER playerCount = PLAYER.PLAYER_ONE;
-    //Confirmation Display
-    GameObject confirmationDisplay;
 
     //Dont destroy on load the manager -> exist permantly
     void Start()
     {
+        playerBasePrefab = PrefabManager.GetInstance().GetPrefab("PlayerPrefab");
         //Create All Players
         for (int i = 0; i < (int)PLAYER.MAX_PLAYERS; ++i)
             CreateNewPlayer();
-
-        confirmationDisplay = GameObject.FindWithTag("ConfirmationDisplay");
-        confirmationDisplay.GetComponent<ToggleActiveScript>().ToggleActive(false);
-    }
-
-    public void ToggleConfirmationDisplay(ListOfControllerActions controller, Button button, EXECUTE_ACTION action = EXECUTE_ACTION.NOTHING, bool playSound = true)
-    {
-        confirmationDisplay.GetComponent<ToggleActiveScript>().ToggleActive(playSound);
-        if (confirmationDisplay.activeSelf)
-        { 
-            confirmationDisplay.GetComponent<ConfirmationActionScript>().SetStateButtonAction(currState, button, action);
-            confirmationDisplay.GetComponent<ConfirmationDisplayScript>().SetControllerToReadFrom(controller);
-            confirmationDisplay.GetComponent<ConfirmationDisplayScript>().Reset();
-        }
-    }
-
-    public bool GetConfirmationDisplayActive()
-    {
-        return confirmationDisplay.activeSelf;
     }
 
     //Setter(s)

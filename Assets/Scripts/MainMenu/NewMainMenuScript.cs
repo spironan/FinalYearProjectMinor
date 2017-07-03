@@ -25,6 +25,7 @@ public enum SETTINGS_OPTIONS
     SFX,
     TOTAL,
 };
+
 public class NewMainMenuScript : MonoBehaviour {
     public GameObject mainMenuHolder;
     public GameObject confirmationToquitHolder;
@@ -71,11 +72,6 @@ public class NewMainMenuScript : MonoBehaviour {
         StartCoroutine(MainMenu_HighlightButton());
     }
 
-    void Start()
-    {
-        GameManager.Instance.ChangeState(GAMESTATE.MAIN_MENU);
-    }
-
     public IEnumerator MainMenu_HighlightButton()
     {
         eventSystem.SetSelectedGameObject(null);
@@ -106,6 +102,12 @@ public class NewMainMenuScript : MonoBehaviour {
 
             Slider temp2 = settings_buttons[(int)SETTINGS_OPTIONS.SFX].gameObject.GetComponentInChildren<Slider>();
             temp2.value = SoundSystem.Instance.GetVolumeByType(AUDIO_TYPE.SOUND_EFFECTS);
+
+            GameManager.Instance.ChangeState(GAMESTATE.MAIN_MENU);
+            for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
+            {
+                GameManager.Instance.GetPlayer(i).UnAssign();//unassign player info
+            }
 
             runOnce = true;
         }

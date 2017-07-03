@@ -58,7 +58,7 @@ public class PauseMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.Instance.GetConfirmationDisplayActive())
+        if (!GlobalUI.Instance.GetConfirmationDisplayActive())
         {
             if (controller.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
             {
@@ -85,11 +85,11 @@ public class PauseMenuScript : MonoBehaviour
                 
                 if(button == PAUSE_OPTIONS.CHARACTER_SELECT)
                 {
-                    GameManager.Instance.ToggleConfirmationDisplay(controller, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
+                    GlobalUI.Instance.ToggleConfirmationDisplay(controller, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
                 }
                 else if(button == PAUSE_OPTIONS.BACK_TO_MAIN)
                 {
-                    GameManager.Instance.ToggleConfirmationDisplay(controller, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
+                    GlobalUI.Instance.ToggleConfirmationDisplay(controller, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
                 }
                 else
                 {

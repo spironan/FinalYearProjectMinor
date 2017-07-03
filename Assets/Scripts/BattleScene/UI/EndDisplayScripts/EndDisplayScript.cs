@@ -49,7 +49,7 @@ public class EndDisplayScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 
-        if (!GameManager.Instance.GetConfirmationDisplayActive())
+        if (!GlobalUI.Instance.GetConfirmationDisplayActive())
         {
             if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
             {
@@ -83,17 +83,17 @@ public class EndDisplayScript : MonoBehaviour
                         break;
                     case ENDGAME_OPTIONS.MAP_SELECT:
                         {
-                            GameManager.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAPSELECT);
+                            GlobalUI.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAPSELECT);
                         }
                         break;
                     case ENDGAME_OPTIONS.CHARACTER_SELECT:
                         {
-                            GameManager.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
+                            GlobalUI.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
                         }
                         break;
                     case ENDGAME_OPTIONS.BACK_TO_MAIN:
                         {
-                            GameManager.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
+                            GlobalUI.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
                         }
                         break;
                 }

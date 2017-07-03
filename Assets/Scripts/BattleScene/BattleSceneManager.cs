@@ -17,6 +17,7 @@ public class BattleSceneManager : MonoBehaviour
     bool gameWon = false;
     bool timePaused = false;
     bool gameEnd = false;
+    bool timeOut = false;
     bool gamePaused = false;
     int currentRound = 1;
     int noOfPlayers = 0;
@@ -175,6 +176,7 @@ public class BattleSceneManager : MonoBehaviour
     void ResetTimer()
     {
         gameWon = false;
+        timeOut = false;
         timePaused = false;
         curBattleTimer = maxBattleTimer;
     }
@@ -200,7 +202,10 @@ public class BattleSceneManager : MonoBehaviour
             if (curBattleTimer > 0)
                 curBattleTimer -= Time.deltaTime;
             else
+            { 
                 gameWon = true;
+                timeOut = true;
+            }
         }
     }
 
@@ -234,25 +239,57 @@ public class BattleSceneManager : MonoBehaviour
 
     public void EndMatch()
     {
-        bool doubleKO = true;
-        for (int i = 0; i < noOfPlayers; ++i)
+        if (!timeOut)
         {
-            if (playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().IsDead())
-                continue;
-
-            doubleKO = false;
-            GameManager.Instance.GetPlayer(i).GetInGameData().WinMatch();
-            victoryInterface[i].WinMatch();
-        }
-        if (doubleKO)
-        {
+            bool doubleKO = true;
             for (int i = 0; i < noOfPlayers; ++i)
             {
+                if (playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().IsDead())
+                    continue;
+
+                doubleKO = false;
                 GameManager.Instance.GetPlayer(i).GetInGameData().WinMatch();
                 victoryInterface[i].WinMatch();
             }
+            if (doubleKO)
+            {
+                for (int i = 0; i < noOfPlayers; ++i)
+                {
+                    GameManager.Instance.GetPlayer(i).GetInGameData().WinMatch();
+                    victoryInterface[i].WinMatch();
+                }
+            }
         }
-
+        else //Won by Timeout
+        {
+            bool bothSameHp = false;
+            int currentHp = -1;
+            int winnerID = -1;
+            for (int i = 0; i < noOfPlayers; ++i)
+            {
+                if (playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().GetHealthPercentage() > currentHp)
+                {
+                    winnerID = i;
+                }
+                else if (playerCharacters[i].GetComponent<PlayerCharacterLogicScript>().GetHealthPercentage() == currentHp)
+                {
+                    bothSameHp = true;
+                }
+            }
+            if (bothSameHp)
+            {
+                for (int i = 0; i < noOfPlayers; ++i)
+                {
+                    GameManager.Instance.GetPlayer(i).GetInGameData().WinMatch();
+                    victoryInterface[i].WinMatch();
+                }
+            }
+            else
+            { 
+                GameManager.Instance.GetPlayer(winnerID).GetInGameData().WinMatch();
+                victoryInterface[winnerID].WinMatch();
+            }
+        }
         //Determine if Set Won By Anyone
         bool displayEndScreen = false;
         for (int i = 0; i < noOfPlayers; ++i)
@@ -302,7 +339,6 @@ public class BattleSceneManager : MonoBehaviour
         PauseTimer();
         endDisplay.SetActive(true);
         endDisplay.GetComponentInChildren<EndDisplayScript>().Reset();
-
     }
 
 }

@@ -51,7 +51,7 @@ public class DynamicFightingCameraScript : MonoBehaviour
         camX = (p1pos.x + p2pos.x) / 2.0f;
         camX= Mathf.Clamp(camX, leftBorder, rightBorder);
 
-        camY = (p1pos.y + p2pos.y) / 2.0f;
+        camY = (p1pos.y + p2pos.y) * 0.60f;/// 2.0f;
         camY = Mathf.Clamp(camY, floor, ceiling);
 
         newOrthoSize = Vector2.Distance(p1pos, p2pos) / 2.0f;
