@@ -9,6 +9,11 @@ public class GiantStar : SkillProfile
     bool runOnce = false;
     bool isComingBack = false;
     float rotatingDir = 1;
+    public override void Start()
+    {
+        base.Start();
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), enemy.GetComponent<Collider2D>());
+    }
     // Update is called once per frame
     public override void Update () {
         checkEveryInterval_lifeTime += Time.deltaTime;

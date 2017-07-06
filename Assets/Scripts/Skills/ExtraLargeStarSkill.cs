@@ -17,6 +17,7 @@ public class ExtraLargeStarSkill : SkillProfile
     public override void Start()
     {
         base.Start();
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), enemy.GetComponent<Collider2D>());
         timeForEachLap = lifetime / laps;
     }
     // Update is called once per frame

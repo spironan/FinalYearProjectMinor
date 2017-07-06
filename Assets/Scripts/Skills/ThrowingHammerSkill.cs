@@ -89,5 +89,7 @@ public class ThrowingHammerSkill : SkillProfile {
     {
         runOnce = false;
         speed_Y = pSpeed;
+        enemyLogic = enemy.GetComponent<PlayerCharacterLogicScript>();
+        ownerLogic = owner.GetComponent<PlayerCharacterLogicScript>();
     }
 }

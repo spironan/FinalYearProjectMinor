@@ -32,7 +32,7 @@ public class ReflectSkill : SkillProfile
 
     public override bool checkForCollision()
     {
-        collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x / 2, Vector2.zero, 0);
+        collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x/1.5f , Vector2.zero, 0);
 
         foreach (RaycastHit2D temp in collision)
         {
@@ -41,9 +41,10 @@ public class ReflectSkill : SkillProfile
                 if (temp.collider.gameObject.tag == "RangedSkill" && temp.collider.gameObject.GetComponent<SkillProfile>().owner != owner)
                 {
                     Debug.Log("reflect");
-                    temp.collider.gameObject.GetComponent<SkillProfile>().reset();
+                    
                     temp.collider.gameObject.GetComponent<SkillProfile>().enemy = temp.collider.gameObject.GetComponent<SkillProfile>().owner;
                     temp.collider.gameObject.GetComponent<SkillProfile>().owner = owner;
+                    temp.collider.gameObject.GetComponent<SkillProfile>().reset();
                     owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenPerHit);
                     //gameObject.SetActive(false);
                     return true;

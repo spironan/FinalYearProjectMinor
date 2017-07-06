@@ -6,6 +6,7 @@ using System.Collections;
 //[RequireComponent(typeof(PlayerCharacterLogicScript))]
 public class SkillActivator : MonoBehaviour {
 
+    public GameObject RegenSkill;
     public GameObject skill1;
     public GameObject skill2;
     public GameObject skill3;
@@ -27,10 +28,13 @@ public class SkillActivator : MonoBehaviour {
     private bool dpadDown;
     private bool selectedSkill = false;
     private bool isCastingUlti = false;
+    private bool failedToCast = false;
 
     private PlayerCharacterLogicScript owner;
     private WordingsHolder wordingsHolder;
     public bool GetIsCastingUlti() { return isCastingUlti; }
+
+    private int keyValue = -1;
     // Use this for initialization
     void Start()
     {
@@ -65,10 +69,11 @@ public class SkillActivator : MonoBehaviour {
         //    playerControllerManager = GetComponent<PlayerControllerManager>();
 
         //Debug.Log(player_number);
-        
-        
 
-        if(currentSkillProfile != null)
+
+        failedToCast = false;
+
+        if (currentSkillProfile != null)
         {
 
             //check for dpad presses
@@ -76,7 +81,7 @@ public class SkillActivator : MonoBehaviour {
             
             if (keyIterator != currentSkillProfile.keysToActivate && selectedSkill)
             {
-                int keyValue = -1;
+                keyValue = -1;
                 
                 if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.Y))//up?
                 {
@@ -97,7 +102,7 @@ public class SkillActivator : MonoBehaviour {
                         activator.closeBorder();
                         destroyInactiveSkill();
                         keyIterator = 0;
-                        
+                        failedToCast = true;
                     }
 
                 }
@@ -118,6 +123,7 @@ public class SkillActivator : MonoBehaviour {
                         activator.closeBorder();
                         destroyInactiveSkill();
                         keyIterator = 0;
+                        failedToCast = true;
                     }
                 }
                 else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.B))//right
@@ -137,6 +143,7 @@ public class SkillActivator : MonoBehaviour {
                         activator.closeBorder();
                         destroyInactiveSkill();
                         keyIterator = 0;
+                        failedToCast = true;
                     }
                 }
                 else if (playerControllerManager.getIsKeyDown(BUTTON_INPUT.X))//left
@@ -156,6 +163,7 @@ public class SkillActivator : MonoBehaviour {
                         activator.closeBorder();
                         destroyInactiveSkill();
                         keyIterator = 0;
+                        failedToCast = true;
                         //dpadDown = false;
                     }
                 }
@@ -164,7 +172,7 @@ public class SkillActivator : MonoBehaviour {
                     dpadDown = false;
                 }
 
-                
+                //keyValue = -1;
 
             }
             
@@ -210,7 +218,9 @@ public class SkillActivator : MonoBehaviour {
                 activator.closeBorder();
             }
         }
+        
         checkSkillToActivate();
+        
     }
 
 
@@ -237,9 +247,10 @@ public class SkillActivator : MonoBehaviour {
     void checkSkillToActivate()
     {
 
-        if (!selectedSkill)
+        if (!selectedSkill && !failedToCast)
         {
-            if (bindedActions.getButtonAction(ACTIONS.SKILL_ONE))
+            if (bindedActions.getButtonAction(ACTIONS.SKILL_ONE)
+                && haveEnoughManaForSkill(skill1.GetComponent<SkillProfile>()))
             {
                 Debug.Log(5);
                 currentSkillProfile = skill1.GetComponent<SkillProfile>();
@@ -250,7 +261,8 @@ public class SkillActivator : MonoBehaviour {
                 //skill 1
                 activator.generate_keys(currentSkillProfile.gameObject);
             }
-            else if (bindedActions.getButtonAction(ACTIONS.SKILL_TWO))
+            else if (bindedActions.getButtonAction(ACTIONS.SKILL_TWO)
+                && haveEnoughManaForSkill(skill2.GetComponent<SkillProfile>()))
             {
                 currentSkillProfile = skill2.GetComponent<SkillProfile>();
                 createNewSkillObject();
@@ -260,7 +272,8 @@ public class SkillActivator : MonoBehaviour {
                 //skill 2
                 activator.generate_keys(currentSkillProfile.gameObject);
             }
-            else if (bindedActions.getButtonAction(ACTIONS.SKILL_FOUR))
+            else if (bindedActions.getButtonAction(ACTIONS.SKILL_FOUR)
+                && haveEnoughManaForSkill(skill4.GetComponent<SkillProfile>()))
             {
 
                 currentSkillProfile = skill4.GetComponent<SkillProfile>();
@@ -271,7 +284,8 @@ public class SkillActivator : MonoBehaviour {
                 //skill 4
                 activator.generate_keys(currentSkillProfile.gameObject);
             }
-            else if (bindedActions.getButtonAction(ACTIONS.SKILL_THREE))
+            else if (bindedActions.getButtonAction(ACTIONS.SKILL_THREE)
+                && haveEnoughManaForSkill(skill3.GetComponent<SkillProfile>()))
             {
 
                 currentSkillProfile = skill3.GetComponent<SkillProfile>();
@@ -280,6 +294,16 @@ public class SkillActivator : MonoBehaviour {
                 selectedSkill = true;
                 //pass skill3 to activator
                 //skill 3
+                activator.generate_keys(currentSkillProfile.gameObject);
+            }
+            else if (bindedActions.getButtonAction(ACTIONS.SKILL_REGEN)
+                && haveEnoughManaForSkill(RegenSkill.GetComponent<SkillProfile>()))
+            {
+
+                currentSkillProfile = RegenSkill.GetComponent<SkillProfile>();
+                createNewSkillObject();
+                keyIterator = 0;
+                selectedSkill = true;
                 activator.generate_keys(currentSkillProfile.gameObject);
             }
             else if (bindedActions.getButtonAction(ACTIONS.SKILL_ULTIMATE) && owner.GetUltiPercentage() >= 1f)
@@ -293,6 +317,19 @@ public class SkillActivator : MonoBehaviour {
                 //skill ulti
                 activator.generate_keys(currentSkillProfile.gameObject);
             }
+        }
+    }
+
+    bool haveEnoughManaForSkill(SkillProfile skill)
+    {
+        if(owner.getManaAmount() >= skill.GetComponent<SkillProfile>().manaCost)
+        {
+            return true;
+        }
+        else
+        {
+            wordingsHolder.showAndSetTiming(WORDING_TYPES.NOMANA, 1f);
+            return false;
         }
     }
 

@@ -40,6 +40,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public int amountOfManaToStart;
     public GameObject player1Aura;
     public GameObject player2Aura;
+    public GameObject ultimateAura;
     ParticleSystem mainAuraParticles;
     float minimumNumOfParticlesForAura;
     bool isSetAura = false;
@@ -171,6 +172,20 @@ public class PlayerCharacterLogicScript : MonoBehaviour
                     player2Aura.SetActive(true);
                 }
             }
+            if(GetUltiPercentage() >= 1)
+            {
+                if (!ultimateAura.activeSelf)
+                {
+                    ultimateAura.SetActive(true);
+                } 
+            }
+            else
+            {
+                if (ultimateAura.activeSelf)
+                {
+                    ultimateAura.SetActive(false);
+                }
+            }
             if(skillActivator.GetIsCastingUlti())
             {
                 //if(mainAuraParticles.emission.rate.constantMin != minimumNumOfParticlesForAura * 5)
@@ -221,7 +236,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
             if (timerToIncreaseMana >= 1f)
             {
                 timerToIncreaseMana = 0;
-                increaseMana(1);
+                increaseMana(2);
             }
         }
     }
@@ -286,11 +301,15 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     }
     public virtual bool MoveCondition()
     {
+        //Debug.Log(11111);
         return !direction.x.Equals(0);
     }
     public virtual void Move()
     {
-        gameObject.transform.position += new Vector3(character.GetMoveSpeed() * direction.x * Time.deltaTime, 0, 0);
+        //Debug.Log(555555);
+        rigidbody.velocity = new Vector2(character.GetMoveSpeed() * direction.x * Time.deltaTime, rigidbody.velocity.y);
+        //rigidbody.AddForce(new Vector2(character.GetMoveSpeed() * direction.x * Time.deltaTime, 0));
+        //gameObject.transform.position += new Vector3(character.GetMoveSpeed() * direction.x * Time.deltaTime, 0, 0);
     }
     public virtual bool JumpCondition()
     {
@@ -300,7 +319,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     {
         inAir = true;
         Debug.Log("JumpForce : " + character.GetJumpForce() * Time.deltaTime);
-        rigidbody.AddForce(new Vector2(0, Mathf.Clamp(character.GetJumpForce() * Time.deltaTime,1,2500)));
+        rigidbody.velocity = new Vector2(rigidbody.velocity.x, character.GetJumpForce() * Time.deltaTime);
+        //rigidbody.AddForce(new Vector2(0, Mathf.Clamp(character.GetJumpForce() * Time.deltaTime,1,2500)));
     }
     public virtual void Recalculate()
     {

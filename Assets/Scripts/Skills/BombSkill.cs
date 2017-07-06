@@ -10,6 +10,7 @@ public class BombSkill : SkillProfile {
     
     bool runOnce = false;
     bool doDamage = true;
+    bool stickToPlayer = true; 
     bool enableCollisionToOwner = false;
    
     //private CircleCollider2D circleColliderSelf;
@@ -38,9 +39,14 @@ public class BombSkill : SkillProfile {
         if (checkEveryInterval_lifeTime > lifetime - 0.2f && doDamage)
         {
             checkForCollision();
+            stickToPlayer = false;
             doDamage = false;
         }
 
+        if(stickToPlayer)
+        {
+            checkForCollision();
+        }
 
         if (!runOnce)
         {
@@ -75,21 +81,43 @@ public class BombSkill : SkillProfile {
     public override bool checkForCollision()
     {
         //Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(),owner.GetComponent<Collider2D>());
-        collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x*3, Vector2.zero, 0);
-
-        foreach (RaycastHit2D temp in collision)
+        if (!stickToPlayer)
         {
-            if (temp.collider != null)
+            collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x * 3, Vector2.zero, 0);
+
+            foreach (RaycastHit2D temp in collision)
             {
-                if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
+                if (temp.collider != null)
                 {
-                    enemyLogic.GainStunMeter(stunValuePerHit);
-                    enemyLogic.TakeDamage(damagePerHit * damageMultipler);
-                    enemyLogic.GainUltMeter(UltGainPerHitForEnemy);
-                    ownerLogic.increaseMana(manaRegenPerHit);
-                    //Debug.Log("hit");
-                    //gameObject.SetActive(false);
-                    return true;
+                    if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
+                    {
+                        enemyLogic.GainStunMeter(stunValuePerHit);
+                        enemyLogic.TakeDamage(damagePerHit * damageMultipler);
+                        enemyLogic.GainUltMeter(UltGainPerHitForEnemy);
+                        ownerLogic.increaseMana(manaRegenPerHit);
+                        //Debug.Log("hit");
+                        //gameObject.SetActive(false);
+                        return true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x * 1.5f, Vector2.zero, 0);
+
+            foreach (RaycastHit2D temp in collision)
+            {
+                if (temp.collider != null)
+                {
+                    if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
+                    {
+                        gameObject.transform.parent = temp.collider.gameObject.transform;
+                        stickToPlayer = false;
+                        //Debug.Log("hit");
+                        //gameObject.SetActive(false);
+                        return true;
+                    }
                 }
             }
         }

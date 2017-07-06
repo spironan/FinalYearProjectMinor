@@ -61,6 +61,8 @@ public class FireSkill : SkillProfile {
     {
         runOnce = false;
         checkEveryInterval_lifeTime = 0;
+        enemyLogic = enemy.GetComponent<PlayerCharacterLogicScript>();
+        ownerLogic = owner.GetComponent<PlayerCharacterLogicScript>();
         if(isSetDirection)
         {
             direction = -direction;
