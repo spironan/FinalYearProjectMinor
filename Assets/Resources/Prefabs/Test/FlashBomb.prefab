@@ -10,13 +10,14 @@ GameObject:
   - 4: {fileID: 497538}
   - 198: {fileID: 19811896}
   - 199: {fileID: 19956370}
+  - 114: {fileID: 11403366}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &189492
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,8 +28,7 @@ GameObject:
   - 4: {fileID: 479624}
   - 212: {fileID: 21272416}
   - 58: {fileID: 5830964}
-  - 50: {fileID: 5000430}
-  - 114: {fileID: 11490410}
+  - 114: {fileID: 11459416}
   m_Layer: 0
   m_Name: FlashBomb
   m_TagString: PhysicalSkill
@@ -61,23 +61,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 479624}
   m_RootOrder: 0
---- !u!50 &5000430
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189492}
-  m_UseAutoMass: 0
-  m_Mass: 10
-  m_LinearDrag: 0
-  m_AngularDrag: 0.5
-  m_GravityScale: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!58 &5830964
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -92,7 +75,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.21
---- !u!114 &11490410
+--- !u!114 &11403366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec090f3c9ed29b84fb883ba5eed827cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11459416
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -100,17 +94,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 189492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd7d77a7a6db2f84488ba44c698ae91b, type: 3}
+  m_Script: {fileID: 11500000, guid: e3aff98a41e284b43bb36c8c785ff0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameOfSkill: FlashBomb
-  descriptionOfSkill: A bomb that stuns the enemy.
+  nameOfSkill: Flash Bomb
+  descriptionOfSkill: stuns the enemy in contact
   keysToActivate: 3
   stunValuePerHit: 100
   player_ID: 0
   damagePerHit: 0
-  lifetime: 0.7
-  pSpeed: 0
+  lifetime: 1
+  pSpeed: 20
   gravity: 0
   manaCost: 25
   manaRegenPerHit: 0
@@ -124,7 +118,7 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: 789d181cd3e83ed4586e52a334ee5e6d, type: 3}
   activateSkill: 0
   particles:
-  - {fileID: 170810, guid: cc79bf24c3c65e1459f58e5deebfb4f9, type: 2}
+  - {fileID: 123118, guid: 430d4a0af03f83f4f8fc958e25612984, type: 2}
 --- !u!198 &19811896
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -132,7 +126,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160758}
   serializedVersion: 2
-  lengthInSec: 0.7
+  lengthInSec: 0.2
   startDelay:
     scalar: 0
     maxCurve:
@@ -553,7 +547,7 @@ ParticleSystem:
     cntmax1: 30
     cntmax2: 30
     cntmax3: 30
-    time0: 0.5
+    time0: 0.1
     time1: 0
     time2: 0
     time3: 0

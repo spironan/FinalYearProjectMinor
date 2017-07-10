@@ -313,46 +313,46 @@ public class PS4ControllerInput : ControllerInput {
         {
             case JOYSTICK_AXIS_INPUT.L2:
                 //L2_button_PS4
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 1.0f);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis, 1.0f);
                 break;
             case JOYSTICK_AXIS_INPUT.R2:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 1.0f);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis, 1.0f);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_UP:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_DOWN:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis, 0.0f, false);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_LEFT:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis, 0.0f, false);
                 break;
             case JOYSTICK_AXIS_INPUT.L3_RIGHT:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_UP:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_DOWN:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis, 0.0f, false);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_LEFT:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis, 0.0f, false);
                 break;
             case JOYSTICK_AXIS_INPUT.R3_RIGHT:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_UP:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_DOWN:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis, 0.0f, false);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_LEFT:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis, 0.0f, false);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis, 0.0f, false);
                 break;
             case JOYSTICK_AXIS_INPUT.DPAD_RIGHT:
-                updateAndReturnIfkeyIsDown(joyStickNumber, valueFromAxis);
+                updateAndReturnIfkeyIsDown(joyStickNumber, player, valueFromAxis);
                 break;
             default:
                 floatAndBool.setFloatAndBool(0, false);
@@ -362,49 +362,50 @@ public class PS4ControllerInput : ControllerInput {
         return floatAndBool.getBool();
 
     }
-
-    public override void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber, float valueFromAxis, float offset = 0, bool positiveAxis = true)
+    /*
+    public override void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player_num,float valueFromAxis, float offset = 0, bool positiveAxis = true)
     {
-        if (!isJoystickKeyPressed.ContainsKey(joyStickNumber))
+        if (!isJoystickKeyPressedWithPlayer[player_num].ContainsKey(joyStickNumber))
         {
-            isJoystickKeyPressed.Add(joyStickNumber, false);
+            isJoystickKeyPressedWithPlayer[player_num].Add(joyStickNumber, false);
         }
         if (positiveAxis)
         {
-            if (valueFromAxis + offset > 0.9f && !isJoystickKeyPressed[joyStickNumber])
+            if (valueFromAxis + offset > 0.9f && !isJoystickKeyPressedWithPlayer[player_num][joyStickNumber])
             {
                 keyDown = true;
-                isJoystickKeyPressed[joyStickNumber] = true;
+                isJoystickKeyPressedWithPlayer[player_num][joyStickNumber] = true;
             }
-            else if (valueFromAxis + offset > 0.9f && isJoystickKeyPressed[joyStickNumber])
+            else if (valueFromAxis + offset > 0.9f && isJoystickKeyPressedWithPlayer[player_num][joyStickNumber])
             {
                 keyDown = false;
             }
             else
             {
                 keyDown = false;
-                isJoystickKeyPressed[joyStickNumber] = false;
+                isJoystickKeyPressedWithPlayer[player_num][joyStickNumber] = false;
             }
         }
         else
         {
-            if (valueFromAxis + offset < -0.9f && !isJoystickKeyPressed[joyStickNumber])
+            if (valueFromAxis + offset < -0.9f && !isJoystickKeyPressedWithPlayer[player_num][joyStickNumber])
             {
                 keyDown = true;
-                isJoystickKeyPressed[joyStickNumber] = true;
+                isJoystickKeyPressedWithPlayer[player_num][joyStickNumber] = true;
             }
-            else if (valueFromAxis + offset < -0.9f && isJoystickKeyPressed[joyStickNumber])
+            else if (valueFromAxis + offset < -0.9f && isJoystickKeyPressedWithPlayer[player_num][joyStickNumber])
             {
                 keyDown = false;
             }
             else
             {
                 keyDown = false;
-                isJoystickKeyPressed[joyStickNumber] = false;
+                isJoystickKeyPressedWithPlayer[player_num][joyStickNumber] = false;
             }
         }
         floatAndBool.setFloatAndBool(0, keyDown);
     }
+    */
 }
 //if ((int)keyNumber < 5)
 //{

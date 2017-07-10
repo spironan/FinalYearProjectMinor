@@ -13,8 +13,10 @@ public class ControllerInput : MonoBehaviour {
     protected string nameOfKey;
     protected string nameOfJoystick;
     protected float valueFromAxis;
-    protected Dictionary<JOYSTICK_AXIS_INPUT, bool> isJoystickKeyPressed = new Dictionary<JOYSTICK_AXIS_INPUT, bool>();
+    protected Dictionary<JOYSTICK_AXIS_INPUT, bool> isJoystickKeyPressed_player1 = new Dictionary<JOYSTICK_AXIS_INPUT, bool>();
+    protected Dictionary<JOYSTICK_AXIS_INPUT, bool> isJoystickKeyPressed_player2 = new Dictionary<JOYSTICK_AXIS_INPUT, bool>();
     protected Dictionary<JOYSTICK_AXIS_INPUT, string> joystickEnumToString = new Dictionary<JOYSTICK_AXIS_INPUT, string>();
+    protected Dictionary<PLAYER, Dictionary<JOYSTICK_AXIS_INPUT, bool>> isJoystickKeyPressedWithPlayer = new Dictionary<PLAYER, Dictionary<JOYSTICK_AXIS_INPUT, bool>>();
     //protected Dictionary<JOYSTICK_AXIS_INPUT, bool> isJoystickKeyPressed = new Dictionary<JOYSTICK_AXIS_INPUT, bool>();
     //protected Dictionary<BUTTON_INPUT, XBOX360> ps4ToXbox360 = new Dictionary<BUTTON_INPUT, XBOX360>();
     //protected Dictionary<BUTTON_INPUT, KeyCode> buttonToKeyCode;
@@ -24,6 +26,9 @@ public class ControllerInput : MonoBehaviour {
     public virtual void Start()
     {
         //debug.log(1);
+        isJoystickKeyPressedWithPlayer.Clear();
+        isJoystickKeyPressedWithPlayer.Add(PLAYER.PLAYER_ONE, isJoystickKeyPressed_player1);
+        isJoystickKeyPressedWithPlayer.Add(PLAYER.PLAYER_TWO, isJoystickKeyPressed_player2);
         joystickEnumToString.Clear();
         joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.L2, "L2_button");
         joystickEnumToString.Add(JOYSTICK_AXIS_INPUT.R2, "R2_button");
@@ -73,8 +78,47 @@ public class ControllerInput : MonoBehaviour {
         return false;
     }
 
-    public virtual void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber,float valueFromAxis, float offset = 0,bool positiveAxis = true)
+    public virtual void updateAndReturnIfkeyIsDown(JOYSTICK_AXIS_INPUT joyStickNumber, PLAYER player_num, float valueFromAxis, float offset = 0,bool positiveAxis = true)
     {
+        if (!isJoystickKeyPressedWithPlayer[player_num].ContainsKey(joyStickNumber))
+        {
+            isJoystickKeyPressedWithPlayer[player_num].Add(joyStickNumber, false);
+        }
+        if (positiveAxis)
+        {
+            if (valueFromAxis + offset > 0.9f && !isJoystickKeyPressedWithPlayer[player_num][joyStickNumber])
+            {
+                keyDown = true;
+                isJoystickKeyPressedWithPlayer[player_num][joyStickNumber] = true;
+            }
+            else if (valueFromAxis + offset > 0.9f && isJoystickKeyPressedWithPlayer[player_num][joyStickNumber])
+            {
+                keyDown = false;
+            }
+            else
+            {
+                keyDown = false;
+                isJoystickKeyPressedWithPlayer[player_num][joyStickNumber] = false;
+            }
+        }
+        else
+        {
+            if (valueFromAxis + offset < -0.9f && !isJoystickKeyPressedWithPlayer[player_num][joyStickNumber])
+            {
+                keyDown = true;
+                isJoystickKeyPressedWithPlayer[player_num][joyStickNumber] = true;
+            }
+            else if (valueFromAxis + offset < -0.9f && isJoystickKeyPressedWithPlayer[player_num][joyStickNumber])
+            {
+                keyDown = false;
+            }
+            else
+            {
+                keyDown = false;
+                isJoystickKeyPressedWithPlayer[player_num][joyStickNumber] = false;
+            }
+        }
+        floatAndBool.setFloatAndBool(0, keyDown);
 
     }
 

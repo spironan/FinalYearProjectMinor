@@ -22,7 +22,7 @@ public class FireSkill : SkillProfile {
             //send this object to despawn
             checkEveryInterval_lifeTime = 0;
         }
-        if(distToEnemy() < 1.0f)
+        //if(distToEnemy() < 1.0f)
         {
             if(checkForCollision())
             {

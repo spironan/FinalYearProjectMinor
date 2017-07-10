@@ -157,6 +157,6 @@ public class SkillProfile : MonoBehaviour {
     public virtual void spawnParticleEffect(PARTICLE_TYPE type)
     {
         if(particles[(int)type] != null)
-            Instantiate(particles[(int)type], transform.position, Quaternion.Euler(0, 0, 0));
+            Instantiate(particles[(int)type], new Vector3(transform.position.x, transform.position.y, -1), Quaternion.Euler(0, 0, 0));
     }
 }

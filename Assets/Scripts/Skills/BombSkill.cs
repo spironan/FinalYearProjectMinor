@@ -114,6 +114,7 @@ public class BombSkill : SkillProfile {
                     {
                         gameObject.transform.parent = temp.collider.gameObject.transform;
                         stickToPlayer = false;
+                        rigidBody.isKinematic = true;
                         //Debug.Log("hit");
                         //gameObject.SetActive(false);
                         return true;
