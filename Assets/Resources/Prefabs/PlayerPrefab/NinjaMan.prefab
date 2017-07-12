@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 489830}
   - 212: {fileID: 21214300}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pressable_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 484808}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: key4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 422824}
   - 212: {fileID: 21295194}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: correct_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 455736}
   - 212: {fileID: 21202946}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 466768}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: key1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438800}
   - 212: {fileID: 21287694}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pressable_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 444144}
   - 212: {fileID: 21212262}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: correct_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440412}
   - 212: {fileID: 21288284}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: correct_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - 4: {fileID: 473066}
   - 198: {fileID: 19851260}
   - 199: {fileID: 19936384}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RedAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   - 114: {fileID: 11471868}
   - 114: {fileID: 11475766}
   - 114: {fileID: 11476528}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NinjaMan
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 402522}
   - 212: {fileID: 21270400}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: correct_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 466082}
   - 212: {fileID: 21214168}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 428498}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: key2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 421130}
   - 212: {fileID: 21293578}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pressable_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 475554}
   - 212: {fileID: 21235252}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - 4: {fileID: 456600}
   - 212: {fileID: 21221966}
   - 114: {fileID: 11497764}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NoMana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   - 4: {fileID: 464432}
   - 198: {fileID: 19855698}
   - 199: {fileID: 19999948}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BlueAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 434168}
   - 212: {fileID: 21205440}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pressable_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 423164}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: key3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 467352}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: key5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +336,7 @@ GameObject:
   - 4: {fileID: 448334}
   - 198: {fileID: 19891800}
   - 199: {fileID: 19904570}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: UltiAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 454850}
   - 212: {fileID: 21258990}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pressable_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   - 4: {fileID: 439070}
   - 212: {fileID: 21235518}
   - 114: {fileID: 11458422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stunned
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 437186}
   - 212: {fileID: 21234746}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: correct_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +401,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 486118}
   - 114: {fileID: 11486290}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SkillActivator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +417,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 449434}
   - 114: {fileID: 11423730}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StunMeter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
