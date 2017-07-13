@@ -37,6 +37,8 @@ public class SkillProfile : MonoBehaviour {
 
     [HideInInspector]
     public int[] directionToPress = new int[5];
+    [HideInInspector]
+    public float percentageOfManaCost = 0;
     public Sprite skillIcon;
     //[HideInInspector]
     public bool activateSkill = false;
@@ -78,6 +80,18 @@ public class SkillProfile : MonoBehaviour {
         ownerLogic = owner.GetComponent<PlayerCharacterLogicScript>();
 
         UltGainPerHitForEnemy = 2 * damagePerHit;
+
+        percentageOfManaCost = (float)manaCost / (float)ownerLogic.GetMaxManaCost();
+    }
+
+    public virtual float GetPercentageOfManaToMax()
+    {
+        if(percentageOfManaCost == 0)
+        {
+            percentageOfManaCost = (float)manaCost / (float)ownerLogic.GetMaxManaCost();
+
+        }
+        return percentageOfManaCost;
     }
 
     public virtual void Update()

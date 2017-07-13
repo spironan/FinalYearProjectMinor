@@ -102,7 +102,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void decreaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount - amount, 0, 100); }
     public void increaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount + amount,0,100); }
     public float percentageOfMana() { return (float)((float)manaAmount / (float)maxMana); }
-    
+    public int GetMaxManaCost() { return maxMana; }
 
     public CharacterBase GetCharacterData() { return character; }
 
