@@ -28,20 +28,21 @@ public class ExtraLargeStarSkill : SkillProfile
 
         if (checkEveryInterval_lifeTime > timeForEachLap)
         {
-            if (!isComingBack)
-            {
-                direction = (owner.transform.position - enemy.transform.position).normalized;
-                isComingBack = true;
+            //if (!isComingBack)
+            //{
+            //direction = (owner.transform.position - enemy.transform.position).normalized;
+            direction = -direction;
+            //isComingBack = true;
                 if (direction.x >= 0)
                     rotatingDir = 1;
                 else
                     rotatingDir = -1;
-            }
-            else
-            {
-                isComingBack = false;
-                runOnce = false;
-            }
+            //}
+            //else
+            //{
+            //    isComingBack = false;
+            //    runOnce = false;
+            //}
             checkEveryInterval_lifeTime = 0f;
             currentLaps += 1;
         }
@@ -72,7 +73,7 @@ public class ExtraLargeStarSkill : SkillProfile
 
         
 
-        position.x += direction.x * pSpeed * Time.deltaTime;
+        position += direction * pSpeed * Time.deltaTime;
         gameObject.transform.position = position;
         gameObject.transform.Rotate(Vector3.forward * rotatingDir * Time.deltaTime * 200);
     }
