@@ -11,15 +11,18 @@ public class PlayerWinScript : MonoBehaviour
         Wintext = GetComponent<Text>();
 	}
 
-    public void DisplayPlayerVictory()
+    public void DisplayPlayerVictory(bool gameDraw)
     {
-        for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
-        {
-            if (!GameManager.Instance.GetPlayer(i).GetInGameData().GetSetWon())
-                continue;
-
-            Wintext.text = "Player " + (i + 1) + " Win";
-        }
+        if (gameDraw)
+            Wintext.text = "Draw!";
+        else
+            Wintext.text = "Player " + ((int)GameManager.Instance.GetWinnerID() + 1) + " Win";
+        //for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
+        //{
+        //    if (!GameManager.Instance.GetPlayer(i).GetInGameData().GetSetWon())
+        //        continue;
+        //    Wintext.text = "Player " + (i + 1) + " Win";
+        //}
     }
 
 }

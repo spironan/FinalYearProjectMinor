@@ -29,7 +29,6 @@ public class PlayerUIScript : MonoBehaviour
 
         ultAmountToReach = 0.0f;
         updateUltMeter = false;
-
     }
 	
 	// Update is called once per frame
@@ -41,7 +40,7 @@ public class PlayerUIScript : MonoBehaviour
             runOnce = false;
         }
         currHealth.fillAmount = playerInfo.GetHealthPercentage();
-        currMana.fillAmount = playerInfo.percentageOfMana();
+        CharacterManaUpdate();
 
         ultAmountToReach = playerInfo.GetUltiPercentage();
         float ultcharge = (ultAmountToReach - ultibar.fillAmount);
@@ -51,4 +50,26 @@ public class PlayerUIScript : MonoBehaviour
         else if(ultAmountToReach == 0.0f)
             ultibar.fillAmount = 0.0f;
 	}
+
+    void CharacterManaUpdate()
+    {
+        currMana.fillAmount = playerInfo.percentageOfMana();
+        if (currMana.fillAmount <= 0.25f)
+        {
+            currMana.color = Color.red;
+        }
+        else if(currMana.fillAmount <= 0.5f)
+        {
+            currMana.color = Color.yellow;
+        }
+        else if (currMana.fillAmount <= 0.75f)
+        {
+            currMana.color = Color.cyan; //new Color(255, 64, 35);
+        }
+        else
+        {
+            currMana.color = Color.green;
+        }
+    }
+
 }

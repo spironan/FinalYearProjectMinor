@@ -14,8 +14,10 @@ public class ActiveMapScript : MonoBehaviour
                 transform.GetChild(i).gameObject.SetActive(false);
             else
             {
-                Bounds bound = transform.GetChild(i).FindChild("Background").GetComponentInChildren<SpriteRenderer>().bounds;
-                cam.SetMapLengthHeight(bound.center, bound.size);
+                MapDataScript bound = transform.GetChild(i).GetComponent<MapDataScript>();// FindChild("Background").GetComponentInChildren<SpriteRenderer>().bounds;
+                cam.SetMapBounds(bound);
+                //cam.SetMapLengthHeight(bound.min, bound.max);
+                //cam.SetMapLengthHeight();
             }
 
         }

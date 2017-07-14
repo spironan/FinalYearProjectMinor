@@ -183,4 +183,35 @@ public class GameManager : MonoBehaviourSingletonPersistent<GameManager>
         return (playerList.Count < (int)PLAYER.MAX_PLAYERS);
     }
 
+
+    //In Game Functions
+    public void StartNewMatch()
+    {
+        for (int i = 0; i < playerList.Count; ++i) 
+            playerList[i].GetInGameData().StartMatch();
+    }
+    public void SetInGameWinCondition(short winsRequired)
+    {
+        for (int i = 0; i < playerList.Count; ++i)
+            playerList[i].GetInGameData().SetWinCondition(winsRequired);
+    }
+    public PlayerData GetWinner()
+    {
+        for (int i = 0; i < playerList.Count; ++i)
+        {
+            if (playerList[i].GetInGameData().GetSetWon())
+                return playerList[i];
+        }
+
+        Debug.Log("Cant Find A Winner");
+        return null;
+    }
+    public PLAYER GetWinnerID()
+    {
+        return GetWinner().GetPlayerID();
+    }
+    public TEAM GetWinnerTeam()
+    {
+        return GetWinner().GetInGameData().GetTeam();
+    }
 }

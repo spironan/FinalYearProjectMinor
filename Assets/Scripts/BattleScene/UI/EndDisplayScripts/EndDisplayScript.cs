@@ -16,7 +16,7 @@ public class EndDisplayScript : MonoBehaviour
 
     ENDGAME_OPTIONS button = ENDGAME_OPTIONS.REMATCH;
     Button[] buttons = null;
-    ListOfControllerActions masterController = null;
+    ListOfControllerActions loserController = null;
     PointerEventData pointer;
     EventSystem eventSystem;
     PlayerWinScript winScript;
@@ -29,13 +29,14 @@ public class EndDisplayScript : MonoBehaviour
     }
 
 	// Use this for initialization
-	public void Reset () {
+	public void Reset (ListOfControllerActions loserController, bool gameDraw = false) {
         button = ENDGAME_OPTIONS.REMATCH;
         if(buttons == null)
             buttons = GetComponentsInChildren<Button>();
-        if(masterController == null)
-            masterController = GameManager.Instance.GetMasterPlayerData().controller;
-        winScript.DisplayPlayerVictory();
+        //if(loserController == null)
+        //   loserController = GameManager.Instance.GetMasterPlayerData().controller;
+        this.loserController = loserController;
+        winScript.DisplayPlayerVictory(gameDraw);
         StartCoroutine(HighlightButton());
     }
 
@@ -51,7 +52,7 @@ public class EndDisplayScript : MonoBehaviour
 
         if (!GlobalUI.Instance.GetConfirmationDisplayActive())
         {
-            if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
+            if (loserController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
             {
                 if (button < ENDGAME_OPTIONS.BACK_TO_MAIN)
                 {
@@ -60,7 +61,7 @@ public class EndDisplayScript : MonoBehaviour
                     SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
                 }
             }
-            else if (masterController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
+            else if (loserController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
             {
                 if (button > ENDGAME_OPTIONS.REMATCH)
                 {
@@ -70,7 +71,7 @@ public class EndDisplayScript : MonoBehaviour
                 }
             }
 
-            if (masterController.getButtonAction(ACTIONS.SELECT))
+            if (loserController.getButtonAction(ACTIONS.SELECT))
             {
                 SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("ExecuteOption"));
                 switch (button)
@@ -83,17 +84,17 @@ public class EndDisplayScript : MonoBehaviour
                         break;
                     case ENDGAME_OPTIONS.MAP_SELECT:
                         {
-                            GlobalUI.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAPSELECT);
+                            GlobalUI.Instance.ToggleConfirmationDisplay(loserController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAPSELECT);
                         }
                         break;
                     case ENDGAME_OPTIONS.CHARACTER_SELECT:
                         {
-                            GlobalUI.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
+                            GlobalUI.Instance.ToggleConfirmationDisplay(loserController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_CHARSELECT);
                         }
                         break;
                     case ENDGAME_OPTIONS.BACK_TO_MAIN:
                         {
-                            GlobalUI.Instance.ToggleConfirmationDisplay(masterController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
+                            GlobalUI.Instance.ToggleConfirmationDisplay(loserController, buttons[(int)button], EXECUTE_ACTION.BACK_TO_MAIN);
                         }
                         break;
                 }

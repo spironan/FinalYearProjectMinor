@@ -155,7 +155,7 @@ public class CharacterSelectScript : MonoBehaviour
 
                 ListOfControllerActions playerController = player.controller;
                 int team = (int)player.GetInGameData().GetTeam();
-                Debug.Log("Player ID : " + player.controller.GetControllerManager().playerID);
+                Debug.Log("Plyer ID by accessing through player: " + player.GetPlayerID() + "Player ID by accessing through controller : " + player.controller.GetControllerManager().playerID);
 
                 //Move Left Right
                 if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
