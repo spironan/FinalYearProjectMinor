@@ -57,7 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameOfSkill: 'Extra Large Star '
   descriptionOfSkill: Throws a extra large star that will boomarage a set number of
-    times.
+    times Towards where the enemy is when thrown.
   keysToActivate: 5
   stunValuePerHit: 0
   player_ID: 0
@@ -74,6 +74,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   direction: {x: 0, y: 0}
   directionToPress: 0000000000000000000000000000000000000000
+  percentageOfManaCost: 0
   skillIcon: {fileID: 21300000, guid: 195b9ba684ed6354fa5ea1dcfa359ca4, type: 3}
   activateSkill: 0
   particles:

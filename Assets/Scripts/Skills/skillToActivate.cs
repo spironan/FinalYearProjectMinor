@@ -8,10 +8,14 @@ public class skillToActivate : MonoBehaviour {
     public Sprite[] PS4Keys;
     public Sprite[] XBOXKeys;
 
+    public Sprite keybox_notReady;
+    public Sprite keybox_Ready;
+
     private int numbersOfKeys;
 
     private SkillProfile currentSkillProfile;
-    private string controllerName; 
+    private string controllerName;
+    private int numberOfCorrectKeys = -1;
     //public GameObject skill;
     // Use this for initialization
     void Start () {
@@ -22,6 +26,14 @@ public class skillToActivate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(currentSkillProfile != null && keyBox.activeSelf)
+        {
+            if(numberOfCorrectKeys+1 == currentSkillProfile.keysToActivate
+                && keyBox.GetComponent<SpriteRenderer>().sprite != keybox_Ready)
+            {
+                keyBox.GetComponent<SpriteRenderer>().sprite = keybox_Ready;
+            }
+        }
 	}
 
     public void generate_keys(GameObject skill)
@@ -29,7 +41,7 @@ public class skillToActivate : MonoBehaviour {
         currentSkillProfile = skill.GetComponent<SkillProfile>();
         numbersOfKeys = currentSkillProfile.keysToActivate;
         currentSkillProfile.determineKeyDirections();
-
+        numberOfCorrectKeys = -1;
 
         foreach (GameObject go in keys)
         {
@@ -38,6 +50,7 @@ public class skillToActivate : MonoBehaviour {
         
         //first make the border active
         keyBox.SetActive(true);
+        keyBox.GetComponent<SpriteRenderer>().sprite = keybox_notReady;
         //set ze keyz by going thru a loop
 
         for(int i = 0; i < numbersOfKeys; ++i)
@@ -58,11 +71,13 @@ public class skillToActivate : MonoBehaviour {
 
     public void showPressedCorrect(int keyToShowCorrect)
     {
+        numberOfCorrectKeys = keyToShowCorrect;
         keys[keyToShowCorrect].transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void closeBorder()
     {
+        currentSkillProfile = null;
         keyBox.SetActive(false);
 
     }

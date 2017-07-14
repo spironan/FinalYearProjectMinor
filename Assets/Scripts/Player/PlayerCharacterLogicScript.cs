@@ -56,6 +56,22 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     protected float timerToIncreaseMana = 0f;
     protected Rigidbody2D rigidbody; //The 2d Rigidbody Attached to the Charactere to apply Physics
     protected CharacterBase character; //The Character Data That Stores its Variables
+    protected Vector2 player_sprite_size;
+    protected Vector2 player_local_sprite_size;
+    protected float player_sprite_across_length;
+
+    protected RaycastHit2D collision_right;
+    protected RaycastHit2D collision_rightUp;
+    protected RaycastHit2D collision_rightDown;
+    protected RaycastHit2D collision_left;
+    protected RaycastHit2D collision_leftUp;
+    protected RaycastHit2D collision_leftDown;
+    protected RaycastHit2D collision_up;
+    protected RaycastHit2D collision_down;
+
+    private int playerLayerNum = 0;
+    private int enemyLayerNum = 0;
+    private int layersToCheckAgainst = 0;
 
     public void SetPlayerID(PLAYER id) { playerID = id; }
     public void SetController(PlayerControllerManager controller) { this.controller = controller; }
@@ -86,13 +102,13 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public void decreaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount - amount, 0, 100); }
     public void increaseMana(int amount) { manaAmount = Mathf.Clamp(manaAmount + amount,0,100); }
     public float percentageOfMana() { return (float)((float)manaAmount / (float)maxMana); }
-
     public void Init(PlayerData player)
     {
         SetCharacter(player.GetInGameData().GetCharName());
         SetPlayerID(player.GetPlayerID());
         SetController(player.gameObject.GetComponent<PlayerControllerManager>());
     }
+    public int GetMaxManaCost() { return maxMana; }
 
     public CharacterBase GetCharacterData() { return character; }
 
@@ -127,6 +143,8 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         toUpdate = true;
         //GetComponent<SpriteRenderer>().sprite = character.GetChar();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        if (rigidbody != null)
+            rigidbody.velocity = new Vector2(0, 0);
         controller.init(playerID);
 
         PlayerCharacterLogicScript[] listOfPlayers = GameObject.FindObjectsOfType<PlayerCharacterLogicScript>();
@@ -143,6 +161,11 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         skillActivator = GetComponent<SkillActivator>();
         basicAttack = GetComponent<BasicAttack>();
         wordingsHolder = GetComponent<WordingsHolder>();
+
+        player_sprite_size = sprite.sprite.rect.size;
+        player_local_sprite_size = player_sprite_size / sprite.sprite.pixelsPerUnit;
+        player_sprite_across_length = Mathf.Sqrt(player_local_sprite_size.x * player_local_sprite_size.x + player_local_sprite_size.y * player_local_sprite_size.y);
+
         character.ResetHealth();
         stunManager.resetStunValue();
         resetManaAmount();
@@ -150,8 +173,43 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         basicAttack.resetTimer();
         wordingsHolder.resetWordings();
         DestroySkillObjects();
+
+        if (GetPlayerID() == PLAYER.PLAYER_ONE)
+        {
+            playerLayerNum = 9;
+            enemyLayerNum = 10;
+            layersToCheckAgainst = LayerMask.GetMask("Player_Two", "Default");
+            ChangePlayerLayer(gameObject, playerLayerNum);
+        }
+        else
+        {
+            playerLayerNum = 10;
+            enemyLayerNum = 9;
+            layersToCheckAgainst = LayerMask.GetMask("Player_One", "Default");
+            ChangePlayerLayer(gameObject, playerLayerNum);
+        }
+
         // character = gameObject.GetComponent<CharacterBase>(); should be removed because character base is no longer a component
 
+    }
+
+    public void ChangePlayerLayer(GameObject obj, int layer)
+    {
+        if(obj == null)
+        {
+            return;
+        }
+
+        obj.layer = layer;
+
+        foreach(Transform child in obj.transform)
+        {
+            if(child == null)
+            {
+                continue;
+            }
+            ChangePlayerLayer(child.gameObject, layer);
+        }
     }
 
     //Overall Structure of how the code should flow
@@ -198,9 +256,6 @@ public class PlayerCharacterLogicScript : MonoBehaviour
                 {
                     mainAuraParticles.startSpeed = 2;
                     mainAuraParticles.gravityModifier = -0.5f;
-                    //temp = new ParticleSystem.MinMaxCurve(minimumNumOfParticlesForAura * 5.0f);
-                    //    .rate.mode = ParticleSystemCurveMode.Constant;
-                    //mainAuraParticles.emission.rate.constantMin = minimumNumOfParticlesForAura * 5;
                 }
             }
             else
@@ -209,8 +264,6 @@ public class PlayerCharacterLogicScript : MonoBehaviour
                 {
                     mainAuraParticles.startLifetime = 1;
                     mainAuraParticles.gravityModifier = -0.1f;
-                    //    .rate.mode = ParticleSystemCurveMode.Constant;
-                    //mainAuraParticles.emission.rate.constantMin = minimumNumOfParticlesForAura * 5;
                 }
             }
             if (!controller.isControllerDisabled())
@@ -244,6 +297,11 @@ public class PlayerCharacterLogicScript : MonoBehaviour
                 timerToIncreaseMana = 0;
                 increaseMana(2);
             }
+
+            if(gameObject.layer != playerLayerNum)
+            {
+                playerLayerNum = gameObject.layer;
+            }
         }
     }
 
@@ -264,9 +322,28 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         wordingsHolder.resetWordings();
         DestroySkillObjects();
         direction = new Vector2(0, 0);
+        player_sprite_size = sprite.sprite.rect.size;
+        player_local_sprite_size = player_sprite_size / sprite.sprite.pixelsPerUnit;
+        player_sprite_across_length = Mathf.Sqrt(player_local_sprite_size.x * player_local_sprite_size.x + player_local_sprite_size.y * player_local_sprite_size.y);
+
         //this.transform.position = new Vector3(0, -2.5f, 0);
         if (rigidbody != null)
             rigidbody.velocity = new Vector2(0, 0);
+
+        if (GetPlayerID() == PLAYER.PLAYER_ONE)
+        {
+            playerLayerNum = 9;
+            enemyLayerNum = 10;
+            layersToCheckAgainst = LayerMask.GetMask("Player_Two","Default");
+            ChangePlayerLayer(gameObject, playerLayerNum);
+        }
+        else
+        {
+            playerLayerNum = 10;
+            enemyLayerNum = 9;
+            layersToCheckAgainst = LayerMask.GetMask("Player_One","Default");
+            ChangePlayerLayer(gameObject, playerLayerNum);
+        }
     }
 
     //Function Called To Update Stun//dont need this -3-
@@ -308,24 +385,25 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public virtual bool MoveCondition()
     {
         //Debug.Log(11111);
-        return !direction.x.Equals(0);
+        return !direction.x.Equals(0) && !CheckIfIsHittingAWallInAir();
     }
     public virtual void Move()
     {
         //Debug.Log(555555);
-        rigidbody.velocity = new Vector2(character.GetMoveSpeed() * direction.x * Time.deltaTime, rigidbody.velocity.y);
+        rigidbody.velocity = new Vector2(character.GetMoveSpeed() * direction.x /** Time.deltaTime*/, rigidbody.velocity.y);
         //rigidbody.AddForce(new Vector2(character.GetMoveSpeed() * direction.x * Time.deltaTime, 0));
         //gameObject.transform.position += new Vector3(character.GetMoveSpeed() * direction.x * Time.deltaTime, 0, 0);
     }
     public virtual bool JumpCondition()
     {
+        CheckIfIsOnGround();
         return (!inAir && direction.y > 0.1);
     }
     public virtual void Jump()
     {
         inAir = true;
-        Debug.Log("JumpForce : " + character.GetJumpForce() * Time.deltaTime);
-        rigidbody.velocity = new Vector2(rigidbody.velocity.x, character.GetJumpForce() * Time.deltaTime);
+        //Debug.Log("JumpForce : " + character.GetJumpForce() * Time.deltaTime);
+        rigidbody.velocity = new Vector2(rigidbody.velocity.x, character.GetJumpForce() /** Time.deltaTime*/);
         //rigidbody.AddForce(new Vector2(0, Mathf.Clamp(character.GetJumpForce() * Time.deltaTime,1,2500)));
     }
     public virtual void Recalculate()
@@ -336,10 +414,130 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     }
 
     //Check to See if Player Touch the ground,so that it can jump again
-    public virtual void OnCollisionStay2D(Collision2D other)
+    //public virtual void OnCollisionStay2D(Collision2D other)
+    //{
+    //    //Vector2 sprite_size = other.collider.gameObject.GetComponent<SpriteRenderer>().sprite.rect.size;
+    //    //Vector2 local_sprite_size = sprite_size / other.collider.gameObject.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+    //    //Vector2 localScaleOfImage = (Vector2)other.collider.gameObject.transform.localScale;
+    //    //Debug.Log(localScaleOfImage);
+    //    //if (other.collider.tag == "Ground" 
+    //    //    && inAir && other.collider.gameObject.transform.position.y < transform.position.y//
+    //    //   /* && (other.collider.gameObject.transform.position.y +(local_sprite_size.y/2 * localScaleOfImage.y)  < transform.position.y - player_local_sprite_size.y / 2)*/)
+    //    //    inAir = false;
+    //}
+
+    
+
+    public virtual void CheckIfIsOnGround()
     {
-        if (other.collider.tag == "Ground" && inAir && other.collider.gameObject.transform.position.y < transform.position.y)
-            inAir = false;
+        collision_down = Physics2D.Raycast(transform.position, Vector3.down, player_local_sprite_size.y, layersToCheckAgainst);
+        collision_rightDown = Physics2D.Raycast(transform.position, new Vector3(0.5f, -0.5f, 0), player_sprite_across_length, layersToCheckAgainst);
+        collision_leftDown = Physics2D.Raycast(transform.position, new Vector3(-0.5f, -0.5f, 0), player_sprite_across_length, layersToCheckAgainst);
+        collision_right = Physics2D.Raycast(transform.position, Vector3.right, player_local_sprite_size.x, layersToCheckAgainst);
+        collision_left = Physics2D.Raycast(transform.position, Vector3.left, player_local_sprite_size.x, layersToCheckAgainst);
+
+        //RaycastHit2D collision = Physics2D.Raycast(transform.position, Vector3.down, player_local_sprite_size.y, 9);
+        //Debug.Log(collision.collider.tag);
+        if (collision_down.collider != null)
+        {
+            if(collision_down.collider.tag == "Player" && GetPlayerID() == PLAYER.PLAYER_ONE)
+                Debug.Log(collision_down.collider.tag);
+            
+            if ((collision_down.collider.tag == "Ground" || collision_down.collider.tag == "Player") && inAir && rigidbody.velocity.y == 0)
+            {
+                inAir = false;
+                return;
+            }
+            else
+                inAir = true;
+        }
+        if(collision_leftDown.collider != null)
+        {
+            if ((collision_leftDown.collider.tag == "Ground" || collision_leftDown.collider.tag == "Player") && inAir && rigidbody.velocity.y == 0)
+            {
+                inAir = false;
+                return;
+            }
+            else
+                inAir = true;
+        }
+        if (collision_rightDown.collider != null)
+        {
+            if ((collision_rightDown.collider.tag == "Ground" || collision_rightDown.collider.tag == "Player") && inAir && rigidbody.velocity.y == 0)
+            {
+                inAir = false;
+                return;
+            }
+            else
+                inAir = true;
+        }
+        else//free falling
+        {
+            inAir = true;
+        }
+    }
+
+    public virtual bool CheckIfIsHittingAWallInAir()
+    {
+        if (inAir)
+        {
+            collision_right = Physics2D.Raycast(transform.position, Vector3.right, player_local_sprite_size.x, layersToCheckAgainst);
+            collision_left = Physics2D.Raycast(transform.position, Vector3.left, player_local_sprite_size.x, layersToCheckAgainst);
+            collision_rightUp = Physics2D.Raycast(transform.position, new Vector3(0.5f,0.5f,0), player_sprite_across_length, layersToCheckAgainst);
+            collision_leftUp = Physics2D.Raycast(transform.position, new Vector3(-0.5f, 0.5f, 0), player_sprite_across_length, layersToCheckAgainst);
+            collision_rightDown = Physics2D.Raycast(transform.position, new Vector3(0.5f, -0.5f, 0), player_sprite_across_length, layersToCheckAgainst);
+            collision_leftDown = Physics2D.Raycast(transform.position, new Vector3(-0.5f, -0.5f, 0), player_sprite_across_length, layersToCheckAgainst);
+            //Debug.Log(collision.collider.tag);
+            if (collision_right.collider != null)
+            {
+                //Debug.Log(collision.collider.tag);
+                if ((collision_right.collider.tag == "Ground" || collision_right.collider.tag == "Player"))
+                    return true;
+                else
+                    return false;
+            }
+            else if (collision_left.collider != null)
+            {
+                if ((collision_left.collider.tag == "Ground" || collision_left.collider.tag == "Player"))
+                    return true;
+                else
+                    return false;
+            }
+            else if (collision_rightUp.collider != null)
+            {
+                if ((collision_rightUp.collider.tag == "Ground" || collision_rightUp.collider.tag == "Player"))
+                    return true;
+                else
+                    return false;
+            }
+            else if (collision_leftUp.collider != null)
+            {
+                if ((collision_leftUp.collider.tag == "Ground" || collision_leftUp.collider.tag == "Player"))
+                    return true;
+                else
+                    return false;
+            }
+            else if (collision_rightDown.collider != null)
+            {
+                if ((collision_rightDown.collider.tag == "Ground" || collision_rightDown.collider.tag == "Player"))
+                    return true;
+                else
+                    return false;
+            }
+            else if (collision_leftDown.collider != null)
+            {
+                if ((collision_leftDown.collider.tag == "Ground" || collision_leftDown.collider.tag == "Player"))
+                    return true;
+                else
+                    return false;
+            }
+            else//free falling
+            {
+                return false;
+            }
+        }
+        else
+            return false;
     }
 
     //To Be Called in the Relevant Places you Deem Fit To Increase The Ult Meter
