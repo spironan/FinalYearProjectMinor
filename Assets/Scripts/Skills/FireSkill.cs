@@ -9,6 +9,7 @@ public class FireSkill : SkillProfile {
     protected bool isSetDirection = false;
     protected float rotatingDir = 1;
 
+    public GameObject ExplosionSkill;
 
     // Update is called once per frame
     public override void Update () {
@@ -73,5 +74,40 @@ public class FireSkill : SkillProfile {
     {
         direction = dir;
         isSetDirection = true;
+    }
+
+    public override bool checkForCollision()
+    {
+        //Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(),owner.GetComponent<Collider2D>());
+        collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x / 2, Vector2.zero, 0);
+
+        foreach (RaycastHit2D temp in collision)
+        {
+            if (temp.collider != null)
+            {
+                if (temp.collider.gameObject.tag == "Player" && temp.collider.gameObject != owner)
+                {
+                    if (temp.collider.gameObject.GetComponent<PlayerCharacterLogicScript>() != null)
+                    {
+                        enemyLogic.GainStunMeter(stunValuePerHit);
+                        enemyLogic.TakeDamage(damagePerHit * damageMultipler);
+                        enemyLogic.GainUltMeter(UltGainPerHitForEnemy);
+                        ownerLogic.increaseMana(manaRegenPerHit);
+                        //Debug.Log("hit");
+                    }
+                    return true;
+                }
+                else if(temp.collider.gameObject.tag == "Ground")
+                {
+                    if(ExplosionSkill != null)
+                    {
+                        spawnSkill(ExplosionSkill);
+                    }
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 }

@@ -57,9 +57,12 @@ MonoBehaviour:
   enemy: {fileID: 0}
   direction: {x: 0, y: 0}
   directionToPress: 0000000000000000000000000000000000000000
+  percentageOfManaCost: 0
   skillIcon: {fileID: 0}
   activateSkill: 0
-  particles: []
+  particles:
+  - {fileID: 0}
+  - {fileID: 120786, guid: c17b3b877b9652240b890411a9c578da, type: 2}
   manaRegenValue: 50
 --- !u!1001 &100100000
 Prefab:

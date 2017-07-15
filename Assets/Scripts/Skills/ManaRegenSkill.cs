@@ -12,6 +12,7 @@ public class ManaRegenSkill : SkillProfile {
     }
     public override void Update () {
         owner.GetComponent<PlayerCharacterLogicScript>().increaseMana(manaRegenValue);
+        spawnParticleEffect(PARTICLE_TYPE.MANA_GAIN,owner);
         Destroy(gameObject);
     }
 }

@@ -42,7 +42,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public GameObject player2Aura;
     public GameObject ultimateAura;
     ParticleSystem mainAuraParticles;
-    float minimumNumOfParticlesForAura;
+    //float minimumNumOfParticlesForAura;
     bool isSetAura = false;
 
 
@@ -70,7 +70,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     protected RaycastHit2D collision_down;
 
     private int playerLayerNum = 0;
-    private int enemyLayerNum = 0;
+    //private int enemyLayerNum = 0;
     private int layersToCheckAgainst = 0;
 
     public void SetPlayerID(PLAYER id) { playerID = id; }
@@ -177,14 +177,14 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         if (GetPlayerID() == PLAYER.PLAYER_ONE)
         {
             playerLayerNum = 9;
-            enemyLayerNum = 10;
+            //enemyLayerNum = 10;
             layersToCheckAgainst = LayerMask.GetMask("Player_Two", "Default");
             ChangePlayerLayer(gameObject, playerLayerNum);
         }
         else
         {
             playerLayerNum = 10;
-            enemyLayerNum = 9;
+            //enemyLayerNum = 9;
             layersToCheckAgainst = LayerMask.GetMask("Player_One", "Default");
             ChangePlayerLayer(gameObject, playerLayerNum);
         }
@@ -223,7 +223,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
                 {
                     isSetAura = true;
                     mainAuraParticles = player1Aura.GetComponent<ParticleSystem>();
-                    minimumNumOfParticlesForAura = 20;
+                    //minimumNumOfParticlesForAura = 20;
                     player1Aura.SetActive(true);
                     player2Aura.SetActive(false);
                 }
@@ -231,7 +231,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
                 {
                     isSetAura = true;
                     mainAuraParticles = player2Aura.GetComponent<ParticleSystem>();
-                    minimumNumOfParticlesForAura = 20;
+                    //minimumNumOfParticlesForAura = 20;
                     player1Aura.SetActive(false);
                     player2Aura.SetActive(true);
                 }
@@ -333,14 +333,14 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         if (GetPlayerID() == PLAYER.PLAYER_ONE)
         {
             playerLayerNum = 9;
-            enemyLayerNum = 10;
+            //enemyLayerNum = 10;
             layersToCheckAgainst = LayerMask.GetMask("Player_Two","Default");
             ChangePlayerLayer(gameObject, playerLayerNum);
         }
         else
         {
             playerLayerNum = 10;
-            enemyLayerNum = 9;
+            //enemyLayerNum = 9;
             layersToCheckAgainst = LayerMask.GetMask("Player_One","Default");
             ChangePlayerLayer(gameObject, playerLayerNum);
         }
@@ -385,7 +385,7 @@ public class PlayerCharacterLogicScript : MonoBehaviour
     public virtual bool MoveCondition()
     {
         //Debug.Log(11111);
-        return !direction.x.Equals(0) && !CheckIfIsHittingAWallInAir();
+        return !direction.x.Equals(0) && !CheckIfIsHittingAWallSideInAir();
     }
     public virtual void Move()
     {
@@ -477,10 +477,12 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         }
     }
 
-    public virtual bool CheckIfIsHittingAWallInAir()
+    public virtual bool CheckIfIsHittingAWallSideInAir()
     {
-        if (inAir)
+        collision_up = Physics2D.Raycast(transform.position, Vector3.up, player_local_sprite_size.y, layersToCheckAgainst);
+        if (inAir && collision_up.collider == null)
         {
+            
             collision_right = Physics2D.Raycast(transform.position, Vector3.right, player_local_sprite_size.x, layersToCheckAgainst);
             collision_left = Physics2D.Raycast(transform.position, Vector3.left, player_local_sprite_size.x, layersToCheckAgainst);
             collision_rightUp = Physics2D.Raycast(transform.position, new Vector3(0.5f,0.5f,0), player_sprite_across_length, layersToCheckAgainst);
@@ -491,42 +493,42 @@ public class PlayerCharacterLogicScript : MonoBehaviour
             if (collision_right.collider != null)
             {
                 //Debug.Log(collision.collider.tag);
-                if ((collision_right.collider.tag == "Ground" || collision_right.collider.tag == "Player"))
+                if ((collision_right.collider.tag == "Ground" || collision_right.collider.tag == "Player") && direction.x > 0)
                     return true;
                 else
                     return false;
             }
-            else if (collision_left.collider != null)
+            else if (collision_left.collider != null )
             {
-                if ((collision_left.collider.tag == "Ground" || collision_left.collider.tag == "Player"))
+                if ((collision_left.collider.tag == "Ground" || collision_left.collider.tag == "Player") && direction.x < 0)
                     return true;
                 else
                     return false;
             }
-            else if (collision_rightUp.collider != null)
+            else if (collision_rightUp.collider != null )
             {
-                if ((collision_rightUp.collider.tag == "Ground" || collision_rightUp.collider.tag == "Player"))
+                if ((collision_rightUp.collider.tag == "Ground" || collision_rightUp.collider.tag == "Player") && direction.x > 0)
                     return true;
                 else
                     return false;
             }
-            else if (collision_leftUp.collider != null)
+            else if (collision_leftUp.collider != null )
             {
-                if ((collision_leftUp.collider.tag == "Ground" || collision_leftUp.collider.tag == "Player"))
+                if ((collision_leftUp.collider.tag == "Ground" || collision_leftUp.collider.tag == "Player") && direction.x < 0)
                     return true;
                 else
                     return false;
             }
-            else if (collision_rightDown.collider != null)
+            else if (collision_rightDown.collider != null )
             {
-                if ((collision_rightDown.collider.tag == "Ground" || collision_rightDown.collider.tag == "Player"))
+                if ((collision_rightDown.collider.tag == "Ground" || collision_rightDown.collider.tag == "Player") && direction.x > 0)
                     return true;
                 else
                     return false;
             }
-            else if (collision_leftDown.collider != null)
+            else if (collision_leftDown.collider != null )
             {
-                if ((collision_leftDown.collider.tag == "Ground" || collision_leftDown.collider.tag == "Player"))
+                if ((collision_leftDown.collider.tag == "Ground" || collision_leftDown.collider.tag == "Player") && direction.x < 0)
                     return true;
                 else
                     return false;

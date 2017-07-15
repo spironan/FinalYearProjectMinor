@@ -1443,6 +1443,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   direction: {x: 0, y: 0}
   directionToPress: 0000000000000000000000000000000000000000
+  percentageOfManaCost: 0
   skillIcon: {fileID: 21300000, guid: 789d181cd3e83ed4586e52a334ee5e6d, type: 3}
   activateSkill: 0
   particles: []
@@ -1503,7 +1504,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 35
+  m_RootOrder: 36
 --- !u!1001 &1090348324
 Prefab:
   m_ObjectHideFlags: 0
@@ -1708,6 +1709,48 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc79bf24c3c65e1459f58e5deebfb4f9, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1207894188
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 492398, guid: c17b3b877b9652240b890411a9c578da, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492398, guid: c17b3b877b9652240b890411a9c578da, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492398, guid: c17b3b877b9652240b890411a9c578da, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 492398, guid: c17b3b877b9652240b890411a9c578da, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492398, guid: c17b3b877b9652240b890411a9c578da, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492398, guid: c17b3b877b9652240b890411a9c578da, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492398, guid: c17b3b877b9652240b890411a9c578da, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 492398, guid: c17b3b877b9652240b890411a9c578da, type: 2}
+      propertyPath: m_RootOrder
+      value: 37
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c17b3b877b9652240b890411a9c578da, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1310897406
 Prefab:
@@ -1984,7 +2027,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 468040, guid: a0790118715bd5648957f7e6d4fd24a8, type: 2}
       propertyPath: m_RootOrder
-      value: 34
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0790118715bd5648957f7e6d4fd24a8, type: 2}
@@ -2208,6 +2251,8 @@ MonoBehaviour:
   keys: []
   PS4Keys: []
   XBOXKeys: []
+  keybox_notReady: {fileID: 0}
+  keybox_Ready: {fileID: 0}
 --- !u!4 &1711809984
 Transform:
   m_ObjectHideFlags: 0

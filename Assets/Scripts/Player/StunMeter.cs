@@ -27,7 +27,7 @@ public class StunMeter : MonoBehaviour
         {
             //stunValue = Mathf.Clamp(stunValue, 0.1f, 100.0f);
             stunValue -= rateOfStunDecay * Time.deltaTime;
-            stunValue = Mathf.Clamp(stunValue, 0.1f, 100.0f);
+            stunValue = Mathf.Clamp(stunValue, 0.1f, maxStunValue);
             fill.transform.localScale = new Vector3(stunValue / 100, 1, 1);
         }
     }
@@ -35,6 +35,11 @@ public class StunMeter : MonoBehaviour
     public float getStunValue()
     {
         return stunValue;
+    }
+
+    public float getMaxStunValue()
+    {
+        return maxStunValue;
     }
 
     public void setStunValue(float value)

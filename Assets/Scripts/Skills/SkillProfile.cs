@@ -4,6 +4,7 @@ using System.Collections;
 public enum PARTICLE_TYPE
 {
     DISAPPEAR,
+    MANA_GAIN,
     TOTAL,
 };
 
@@ -168,9 +169,32 @@ public class SkillProfile : MonoBehaviour {
         direction = dir;
     }
 
-    public virtual void spawnParticleEffect(PARTICLE_TYPE type)
+    public virtual void spawnParticleEffect(PARTICLE_TYPE type, GameObject parentObj = null)
     {
         if(particles[(int)type] != null)
-            Instantiate(particles[(int)type], new Vector3(transform.position.x, transform.position.y, -1), Quaternion.Euler(0, 0, 0));
+        {
+            GameObject temp;
+            temp = Instantiate(particles[(int)type], new Vector3(transform.position.x, transform.position.y, 2), Quaternion.Euler(0, 0, 0)) as GameObject;
+
+            if (parentObj != null)
+            {
+                temp.transform.SetParent(parentObj.transform);
+            }
+        }
+            
+    }
+
+    public virtual void spawnSkill(GameObject obj)
+    {
+        GameObject temp;
+        temp = Instantiate(obj, transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        temp.SetActive(true);
+        temp.transform.position = transform.position;
+        //temp.GetComponent<SkillProfile>().offSetSpawn(gameObject.GetComponent<PlayerCharacterLogicScript>().GetDirection(), 1);
+        temp.GetComponent<SkillProfile>().player_ID = player_ID;
+        temp.GetComponent<SkillProfile>().owner = owner;
+        temp.GetComponent<SkillProfile>().enemy = enemy;
+
+        temp.GetComponent<SkillProfile>().direction = direction;
     }
 }

@@ -9,11 +9,11 @@ public class ExtraLargeStarSkill : SkillProfile
     float damageTimer = 1f;
 
     bool runOnce = false;
-    bool isComingBack = false;
+    //bool isComingBack = false;
     int currentLaps = 0;
     float rotatingDir = 1;
     float timeForEachLap;
-    float timeBeforeTurning = 0f;
+    //float timeBeforeTurning = 0f;
     public override void Start()
     {
         base.Start();
