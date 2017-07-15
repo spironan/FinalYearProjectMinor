@@ -7,7 +7,7 @@ public class SingletonInitScript : SingletonScript
 	void Awake () 
     {
         //Init Database
-        Database db = DatabaseSystem.GetInstance().InitDataBase("FYPJ2Database", "FYPJ2Database.db");
+        Database db = DatabaseSystem.GetInstance().InitDataBase("FYPJ2Database");
 
 	    //Init Universal Managers here
         SpriteManager.GetInstance().Initialze(db, "Sprites");

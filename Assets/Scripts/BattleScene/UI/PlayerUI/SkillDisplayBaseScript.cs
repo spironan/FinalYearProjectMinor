@@ -16,22 +16,23 @@ public class SkillDisplayBaseScript : MonoBehaviour
     public void SetIcon(SkillProfile skill )
     {
         icon.sprite = skill.skillIcon;
-        //if (cost <= 0.25f)
-        //{
-        //    overlay.color = Color.red;
-        //}
-        //else if (cost <= 0.5f)
-        //{
-        //    overlay.color = Color.yellow;
-        //}
-        //else if (cost <= 0.75f)
-        //{
-        //    overlay.color = Color.cyan; //new Color(255, 64, 35);
-        //}
-        //else
-        //{
-        //    overlay.color = Color.green;
-        //}
+
+        if (skill.percentageOfManaCost <= 0.25f)
+        {
+            overlay.color = Color.red;
+        }
+        else if (skill.percentageOfManaCost <= 0.5f)
+        {
+            overlay.color = Color.yellow;
+        }
+        else if (skill.percentageOfManaCost <= 0.75f)
+        {
+            overlay.color = Color.cyan; //new Color(255, 64, 35);
+        }
+        else
+        {
+            overlay.color = Color.green;
+        }
     }
 
     public void SetInput(Sprite inputSprite)

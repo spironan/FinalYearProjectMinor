@@ -13,7 +13,6 @@ public class PlayerUIScript : MonoBehaviour
     Image charArt, currHealth, currMana, ultibar;
     public PlayerSkillsDisplayScript playerSkills;
     float ultAmountToReach = 0.0f;
-    bool updateUltMeter = false;
 
     bool runOnce = true;
 
@@ -28,7 +27,6 @@ public class PlayerUIScript : MonoBehaviour
         charArt.sprite = playerInfo.GetCharacterData().GetCharArt();
 
         ultAmountToReach = 0.0f;
-        updateUltMeter = false;
     }
 	
 	// Update is called once per frame

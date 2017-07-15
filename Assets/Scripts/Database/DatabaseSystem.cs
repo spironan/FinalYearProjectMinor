@@ -14,22 +14,34 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
         dataBaseSystem.Clear();
     }
 
-    public Database InitDataBase(string dataBaseName, string dataBasePath)
+    public Database InitDataBase(string dataBaseName)
     {
+        DatabaseInfo newDatabaseInfo = new DatabaseInfo(dataBaseName);
 #if UNITY_ANDROID
-        string actualDBFile = Application.persistentDataPath + "/" + dataBasePath;
-        string filePath = "URI=file:" + actualDBFile;
-        if (!File.Exists(actualDBFile))
+        if (!File.Exists(newDatabaseInfo.databasePath))
         {
-            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/StudioProject4DataBase.db"); 
-            while (!loadDB.isDone) { }  
-            File.WriteAllBytes(actualDBFile, loadDB.bytes);
-			Debug.Log("DB successfully created");
+            WWW newDB = new WWW(newDatabaseInfo.newDatabasePath_Android);
+            while (!newDB.isDone) { }
+            File.WriteAllBytes(newDatabaseInfo.databasePath, newDB.bytes);
+            Debug.Log("new DB successfully created for android");
         }
-#else
-        string filePath = "URI=file:" + Application.dataPath + "/StreamingAssets/" + dataBasePath;
 #endif
-        return CreateDataBase(dataBaseName, filePath);
+        return CreateDataBase(newDatabaseInfo);
+
+//#if UNITY_ANDROID
+//        string actualDBFile = Application.persistentDataPath + "/" + dataBasePath;
+//        string filePath = "URI=file:" + actualDBFile;
+//        if (!File.Exists(actualDBFile))
+//        {
+//            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/StudioProject4DataBase.db"); 
+//            while (!loadDB.isDone) { }  
+//            File.WriteAllBytes(actualDBFile, loadDB.bytes);
+//            Debug.Log("DB successfully created");
+//        }
+//#else
+//        string filePath = "URI=file:" + Application.dataPath + "/StreamingAssets/" + dataBasePath;
+//#endif
+//        return CreateDataBase(dataBaseName, filePath);
     }
 
     public void Clear()
@@ -81,20 +93,21 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
         return null;
     }
 
-    private Database CreateDataBase(string fileName, string filePath)
+    private Database CreateDataBase(DatabaseInfo newDatabaseInfo)
     {
-        if (HasDataBase(fileName))
+        if (HasDataBase(newDatabaseInfo.databaseName))
         {
             // I can Do replacing but lets play it safe there is tons of names anyway
-            Debug.Log("File Name : " + fileName + " Already in Use,Please Use Another FileName");
-            return GetDataBase(fileName);
+            Debug.Log("Filename : " + newDatabaseInfo.databaseName + " Already in Use, Please Use Another Filename if you want to make a new one, Returning Existing Database");
+            return GetDataBase(newDatabaseInfo.databaseName);
         }
-        Database dataBase = new Database();
 
-        if (!dataBase.SetConnection(filePath))
+        Database dataBase = new Database(newDatabaseInfo);
+
+        if (!dataBase.SetConnection(newDatabaseInfo.fullfilePath))
             return null;
 
-        dataBaseSystem.Add(fileName, dataBase);
+        dataBaseSystem.Add(newDatabaseInfo.databaseName, dataBase);
         Debug.Log("Added into DataBaseSystem");
 
         return dataBase;

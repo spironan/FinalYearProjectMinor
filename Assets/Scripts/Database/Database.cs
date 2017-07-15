@@ -17,6 +17,7 @@ public class Database
      * connected : To check if the file is already connected to something
      */
 
+    public DatabaseInfo databaseInfo;
     public string connectionString;
     public IDbConnection dbConnection;
     public IDbCommand dbCmd;
@@ -30,6 +31,16 @@ public class Database
         dbCmd = database.dbCmd;
         reader = database.reader;
         connected = database.connected;
+    }
+
+    public Database(DatabaseInfo databaseInfo)
+    {
+        this.databaseInfo = databaseInfo;
+        connectionString = "";
+        connected = false;
+        reader = null;
+        dbCmd = null;
+        dbConnection = null;
     }
 
     public Database()

@@ -15,11 +15,12 @@ public class MapManager : Singleton<MapManager>
         if (!RanBefore())
         {
             //Create All Unique Characters Data Here through local database server,Should Only Be Ran Once On Initalization
-            database.dbConnection.Open();
-            database.dbCmd = database.dbConnection.CreateCommand();
-            string sqlQuery = "SELECT * FROM " + tableName;
-            database.dbCmd.CommandText = sqlQuery;
-            database.reader = database.dbCmd.ExecuteReader();
+            //database.dbConnection.Open();
+            //database.dbCmd = database.dbConnection.CreateCommand();
+            //string sqlQuery = "SELECT * FROM " + tableName;
+            //database.dbCmd.CommandText = sqlQuery;
+            //database.reader = database.dbCmd.ExecuteReader();
+            database.SelectTable(tableName);
             while (database.reader.Read())
             {
                 string name = database.reader.GetString(0);

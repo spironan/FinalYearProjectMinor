@@ -8,7 +8,7 @@ public class GlobalUI : MonoBehaviourSingletonPersistent<GlobalUI>
     GameObject confirmationDisplay;
 
     // Use this for initialization
-    void Awake()
+    new void Awake()
     {
         base.Awake();
         confirmationDisplay = GameObject.FindWithTag("ConfirmationDisplay");
