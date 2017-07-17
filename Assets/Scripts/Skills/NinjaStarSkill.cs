@@ -14,7 +14,7 @@ public class NinjaStarSkill : FireSkill
     public override bool checkForCollision()
     {
         //Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(),owner.GetComponent<Collider2D>());
-        collision = Physics2D.CircleCastAll(transform.position, 2f, Vector2.zero, 0);
+        collision = Physics2D.CircleCastAll(transform.position, local_sprite_size.x / 2, Vector2.zero, 0);
 
         foreach (RaycastHit2D temp in collision)
         {
