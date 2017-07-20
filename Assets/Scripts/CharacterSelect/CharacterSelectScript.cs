@@ -73,7 +73,7 @@ public class CharacterSelectScript : MonoBehaviour
     void LinkSlots()
     {
         CharacterSlot tempSlot;
-        int spawnIndex = 0;
+        //int spawnIndex = 0;
         //Allocate CharSlots Up Down Left Right for navigation
         if (charCount > 1)
         {
@@ -106,7 +106,7 @@ public class CharacterSelectScript : MonoBehaviour
                     tempSlot.up = charSlots[up];
                     tempSlot.down = charSlots[down];
                 }
-                spawnIndex = (int)(maxIndex * 0.5f);
+                //spawnIndex = (int)(maxIndex * 0.5f);
             }
 
         }

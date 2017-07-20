@@ -91,7 +91,7 @@ public class MapSelectScript : MonoBehaviour
     bool canActivate = true;
     bool mapPicked = false;
     bool cancelled = false;
-    bool atDest = true;
+    //bool atDest = true;
 
     List<GameObject> maps = new List<GameObject>();
     Vector3 offset;
@@ -187,7 +187,7 @@ public class MapSelectScript : MonoBehaviour
             timeToDest = 0.0f;
             transform.position = destination;
             dir = Vector3.zero;
-            atDest = true;
+            //atDest = true;
         }
     }
 
@@ -221,7 +221,7 @@ public class MapSelectScript : MonoBehaviour
                     if (currIndex > 0)
                     {
                         destination = transform.position + moveBy;
-                        atDest = false;
+                        //atDest = false;
                         dir = (destination - transform.position).normalized;
                         timeToDest = (destination - transform.position).magnitude / speed;
                         buttonCD = timeToDest;
@@ -232,7 +232,7 @@ public class MapSelectScript : MonoBehaviour
                     if (currIndex < totalMaps - 1)
                     {
                         destination = transform.position - moveBy;
-                        atDest = false;
+                        //atDest = false;
                         dir = (destination - transform.position).normalized;
                         timeToDest = (destination - transform.position).magnitude / speed;
                         buttonCD = timeToDest;

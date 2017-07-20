@@ -9,7 +9,7 @@ public class DynamicFightingCameraScript : MonoBehaviour
     float floor, ceiling;
     float leftBorder, rightBorder;
     float maxOrthoSize;
-    Vector2 mapCenter;
+    //Vector2 mapCenter;
 
     float extraUIOrtho;
     Camera thisCam;
@@ -40,7 +40,7 @@ public class DynamicFightingCameraScript : MonoBehaviour
             maxOrthoSize = mapLength / 2.0f;
         else
             maxOrthoSize = mapHeight / 2.0f;
-        mapCenter = new Vector3((leftBorder + rightBorder) / 2.0f, (floor + ceiling) / 2.0f, 0);
+        //mapCenter = new Vector3((leftBorder + rightBorder) / 2.0f, (floor + ceiling) / 2.0f, 0);
     }
 
     //public void SetMapLengthHeight(Vector3 minPoint, Vector3 maxPoint)
