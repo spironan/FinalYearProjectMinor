@@ -36,6 +36,11 @@ public class Wordings : MonoBehaviour {
             gameObject.SetActive(false);
         }
     }
+
+    public virtual void resetTimer()
+    {
+        timer = 0;
+    }
     //float characterHeight;
     //public SpriteRenderer spriteRendererOfWording;
     //public Sprite[] wordings;

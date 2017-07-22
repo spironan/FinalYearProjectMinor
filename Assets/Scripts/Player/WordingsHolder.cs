@@ -13,6 +13,7 @@ public class WordingsHolder : MonoBehaviour {
     {
         wordings[(int)types].gameObject.SetActive(true);
         wordings[(int)types].lifeTime = lifeTime;
+        wordings[(int)types].resetTimer();
     }
 
     public void resetWordings()
@@ -20,6 +21,7 @@ public class WordingsHolder : MonoBehaviour {
         foreach(Wordings wording in wordings)
         {
             wording.lifeTime = 0f;
+            wording.resetTimer();
         }
     }
 	//// Use this for initialization
