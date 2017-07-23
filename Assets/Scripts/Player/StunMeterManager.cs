@@ -10,6 +10,7 @@ public class StunMeterManager : MonoBehaviour {
     private PLAYER player_number;
     private PlayerControllerManager playerControllerManager;
     public float stunTime = 0.0f;
+    private bool isStunned = false;
 
     private SkillActivator activator;
     // Use this for initialization
@@ -42,7 +43,7 @@ public class StunMeterManager : MonoBehaviour {
         {
             stunMeter.gameObject.SetActive(true);
         }
-        if(playerControllerManager.isControllerDisabled())
+        if(playerControllerManager.isControllerDisabled() && isStunned)
         {
             stunTime += Time.deltaTime;
         }
@@ -52,6 +53,7 @@ public class StunMeterManager : MonoBehaviour {
         //}
         if(stunMeter.getStunValue() == 100 && !playerControllerManager.isControllerDisabled())
         {
+            isStunned = true;
             playerControllerManager.DisableController();
             activator.resetCurrentCastingSkill();
             StunnedTitle.showAndSetTiming(WORDING_TYPES.STUNNED,3f);
@@ -61,6 +63,7 @@ public class StunMeterManager : MonoBehaviour {
             //StunnedTitle.hideWording();
             playerControllerManager.EnableController();
             stunTime = 0;
+            isStunned = false;
         }
         //if (Input.GetKey(KeyCode.Z))
         //{
@@ -70,12 +73,13 @@ public class StunMeterManager : MonoBehaviour {
 
     public void addStunValue(float value)
     {
-        if(!playerControllerManager.isControllerDisabled())
+        if(!isStunned)
             stunMeter.addStunValue(value);
     }
 
     public void resetStunValue()
     {
+        isStunned = false;
         stunMeter.setStunValue(0f);
     }
 
