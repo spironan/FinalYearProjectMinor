@@ -13,7 +13,7 @@ public class StunMeter : MonoBehaviour
 
 
     private float maxStunValue = 100.0f;
-    private bool stopStunValueSecrease = false;
+    private bool stopStunValueDecrease = false;
     //// Use this for initialization
     //void Start()
     //{
@@ -23,7 +23,7 @@ public class StunMeter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!stopStunValueSecrease)
+        if (!stopStunValueDecrease)
         {
             //stunValue = Mathf.Clamp(stunValue, 0.1f, 100.0f);
             stunValue -= rateOfStunDecay * Time.deltaTime;
@@ -59,7 +59,7 @@ public class StunMeter : MonoBehaviour
 
     public void setToStopStunDecrease(bool trigger)
     {
-        stopStunValueSecrease = trigger;
+        stopStunValueDecrease = trigger;
     }
     //public void pauseStunDecrease()
     //{
