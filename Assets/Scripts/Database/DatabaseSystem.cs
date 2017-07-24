@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
+
 public class DatabaseSystem : Singleton<DatabaseSystem>
 {
     //a dictionary of the different database files and its Database(s)
@@ -18,30 +19,16 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
     {
         DatabaseInfo newDatabaseInfo = new DatabaseInfo(dataBaseName);
 #if UNITY_ANDROID
-        if (!File.Exists(newDatabaseInfo.databasePath))
+        if (!File.Exists(newDatabaseInfo.databasePersistentPath))
         {
             WWW newDB = new WWW(newDatabaseInfo.newDatabasePath_Android);
             while (!newDB.isDone) { }
-            File.WriteAllBytes(newDatabaseInfo.databasePath, newDB.bytes);
+            File.WriteAllBytes(newDatabaseInfo.databasePersistentPath, newDB.bytes);
+            //Debug.Log("persistent data path : " + newDatabaseInfo.databasePersistentPath);
             Debug.Log("new DB successfully created for android");
         }
 #endif
         return CreateDataBase(newDatabaseInfo);
-
-//#if UNITY_ANDROID
-//        string actualDBFile = Application.persistentDataPath + "/" + dataBasePath;
-//        string filePath = "URI=file:" + actualDBFile;
-//        if (!File.Exists(actualDBFile))
-//        {
-//            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/StudioProject4DataBase.db"); 
-//            while (!loadDB.isDone) { }  
-//            File.WriteAllBytes(actualDBFile, loadDB.bytes);
-//            Debug.Log("DB successfully created");
-//        }
-//#else
-//        string filePath = "URI=file:" + Application.dataPath + "/StreamingAssets/" + dataBasePath;
-//#endif
-//        return CreateDataBase(dataBaseName, filePath);
     }
 
     public void Clear()
@@ -58,6 +45,7 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
         return dataBaseSystem.ContainsKey(fileName);
     }
 
+    //Dangerous to Get the actual db in case modified, used Get Copy for less risk
     public Database GetDataBase(string fileName)
     {
         if (HasDataBase(fileName))
@@ -71,7 +59,7 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
             }
         }
 
-        Debug.Log("dataBase File Does Not Exist, Please Create it first");
+        Debug.Log("dataBase File of filename : " + fileName + " Does Not Exist, Please Create it first");
         return null;
     }
 
@@ -83,13 +71,13 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
             {
                 if (key == fileName)
                 {
-                    Database temp = new Database(dataBaseSystem[key]);
-                    return temp;// Returns a FileReaderBase
+                    Database copy = new Database(dataBaseSystem[key]);
+                    return copy;// Returns a FileReaderBase
                 }
             }
         }
 
-        Debug.Log("dataBase File Does Not Exist, Please Create it first");
+        Debug.Log("dataBase File of filename : " + fileName + " Does Not Exist, Please Create it first");
         return null;
     }
 
@@ -108,7 +96,7 @@ public class DatabaseSystem : Singleton<DatabaseSystem>
             return null;
 
         dataBaseSystem.Add(newDatabaseInfo.databaseName, dataBase);
-        Debug.Log("Added into DataBaseSystem");
+        Debug.Log("Added Database: " + newDatabaseInfo.databaseName + " into DataBaseSystem");
 
         return dataBase;
     }

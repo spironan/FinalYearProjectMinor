@@ -470,11 +470,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tipsMessages:
-  - 
-  - 
-  - 
-  - 
-  - 
+  - you can push opponent off the stage!
+  - you can pause the game by pressing the start key
+  - charging correctly will give you back significant mana
+  - the color of the skill icons give you a rough guage of the skill cost
+  - you can use your ultimate anytime! even when you have no mana
 --- !u!1 &1686881920
 GameObject:
   m_ObjectHideFlags: 0

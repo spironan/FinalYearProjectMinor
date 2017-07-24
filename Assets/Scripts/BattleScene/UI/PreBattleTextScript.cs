@@ -8,7 +8,7 @@ public class PreBattleTextScript : MonoBehaviour
     Animator preBattleAnimator;
 
 	// Use this for initialization
-	void Start () 
+	void Awake () 
     {
         battleSceneManager = GameObject.FindWithTag("UserInterface").GetComponent<BattleSceneManager>();
         preBattleAnimator = GetComponent<Animator>();
@@ -18,10 +18,20 @@ public class PreBattleTextScript : MonoBehaviour
     {
         if(preBattleAnimator == null)
             preBattleAnimator = GetComponent<Animator>();
-        preBattleAnimator.SetInteger("Round",currRound);
+        preBattleAnimator.SetInteger("Round", currRound);
+        StartCoroutine(WaitForAnimFinish(2.1f));
         //preBattleAnimator.Play("PreBattleTextImage");
     }
-    
+
+    IEnumerator WaitForAnimFinish(float duration)
+    {
+        DeActivateControllers();
+        //Debug.Log("waiting, time left : " + duration);
+        yield return new WaitForSeconds(duration);
+        //Debug.Log("Finished waiting, allowing players to move");
+        ActivateControllers();
+    }
+
     public void FinishAnim()
     {
         preBattleAnimator.SetBool("SetFinish", true);

@@ -41,6 +41,11 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
+      - time: 2.1666667
+        value: {x: 0, y: 0, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -92,8 +97,13 @@ AnimationClip:
         tangentMode: 0
       - time: 1.9833333
         value: {x: 0.1, y: 0.1, z: 1}
-        inSlope: {x: -6.000001, y: -6.000001, z: 0}
-        outSlope: {x: -6.000001, y: -6.000001, z: 0}
+        inSlope: {x: -3.0000005, y: -3.0000005, z: 0}
+        outSlope: {x: -3.0000005, y: -3.0000005, z: 0}
+        tangentMode: 0
+      - time: 2.1666667
+        value: {x: 0.1, y: 0.1, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -108,7 +118,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 2.0166667
+      - time: 2.1666667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -128,7 +138,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 2.0166667
+      - time: 2.1666667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -148,7 +158,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 2.0166667
+      - time: 2.1666667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -170,13 +180,13 @@ AnimationClip:
         tangentMode: 10
       - time: 1.9833333
         value: 1
-        inSlope: -15.000014
-        outSlope: -15.000014
+        inSlope: -2.7272718
+        outSlope: -2.7272718
         tangentMode: 10
-      - time: 2.0166667
+      - time: 2.1666667
         value: 0
-        inSlope: -30.000029
-        outSlope: -30.000029
+        inSlope: -5.4545436
+        outSlope: -5.4545436
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -191,7 +201,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: ed0a7c2d96a6ef44588364811bd56639, type: 3}
     - time: 1.5
       value: {fileID: 21300000, guid: 671ea3069f352d6408e10e1599ad752c, type: 3}
-    - time: 2
+    - time: 2.1666667
       value: {fileID: 21300000, guid: 671ea3069f352d6408e10e1599ad752c, type: 3}
     attribute: m_Sprite
     path: 
@@ -255,7 +265,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2.0166667
+    m_StopTime: 2.1833334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -316,8 +326,13 @@ AnimationClip:
         tangentMode: 10
       - time: 1.9833333
         value: 0.1
-        inSlope: -6.000001
-        outSlope: -6.000001
+        inSlope: -3.0000005
+        outSlope: -3.0000005
+        tangentMode: 10
+      - time: 2.1666667
+        value: 0.1
+        inSlope: 0
+        outSlope: 0
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -371,8 +386,13 @@ AnimationClip:
         tangentMode: 10
       - time: 1.9833333
         value: 0.1
-        inSlope: -6.000001
-        outSlope: -6.000001
+        inSlope: -3.0000005
+        outSlope: -3.0000005
+        tangentMode: 10
+      - time: 2.1666667
+        value: 0.1
+        inSlope: 0
+        outSlope: 0
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -429,6 +449,11 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
+      - time: 2.1666667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -444,7 +469,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 2.0166667
+      - time: 2.1666667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -464,7 +489,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 2.0166667
+      - time: 2.1666667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -484,7 +509,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 2.0166667
+      - time: 2.1666667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -506,13 +531,13 @@ AnimationClip:
         tangentMode: 10
       - time: 1.9833333
         value: 1
-        inSlope: -15.000014
-        outSlope: -15.000014
+        inSlope: -2.7272718
+        outSlope: -2.7272718
         tangentMode: 10
-      - time: 2.0166667
+      - time: 2.1666667
         value: 0
-        inSlope: -30.000029
-        outSlope: -30.000029
+        inSlope: -5.4545436
+        outSlope: -5.4545436
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -545,6 +570,11 @@ AnimationClip:
         outSlope: 0
         tangentMode: 10
       - time: 2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.1666667
         value: 0
         inSlope: 0
         outSlope: 0
@@ -584,6 +614,11 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
+      - time: 2.1666667
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -615,6 +650,11 @@ AnimationClip:
         outSlope: 0
         tangentMode: 10
       - time: 2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.1666667
         value: 0
         inSlope: 0
         outSlope: 0
@@ -668,23 +708,9 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.016666668
-    functionName: DeActivateControllers
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 1.5
     functionName: PlayClip
     data: Fight
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 2
-    functionName: ActivateControllers
-    data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

@@ -150,10 +150,10 @@ public class BattleSceneManager : MonoBehaviour
     public void ResetMatch()
     {
         ++currentRound;
-        preBattleText.PlayAnim(currentRound);
         ResetPlayerCharacters();
         SetPlayerSpawnPoints();
         ResetTimer();
+        preBattleText.PlayAnim(currentRound);
     }
 
     public void ResetEntireSet()
@@ -249,7 +249,7 @@ public class BattleSceneManager : MonoBehaviour
     {
         for (int i = 0; i < noOfPlayers; ++i)
         {
-            if (GameManager.Instance.GetPlayer(i).controller.getButtonAction(ACTIONS.START))
+            if (GameManager.Instance.GetPlayer(i).controller != null && GameManager.Instance.GetPlayer(i).controller.getButtonAction(ACTIONS.START))
             {
                 PauseGame(i);
                 break;

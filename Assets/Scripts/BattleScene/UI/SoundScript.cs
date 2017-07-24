@@ -13,6 +13,8 @@ public class SoundScript : MonoBehaviour
         {
             if (sound.name == clipName)
             {
+                if (audioSource.isPlaying)
+                    audioSource.Stop();
                 audioSource.clip = sound;
                 audioSource.Play();
             }

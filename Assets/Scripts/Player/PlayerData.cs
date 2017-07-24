@@ -5,12 +5,12 @@ public class PlayerData : MonoBehaviour
 {
     //Unique Player ID <- Important , used to identify that particular player
     uint UniquePlayerID;
+    //PlayerName <- Name of the Player           
+    string PlayerName;
     //Player In Game ID
     PLAYER playerID;
-    //PlayerName <- Name of the Player           
-    string PlayerName;   
     //Controller For Reading Input
-    public ListOfControllerActions controller;
+    public ListOfControllerActions controller = null;
     //the frame outline of the player
     public GameObject selectframe;
     // Character Data is the progression of the data, read from Database As well next time                               
@@ -23,6 +23,8 @@ public class PlayerData : MonoBehaviour
     bool assigned = false;
     //Whether Player Has Picked A Character in Character Select
     bool pickedChar = false;
+    //Whether Player is A CPU or Not
+    bool isCPU = false;
 
     //skillbook
 
@@ -51,44 +53,26 @@ public class PlayerData : MonoBehaviour
         PlayerControllerManager controller = GetComponent<PlayerControllerManager>();
         controller.init(playerID);
     }
-    public PLAYER GetPlayerID()
-    {
-        return playerID;
-    }
+    public PLAYER GetPlayerID() { return playerID; }
+
+    public void MakeCPU() { isCPU = true; }
+    public void MakeHuman() { isCPU = false; }
+    public void ConnectController(ListOfControllerActions controller) { /*if (controller == null)*/ this.controller = controller; }
+    public void DisconnectController() { if (controller != null) this.controller = null; }
+    public bool IsCPU() { return isCPU; }
 
     public void Assign() { assigned = true; }
     public void UnAssign() { assigned = false; }
     public bool IsAssigned() { return assigned; }
 
-    public void IsMaster()
-    {
-        isMaster = true;
-    }
-    public void IsGuest()
-    {
-        isMaster = false;
-    }
-    public bool GetMasterStatus()
-    {
-        return isMaster;
-    }
+    public void IsMaster() { isMaster = true; }
+    public void IsGuest() { isMaster = false; }
+    public bool GetMasterStatus() { return isMaster; }
 
-    public bool GetPickStatus()
-    {
-        return pickedChar;
-    }
-    public void PickChar()
-    {
-        pickedChar = true;
-    }
-    public void UnPickChar()
-    {
-        pickedChar = false;
-    }
-    public void ResetCharSelect()
-    {
-        pickedChar = false;
-    }
+    public bool GetPickStatus() { return pickedChar; }
+    public void PickChar() { pickedChar = true; }
+    public void UnPickChar() { pickedChar = false; }
+    public void ResetCharSelect() { pickedChar = false; }
 
     //Getter(s)
     //public PlayerCharacterData GetCharData(CHARACTERS chara) { return characterData[(int)chara]; }

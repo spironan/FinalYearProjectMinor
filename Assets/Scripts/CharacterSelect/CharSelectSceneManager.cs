@@ -1,41 +1,118 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CharSelectSceneManager : MonoBehaviour
 {
     enum SELECTIONPHASE
     {
         PLAYER_ASSIGN,
-        PICKING,
+        CHARACTER_PICKING,
         MAP_PICK,
         BEGIN_MATCH,
         END_SELECTIONSTAGE
     };
     SELECTIONPHASE currentPhase = SELECTIONPHASE.PLAYER_ASSIGN;
+    SELECTIONPHASE previousPhase;
 
     //Frames Of The Different Players
     public GameObject[] frameObj = new GameObject[(int)TEAM.MAX_TEAM];
     //Current Team Of the Player used to assign player team
     TEAM playerTeam = TEAM.RED_TEAM;
-
+    //All the Different Canvases(SideSelect,CharSelect,MapSelect)
+    List<CanvasGroup> canvasGroups = new List<CanvasGroup>();
     //public GameObject charSelectHolder, mapSelectHolder, mapSelectSpawner;
-    GameObject mapSelectHolder;
+    SideSelectScript sideSelect;
     CharacterSelectScript charSelectData;
+    GameObject mapSelectHolder;
     MapSelectScript mapSelectData;
     bool autoCreateSlots = true;
-
-    // Use this for initialization
+    
 	void Awake () 
     {
         GameManager.Instance.ChangeState(GAMESTATE.CHAR_SELECT);
+        
+        //Find and add all canvas groups to the list
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Canvas"))
+            canvasGroups.Add(go.GetComponent<CanvasGroup>());
+        
+        sideSelect = GameObject.FindWithTag("SideSelect").GetComponent<SideSelectScript>();
         charSelectData = GameObject.FindGameObjectWithTag("CharacterSelect").GetComponent<CharacterSelectScript>();
-        mapSelectData = GameObject.FindGameObjectWithTag("MapSpawnArea").GetComponent<MapSelectScript>();
         mapSelectHolder = GameObject.FindGameObjectWithTag("MapHolder");
+        mapSelectData = mapSelectHolder.GetComponentInChildren<MapSelectScript>();
         mapSelectHolder.SetActive(false);
         autoCreateSlots = true;
+        SetActiveCanvas();
 	}
-	
-	// Update is called once per frame
+
+    void SetInteractableCanvas(string canvasName)
+    {
+        foreach (CanvasGroup canvasgroup in canvasGroups)
+            if (canvasgroup.gameObject.name == canvasName)
+            {
+                canvasgroup.gameObject.SetActive(true);
+                canvasgroup.interactable = true;
+                canvasgroup.alpha = 1.0f;
+            }
+            else
+            {
+                canvasgroup.interactable = false;
+                canvasgroup.alpha = 0.0f;
+                canvasgroup.gameObject.SetActive(false);
+            }
+    }
+
+    void ChangeSelectionPhase(SELECTIONPHASE newPhase)
+    {
+        if (currentPhase != newPhase)
+        {
+            previousPhase = currentPhase;
+            currentPhase = newPhase;
+            SetActiveCanvas();
+        }
+    }
+
+    void SetActiveCanvas()
+    {
+        switch (currentPhase)
+        {
+            case SELECTIONPHASE.PLAYER_ASSIGN:
+                {
+                    switch (GameManager.Instance.GetGameMode())
+                    {
+                        case GAME_MODES.PRACTICE:
+                            SetInteractableCanvas("SideSelectCanvas");
+                            break;
+                        case GAME_MODES.LOCAL_PVP:
+                            SetInteractableCanvas("CharacterSelectCanvas");
+                            break;
+                    }
+                }
+                break;
+            case SELECTIONPHASE.CHARACTER_PICKING:
+                {
+                    switch (GameManager.Instance.GetGameMode())
+                    {
+                        case GAME_MODES.PRACTICE:
+                        case GAME_MODES.LOCAL_PVP:
+                            if (previousPhase == SELECTIONPHASE.PLAYER_ASSIGN)
+                                SetInteractableCanvas("CharacterSelectCanvas");
+                            break;
+                    }
+                }
+                break;
+            case SELECTIONPHASE.MAP_PICK:
+                {
+                    SetInteractableCanvas("MapSelectCanvas");
+                }
+                break;
+            case SELECTIONPHASE.BEGIN_MATCH:
+                {
+                }
+                break;
+        }
+    }
+
 	void Update () 
     {
         switch (currentPhase)
@@ -45,7 +122,7 @@ public class CharSelectSceneManager : MonoBehaviour
                     UpdatePlayerAssign();
                 }
                 break;
-            case SELECTIONPHASE.PICKING:
+            case SELECTIONPHASE.CHARACTER_PICKING:
                 {
                     CharacterPickingPhase();
                 }
@@ -66,43 +143,62 @@ public class CharSelectSceneManager : MonoBehaviour
 
     void UpdatePlayerAssign()
     {
-        bool gotoCharSelect = true;
-        for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
+        switch (GameManager.Instance.GetGameMode())
         {
-            PlayerData player = GameManager.Instance.GetPlayer(i);
-            if (!player.IsAssigned())
-            {
-                gotoCharSelect = false;
-                if(player.controller.getButtonAction(ACTIONS.START))
+            case GAME_MODES.PRACTICE:
                 {
-                    autoCreateSlots = false;
-                    player.Assign();
-                    player.GetInGameData().SetTeam(playerTeam);
-                    player.selectframe = frameObj[(int)playerTeam];
-                    charSelectData.CreatePlayerFrame(player.GetPlayerID());
-                    Debug.Log("Assigned Player ID: " + player.GetPlayerID() + " To Team : " + playerTeam);
-                    playerTeam++;
+                    if (sideSelect.SelectedTeam())
+                    {
+                        //charSelectData.CreatePlayerFrame(player2.GetPlayerID());
+                        ChangeSelectionPhase(SELECTIONPHASE.CHARACTER_PICKING);
+                        charSelectData.CreatePlayerFrame(PLAYER.PLAYER_ONE);
+                        charSelectData.CreatePlayerFrame(PLAYER.PLAYER_TWO);
+                    }
                 }
-            }
-        }
+                break;
 
-        if (gotoCharSelect)
-        {
-            if (autoCreateSlots)
-            {
-                for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
+            case GAME_MODES.LOCAL_PVP:
                 {
-                    charSelectData.CreatePlayerFrame(GameManager.Instance.GetPlayer(i).GetPlayerID());
-                }
-            }
-            currentPhase = SELECTIONPHASE.PICKING;
-        }
+                    bool gotoCharSelect = true;
+                    for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
+                    {
+                        PlayerData player = GameManager.Instance.GetPlayer(i);
+                        if (!player.IsAssigned())
+                        {
+                            gotoCharSelect = false;
+                            if (player.controller.getButtonAction(ACTIONS.START))
+                            {
+                                autoCreateSlots = false;
+                                player.Assign();
+                                player.GetInGameData().SetTeam(playerTeam);
+                                player.selectframe = frameObj[(int)playerTeam];
+                                charSelectData.CreatePlayerFrame(player.GetPlayerID());
+                                Debug.Log("Assigned Player ID: " + player.GetPlayerID() + " To Team : " + playerTeam);
+                                playerTeam++;
+                            }
+                        }
+                    }
 
+                    if (gotoCharSelect)
+                    {
+                        if (autoCreateSlots)
+                        {
+                            for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
+                            {
+                                charSelectData.CreatePlayerFrame(GameManager.Instance.GetPlayer(i).GetPlayerID());
+                            }
+                        }
+                        //currentPhase = SELECTIONPHASE.CHARACTER_PICKING;
+                        ChangeSelectionPhase(SELECTIONPHASE.CHARACTER_PICKING);
+                    }
+                }
+                break;
+        }
     }
 
     void CharacterPickingPhase()
     {
-        ///Check for controls and navigation of picture here
+        //Check for controls and navigation of picture here
         if (charSelectData.FinishedPicking())
         {
             //Lock In All frames
@@ -110,21 +206,31 @@ public class CharSelectSceneManager : MonoBehaviour
             //Turn On Map Straight away
             mapSelectHolder.SetActive(true);
             //mapSelectData = mapSelectSpawner.GetComponent<MapSelectScript>();
-            currentPhase = SELECTIONPHASE.MAP_PICK;
+            ChangeSelectionPhase(SELECTIONPHASE.MAP_PICK);
+            //currentPhase = SELECTIONPHASE.MAP_PICK;
+        }
+        else if (charSelectData.BackToSideSelect())
+        {
+            charSelectData.Reset();
+            ChangeSelectionPhase(SELECTIONPHASE.PLAYER_ASSIGN);
+            sideSelect.Reset();
         }
     }
 
     void MapPickingPhase()
     {
-        ///Check for relevant controls and navigation of picture here
+        //Check for relevant controls and navigation of picture here
         if (mapSelectData.CheckMapPicked())
-            currentPhase = SELECTIONPHASE.BEGIN_MATCH;
+        {
+            //currentPhase = SELECTIONPHASE.BEGIN_MATCH;
+            ChangeSelectionPhase(SELECTIONPHASE.BEGIN_MATCH);
+        }
         else if (mapSelectData.CancelMapSelect())
         {
             mapSelectData.SetCancel(false);
             mapSelectHolder.SetActive(false);
             charSelectData.UnFinish();
-            currentPhase = SELECTIONPHASE.PICKING;
+            ChangeSelectionPhase(SELECTIONPHASE.CHARACTER_PICKING);
         }
     }
 
@@ -133,5 +239,5 @@ public class CharSelectSceneManager : MonoBehaviour
         //Play Some Animation Maybe?
         LoadingScreenManager.LoadScene("BattleScene");
     }
-
+    
 }

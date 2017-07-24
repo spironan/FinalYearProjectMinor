@@ -34,6 +34,7 @@ TagManager:
   - ConfirmationToQuitHolder
   - MainMenuOptionsHolder
   - GlobalUIDisplay
+  - SideSelect
   layers:
   - Default
   - TransparentFX
