@@ -24,7 +24,6 @@ public class CharSelectSceneManager : MonoBehaviour
     //public GameObject charSelectHolder, mapSelectHolder, mapSelectSpawner;
     SideSelectScript sideSelect;
     CharacterSelectScript charSelectData;
-    GameObject mapSelectHolder;
     MapSelectScript mapSelectData;
     bool autoCreateSlots = true;
     
@@ -38,9 +37,7 @@ public class CharSelectSceneManager : MonoBehaviour
         
         sideSelect = GameObject.FindWithTag("SideSelect").GetComponent<SideSelectScript>();
         charSelectData = GameObject.FindGameObjectWithTag("CharacterSelect").GetComponent<CharacterSelectScript>();
-        mapSelectHolder = GameObject.FindGameObjectWithTag("MapHolder");
-        mapSelectData = mapSelectHolder.GetComponentInChildren<MapSelectScript>();
-        mapSelectHolder.SetActive(false);
+        mapSelectData = GameObject.FindGameObjectWithTag("MapSpawnArea").GetComponentInChildren<MapSelectScript>();
         autoCreateSlots = true;
         SetActiveCanvas();
 	}
@@ -81,7 +78,10 @@ public class CharSelectSceneManager : MonoBehaviour
                     switch (GameManager.Instance.GetGameMode())
                     {
                         case GAME_MODES.PRACTICE:
-                            SetInteractableCanvas("SideSelectCanvas");
+                            {
+                                SetInteractableCanvas("SideSelectCanvas");
+                                GameManager.Instance.RestoreDefaults();
+                            }
                             break;
                         case GAME_MODES.LOCAL_PVP:
                             SetInteractableCanvas("CharacterSelectCanvas");
@@ -95,7 +95,6 @@ public class CharSelectSceneManager : MonoBehaviour
                     {
                         case GAME_MODES.PRACTICE:
                         case GAME_MODES.LOCAL_PVP:
-                            if (previousPhase == SELECTIONPHASE.PLAYER_ASSIGN)
                                 SetInteractableCanvas("CharacterSelectCanvas");
                             break;
                     }
@@ -149,10 +148,9 @@ public class CharSelectSceneManager : MonoBehaviour
                 {
                     if (sideSelect.SelectedTeam())
                     {
-                        //charSelectData.CreatePlayerFrame(player2.GetPlayerID());
                         ChangeSelectionPhase(SELECTIONPHASE.CHARACTER_PICKING);
                         charSelectData.CreatePlayerFrame(PLAYER.PLAYER_ONE);
-                        charSelectData.CreatePlayerFrame(PLAYER.PLAYER_TWO);
+                        //charSelectData.CreatePlayerFrame(PLAYER.PLAYER_TWO);
                     }
                 }
                 break;
@@ -203,9 +201,7 @@ public class CharSelectSceneManager : MonoBehaviour
         {
             //Lock In All frames
             charSelectData.LockAllFrames();
-            //Turn On Map Straight away
-            mapSelectHolder.SetActive(true);
-            //mapSelectData = mapSelectSpawner.GetComponent<MapSelectScript>();
+            //Change Scene to Map Select
             ChangeSelectionPhase(SELECTIONPHASE.MAP_PICK);
             //currentPhase = SELECTIONPHASE.MAP_PICK;
         }
@@ -227,10 +223,9 @@ public class CharSelectSceneManager : MonoBehaviour
         }
         else if (mapSelectData.CancelMapSelect())
         {
-            mapSelectData.SetCancel(false);
-            mapSelectHolder.SetActive(false);
-            charSelectData.UnFinish();
             ChangeSelectionPhase(SELECTIONPHASE.CHARACTER_PICKING);
+            charSelectData.UnFinish(mapSelectData.GetCancelledTeam());
+            mapSelectData.SetCancel(false);
         }
     }
 

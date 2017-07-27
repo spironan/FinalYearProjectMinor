@@ -109,6 +109,11 @@ public class GameManager : MonoBehaviourSingletonPersistent<GameManager>
 
         return masterPlayer.GetComponent<PlayerData>();
     }
+    public PlayerData GetRandomPlayer()
+    {
+        Random.seed = System.DateTime.Now.Millisecond;
+        return GetPlayer(Random.Range(0,(int)PLAYER.MAX_PLAYERS));
+    }
     public Map GetCurrMap() { return currMap; }
     public int GetPlayerSize() { return playerList.Count; }
     public GAMESTATE GetGameState() { return currState; }
@@ -185,6 +190,11 @@ public class GameManager : MonoBehaviourSingletonPersistent<GameManager>
 
 
     //In Game Functions
+    public void RestoreDefaults()
+    {
+        for (int i = 0; i < playerList.Count; ++i)
+            playerList[i].ResetToDefaults();
+    }
     public void StartNewMatch()
     {
         for (int i = 0; i < playerList.Count; ++i) 
@@ -214,4 +224,5 @@ public class GameManager : MonoBehaviourSingletonPersistent<GameManager>
     {
         return GetWinner().GetInGameData().GetTeam();
     }
+    
 }

@@ -18,23 +18,19 @@ public class CharacterSelectScript : MonoBehaviour
     int charCount;
     //Is The Character Select Finished
     bool finished = false;
-    //To Determine Whether or not To Take In Input Of Players
-    bool updateNavigation = true;
     //To Determine whether or not to go back to SideSelect
     bool backToSideSelect = false;
     //AudioClips that the sound play
-    AudioClip startSound, selectChar, pickChar;
+    AudioClip startSound;
     
+
 	void Awake () 
     {
         //Audio SFX
         startSound = AudioClipManager.GetInstance().GetAudioClip("Start");
-        selectChar = AudioClipManager.GetInstance().GetAudioClip("Select");
-        pickChar = AudioClipManager.GetInstance().GetAudioClip("PickChar");
         framePrefab = PrefabManager.GetInstance().GetPrefab("CharacterSlot");
         charCount = CharacterManager.GetInstance().GetCharCount();
         finished = false;
-        updateNavigation = true;
         SpawnSlots();
         LinkSlots();
 	}
@@ -116,6 +112,9 @@ public class CharacterSelectScript : MonoBehaviour
 
     public void CreatePlayerFrame(PLAYER playerID)
     {
+        if (playerFrames.Count >= (int)PLAYER.MAX_PLAYERS)
+            return;
+
         PlayerData player = GameManager.Instance.GetPlayer(playerID);
         GameObject frame = Instantiate(player.selectframe);
         if (frame != null)
@@ -123,6 +122,7 @@ public class CharacterSelectScript : MonoBehaviour
             frame.transform.SetParent(gameObject.transform, false);
             frame.transform.localScale = new Vector3(1, 1, 1);
             CharSelectLocationScript framescript = frame.GetComponent<CharSelectLocationScript>();
+            framescript.SetPlayerID(playerID);
             if (player.GetInGameData().GetCharName() != "")
                 framescript.AssignCharSlot(charSlots[CharacterManager.GetInstance().GetCharacterIndex(player.GetInGameData().GetCharName())]);
             else
@@ -135,6 +135,7 @@ public class CharacterSelectScript : MonoBehaviour
             Debug.Log("Unable to Create Player Frame for :" + playerID + "as it is null");
     }
 
+
     public void Update()
     {
         if(!finished)
@@ -146,7 +147,7 @@ public class CharacterSelectScript : MonoBehaviour
 
     void NavigateSelect()
     {
-        if (updateNavigation)
+        if (!GlobalUI.Instance.GetConfirmationDisplayActive())
         {
             for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
             {
@@ -159,130 +160,157 @@ public class CharacterSelectScript : MonoBehaviour
                 if (player.controller == null)
                     continue;
 
-                int team = (int)player.GetInGameData().GetTeam();
-                Debug.Log("Player ID by accessing through player: " + player.GetPlayerID() + " Player ID by accessing through controller : " + player.controller.GetControllerManager().playerID);
+                CharSelectLocationScript curPlayerFrame = GetPlayerFrame(player.GetPlayerID());
+                if (curPlayerFrame == null)
+                    continue;
+                //int team = (int)player.GetInGameData().GetTeam();
+                //Debug.Log("Player ID by accessing through player: " + player.GetPlayerID() + " Player ID by accessing through controller : " + player.controller.GetControllerManager().playerID);
 
                 //Move Left Right
                 if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
                 {
-                    playerFrames[team].MoveLeft();
-                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
+                    curPlayerFrame.MoveLeft();
                 }
                 else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT))
                 {
-                    playerFrames[team].MoveRight();
-                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
+                    curPlayerFrame.MoveRight();
                 }
 
                 // Move Up Down
                 if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_UP))
                 {
-                    playerFrames[team].MoveUp();
-                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
+                    curPlayerFrame.MoveUp();
                 }
                 else if (playerController.getAxisActionBoolDown(ACTIONS.MOVE_DOWN))
                 {
-                    playerFrames[team].MoveDown();
-                    SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, selectChar, false, "SFX_Player" + (i + 1));
+                    curPlayerFrame.MoveDown();
                 }
 
                 //Player Picks Character
                 if (playerController.getButtonAction(ACTIONS.PICK_CHARACTER))
                 {
-                    Debug.Log("Locking In Character : " + playerFrames[team].GetCharName() +
+                    Debug.Log("Locking In Character : " + curPlayerFrame.GetCharName() +
                        " By Team :" + player.GetInGameData().GetTeam() + " Of Player ID :" + player.GetPlayerID());
-                    LockInCharacter(player.GetInGameData().GetTeam(), playerFrames[team].GetCharName());
+                    if (LockInCharacter(player, curPlayerFrame.GetCharName()))
+                        break;
                 }
                 //Player Unpick Character
                 else if (playerController.getButtonAction(ACTIONS.UNPICK_CHARACTER))
                 {
                     if (player.GetPickStatus())
-                        DeselectCharacter(player.GetInGameData().GetTeam());
+                        DeselectCharacter(player);
                     else
                     {
                         switch (GameManager.Instance.GetGameMode())
                         {
                             case GAME_MODES.LOCAL_PVP:
-                                ActivateExitConfirmation(playerController);
+                                GlobalUI.Instance.ToggleConfirmationDisplay(playerController, GameObject.FindWithTag("ChangeSceneButton").GetComponent<Button>(), EXECUTE_ACTION.BACK_TO_MAIN);
                                 break;
                             case GAME_MODES.PRACTICE:
-                                backToSideSelect = true;
+                                {
+                                    if (player.GetPlayerID() == PLAYER.PLAYER_TWO) // Currently Controlling the AI
+                                    {
+                                        PlayerData actualPlayer = GameManager.Instance.GetPlayer(PLAYER.PLAYER_ONE);
+                                        actualPlayer.SwapControllers(player);
+                                        DeselectCharacter(actualPlayer);
+                                    }
+                                    else
+                                    {
+                                        backToSideSelect = true;
+                                    }
+                                }
                                 break;
                         }
                     }
                 }
+
             }
         }
-        else if (!GlobalUI.Instance.GetConfirmationDisplayActive())
-        {
-            updateNavigation = true;
-        }
     }
 
-    public bool BackToSideSelect() { return backToSideSelect; }
-    public void Reset() { backToSideSelect = false; }
 
-    void ActivateExitConfirmation(ListOfControllerActions controller)
+    public bool LockInCharacter(PlayerData player, string charaName)
     {
-        GlobalUI.Instance.ToggleConfirmationDisplay(controller, GameObject.FindWithTag("ChangeSceneButton").GetComponent<Button>(), EXECUTE_ACTION.BACK_TO_MAIN);
-        updateNavigation = false;
-    }
+        player.GetInGameData().SetCharName(charaName);
+        player.PickChar();
+        GetPlayerFrame(player.GetPlayerID()).LockIn();
 
-    public void LockInCharacter(TEAM playerTeam, string charaName)
-    {
-        PlayerData player = GameManager.Instance.GetPlayer(playerTeam);
-        if (!player.GetPickStatus())
+        if (GameManager.Instance.GetGameMode() == GAME_MODES.PRACTICE)
         {
-            player.GetInGameData().SetCharName(charaName);
-            player.PickChar();
-            playerFrames[(int)playerTeam].LockIn();
-            SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, pickChar, false, "SFX_Player" + (int)(player.GetPlayerID() + 1));
-            Debug.Log("Player Team : " + playerTeam + " Of ID : " + GameManager.Instance.GetPlayer(playerTeam).GetPlayerID() + " Locked in character : " + charaName);
-
-            if (GameManager.Instance.GetGameMode() == GAME_MODES.PRACTICE)
+            //Swap Controllers
+            PlayerData opposingPlayer = null;
+            if (player.GetPlayerID() == PLAYER.PLAYER_ONE)
             {
-                //Swap Controllers
-                PlayerData opposingPlayer = null;
-                if (player.GetPlayerID() == PLAYER.PLAYER_ONE)
+                opposingPlayer = GameManager.Instance.GetPlayer(PLAYER.PLAYER_TWO);
+                if (!opposingPlayer.IsAssigned())
                 {
-                    opposingPlayer = GameManager.Instance.GetPlayer(PLAYER.PLAYER_TWO);
-                    //opposingPlayer.Assign();
-                    //CreatePlayerFrame(opposingPlayer.GetPlayerID());
+                    opposingPlayer.Assign();
+                    CreatePlayerFrame(opposingPlayer.GetPlayerID());
                 }
-                else if (player.GetPlayerID() == PLAYER.PLAYER_TWO)
-                    opposingPlayer = GameManager.Instance.GetPlayer(PLAYER.PLAYER_ONE);
-                opposingPlayer.ConnectController(player.controller);
-                player.DisconnectController();
             }
+            else if (player.GetPlayerID() == PLAYER.PLAYER_TWO)
+                opposingPlayer = GameManager.Instance.GetPlayer(PLAYER.PLAYER_ONE);
+
+            opposingPlayer.SwapControllers(player);
+            return true;
         }
+        return false;
+    }
+    
+    public void DeselectCharacter(PlayerData player)
+    {
+        //DeselectCharacter         
+        player.UnPickChar();
+        GetPlayerFrame(player.GetPlayerID()).UnLock();
     }
 
     public void DeselectCharacter(TEAM playerTeam)
     {
-        PlayerData player = GameManager.Instance.GetPlayer(playerTeam);
-        //DeselectCharacter        
-        if (player.GetPickStatus())
+        //DeselectCharacter         
+        GameManager.Instance.GetPlayer(playerTeam).UnPickChar();
+        GetPlayerFrame(playerTeam).UnLock();
+    }
+
+    public void DeselectAllCharacters()
+    {
+        for (int i = 0; i < GameManager.Instance.GetPlayerSize(); ++i)
         {
-            player.UnPickChar();
-            playerFrames[(int)playerTeam].UnLock();
-            if (GameManager.Instance.GetGameMode() == GAME_MODES.PRACTICE)
-            {
-                //Only Applies to CPU
-                PlayerData opposingPlayer = null;
-                if (player.GetPlayerID() == PLAYER.PLAYER_TWO)
-                    opposingPlayer = GameManager.Instance.GetPlayer(PLAYER.PLAYER_ONE);
-                opposingPlayer.ConnectController(player.controller);
-                player.DisconnectController();
-            }
+            GameManager.Instance.GetPlayer(i).UnPickChar();
+            GetPlayerFrame(i).UnLock();
         }
     }
+
+    public CharSelectLocationScript GetPlayerFrame(PLAYER playerID)
+    {
+        CharSelectLocationScript curPlayerFrame = null;
+        foreach (CharSelectLocationScript frame in playerFrames)
+        {
+            if (frame.GetPlayerID() == playerID)
+            {
+                curPlayerFrame = frame;
+                return curPlayerFrame;
+            }
+        }
+        return null;
+    }
+
+    public CharSelectLocationScript GetPlayerFrame(TEAM playerTeam)
+    {
+        PLAYER playerID = GameManager.Instance.GetPlayer(playerTeam).GetPlayerID();
+        return GetPlayerFrame(playerID);
+    }
+
+    public CharSelectLocationScript GetPlayerFrame(int playerTeam)
+    {
+        PLAYER playerID = GameManager.Instance.GetPlayer(playerTeam).GetPlayerID();
+        return GetPlayerFrame(playerID);
+    }
+
 
     public void LockAllFrames()
     {
         for (int i = 0; i < playerFrames.Count; ++i)
-        {
             playerFrames[i].LockIn();
-        }
     }
 
     bool CheckBothPicked()
@@ -294,9 +322,20 @@ public class CharacterSelectScript : MonoBehaviour
         }
         return true;
     }
+    
+
+    public bool BackToSideSelect() { return backToSideSelect; }
+    public void Reset() { backToSideSelect = false; }
 
     public bool FinishedPicking() { return finished; }
-    public void UnFinish() { finished = false; }
+    public void UnFinish(TEAM cancelledTeam)
+    {
+        finished = false;
+        if (GameManager.Instance.GetGameMode() == GAME_MODES.PRACTICE)
+            DeselectAllCharacters();
+        else
+            DeselectCharacter(cancelledTeam);
+    }
 
     public string GetCurrChara(TEAM playerteam)
     {

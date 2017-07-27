@@ -62,7 +62,6 @@ public class NewMainMenuScript : MonoBehaviour {
         if (settings_buttons == null)
             settings_buttons = settingsHolder.GetComponentsInChildren<Button>();
 
-
         
         //set all sliders value to be the same as the volume.
 
@@ -97,6 +96,8 @@ public class NewMainMenuScript : MonoBehaviour {
     void Update () {
         if(!runOnce)
         {
+            GameManager.Instance.RestoreDefaults();
+
             Slider temp = settings_buttons[(int)SETTINGS_OPTIONS.BGM].gameObject.GetComponentInChildren<Slider>();
             temp.value = SoundSystem.Instance.GetVolumeByType((AUDIO_TYPE.BACKGROUND_MUSIC));
 

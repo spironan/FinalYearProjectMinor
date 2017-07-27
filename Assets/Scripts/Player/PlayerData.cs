@@ -59,6 +59,7 @@ public class PlayerData : MonoBehaviour
     public void MakeHuman() { isCPU = false; }
     public void ConnectController(ListOfControllerActions controller) { /*if (controller == null)*/ this.controller = controller; }
     public void DisconnectController() { if (controller != null) this.controller = null; }
+    public void SwapControllers(PlayerData player) { ListOfControllerActions temp = controller; this.controller = player.controller; player.controller = temp; }
     public bool IsCPU() { return isCPU; }
 
     public void Assign() { assigned = true; }
@@ -74,6 +75,7 @@ public class PlayerData : MonoBehaviour
     public void UnPickChar() { pickedChar = false; }
     public void ResetCharSelect() { pickedChar = false; }
 
+    public void ResetToDefaults() { assigned = pickedChar = isCPU = false; }
     //Getter(s)
     //public PlayerCharacterData GetCharData(CHARACTERS chara) { return characterData[(int)chara]; }
     public PlayerCharacterData GetCharDataByName(string charName) 

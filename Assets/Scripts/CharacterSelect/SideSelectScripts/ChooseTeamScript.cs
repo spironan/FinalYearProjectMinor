@@ -27,12 +27,8 @@ public class ChooseTeamScript : MonoBehaviour {
 
         PlayerData player2 = GameManager.Instance.GetPlayer(PLAYER.PLAYER_TWO);
         player2.MakeCPU();
-        player2.Assign();
+        //player2.Assign();
         player2.GetInGameData().SetTeam(opposingTeam);
         player2.selectframe = PrefabManager.GetInstance().GetPrefab("CS_Overlay_CPU");
-
-        //CharacterSelectScript charSelectData = GameObject.FindWithTag("CharacterSelect").GetComponent<CharacterSelectScript>();
-        //charSelectData.CreatePlayerFrame(player.GetPlayerID());
-        //charSelectData.CreatePlayerFrame(player2.GetPlayerID());
     }
 }

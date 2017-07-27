@@ -20,7 +20,11 @@ public class SideSelectScript : MonoBehaviour
     ListOfControllerActions controller = null;
     bool selectedTeam = false;
 
+    FlipObjectScript flipText;
+
     public bool SelectedTeam() { return selectedTeam; }
+
+    public void Reset() { selectedTeam = false; }
 
     void Start()
     {
@@ -28,6 +32,7 @@ public class SideSelectScript : MonoBehaviour
         eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
         pointer = new PointerEventData(EventSystem.current); // pointer event for Execute
 
+        flipText = GameObject.Find("FlipArrow").GetComponent<FlipObjectScript>();
         button = SIDES.RED_TEAM;
         if (buttons == null)
             buttons = GetComponentsInChildren<Button>();
@@ -51,6 +56,7 @@ public class SideSelectScript : MonoBehaviour
                     button++;
                     buttons[(int)button].Select();
                     buttons[(int)button].transform.localScale = SelectedSize;
+                    flipText.Flip();
                     SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
                 }
             }
@@ -62,6 +68,7 @@ public class SideSelectScript : MonoBehaviour
                     button--;
                     buttons[(int)button].Select();
                     buttons[(int)button].transform.localScale = SelectedSize;
+                    flipText.Flip();
                     SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
                 }
             }
@@ -79,7 +86,5 @@ public class SideSelectScript : MonoBehaviour
         }
     }
 
-    public void Reset() { selectedTeam = false; }
-
-
+    
 }

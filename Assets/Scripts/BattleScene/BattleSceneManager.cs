@@ -34,7 +34,7 @@ public class BattleSceneManager : MonoBehaviour
         {
             case GAME_MODES.PRACTICE:
                 SetWinCondition(1);
-                maxBattleTimer = 1000.0f;
+                maxBattleTimer = 999.0f;
                 break;
             case GAME_MODES.VS_AI:
             case GAME_MODES.LOCAL_PVP:
@@ -58,9 +58,17 @@ public class BattleSceneManager : MonoBehaviour
         noOfPlayers = GameManager.Instance.GetPlayerSize();
 
         preBattleText = GameObject.FindGameObjectWithTag("PreBattleText").GetComponent<PreBattleTextScript>();
-
-        foreach (GameObject display in GameObject.FindGameObjectsWithTag("VictoryDisplay"))
-            victoryInterface.Add(display.GetComponent<VictoryDisplayScript>());
+        switch (GameManager.Instance.GetGameMode())
+        {
+            case GAME_MODES.PRACTICE:
+            case GAME_MODES.VS_AI:
+                preBattleText.gameObject.SetActive(false);
+                break;
+            case GAME_MODES.LOCAL_PVP:
+                foreach (GameObject display in GameObject.FindGameObjectsWithTag("VictoryDisplay"))
+                    victoryInterface.Add(display.GetComponent<VictoryDisplayScript>());
+                break;
+        }
 
         endDisplay = GameObject.FindWithTag("EndDisplay");
         endDisplay.SetActive(false);
@@ -77,15 +85,11 @@ public class BattleSceneManager : MonoBehaviour
             PlayerData player = GameManager.Instance.GetPlayer(currentTeam);
             GameObject character = PrefabManager.GetInstance().GetPrefab(player.GetInGameData().GetCharName());
             character.GetComponent<PlayerCharacterLogicScript>().Init(player);
-            //character.GetComponent<PlayerCharacterLogicScript>().SetCharacter(player.GetInGameData().GetCharName());
-            //character.GetComponent<PlayerCharacterLogicScript>().SetPlayerID(player.GetPlayerID());
-            //character.GetComponent<PlayerCharacterLogicScript>().SetController(player.gameObject.GetComponent<PlayerControllerManager>());
             character.GetComponent<SkillActivator>().bindedActions = player.gameObject.GetComponent<ListOfControllerActions>();
             playerCharacters.Add(character);
         }
     }
-
-
+    
     void Start()
     {
         StartBattle();
@@ -94,10 +98,10 @@ public class BattleSceneManager : MonoBehaviour
     //Called Once when a Player Starts
     public void StartBattle()
     {
-        //ResetPlayerCharacters();
         SetPlayerSpawnPoints();
         ResetTimer();
-        preBattleText.PlayAnim(currentRound);
+        if(preBattleText.gameObject.activeSelf)
+            preBattleText.PlayAnim(currentRound);
     }
 
 
@@ -125,11 +129,6 @@ public class BattleSceneManager : MonoBehaviour
         pauseDisplay.GetComponent<ToggleActiveScript>().ToggleActive();
         pauseDisplay.GetComponentInChildren<PauseMenuScript>().Pause(playerID);
         SetPlayerControls(false);
-        //foreach (GameObject player in playerCharacters)
-        //{
-        //    player.GetComponent<PlayerCharacterLogicScript>().StopUpdate();
-        //    player.GetComponent<PlayerCharacterLogicScript>().DisableAllAttacks();
-        //}
     }
 
     public void UnPauseGame()
@@ -139,38 +138,57 @@ public class BattleSceneManager : MonoBehaviour
         Time.timeScale = 1.0f;
         pauseDisplay.GetComponent<ToggleActiveScript>().ToggleActive();
         SetPlayerControls(true);
-        //foreach (GameObject player in playerCharacters)
-        //{
-        //    player.GetComponent<PlayerCharacterLogicScript>().StartUpdate(); // Start Updating Players again
-        //    player.GetComponent<PlayerCharacterLogicScript>().EnableAllAttacks();
-        //}
     }
 
 
     public void ResetMatch()
     {
-        ++currentRound;
-        ResetPlayerCharacters();
-        SetPlayerSpawnPoints();
-        ResetTimer();
-        preBattleText.PlayAnim(currentRound);
+        switch (GameManager.Instance.GetGameMode()) 
+        {
+            case GAME_MODES.PRACTICE:
+            case GAME_MODES.VS_AI:
+                {
+                    ResetPlayerCharacters();
+                    SetPlayerSpawnPoints();
+                    ResetTimer();
+                }
+                break;
+            case GAME_MODES.LOCAL_PVP:
+                {
+                    ++currentRound;
+                    ResetPlayerCharacters();
+                    SetPlayerSpawnPoints();
+                    ResetTimer();
+                    preBattleText.PlayAnim(currentRound);
+                }
+                break;
+        }
+
     }
 
     public void ResetEntireSet()
     {
-        preBattleText.ResetAnim();
-        GameManager.Instance.StartNewMatch();
+        switch (GameManager.Instance.GetGameMode())
+        {
+            case GAME_MODES.PRACTICE:
+            case GAME_MODES.VS_AI:
+                {
+                    GameManager.Instance.StartNewMatch();
+                }
+                break;
+            case GAME_MODES.LOCAL_PVP:
+                {
+                    preBattleText.ResetAnim();
+                    GameManager.Instance.StartNewMatch();
+                }
+                break;
+        }
     }
 
     public void Rematch()
     {
         ResetEntireSet();
         SetPlayerControls(true);
-        //foreach (GameObject player in playerCharacters)
-        //{
-        //    player.GetComponent<PlayerCharacterLogicScript>().StartUpdate(); // Start Updating Players again
-        //    player.GetComponent<PlayerCharacterLogicScript>().EnableAllAttacks();
-        //}
         endDisplay.SetActive(false);
         gameEnd = false;
         currentRound = 1;
@@ -209,7 +227,9 @@ public class BattleSceneManager : MonoBehaviour
     {
         if (!gameEnd && !gamePaused)
         {
-            UpdateTimer();
+            if(GameManager.Instance.GetGameMode() != GAME_MODES.PRACTICE)
+                UpdateTimer();
+
             CheckForDeath();
 
             if (gameWon)
@@ -264,127 +284,70 @@ public class BattleSceneManager : MonoBehaviour
 
     public void EndMatch()
     {
-        PlayerCharacterLogicScript player1 = playerCharacters[0].GetComponent<PlayerCharacterLogicScript>();
-        PlayerCharacterLogicScript player2 = playerCharacters[1].GetComponent<PlayerCharacterLogicScript>();
-
-        if(timeOut && player1.GetHealthPercentage() == player2.GetHealthPercentage()
-            ||!timeOut && player1.IsDead() && player2.IsDead())
+        switch (GameManager.Instance.GetGameMode())
         {
-            draw = true;
-            //GameManager.Instance.GetPlayer(player1.GetPlayerID()).GetInGameData().WinMatch();
-            //GameManager.Instance.GetPlayer(player2.GetPlayerID()).GetInGameData().WinMatch();
-            //victoryInterface[0].WinMatch();
-            //victoryInterface[1].WinMatch();
-        }
-        else if (timeOut && player1.GetHealthPercentage() > player2.GetHealthPercentage()
-            || !timeOut && player2.IsDead())
-        {
-            draw = false;
-            winnerID = (int)player1.GetPlayerID();
-            loserID = (int)player2.GetPlayerID();
-            //GameManager.Instance.GetPlayer(player1.GetPlayerID()).GetInGameData().WinMatch();
-            //loserController = GameManager.Instance.GetPlayer(loserID).GetComponent<ListOfControllerActions>();
-            //victoryInterface[winnerID].WinMatch();
-        }
-        else
-        {
-            draw = false;
-            winnerID = (int)player2.GetPlayerID();
-            loserID = (int)player1.GetPlayerID();
-            //GameManager.Instance.GetPlayer(player2.GetPlayerID()).GetInGameData().WinMatch();
-            //loserController = GameManager.Instance.GetPlayer(loserID).GetComponent<ListOfControllerActions>();
-            //victoryInterface[winnerID].WinMatch();
-        }
-
-        if (draw)
-        {
-            GameManager.Instance.GetPlayer(player1.GetPlayerID()).GetInGameData().WinMatch();
-            GameManager.Instance.GetPlayer(player2.GetPlayerID()).GetInGameData().WinMatch();
-            victoryInterface[0].WinMatch();
-            victoryInterface[1].WinMatch();
-        }
-        else
-        {
-            GameManager.Instance.GetPlayer(winnerID).GetInGameData().WinMatch();
-            loserController = GameManager.Instance.GetPlayer(loserID).GetComponent<ListOfControllerActions>();
-            victoryInterface[(int)GameManager.Instance.GetPlayer(winnerID).GetInGameData().GetTeam()].WinMatch();
-        }
-
-        //if (!timeOut)
-        //{
-        //    bool doubleKO = true;
-        //    for (int i = 0; i < noOfPlayers; ++i)
-        //    {
-        //        PlayerCharacterLogicScript player = playerCharacters[i].GetComponent<PlayerCharacterLogicScript>();
-        //        if (player.IsDead())
-        //            continue;
-        //        doubleKO = false;
-        //        GameManager.Instance.GetPlayer(player.GetPlayerID()).GetInGameData().WinMatch();
-        //        victoryInterface[i].WinMatch();
-        //    }
-        //    if (doubleKO)
-        //    {
-        //        for (int i = 0; i < noOfPlayers; ++i)
-        //        {
-        //            GameManager.Instance.GetPlayer(i).GetInGameData().WinMatch();
-        //            victoryInterface[i].WinMatch();
-        //        }
-        //    }
-        //}
-        //else //Won by Timeout
-        //{
-        //    //float p1Hp = playerCharacters[0].GetComponent<PlayerCharacterLogicScript>().GetHealthPercentage();
-        //    //float p2Hp = playerCharacters[1].GetComponent<PlayerCharacterLogicScript>().GetHealthPercentage();
-        //    //if(p1Hp == p2Hp)
-        //    bool bothSameHp = false;
-        //    float currentHp = -1;
-        //    int winnerID = -1;
-        //    for (int i = 0; i < noOfPlayers; ++i)
-        //    {
-        //        PlayerCharacterLogicScript player = playerCharacters[i].GetComponent<PlayerCharacterLogicScript>();
-        //        float hp = player.GetHealthPercentage();
-        //        if (hp > currentHp)
-        //        {
-        //            winnerID = (int)player.GetPlayerID();
-        //            currentHp = hp;
-        //        }
-        //        else if (currentHp > 0 && hp == currentHp)
-        //        {
-        //            bothSameHp = true;
-        //        }
-        //    }
-        //    if (bothSameHp)
-        //    {
-        //        for (int i = 0; i < noOfPlayers; ++i)
-        //        {
-        //            GameManager.Instance.GetPlayer(i).GetInGameData().WinMatch();
-        //            victoryInterface[i].WinMatch();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        GameManager.Instance.GetPlayer(winnerID).GetInGameData().WinMatch();
-        //        victoryInterface[winnerID].WinMatch();
-        //    }
-        //}
-
-        //Determine if Set Won By Anyone
-        bool displayEndScreen = false;
-        for (int i = 0; i < noOfPlayers; ++i)
-        {
-            PlayerData player = GameManager.Instance.GetPlayer(i);
-            if (player.GetInGameData().GetSetWon())
-            {
-                SetPlayerSpawnPoints();
-                DisplayWinResult();
-                displayEndScreen = true;
+            case GAME_MODES.PRACTICE:
+            case GAME_MODES.VS_AI:
+                ResetMatch();
                 break;
-            }
-        }
+            case GAME_MODES.LOCAL_PVP:
+                {
+                    PlayerCharacterLogicScript player1 = playerCharacters[0].GetComponent<PlayerCharacterLogicScript>();
+                    PlayerCharacterLogicScript player2 = playerCharacters[1].GetComponent<PlayerCharacterLogicScript>();
 
-        if (!displayEndScreen)
-        {
-            ResetMatch();
+                    if (timeOut && player1.GetHealthPercentage() == player2.GetHealthPercentage()
+                        || !timeOut && player1.IsDead() && player2.IsDead())
+                    {
+                        draw = true;
+                    }
+                    else if (timeOut && player1.GetHealthPercentage() > player2.GetHealthPercentage()
+                        || !timeOut && player2.IsDead())
+                    {
+                        draw = false;
+                        winnerID = (int)player1.GetPlayerID();
+                        loserID = (int)player2.GetPlayerID();
+                    }
+                    else
+                    {
+                        draw = false;
+                        winnerID = (int)player2.GetPlayerID();
+                        loserID = (int)player1.GetPlayerID();
+                    }
+
+                    if (draw)
+                    {
+                        GameManager.Instance.GetPlayer(player1.GetPlayerID()).GetInGameData().WinMatch();
+                        GameManager.Instance.GetPlayer(player2.GetPlayerID()).GetInGameData().WinMatch();
+                        victoryInterface[0].WinMatch();
+                        victoryInterface[1].WinMatch();
+                    }
+                    else
+                    {
+                        GameManager.Instance.GetPlayer(winnerID).GetInGameData().WinMatch();
+                        loserController = GameManager.Instance.GetPlayer(loserID).GetComponent<ListOfControllerActions>();
+                        victoryInterface[(int)GameManager.Instance.GetPlayer(winnerID).GetInGameData().GetTeam()].WinMatch();
+                    }
+
+                    //Determine if Set Won By Anyone
+                    bool displayEndScreen = false;
+                    for (int i = 0; i < noOfPlayers; ++i)
+                    {
+                        PlayerData player = GameManager.Instance.GetPlayer(i);
+                        if (player.GetInGameData().GetSetWon())
+                        {
+                            SetPlayerSpawnPoints();
+                            DisplayWinResult();
+                            displayEndScreen = true;
+                            break;
+                        }
+                    }
+
+                    if (!displayEndScreen)
+                    {
+                        ResetMatch();
+                    }
+                }
+                break;
         }
     }
 
@@ -392,11 +355,6 @@ public class BattleSceneManager : MonoBehaviour
     {
         preBattleText.FinishAnim();
         SetPlayerControls(false);
-        //foreach (GameObject player in playerCharacters)
-        //{ 
-        //    player.GetComponent<PlayerCharacterLogicScript>().StopUpdate();
-        //    player.GetComponent<PlayerCharacterLogicScript>().DisableAndResetAllAttacks();
-        //}
 
         foreach (VictoryDisplayScript victoryUI in victoryInterface)
             victoryUI.ResetVictories();

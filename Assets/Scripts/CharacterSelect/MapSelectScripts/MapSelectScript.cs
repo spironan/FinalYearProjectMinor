@@ -100,6 +100,10 @@ public class MapSelectScript : MonoBehaviour
     Vector3 dir = Vector3.zero;
     AudioClip select;
 
+    public Text mapDisplayCounter;
+    PlayerData player = null;
+    TEAM cancelledTeam;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -107,6 +111,7 @@ public class MapSelectScript : MonoBehaviour
         mapPrefab = PrefabManager.GetInstance().GetPrefab("MapSlot");
         totalMaps = MapManager.GetInstance().GetMapCount();
         offset = new Vector3(itemWidth + spaceBetweenMaps, 0, 0);
+        mapDisplayCounter = GameObject.Find("MapCounterText").GetComponent<Text>();
 
         for (int i = 0; i < totalMaps; ++i)
         {
@@ -146,6 +151,7 @@ public class MapSelectScript : MonoBehaviour
         moveBy = new Vector3((itemWidth + spaceBetweenMaps)/9.3f, 0, 0);
         //Increase the size of the currentMap Slightly
         ResizeMaps();
+        UpdateCounter();
 	}
 	
 	// Update is called once per frame
@@ -156,8 +162,21 @@ public class MapSelectScript : MonoBehaviour
         else if (buttonCurrCD > buttonCD)
             canActivate = true;
 
-        ///Controls here
-        PlayerData player = GameManager.Instance.GetMasterPlayerData();
+        if (player == null)
+        {
+            switch(GameManager.Instance.GetGameMode())
+            {
+                case GAME_MODES.LOCAL_PVP:
+                    player = GameManager.Instance.GetRandomPlayer();
+                    break;
+                case GAME_MODES.PRACTICE:
+                case GAME_MODES.VS_AI:
+                    player = GameManager.Instance.GetMasterPlayerData();
+                    break;
+            }
+        }
+
+        //Controls here
         if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
         {
             ShiftLeft(); // Shift The Things To The Left 
@@ -172,7 +191,8 @@ public class MapSelectScript : MonoBehaviour
         }
         else if (player.controller.getButtonAction(ACTIONS.CANCEL_MAP_SELECT))
         {
-            GameObject.FindWithTag("CharacterSelect").GetComponent<CharacterSelectScript>().DeselectCharacter(player.GetInGameData().GetTeam());
+            //GameObject.FindWithTag("CharacterSelect").GetComponent<CharacterSelectScript>().DeselectCharacter(player.GetInGameData().GetTeam());
+            cancelledTeam = player.GetInGameData().GetTeam();
             Cancel();
         }
 	}
@@ -206,6 +226,7 @@ public class MapSelectScript : MonoBehaviour
     public void SetCancel(bool cancel) { cancelled = cancel; }
     public void Cancel() { cancelled = true; }
     public bool CancelMapSelect() { return cancelled; }
+    public TEAM GetCancelledTeam() { return cancelledTeam; }
     public string GetCurrentMapName() { return MapManager.GetInstance().GetMapByIndex(currIndex).GetMapName(); }
 
     public void ShiftLeft() { Shift("Left"); }
@@ -251,12 +272,14 @@ public class MapSelectScript : MonoBehaviour
         currIndex++;
         if (currIndex >= totalMaps)
             currIndex -= totalMaps;
+        UpdateCounter();
     }
     void DecreaseIndex()
     {
         currIndex--;
         if (currIndex < 0)
             currIndex = totalMaps - 1;
+        UpdateCounter();
     }
     void ResizeMaps()
     {
@@ -269,4 +292,5 @@ public class MapSelectScript : MonoBehaviour
         }
     }
 
+    void UpdateCounter() {  mapDisplayCounter.text = "" + (currIndex + 1) + "/" + totalMaps; }
 }

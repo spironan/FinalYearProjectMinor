@@ -35,6 +35,7 @@ TagManager:
   - MainMenuOptionsHolder
   - GlobalUIDisplay
   - SideSelect
+  - MapCounterText
   layers:
   - Default
   - TransparentFX
