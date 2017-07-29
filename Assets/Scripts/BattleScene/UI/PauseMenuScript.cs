@@ -9,9 +9,9 @@ public class PauseMenuScript : MonoBehaviour
     enum PAUSE_OPTIONS
     {
         RESUME,
-        MOVE_LIST,
-        SOUND_OPTION,
-        CONTROLLER_SETTINGS,
+        //MOVE_LIST,
+        //SOUND_OPTION,
+        //CONTROLLER_SETTINGS,
         CHARACTER_SELECT,
         BACK_TO_MAIN
     };
@@ -47,7 +47,6 @@ public class PauseMenuScript : MonoBehaviour
 
         StartCoroutine(HighlightButton());
     }
-
     IEnumerator HighlightButton()
     {
         eventSystem.SetSelectedGameObject(null);

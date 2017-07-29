@@ -2430,19 +2430,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22416130, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22441300, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22434274, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22452940, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22453580, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchoredPosition.x
