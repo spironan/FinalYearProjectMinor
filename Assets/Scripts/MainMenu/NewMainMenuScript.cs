@@ -8,6 +8,8 @@ public enum MAIN_OPTIONS
     START_PVP,
     PRACTICE,
     SETTINGS,
+    CONTROLGUIDE,
+    CREDITS,
     EXIT,
     TOTAL,
 };
@@ -30,6 +32,8 @@ public class NewMainMenuScript : MonoBehaviour {
     public GameObject mainMenuHolder;
     public GameObject confirmationToquitHolder;
     public GameObject settingsHolder;
+    public GameObject controlGuideHolder;
+    public GameObject creditsHolder;
 
     MAIN_OPTIONS mainMenu_button = MAIN_OPTIONS.START_PVP;
     QUIT_OPTIONS quit_button = QUIT_OPTIONS.NO;
@@ -44,6 +48,8 @@ public class NewMainMenuScript : MonoBehaviour {
     bool disableMainMenu = false;
     bool disableConfirmationToQuit = true;
     bool disableSettings = true;
+    bool disableControlGuide = true;
+    bool disableCredits = true;
 
     bool runOnce = false;
 
@@ -68,6 +74,8 @@ public class NewMainMenuScript : MonoBehaviour {
 
         confirmationToquitHolder.SetActive(false);
         settingsHolder.SetActive(false);
+        controlGuideHolder.SetActive(false);
+        creditsHolder.SetActive(false);
         StartCoroutine(MainMenu_HighlightButton());
     }
 
@@ -123,6 +131,14 @@ public class NewMainMenuScript : MonoBehaviour {
         else if(!disableSettings)
         {
             SettingsActions();
+        }
+        else if (!disableControlGuide)
+        {
+            ControlGuideActions();
+        }
+        else if (!disableCredits)
+        {
+            CreditsActions();
         }
     }
 
@@ -272,6 +288,22 @@ public class NewMainMenuScript : MonoBehaviour {
                         settingsHolder.SetActive(true);
                     }
                     break;
+                case MAIN_OPTIONS.CONTROLGUIDE:
+                    {
+                        //StartCoroutine(Settings_HighlightButton());
+                        disableMainMenu = true;
+                        disableControlGuide = false;
+                        controlGuideHolder.SetActive(true);
+                    }
+                    break;
+                case MAIN_OPTIONS.CREDITS:
+                    {
+                        //StartCoroutine(Settings_HighlightButton());
+                        disableMainMenu = true;
+                        disableCredits = false;
+                        creditsHolder.SetActive(true);
+                    }
+                    break;
                 case MAIN_OPTIONS.EXIT:
                     {
                         StartCoroutine(Quit_HighlightButton());
@@ -282,6 +314,30 @@ public class NewMainMenuScript : MonoBehaviour {
                     }
                     break;
             }
+        }
+    }
+
+    void ControlGuideActions()
+    {
+        if (GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.BACK)
+            || GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.SELECT))
+        {
+            StartCoroutine(MainMenu_HighlightButton());
+            disableMainMenu = false;
+            disableControlGuide = true;
+            controlGuideHolder.SetActive(false);
+        }
+    }
+
+    void CreditsActions()
+    {
+        if (GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.BACK)
+            || GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.SELECT))
+        {
+            StartCoroutine(MainMenu_HighlightButton());
+            disableMainMenu = false;
+            disableCredits = true;
+            creditsHolder.SetActive(false);
         }
     }
 }
