@@ -2210,19 +2210,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22475828, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22437548, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22492904, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22471726, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22427882, guid: 04eeccbb20ee1804e866c7bc69c5bdcf, type: 2}
       propertyPath: m_AnchorMin.y
@@ -4066,7 +4066,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 399, y: 112}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1925265945
 MonoBehaviour:
@@ -4100,7 +4100,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ver 0.09
+  m_Text: Ver 0.10 OFFICIAL
 --- !u!222 &1925265946
 CanvasRenderer:
   m_ObjectHideFlags: 0
