@@ -152,19 +152,10 @@ public class MapSelectScript : MonoBehaviour
         //Increase the size of the currentMap Slightly
         ResizeMaps();
         UpdateCounter();
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-        if (buttonCurrCD <= buttonCD)
-            buttonCurrCD += Time.deltaTime;
-        else if (buttonCurrCD > buttonCD)
-            canActivate = true;
 
         if (player == null)
         {
-            switch(GameManager.Instance.GetGameMode())
+            switch (GameManager.Instance.GetGameMode())
             {
                 case GAME_MODES.LOCAL_PVP:
                     player = GameManager.Instance.GetRandomPlayer();
@@ -175,6 +166,29 @@ public class MapSelectScript : MonoBehaviour
                     break;
             }
         }
+    }
+	
+	// Update is called once per frame
+	void Update () 
+    {
+        if (buttonCurrCD <= buttonCD)
+            buttonCurrCD += Time.deltaTime;
+        else if (buttonCurrCD > buttonCD)
+            canActivate = true;
+
+        //if (player == null)
+        //{
+        //    switch(GameManager.Instance.GetGameMode())
+        //    {
+        //        case GAME_MODES.LOCAL_PVP:
+        //            player = GameManager.Instance.GetRandomPlayer();
+        //            break;
+        //        case GAME_MODES.PRACTICE:
+        //        case GAME_MODES.VS_AI:
+        //            player = GameManager.Instance.GetMasterPlayerData();
+        //            break;
+        //    }
+        //}
 
         //Controls here
         if (player.controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))

@@ -51,6 +51,11 @@ public class LoadingScreenManager : MonoBehaviour
         if (sceneToLoad == "")
             return;
 
+        if (sceneToLoad == "BattleScene")
+            GameObject.FindGameObjectWithTag("FightBackground").SetActive(true);
+        else
+            GameObject.FindGameObjectWithTag("FightBackground").SetActive(false);
+
         fadeOverlay.gameObject.SetActive(true); // Making sure it's on so that we can crossfade Alpha
         tipsText.gameObject.GetComponent<Text>().CrossFadeAlpha(0, 0, true);
         loadingAnimation.gameObject.GetComponent<Image>().CrossFadeAlpha(0, 0, true);

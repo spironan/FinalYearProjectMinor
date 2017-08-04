@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviourSingletonPersistent<GameManager>
     GAME_MODES currGameMode = GAME_MODES.LOCAL_PVP;
     //Current Number Of Players
     PLAYER playerCount = PLAYER.PLAYER_ONE;
+    //Current Random Player
+    PLAYER curRandomPlayer = PLAYER.MAX_PLAYERS;
 
     //Dont destroy on load the manager -> exist permantly
     void Start()
@@ -112,8 +114,10 @@ public class GameManager : MonoBehaviourSingletonPersistent<GameManager>
     public PlayerData GetRandomPlayer()
     {
         Random.seed = System.DateTime.Now.Millisecond;
-        return GetPlayer(Random.Range(0,(int)PLAYER.MAX_PLAYERS));
+        curRandomPlayer = (PLAYER)Random.Range(0, (int)PLAYER.MAX_PLAYERS);
+        return GetPlayer(curRandomPlayer);
     }
+    public PLAYER GetCurRandomPlayer() { return curRandomPlayer; }
     public Map GetCurrMap() { return currMap; }
     public int GetPlayerSize() { return playerList.Count; }
     public GAMESTATE GetGameState() { return currState; }
