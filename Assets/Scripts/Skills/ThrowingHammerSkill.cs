@@ -10,7 +10,7 @@ public class ThrowingHammerSkill : SkillProfile {
     public override void Start()
     {
         base.Start();
-        speed_Y = pSpeed;
+        //speed_Y = pSpeed;
         transform.position = new Vector3(owner.transform.position.x, owner.transform.position.y, -1);
     }
 

@@ -63,7 +63,7 @@ MonoBehaviour:
   player_ID: 0
   damagePerHit: 15
   lifetime: 0
-  pSpeed: 5
+  pSpeed: 4
   gravity: 9.8
   manaCost: 15
   manaRegenPerHit: 0
@@ -74,11 +74,12 @@ MonoBehaviour:
   enemy: {fileID: 0}
   direction: {x: 0, y: 0}
   directionToPress: 0000000000000000000000000000000000000000
+  percentageOfManaCost: 0
   skillIcon: {fileID: 21300000, guid: 84696f88535c6ad49b7c156f135f29e3, type: 3}
   activateSkill: 0
   particles:
   - {fileID: 170810, guid: cc79bf24c3c65e1459f58e5deebfb4f9, type: 2}
-  speed_Y: 0
+  speed_Y: 8
 --- !u!212 &21264808
 SpriteRenderer:
   m_ObjectHideFlags: 1

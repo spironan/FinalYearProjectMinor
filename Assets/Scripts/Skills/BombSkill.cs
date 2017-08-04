@@ -9,9 +9,9 @@ public class BombSkill : SkillProfile {
     float throwingDir = 1;
     
     bool runOnce = false;
-    bool doDamage = true;
+    //bool doDamage = true;
     bool stickToPlayer = true; 
-    bool enableCollisionToOwner = false;
+    //bool enableCollisionToOwner = false;
    
     //private CircleCollider2D circleColliderSelf;
     Rigidbody2D rigidBody;
@@ -22,7 +22,6 @@ public class BombSkill : SkillProfile {
         base.Start();
         rigidBody = GetComponent<Rigidbody2D>();
         particles_bomb = GetComponentInChildren<ParticleSystem>();
-        
         //circleColliderSelf = GetComponent<CircleCollider2D>();
     }
     // Update is called once per frame
@@ -31,17 +30,21 @@ public class BombSkill : SkillProfile {
         checkEveryInterval_lifeTime += Time.deltaTime;
         if (checkEveryInterval_lifeTime > lifetime)
         {
+            checkForCollision();
+            stickToPlayer = false;
+            //doDamage = false;
+            spawnParticleEffect(PARTICLE_TYPE.DISAPPEAR);
             gameObject.SetActive(false);
             Destroy(gameObject);
             //send this object to despawn
             checkEveryInterval_lifeTime = 0;
         }
-        if (checkEveryInterval_lifeTime > lifetime - 0.2f && doDamage)
-        {
-            checkForCollision();
-            stickToPlayer = false;
-            doDamage = false;
-        }
+        //if (checkEveryInterval_lifeTime > lifetime - 0.2f && doDamage)
+        //{
+        //    checkForCollision();
+        //    stickToPlayer = false;
+        //    doDamage = false;
+        //}
 
         if(stickToPlayer)
         {
@@ -58,17 +61,17 @@ public class BombSkill : SkillProfile {
                 throwingDir = 1;
             else
                 throwingDir = -1;
-            rigidBody.velocity = new Vector2(throwingDir * 1.5f, 5);
+            rigidBody.velocity = new Vector2(throwingDir * 4f, 5);
 
 
         }
-        if(!enableCollisionToOwner)
-        {
-            if (distToOwner() > (local_sprite_size.x / 2))
-            {
-                Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>(), false);
-            }
-        }
+        //if(!enableCollisionToOwner)
+        //{
+        //    if (distToOwner() > (local_sprite_size.x / 2))
+        //    {
+        //        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>(), false);
+        //    }
+        //}
         //
         //position.x += direction.x * pSpeed * Time.deltaTime;
         //gameObject.transform.position = position;

@@ -215,6 +215,10 @@ public class SkillActivator : MonoBehaviour {
                 }
                 selectedSkill = false;
                 isCastingUlti = false;
+                if(skill_gameObject != null)
+                {
+                    skill_gameObject = null;
+                }
                 activator.closeBorder();
             }
         }
@@ -241,7 +245,10 @@ public class SkillActivator : MonoBehaviour {
     {
         selectedSkill = false;
         isCastingUlti = false;
-        Destroy(skill_gameObject);
+        if (skill_gameObject != null)
+        {
+            Destroy(skill_gameObject);
+        }
     }
 
     void checkSkillToActivate()

@@ -440,10 +440,9 @@ public class PlayerCharacterLogicScript : MonoBehaviour
         //Debug.Log(collision.collider.tag);
         if (collision_down.collider != null)
         {
-            if(collision_down.collider.tag == "Player" && GetPlayerID() == PLAYER.PLAYER_ONE)
-                Debug.Log(collision_down.collider.tag);
+           
             
-            if ((collision_down.collider.tag == "Ground" || collision_down.collider.tag == "Player") && inAir && rigidbody.velocity.y == 0)
+            if ((collision_down.collider.tag == "Ground" || collision_down.collider.tag == "Player") && inAir && Mathf.Abs(rigidbody.velocity.y) < 0.1)
             {
                 inAir = false;
                 return;
@@ -451,9 +450,9 @@ public class PlayerCharacterLogicScript : MonoBehaviour
             else
                 inAir = true;
         }
-        if(collision_leftDown.collider != null)
+        else if(collision_leftDown.collider != null)
         {
-            if ((collision_leftDown.collider.tag == "Ground" || collision_leftDown.collider.tag == "Player") && inAir && rigidbody.velocity.y == 0)
+            if ((collision_leftDown.collider.tag == "Ground" || collision_leftDown.collider.tag == "Player") && inAir && Mathf.Abs(rigidbody.velocity.y) < 0.1)
             {
                 inAir = false;
                 return;
@@ -461,9 +460,9 @@ public class PlayerCharacterLogicScript : MonoBehaviour
             else
                 inAir = true;
         }
-        if (collision_rightDown.collider != null)
+        else if (collision_rightDown.collider != null)
         {
-            if ((collision_rightDown.collider.tag == "Ground" || collision_rightDown.collider.tag == "Player") && inAir && rigidbody.velocity.y == 0)
+            if ((collision_rightDown.collider.tag == "Ground" || collision_rightDown.collider.tag == "Player") && inAir && Mathf.Abs(rigidbody.velocity.y) < 0.1)
             {
                 inAir = false;
                 return;

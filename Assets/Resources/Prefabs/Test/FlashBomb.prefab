@@ -31,7 +31,7 @@ GameObject:
   - 114: {fileID: 11459416}
   m_Layer: 0
   m_Name: FlashBomb
-  m_TagString: PhysicalSkill
+  m_TagString: RangedSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   direction: {x: 0, y: 0}
   directionToPress: 0000000000000000000000000000000000000000
+  percentageOfManaCost: 0
   skillIcon: {fileID: 21300000, guid: 789d181cd3e83ed4586e52a334ee5e6d, type: 3}
   activateSkill: 0
   particles:
