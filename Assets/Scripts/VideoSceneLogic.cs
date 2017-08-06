@@ -10,7 +10,7 @@ public class VideoSceneLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameManager.Instance.GetMasterPlayerData().controller.getAxisActionBoolDown(ACTIONS.START))
+        if (GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.START))
         {
             LoadingScreenManager.LoadScene("MainMenuScene");
         }

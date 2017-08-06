@@ -35,6 +35,11 @@ public class NewMainMenuScript : MonoBehaviour {
     public GameObject controlGuideHolder;
     public GameObject creditsHolder;
 
+    public float timerToMovieScene;
+
+    float movieSceneCountdown;
+    bool prevMoved,curMoved;
+
     MAIN_OPTIONS mainMenu_button = MAIN_OPTIONS.START_PVP;
     QUIT_OPTIONS quit_button = QUIT_OPTIONS.NO;
     SETTINGS_OPTIONS settings_button = SETTINGS_OPTIONS.BGM;
@@ -68,6 +73,8 @@ public class NewMainMenuScript : MonoBehaviour {
         if (settings_buttons == null)
             settings_buttons = settingsHolder.GetComponentsInChildren<Button>();
 
+        movieSceneCountdown = timerToMovieScene;
+        prevMoved = curMoved = false;
         
         //set all sliders value to be the same as the volume.
 
@@ -140,6 +147,19 @@ public class NewMainMenuScript : MonoBehaviour {
         {
             CreditsActions();
         }
+
+        if (!curMoved && !prevMoved)
+        {
+            movieSceneCountdown -= Time.deltaTime;
+            if (movieSceneCountdown <= 0.0f)
+                LoadingScreenManager.LoadScene("VideoScene");
+        }
+        else if (!curMoved && prevMoved)
+        {
+            movieSceneCountdown = timerToMovieScene;
+        }
+        prevMoved = curMoved;
+        curMoved = false;
     }
 
     void SettingsActions()
@@ -152,6 +172,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 settings_buttons[(int)settings_button].Select();
                 SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
             }
+            curMoved = true;
         }
         else if (GameManager.Instance.GetMasterPlayerData().controller.getAxisActionBoolDown(ACTIONS.MOVE_UP))
         {
@@ -161,6 +182,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 settings_buttons[(int)settings_button].Select();
                 SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
             }
+            curMoved = true;
         }
 
         if (GameManager.Instance.GetMasterPlayerData().controller.getAxisActionBoolDown(ACTIONS.MOVE_RIGHT))
@@ -171,6 +193,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 temp.value += 10 * Time.deltaTime;
                 SoundSystem.Instance.OnValueChanged(temp, (AUDIO_TYPE)settings_button);
             }
+            curMoved = true;
         }
         else if (GameManager.Instance.GetMasterPlayerData().controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
         {
@@ -180,6 +203,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 temp.value -= 10 * Time.deltaTime;
                 SoundSystem.Instance.OnValueChanged(temp, (AUDIO_TYPE)settings_button);
             }
+            curMoved = true;
         }
 
         if (GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.BACK))
@@ -188,6 +212,8 @@ public class NewMainMenuScript : MonoBehaviour {
             disableMainMenu = false;
             disableSettings = true;
             settingsHolder.SetActive(false);
+
+            curMoved = true;
         }
     }
 
@@ -201,6 +227,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 quit_buttons[(int)quit_button].Select();
                 SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
             }
+            curMoved = true;
         }
         else if (GameManager.Instance.GetMasterPlayerData().controller.getAxisActionBoolDown(ACTIONS.MOVE_LEFT))
         {
@@ -210,6 +237,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 quit_buttons[(int)quit_button].Select();
                 SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
             }
+            curMoved = true;
         }
         if (GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.BACK))
         {
@@ -217,6 +245,8 @@ public class NewMainMenuScript : MonoBehaviour {
             disableMainMenu = false;
             disableConfirmationToQuit = true;
             confirmationToquitHolder.SetActive(false);
+
+            curMoved = true;
         }
         if (GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.SELECT))
         {
@@ -239,6 +269,7 @@ public class NewMainMenuScript : MonoBehaviour {
                     }
                     break;
             }
+            curMoved = true;
         }
     }
 
@@ -252,6 +283,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 mainMenu_buttons[(int)mainMenu_button].Select();
                 SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
             }
+            curMoved = true;
         }
         else if (GameManager.Instance.GetMasterPlayerData().controller.getAxisActionBoolDown(ACTIONS.MOVE_UP))
         {
@@ -261,6 +293,7 @@ public class NewMainMenuScript : MonoBehaviour {
                 mainMenu_buttons[(int)mainMenu_button].Select();
                 SoundSystem.Instance.PlayClip(AUDIO_TYPE.SOUND_EFFECTS, AudioClipManager.GetInstance().GetAudioClip("SelectOption"));
             }
+            curMoved = true;
         }
 
         if (GameManager.Instance.GetMasterPlayerData().controller.getButtonAction(ACTIONS.SELECT))
@@ -314,6 +347,7 @@ public class NewMainMenuScript : MonoBehaviour {
                     }
                     break;
             }
+            curMoved = true;
         }
     }
 
@@ -326,6 +360,8 @@ public class NewMainMenuScript : MonoBehaviour {
             disableMainMenu = false;
             disableControlGuide = true;
             controlGuideHolder.SetActive(false);
+
+            curMoved = true;
         }
     }
 
@@ -339,5 +375,6 @@ public class NewMainMenuScript : MonoBehaviour {
             disableCredits = true;
             creditsHolder.SetActive(false);
         }
+        curMoved = true;
     }
 }
